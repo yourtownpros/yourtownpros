@@ -1,0 +1,98 @@
+{
+  "source_csv": "rankly-call-list-v25-2026-11-10.csv",
+  "total_csv_rows": 5303,
+  "state_derivation": {
+    "step1_city_suffix": 4361,
+    "step2_address_zip": 190,
+    "step3_city_map": 187,
+    "step4_colorado_list": 322,
+    "unresolved": 243
+  },
+  "excluded_category_rows": {
+    "total": 217,
+    "restaurant_liquor": 53,
+    "unmapped": 164
+  },
+  "included_businesses": 4843,
+  "businesses_by_vertical": {
+    "pet-grooming": 442,
+    "tattoo": 232,
+    "nails": 335,
+    "barbers": 351,
+    "hair-salons": 433,
+    "med-spas": 179,
+    "massage": 6,
+    "auto-repair": 937,
+    "towing": 32,
+    "plumbers": 290,
+    "electricians": 309,
+    "hvac": 41,
+    "roofing": 2,
+    "painting": 17,
+    "lawn-and-landscaping": 94,
+    "handyman": 23,
+    "cleaners": 221,
+    "florists": 350,
+    "bakeries-and-cafes": 309,
+    "jewelry": 109,
+    "veterinary": 104,
+    "fitness": 24,
+    "locksmiths": 3
+  },
+  "businesses_by_state": {
+    "AZ": 228,
+    "CA": 874,
+    "CO": 555,
+    "ID": 80,
+    "KS": 226,
+    "MT": 218,
+    "NE": 298,
+    "NV": 75,
+    "NM": 26,
+    "OK": 345,
+    "OR": 245,
+    "PR": 96,
+    "SD": 495,
+    "TX": 562,
+    "WA": 254,
+    "WY": 266
+  },
+  "pages": {
+    "homepage": 1,
+    "vertical_hub": 23,
+    "state_overview": 16,
+    "state_vertical_hub": 240,
+    "city_hub": 186,
+    "category": 618,
+    "listing": 4843,
+    "match_thanks_copied": 1,
+    "total_html": 5928
+  },
+  "slug_collisions": {
+    "count": 0,
+    "details": []
+  },
+  "sanitized_em_dash_fields": 6,
+  "sitemap": {
+    "index": "sitemap.xml",
+    "chunks": [
+      "sitemap-1.xml",
+      "sitemap-2.xml",
+      "sitemap-3.xml",
+      "sitemap-4.xml",
+      "sitemap-5.xml",
+      "sitemap-6.xml"
+    ],
+    "url_count": 5927
+  },
+  "link_check": {
+    "internal_hrefs_checked": 172254,
+    "broken": []
+  },
+  "phone_spot_check": {
+    "checked": 10,
+    "passed": 10,
+    "failures": []
+  },
+  "em_dash_files": []
+}

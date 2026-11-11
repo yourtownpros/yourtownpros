@@ -1,5 +1,5 @@
 {
-  "version": "v5.3",
+  "version": "v5.4",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -16,7 +16,7 @@
     "restaurant_liquor": 58,
     "unmapped": 177
   },
-  "included_businesses": 5062,
+  "included_businesses": 5061,
   "businesses_by_vertical": {
     "pet-grooming": 457,
     "tattoo": 239,
@@ -35,7 +35,7 @@
     "painting": 18,
     "lawn-and-landscaping": 104,
     "handyman": 23,
-    "cleaners": 229,
+    "cleaners": 228,
     "florists": 355,
     "bakeries-and-cafes": 314,
     "jewelry": 113,
@@ -51,7 +51,7 @@
   "businesses_by_state": {
     "AZ": 228,
     "CA": 874,
-    "CO": 771,
+    "CO": 770,
     "ID": 80,
     "KS": 226,
     "MT": 218,
@@ -74,7 +74,7 @@
     "city_hub": 309,
     "county_hub": 316,
     "category": 1186,
-    "listing": 5064,
+    "listing": 5063,
     "claim": 1,
     "add_business": 1,
     "for_business": 1,
@@ -86,9 +86,9 @@
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 7190
+    "total_html": 7189
   },
-  "search_index_entries": 5064,
+  "search_index_entries": 5063,
   "search_upgrade": {
     "cities_index_entries": 309,
     "cities_index_broken": [],
@@ -101,9 +101,9 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 7186,
-    "pages_with_fbmenu": 7186,
-    "total_html": 7190
+    "pages_with_brand_home_anchor": 7185,
+    "pages_with_fbmenu": 7185,
+    "total_html": 7189
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -165,26 +165,26 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 38,
-        "prospects_csvs": 129,
+        "call_block_briefs": 41,
+        "prospects_csvs": 135,
         "site_digests": 23
       },
-      "prospects_rows": 4386,
+      "prospects_rows": 4516,
       "digest_entries": 1480,
-      "pool_phones": 5807,
+      "pool_phones": 5944,
       "digest_linked_listings": 33
     },
     "coverage_unflagged_listings": {
-      "map_embed": 870,
+      "map_embed": 869,
       "attribute_chips": 1000,
       "about": 83,
       "since_year": 961,
-      "website_button": 316,
+      "website_button": 335,
+      "hours": 142,
       "services": 3,
-      "hours": 109,
       "address_added": 2
     },
-    "total_listings": 5062
+    "total_listings": 5061
   },
   "v34_checks": {
     "enrichment_spot_check": [
@@ -553,7 +553,7 @@
     "titles_over_65": {},
     "description_stats_by_kind": {
       "listing": {
-        "count": 5064,
+        "count": 5063,
         "min": 81,
         "max": 160,
         "over_160": 0
@@ -772,10 +772,10 @@
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 7190,
-    "supabase_client_files": 7190,
-    "auth_init_files": 7190,
-    "total_html_files": 7190,
+    "goatcounter_files": 7189,
+    "supabase_client_files": 7189,
+    "auth_init_files": 7189,
+    "total_html_files": 7189,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -802,10 +802,10 @@
   "v37_checks": {
     "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
-      "candidates": 854,
-      "from_cache": 854,
+      "candidates": 853,
+      "from_cache": 853,
       "submitted": 0,
-      "matched": 798,
+      "matched": 797,
       "no_match": 56,
       "unattempted": 0,
       "census_ok": true,
@@ -815,7 +815,7 @@
       "category_pages": 1186,
       "pages_with_map": 233,
       "pages_facade_only": 0,
-      "total_pins": 574,
+      "total_pins": 573,
       "dnc_flagged_pinned": 8
     },
     "county": {
@@ -835,13 +835,13 @@
     "sitemap_segments": {
       "chunks": {
         "sitemap-listings.xml": 5000,
-        "sitemap-listings-2.xml": 64,
+        "sitemap-listings-2.xml": 63,
         "sitemap-categories.xml": 1186,
         "sitemap-hubs.xml": 659,
         "sitemap-misc.xml": 6
       },
       "by_template": {
-        "listings": 5064,
+        "listings": 5063,
         "categories": 1186,
         "hubs": 659,
         "misc": 6
@@ -859,20 +859,20 @@
   "v38_checks": {
     "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
     "claims_verification": {
-      "verify_data_entries": 5064,
+      "verify_data_entries": 5063,
       "with_email": 121,
-      "with_website": 331,
-      "with_domain": 331,
+      "with_website": 350,
+      "with_domain": 350,
       "with_facebook": 6,
       "join_stats": {
         "with_email": 121,
-        "with_website": 329,
-        "with_domain": 329,
+        "with_website": 348,
+        "with_domain": 348,
         "with_facebook": 6
       },
       "email_spot_trace_checked": 10,
       "email_spot_trace_untraced": [],
-      "claim_links_with_slug": 5062,
+      "claim_links_with_slug": 5061,
       "claim_links_missing_slug": []
     },
     "featured": {
@@ -896,11 +896,11 @@
       "popup_payload_missing": []
     },
     "listing_maps": {
-      "pin_mode": 798,
+      "pin_mode": 797,
       "city_mode": 4266,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 879
+      "get_directions_links": 878
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -931,7 +931,7 @@
       "dashboard_script_node_check": "pass"
     },
     "biz_data": {
-      "entries": 5064,
+      "entries": 5063,
       "fields": [
         "name",
         "trade",
@@ -941,8 +941,8 @@
         "address",
         "website"
       ],
-      "with_website": 331,
-      "with_address": 879,
+      "with_website": 350,
+      "with_address": 878,
       "website_matches_verify_data": true
     },
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
@@ -990,13 +990,13 @@
     },
     "honeypots": {
       "field": "company_website",
-      "match_forms_with_honeypot": 6248,
+      "match_forms_with_honeypot": 6247,
       "claim_forms_with_honeypot": 2,
-      "suggest_forms_with_honeypot": 5064,
+      "suggest_forms_with_honeypot": 5063,
       "add_business_forms_with_honeypot": 1,
-      "honeypot_inputs_total": 11315,
+      "honeypot_inputs_total": 11313,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 7189,
+      "guard_script_pages": 7188,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -1023,7 +1023,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 7190,
+    "viewport_pages": 7189,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1059,8 +1059,8 @@
   },
   "v44_checks": {
     "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
-    "claimed_listings_query_files": 6250,
-    "claimed_listings_query_pages_expected": 6250,
+    "claimed_listings_query_files": 6249,
+    "claimed_listings_query_pages_expected": 6249,
     "listing_badge_swap_code": true,
     "manage_bar_markup": true,
     "manage_bar_links": true,
@@ -1363,7 +1363,7 @@
     "schema_v9_index": true,
     "per_card_links_match_instrumentation": true,
     "per_card_targets_scoped": true,
-    "per_card_count": 26176,
+    "per_card_count": 26167,
     "flagged_never_card_target": true,
     "flagged_listings_unscoped": true,
     "match_script_pages_complete": true,
@@ -1489,7 +1489,7 @@
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
       331,
-      331
+      350
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
@@ -1528,6 +1528,88 @@
     "structure_matches_v52_after_deltas": true,
     "partner_placements_unchanged": true,
     "v50_v51_v52_wiring_intact": true,
+    "standing_invariants_held": true
+  },
+  "v54_checks": {
+    "note": "v5.4: JOB 4 DATA MERGE + CLOSED-BUSINESS REMOVAL + OPEN NOW. (1) The Job 4 merge is the v5.2 pattern one round later: Claude's Colorado round 2 values (prep: prep-yourtownpros-job4-enrichment.py from ytp-claude/ytp-job4-batch1-done.csv, the businesses' own Google profiles) merge 19 websites and 33 hours sets for 44 Denver and Aurora listings into the same enrichment records; a stated value wins over older enrichment, a blank never erases, no row is flagged, and no row is unkeyed (the v5.2 block's verify-data and biz-data reconciliations and its hours and website page-set checks were revised in place to run over the union of both merges). Job 4 states no Facebook URL, so there are no Facebook-only rows this round. (2) McMahan Cleaners (Denver) was flagged PERMANENTLY CLOSED on its Google profile in the same Job 4 pass; CLOSED_EXCLUDED54 drops its row before slug assignment, so no listing page is generated and the business leaves every surface. Totals move by exactly the one business: listings 5,064 to 5,063, sitemap 6,915 to 6,914, HTML 7,190 to 7,189, search entries 5,064 to 5,063; the totals keys in the v4.7, v5.0, v5.1, v5.2 and v5.3 blocks were revised in place (documented pattern). The structural delta set is exactly the six old-tree HTML files that named the business (its page, its category page, and the four sibling listings whose Similar pros rails linked it, two of which also re-draw a category photo inside the same Denver cleaners group) plus the six aggregate hub pages whose counts and member-derived sections move with any one removal (the homepage, the Colorado hub, the Denver city hub, the Denver County hub, the cleaners hub and the cleaners Colorado hub); the v4.8 comparison skips exactly that set, the v5.2 file-set and non-HTML checks accept exactly the removal's file deltas, and this block asserts the new tree names the business nowhere. Its old page carried no hours block and no website (asserted), so the page-set checks needed no subtraction. (3) Open Now (Yelp gap audit row 20, feature side): listings with hours gain a client-side Open now / Closed line above the hours block, computed by OPENNOW_JS from the listing's own rendered day strings in the listing's state timezone (STATE_TZ54: static state map, dominant zone for split states, the honest limit of state-level data); category pages with at least one hours-carrying member gain an 'Open now (hours listed)' rail filter fed by a per-page ytp-hours JSON block, which keeps only listings whose hours say they are open now and excludes listings without determinable hours only while it is on, as the label states. The parser is written to exactly the formats present in the merged data (407 distinct day strings inventoried): 403 parse, 3 are 24/7 forms, and exactly one is unparseable ('Wednesday: 9:00 am', an opening time with no close, at Luxury Nails and Spa, Lincoln). Nine listings' weeks do not fully determine (the named unknown set: four Wednesday holiday gaps from Job 2, two '(weekend not stated)' office-hours listings, one range-only week, the unparseable Wednesday, and JT Plumbing, whose Sunday is unstated); they render no badge and the filter treats them as not-open-unknown. No schema change; no price anywhere; no em dashes in shipped copy.",
+    "job4_stats": {
+      "keys_loaded": 44,
+      "rows_keyed": 44,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "websites_applied": 19,
+      "websites_overridden": 0,
+      "websites_already_present": 0,
+      "hours_applied": 33,
+      "hours_overridden": 0,
+      "hours_already_present": 0,
+      "facebook_only_rows": 0
+    },
+    "closed_removed": [
+      {
+        "business": "McMahan Cleaners",
+        "city": "Denver",
+        "state": "CO",
+        "category": "Dry cleaners"
+      }
+    ],
+    "job4_enrichment_counts_exact": true,
+    "job4_all_rows_keyed": true,
+    "job4_no_flagged_rows_merged": true,
+    "job4_mcmahan_row_not_in_file": true,
+    "job4_merged_values_render_on_listings": true,
+    "job4_verify_data_reconciled": true,
+    "job4_biz_data_reconciled": true,
+    "job4_verify_data_domain_delta": true,
+    "job4_verify_data_domains_before_after": [
+      331,
+      350
+    ],
+    "job4_hours_website_page_sets": true,
+    "closed_removed_exactly_mcmahan": true,
+    "mcmahan_page_not_generated": true,
+    "mcmahan_absent_from_data_files": true,
+    "mcmahan_absent_from_sitemap": true,
+    "mcmahan_named_nowhere_in_tree": true,
+    "mcmahan_delta_set_exact": true,
+    "mcmahan_old_page_had_no_hours_or_website": true,
+    "totals_moved_exactly_by_the_removal": true,
+    "open_now_css_present": true,
+    "open_now_mounts_exactly_on_hours_listings": true,
+    "open_now_scripts_exactly_on_hours_listings": true,
+    "open_now_mount_timezones_match_state": true,
+    "open_now_category_pages_exact": true,
+    "open_now_category_pages_count": 49,
+    "open_now_category_entries_count": 136,
+    "open_now_category_script_wired": true,
+    "open_now_js_syntax": true,
+    "open_now_parser_fixture": {
+      "parsed": 403,
+      "all24": 3,
+      "unparseable": [
+        "Wednesday: 9:00 am"
+      ],
+      "unknown": [
+        "auto-repair/poudre-auto-repair-fort-collins",
+        "cleaners/super-cleaners-chandler",
+        "hvac/balance-point-heating-cooling-and-plumbing-fort-collins",
+        "hvac/hooley-heating-and-air-conditioning-fort-collins",
+        "med-spas/pearl-skin-and-body-rejuvenation-colorado-springs",
+        "nails/harmony-nail-lounge-colorado-springs",
+        "nails/luxury-nails-and-spa-lincoln",
+        "pet-grooming/wagz-pet-market-and-grooming-fort-collins",
+        "plumbers/jt-plumbing-heating-and-air-fort-collins"
+      ]
+    },
+    "open_now_parser_coverage_exact": true,
+    "open_now_unknown_listings_exact": true,
+    "open_now_determined_listings": 133,
+    "structure_matches_v53_after_deltas": true,
+    "changed_files_fully_explained": true,
+    "file_set_matches_v54_deltas": true,
+    "nonhtml_changed_exact_v54": true,
+    "partner_placements_unchanged": true,
+    "v50_v51_v52_v53_wiring_intact": true,
     "standing_invariants_held": true
   },
   "partner_placements_detail": [
@@ -22085,7 +22167,7 @@
     }
   ],
   "search_target_check": {
-    "index_urls": 5064,
+    "index_urls": 5063,
     "index_broken": [],
     "category_groups_checked": 1184,
     "category_broken": [],
@@ -22117,15 +22199,15 @@
       "sitemap-misc.xml"
     ],
     "segments": {
-      "listings": 5064,
+      "listings": 5063,
       "categories": 1186,
       "hubs": 659,
       "misc": 6
     },
-    "url_count": 6915
+    "url_count": 6914
   },
   "link_check": {
-    "internal_hrefs_checked": 749748,
+    "internal_hrefs_checked": 749632,
     "broken": []
   },
   "phone_spot_check": {

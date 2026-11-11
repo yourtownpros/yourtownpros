@@ -1,52 +1,52 @@
 {
-  "version": "v4.5",
-  "source_csv": "rankly-call-list-v25-2026-11-10.csv",
-  "total_csv_rows": 5303,
-  "phone_duplicates_dropped": 0,
+  "version": "v4.6",
+  "source_csv": "rankly-call-list-v28-2026-11-10.csv",
+  "total_csv_rows": 5437,
+  "phone_duplicates_dropped": 1,
   "state_derivation": {
-    "step1_city_suffix": 4361,
+    "step1_city_suffix": 4493,
     "step2_address_zip": 190,
     "step2b_address_no_zip": 217,
-    "step3_city_map": 176,
-    "step4_colorado_list": 221,
-    "unresolved": 138
+    "step3_city_map": 184,
+    "step4_colorado_list": 213,
+    "unresolved": 139
   },
   "excluded_category_rows": {
-    "total": 241,
+    "total": 249,
     "restaurant_liquor": 58,
-    "unmapped": 183
+    "unmapped": 191
   },
-  "included_businesses": 4924,
+  "included_businesses": 5048,
   "businesses_by_vertical": {
-    "pet-grooming": 450,
-    "tattoo": 232,
-    "nails": 336,
-    "barbers": 355,
-    "tanning": 1,
-    "hair-salons": 442,
-    "med-spas": 180,
+    "pet-grooming": 457,
+    "tattoo": 239,
+    "nails": 345,
+    "barbers": 364,
+    "tanning": 3,
+    "hair-salons": 460,
+    "med-spas": 191,
     "massage": 6,
-    "auto-repair": 973,
-    "towing": 33,
-    "plumbers": 293,
-    "electricians": 310,
-    "hvac": 41,
+    "auto-repair": 977,
+    "towing": 42,
+    "plumbers": 297,
+    "electricians": 315,
+    "hvac": 48,
     "roofing": 3,
     "painting": 18,
-    "lawn-and-landscaping": 95,
+    "lawn-and-landscaping": 104,
     "handyman": 23,
-    "cleaners": 224,
-    "florists": 353,
-    "bakeries-and-cafes": 312,
-    "jewelry": 109,
-    "veterinary": 107,
-    "fitness": 25,
+    "cleaners": 229,
+    "florists": 355,
+    "bakeries-and-cafes": 314,
+    "jewelry": 113,
+    "veterinary": 113,
+    "fitness": 29,
     "locksmiths": 3
   },
   "businesses_by_state": {
     "AZ": 228,
     "CA": 874,
-    "CO": 636,
+    "CO": 760,
     "ID": 80,
     "KS": 226,
     "MT": 218,
@@ -65,11 +65,11 @@
     "homepage": 1,
     "vertical_hub": 26,
     "state_overview": 16,
-    "state_vertical_hub": 243,
-    "city_hub": 307,
+    "state_vertical_hub": 244,
+    "city_hub": 308,
     "county_hub": 316,
-    "category": 1155,
-    "listing": 4926,
+    "category": 1185,
+    "listing": 5050,
     "claim": 1,
     "for_business": 1,
     "privacy": 1,
@@ -79,24 +79,24 @@
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 7003
+    "total_html": 7159
   },
-  "search_index_entries": 4926,
+  "search_index_entries": 5050,
   "search_upgrade": {
-    "cities_index_entries": 307,
+    "cities_index_entries": 308,
     "cities_index_broken": [],
-    "category_index_entries": 1155,
+    "category_index_entries": 1185,
     "category_index_broken": [],
     "coordinates": {
       "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
-      "entries_with_coords": 307,
+      "entries_with_coords": 308,
       "unmatched": []
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 6999,
-    "pages_with_fbmenu": 6999,
-    "total_html": 7003
+    "pages_with_brand_home_anchor": 7155,
+    "pages_with_fbmenu": 7155,
+    "total_html": 7159
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -158,26 +158,26 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 36,
+        "call_block_briefs": 37,
         "prospects_csvs": 123,
         "site_digests": 23
       },
       "prospects_rows": 4308,
       "digest_entries": 1480,
-      "pool_phones": 5729,
+      "pool_phones": 5749,
       "digest_linked_listings": 33
     },
     "coverage_unflagged_listings": {
-      "map_embed": 740,
-      "attribute_chips": 976,
-      "about": 47,
-      "since_year": 948,
-      "website_button": 216,
+      "map_embed": 859,
+      "attribute_chips": 1000,
+      "about": 82,
+      "since_year": 961,
+      "website_button": 310,
       "services": 3,
       "hours": 2,
       "address_added": 2
     },
-    "total_listings": 4924
+    "total_listings": 5048
   },
   "v34_checks": {
     "enrichment_spot_check": [
@@ -204,7 +204,7 @@
         "url": "/lawn-and-landscaping/lightning-landscaping-aurora/",
         "field": "since",
         "value": "2002",
-        "source_file": "rankly-call-list-v25-2026-11-10.csv",
+        "source_file": "rankly-call-list-v28-2026-11-10.csv",
         "evidence_matched": "since 2002",
         "found_in_source": true
       },
@@ -231,7 +231,7 @@
         "url": "/cleaners/suite-success-dry-cleaners-wheat-ridge/",
         "field": "since",
         "value": "1992",
-        "source_file": "rankly-call-list-v25-2026-11-10.csv",
+        "source_file": "rankly-call-list-v28-2026-11-10.csv",
         "evidence_matched": "since 1992",
         "found_in_source": true
       },
@@ -541,25 +541,25 @@
     "titles_over_65": {},
     "description_stats_by_kind": {
       "listing": {
-        "count": 4926,
+        "count": 5050,
         "min": 81,
         "max": 160,
         "over_160": 0
       },
       "category": {
-        "count": 1155,
+        "count": 1185,
         "min": 141,
         "max": 160,
         "over_160": 0
       },
       "city_hub": {
-        "count": 307,
+        "count": 308,
         "min": 126,
         "max": 160,
         "over_160": 0
       },
       "state_vertical_hub": {
-        "count": 243,
+        "count": 244,
         "min": 79,
         "max": 160,
         "over_160": 0
@@ -741,16 +741,16 @@
         "to": "/veterinary/puerto-rico/san-juan/"
       }
     ],
-    "cities_index_entries": 307,
+    "cities_index_entries": 308,
     "sitemap_lastmod_complete": true,
     "check_adjustments": "link check: an href resolving to a real file in the tree (favicon links) counts as resolved, not only directory pages; em dash check skips the binary brand art (.png/.ico), which carries no copy."
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 7003,
-    "supabase_client_files": 7003,
-    "auth_init_files": 7003,
-    "total_html_files": 7003,
+    "goatcounter_files": 7159,
+    "supabase_client_files": 7159,
+    "auth_init_files": 7159,
+    "total_html_files": 7159,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -769,47 +769,48 @@
   "v37_checks": {
     "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
-      "candidates": 727,
+      "candidates": 843,
       "from_cache": 727,
-      "submitted": 0,
-      "matched": 679,
-      "no_match": 48,
+      "submitted": 116,
+      "matched": 788,
+      "no_match": 55,
       "unattempted": 0,
       "census_ok": true,
       "error": null
     },
     "pins": {
-      "category_pages": 1155,
-      "pages_with_map": 201,
+      "category_pages": 1185,
+      "pages_with_map": 232,
       "pages_facade_only": 0,
-      "total_pins": 462,
+      "total_pins": 571,
       "dnc_flagged_pinned": 8
     },
     "county": {
-      "city_groups_total": 701,
-      "cities_with_county": 701,
+      "city_groups_total": 702,
+      "cities_with_county": 702,
       "cities_unresolved": [],
       "sources": {
-        "census_plurality": 123,
+        "census_plurality": 124,
         "geonames_place": 578
       },
-      "category_pages_with_county": 1155,
-      "category_pages_total": 1155,
+      "category_pages_with_county": 1185,
+      "category_pages_total": 1185,
       "hubs_total": 316,
       "hubs_in_sitemap": 131,
       "hubs_noindex": 185
     },
     "sitemap_segments": {
       "chunks": {
-        "sitemap-listings.xml": 4926,
-        "sitemap-categories.xml": 1155,
-        "sitemap-hubs.xml": 644,
+        "sitemap-listings.xml": 5000,
+        "sitemap-listings-2.xml": 50,
+        "sitemap-categories.xml": 1185,
+        "sitemap-hubs.xml": 646,
         "sitemap-misc.xml": 5
       },
       "by_template": {
-        "listings": 4926,
-        "categories": 1155,
-        "hubs": 644,
+        "listings": 5050,
+        "categories": 1185,
+        "hubs": 646,
         "misc": 5
       }
     },
@@ -825,20 +826,20 @@
   "v38_checks": {
     "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
     "claims_verification": {
-      "verify_data_entries": 4926,
-      "with_email": 24,
-      "with_website": 231,
-      "with_domain": 231,
+      "verify_data_entries": 5050,
+      "with_email": 118,
+      "with_website": 325,
+      "with_domain": 325,
       "with_facebook": 6,
       "join_stats": {
-        "with_email": 24,
-        "with_website": 229,
-        "with_domain": 229,
+        "with_email": 118,
+        "with_website": 323,
+        "with_domain": 323,
         "with_facebook": 6
       },
       "email_spot_trace_checked": 10,
       "email_spot_trace_untraced": [],
-      "claim_links_with_slug": 4924,
+      "claim_links_with_slug": 5048,
       "claim_links_missing_slug": []
     },
     "featured": {
@@ -855,18 +856,18 @@
       "grid_columns": "232px minmax(0,1fr) minmax(340px,42%)",
       "map_panel": "sticky, top 96px, height calc(100vh - 96px)",
       "stack_below": "1024px, map first at 320px",
-      "pages_with_pins": 201,
-      "pages_city_centered": 954,
+      "pages_with_pins": 232,
+      "pages_city_centered": 953,
       "pages_with_facade_markup": 0,
       "duplicate_location_line_pages": [],
       "popup_payload_missing": []
     },
     "listing_maps": {
-      "pin_mode": 679,
-      "city_mode": 4247,
+      "pin_mode": 788,
+      "city_mode": 4262,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 749
+      "get_directions_links": 868
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -897,7 +898,7 @@
       "dashboard_script_node_check": "pass"
     },
     "biz_data": {
-      "entries": 4926,
+      "entries": 5050,
       "fields": [
         "name",
         "trade",
@@ -907,8 +908,8 @@
         "address",
         "website"
       ],
-      "with_website": 231,
-      "with_address": 749,
+      "with_website": 325,
+      "with_address": 868,
       "website_matches_verify_data": true
     },
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
@@ -956,11 +957,11 @@
     },
     "honeypots": {
       "field": "company_website",
-      "match_forms_with_honeypot": 6079,
+      "match_forms_with_honeypot": 6233,
       "claim_forms_with_honeypot": 2,
-      "honeypot_inputs_total": 6081,
+      "honeypot_inputs_total": 6235,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 7002,
+      "guard_script_pages": 7158,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -987,7 +988,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 7003,
+    "viewport_pages": 7159,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1001,7 +1002,7 @@
       "legal": true,
       "404": true
     },
-    "category_filters_toggle_pages": 1155,
+    "category_filters_toggle_pages": 1185,
     "category_phone_order_rules": true,
     "category_map_phone_flags": true,
     "pin_popup_max_width": 280,
@@ -1023,8 +1024,8 @@
   },
   "v44_checks": {
     "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
-    "claimed_listings_query_files": 6081,
-    "claimed_listings_query_pages_expected": 6081,
+    "claimed_listings_query_files": 6235,
+    "claimed_listings_query_pages_expected": 6235,
     "listing_badge_swap_code": true,
     "manage_bar_markup": true,
     "manage_bar_links": true,
@@ -1062,12 +1063,32 @@
     "photos_table_allowlisted": true,
     "no_public_photo_rendering": true
   },
+  "v46_checks": {
+    "note": "v4.6: data refresh only. Source call list v28 (5,437 rows) replaces v25 (5,303): the 97 wave-33 email rows (45 Colorado Springs + 52 Fort Collins, never before in the directory) enter as listings, alongside the v26/v27 phone-only appends. No template, feature or design change; every standing invariant from v3.6 through v4.5 is re-asserted here over the new tree.",
+    "source_csv_is_v28": true,
+    "no_broken_internal_links": true,
+    "no_em_dash_files": true,
+    "no_aggregate_rating_files": true,
+    "honeypots_intact": true,
+    "renaud_phone_exactly_two_files": true,
+    "rankly_pages_phone_free": true,
+    "featured_no_price": true,
+    "claimed_listings_wiring": true,
+    "dashboard_photos_pane_present": true,
+    "dashboard_requests_pane_present": true,
+    "san_juan_merge_unchanged": true,
+    "single_trade_hub_noindex_unchanged": true,
+    "fort_collins_listing_pages": 63,
+    "colorado_springs_listing_pages": 69,
+    "fort_collins_listings_present": true,
+    "colorado_springs_listings_present": true
+  },
   "search_target_check": {
-    "index_urls": 4926,
+    "index_urls": 5050,
     "index_broken": [],
-    "category_groups_checked": 1153,
+    "category_groups_checked": 1183,
     "category_broken": [],
-    "city_hub_groups_checked": 307,
+    "city_hub_groups_checked": 308,
     "city_hub_broken": []
   },
   "brighton_test": {
@@ -1089,20 +1110,21 @@
     "index": "sitemap.xml",
     "chunks": [
       "sitemap-listings.xml",
+      "sitemap-listings-2.xml",
       "sitemap-categories.xml",
       "sitemap-hubs.xml",
       "sitemap-misc.xml"
     ],
     "segments": {
-      "listings": 4926,
-      "categories": 1155,
-      "hubs": 644,
+      "listings": 5050,
+      "categories": 1185,
+      "hubs": 646,
       "misc": 5
     },
-    "url_count": 6730
+    "url_count": 6886
   },
   "link_check": {
-    "internal_hrefs_checked": 665218,
+    "internal_hrefs_checked": 680413,
     "broken": []
   },
   "phone_spot_check": {

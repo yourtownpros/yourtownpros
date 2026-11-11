@@ -280,6 +280,9 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 .biznav{position:static;display:flex;flex-wrap:wrap;gap:4px}
 .biznav button{width:auto}
 }
+
+.hpf{position:absolute!important;left:-9999px!important;top:-9999px!important;width:1px;height:1px;overflow:hidden}
+.hpf label{margin:0}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -304,6 +307,7 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 <label for="claim-business">Business name</label><input type="text" name="business" id="claim-business" readonly required>
 <label for="claim-city">City</label><input type="text" name="city" id="claim-city" readonly required>
 <input type="hidden" name="business_slug" id="claim-slug">
+<div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
 <div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div>
 <label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required>
 <label for="claim-role">Your role</label><input type="text" name="role" id="claim-role" placeholder="Owner, manager, family member">
@@ -384,6 +388,7 @@ for(var i=0;i<d.length;i++){if(d[i].name.toLowerCase()===nm){chosen={slug:d[i].u
 }}).catch(function(){});
 fetch("/verify-data.json").then(function(r){return r.json()}).then(function(d){verifyData=d;if(chosen)renderMethods()}).catch(function(){});
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
+var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
 if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
 var radios=form.querySelectorAll("input[name='vm']"),method="";
 for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}
@@ -448,5 +453,13 @@ setTimeout(drain,4000);
 if(A.sb){A.sb.auth.getSession().then(function(res){var s=res&&res.data?res.data.session:null;A.session=s;A.user=s?s.user:null;render();drain()}).catch(function(){drain()});
 A.sb.auth.onAuthStateChange(function(ev,s){A.session=s;A.user=s?s.user:null;render()})}
 else{drain()}
+})();
+</script><script>
+(function(){
+document.addEventListener("submit",function(ev){
+var f=ev.target;if(!f||!f.querySelector)return;
+var hp=f.querySelector("input[name='company_website']");
+if(hp&&hp.value){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation()}
+},true);
 })();
 </script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

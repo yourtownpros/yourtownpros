@@ -280,6 +280,9 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 .biznav{position:static;display:flex;flex-wrap:wrap;gap:4px}
 .biznav button{width:auto}
 }
+
+.hpf{position:absolute!important;left:-9999px!important;top:-9999px!important;width:1px;height:1px;overflow:hidden}
+.hpf label{margin:0}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -292,7 +295,7 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 <div class="feat"><div class="k">Sponsored · Featured spot open</div><h2>One barber shop business in Bellaire gets this spot</h2><p style="margin:0">The featured business in Bellaire appears first here, and gets an online booking button on its listing so customers can book without calling. This placement is exclusive to one business per town.</p></div>
 <div class="match" id="match"><h2>Get matched with a Bellaire barber shop pro</h2><p style="margin:0">Want help booking? Tell us what you need and we will match you with a Bellaire barber shop pro who has room, usually the same day. Free for customers, and no obligation.</p>
 <form action="https://formsubmit.co/yourtownpros@gmail.com" method="POST">
-<input type="hidden" name="_subject" value="Match request: Barbers, Bellaire (via William&#x27;s Haircuts listing)"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://yourtownpros.com/match-thanks/">
+<input type="hidden" name="_subject" value="Match request: Barbers, Bellaire (via William&#x27;s Haircuts listing)"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://yourtownpros.com/match-thanks/"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
 <label for="m-name">Your name</label><input id="m-name" type="text" name="name" required>
 <label for="m-phone">Your phone</label><input id="m-phone" type="tel" name="phone" required>
 <label for="m-service">What do you need?</label><input id="m-service" type="text" name="service" placeholder="Example: skin fade and a beard trim">
@@ -392,5 +395,13 @@ setTimeout(drain,4000);
 if(A.sb){A.sb.auth.getSession().then(function(res){var s=res&&res.data?res.data.session:null;A.session=s;A.user=s?s.user:null;render();drain()}).catch(function(){drain()});
 A.sb.auth.onAuthStateChange(function(ev,s){A.session=s;A.user=s?s.user:null;render()})}
 else{drain()}
+})();
+</script><script>
+(function(){
+document.addEventListener("submit",function(ev){
+var f=ev.target;if(!f||!f.querySelector)return;
+var hp=f.querySelector("input[name='company_website']");
+if(hp&&hp.value){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation()}
+},true);
 })();
 </script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

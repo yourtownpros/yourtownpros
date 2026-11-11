@@ -29,4 +29,12 @@ if(A.sb){A.sb.auth.getSession().then(function(res){var s=res&&res.data?res.data.
 A.sb.auth.onAuthStateChange(function(ev,s){A.session=s;A.user=s?s.user:null;render()})}
 else{drain()}
 })();
+</script><script>
+(function(){
+document.addEventListener("submit",function(ev){
+var f=ev.target;if(!f||!f.querySelector)return;
+var hp=f.querySelector("input[name='company_website']");
+if(hp&&hp.value){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation()}
+},true);
+})();
 </script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

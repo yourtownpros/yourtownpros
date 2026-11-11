@@ -1,5 +1,5 @@
 {
-  "version": "v4.0",
+  "version": "v4.1",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -159,10 +159,10 @@
       "source_files": {
         "research_notes": 58,
         "call_block_briefs": 36,
-        "prospects_csvs": 120,
+        "prospects_csvs": 123,
         "site_digests": 23
       },
-      "prospects_rows": 4204,
+      "prospects_rows": 4256,
       "digest_entries": 1480,
       "pool_phones": 5729,
       "digest_linked_listings": 33
@@ -932,6 +932,42 @@
       "yourtownpros-fetch-gc.py": true
     },
     "goatcounter_tools_token_gate": true
+  },
+  "v41_checks": {
+    "note": "v4.1: DevOps + security pass. The only site change is form honeypots: every match form and the claim form carry a hidden company_website field (offscreen, tabindex -1, autocomplete off); a capture-phase guard script on every generated page aborts any submit whose honeypot is filled, before the form's own handler runs, and the claim and featured-match submit handlers check the field again themselves. A filled honeypot is dropped silently: no error, no insert, no email; normal submissions are unchanged. Everything else in this version is back-office: the live RLS audit, schema v4, the secret scan, the backup tool and the incident runbook.",
+    "rls_audit": {
+      "document": "rankly-plan/yourtownpros-rls-audit-2026-11-10.md",
+      "result": "see audit doc: full matrix with three self-approval holes found live (claim insert with status approved, review insert with status approved, profile is_owner self-set); all other checks passed; test rows and the test user were deleted and table counts verified back to the pre-audit snapshot"
+    },
+    "schema_v4": {
+      "file": "rankly-plan/yourtownpros-supabase-schema-v4.sql",
+      "contents": [
+        "reviews column-guard trigger (non-service updates revert every column except response_text/response_at); closes the v3.9 flagged item",
+        "insert throttles: claims 5/day, reviews 10/day, saved_pros 50/day per user",
+        "audit fixes: claims and reviews inserts by non-service roles are forced to status pending; claims status/decided_at/approved_via frozen against non-service updates; profiles is_owner frozen against non-service updates"
+      ],
+      "applied_by": "parent, in the Supabase SQL Editor, before or with the v4.1 push"
+    },
+    "secret_scan": {
+      "scope": "site tree, yourtownpros repo, previews repo, both repos' full git history, and rankly-plan scripts",
+      "result": "no credential findings; the only key material present is the Supabase publishable key and the IndexNow key, both public by design. Patterns and detail in the audit doc"
+    },
+    "honeypots": {
+      "field": "company_website",
+      "match_forms_with_honeypot": 6079,
+      "claim_forms_with_honeypot": 2,
+      "honeypot_inputs_total": 6081,
+      "forms_missing_honeypot": [],
+      "guard_script_pages": 7002,
+      "guard_script_missing": [
+        "match-thanks/index.html"
+      ],
+      "claim_handler_checks": true,
+      "featured_match_handler_checks": true,
+      "normal_submission_path_changed": false
+    },
+    "backup_tool": "rankly-plan/yourtownpros-backup.py",
+    "runbook": "rankly-plan/yourtownpros-incident-runbook.md"
   },
   "search_target_check": {
     "index_urls": 4926,

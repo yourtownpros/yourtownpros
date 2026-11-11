@@ -1,5 +1,5 @@
 {
-  "version": "v3.4",
+  "version": "v3.5",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -450,6 +450,84 @@
         }
       }
     }
+  },
+  "v35_checks": {
+    "pool_sizes": {
+      "auto-repair": 6,
+      "bakeries-and-cafes": 8,
+      "barbers": 7,
+      "cleaners": 7,
+      "electricians": 6,
+      "fitness": 8,
+      "florists": 7,
+      "hair-salons": 6,
+      "handyman": 6,
+      "hvac": 4,
+      "jewelry": 7,
+      "lawn-and-landscaping": 5,
+      "locksmiths": 3,
+      "massage": 5,
+      "med-spas": 4,
+      "nails": 6,
+      "natural-skincare": 8,
+      "painting": 6,
+      "pet-grooming": 7,
+      "plumbers": 6,
+      "roofing": 6,
+      "tanning": 7,
+      "tattoo": 5,
+      "towing": 5,
+      "veterinary": 7,
+      "website-design": 7
+    },
+    "pool_position_1_is_hero": false,
+    "category_photo_distinct": [
+      {
+        "page": "/pet-grooming/colorado/brighton/",
+        "vertical": "pet-grooming",
+        "pool_size": 7,
+        "cards": 5,
+        "distinct_photos": 5,
+        "expected_distinct": 5,
+        "pass": true
+      },
+      {
+        "page": "/auto-repair/california/salinas/",
+        "vertical": "auto-repair",
+        "pool_size": 6,
+        "cards": 15,
+        "distinct_photos": 6,
+        "expected_distinct": 6,
+        "pass": true
+      },
+      {
+        "page": "/auto-repair/california/hanford/",
+        "vertical": "auto-repair",
+        "pool_size": 6,
+        "cards": 13,
+        "distinct_photos": 6,
+        "expected_distinct": 6,
+        "pass": true
+      },
+      {
+        "page": "/pet-grooming/california/yuba-city/",
+        "vertical": "pet-grooming",
+        "pool_size": 7,
+        "cards": 13,
+        "distinct_photos": 7,
+        "expected_distinct": 7,
+        "pass": true
+      },
+      {
+        "page": "/auto-repair/california/turlock/",
+        "vertical": "auto-repair",
+        "pool_size": 6,
+        "cards": 12,
+        "distinct_photos": 6,
+        "expected_distinct": 6,
+        "pass": true
+      }
+    ]
   },
   "search_target_check": {
     "index_urls": 4926,

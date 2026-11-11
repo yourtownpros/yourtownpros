@@ -570,9 +570,9 @@ if(A.user&&A.sb){if(wf)wf.hidden=false;if(wp)wp.hidden=true;
 if(wf)wf.addEventListener("submit",function(ev){ev.preventDefault();
 var rating=parseInt(document.getElementById("ytp-rev-rating").value,10);
 var body=document.getElementById("ytp-rev-body").value.trim();
-A.sb.from("reviews").insert({business_slug:slug,user_id:A.user.id,author_display:A.displayName(),rating:rating,body:body,status:"pending"}).then(function(r){
+A.sb.from("reviews").insert({business_slug:slug,user_id:A.user.id,author_display:A.displayName(),rating:rating,body:body,status:"pending"}).select("id").then(function(r){
 if(r&&r.error){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"}
-else{wf.innerHTML="<p>Thanks, your review appears after a quick check.</p>"}}).catch(function(){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"})})}
+else{if(window.ytpThread55)window.ytpThread55("review",r.data&&r.data[0]?r.data[0].id:null);wf.innerHTML="<p>Thanks, your review appears after a quick check.</p>"}}).catch(function(){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"})})}
 else{if(wf)wf.hidden=true;if(wp)wp.hidden=false}
 });
 </script><script>
@@ -759,8 +759,55 @@ mount.appendChild(card);
 }).catch(function(){});
 });
 </script><script>
+/* v5.5: owner messaging hook (see the schema v12 note in
+   the generator: private threads, nothing public). */
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
+ytpOnReady(function(A){
+window.ytpThread55=function(kind,sourceId){
+try{
+if(!A.sb||!A.user)return;
+var slug="lawn-and-landscaping/cruz-landscape-los-angeles-koreatown";
+var src=kind==="review"?{review_id:sourceId}:{match_request_id:sourceId};
+A.sb.from("threads").select("id,business_slug,customer_id").eq("business_slug",slug).eq("customer_id",A.user.id).then(function(r){
+var plan=ytpPlanThread55((r&&!r.error&&r.data)?r.data:[],slug,A.user.id,src);
+if(!plan||plan.action!=="create")return;
+A.sb.from("threads").insert(plan.row).then(function(){}).catch(function(){});
+}).catch(function(){});
+}catch(e){}
+};
+});
+</script><script>
 ytpOnReady(function(A){
 var form=document.getElementById("ytp-match-form");if(!form)return;
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
 form.addEventListener("submit",function(ev){
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value){ev.preventDefault();return}
 if(!A.sb)return;
@@ -782,16 +829,47 @@ preferred_time:(form.querySelector("[name='when']")||{}).value||"",
 notes:notes,
 status:"new"};
 var done=false;function once(){if(!done){done=true;go()}}
+function thread55(mid){
+if(!A.user||!slug)return;
+try{
+A.sb.from("threads").select("id,business_slug,customer_id").eq("business_slug",slug).eq("customer_id",A.user.id).then(function(r){
+var plan=ytpPlanThread55((r&&!r.error&&r.data)?r.data:[],slug,A.user.id,{match_request_id:mid||null});
+if(!plan||plan.action!=="create")return;
+A.sb.from("threads").insert(plan.row).then(function(){}).catch(function(){});
+}).catch(function(){});
+}catch(e){}
+}
 function fb(){
 var rw={business_slug:slug,
 name:row.name,phone:row.phone,vertical:row.vertical,city:row.city,need:row.need,preferred_time:row.preferred_time,
 notes:(notes?notes+" ":"")+"[ytp-src:"+src+"]",
 status:"new"};
-try{A.sb.from("match_requests").insert(rw).then(once).catch(once)}catch(e){once()}}
-try{A.sb.from("match_requests").insert(row).then(function(r){if(r&&r.error)fb();else once()}).catch(function(){fb()})}catch(e){fb()}
+try{A.sb.from("match_requests").insert(rw).select("id").then(function(r){thread55(r&&r.data&&r.data[0]?r.data[0].id:null);once()}).catch(once)}catch(e){once()}}
+try{A.sb.from("match_requests").insert(row).select("id").then(function(r){if(r&&r.error)fb();else{thread55(r.data&&r.data[0]?r.data[0].id:null);once()}}).catch(function(){fb()})}catch(e){fb()}
 setTimeout(once,1500);
 });
 });
+</script><script>
+/* v5.5: GoatCounter action events. */
+(function(){
+function fire(kind){
+try{
+if(!window.goatcounter||!window.goatcounter.count)return;
+var slug=window.location.pathname.replace(/^\/+|\/+$/g,"");
+if(!slug)return;
+window.goatcounter.count({path:"/_events/"+kind+"/"+slug,event:true,title:kind+" click"});
+}catch(e){}
+}
+document.addEventListener("click",function(ev){
+var t=ev.target;
+var a=t&&t.closest?t.closest("a"):null;
+if(!a)return;
+var h=a.getAttribute("href")||"";
+if(h.indexOf("tel:")===0){fire("call");return}
+if(h.indexOf("google.com/maps/dir")!==-1){fire("directions");return}
+if(a.textContent&&a.textContent.indexOf("Visit their website")===0)fire("website");
+});
+})();
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>
 <script>

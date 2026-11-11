@@ -1,5 +1,5 @@
 {
-  "version": "v5.4",
+  "version": "v5.5",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -165,22 +165,22 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 41,
-        "prospects_csvs": 135,
+        "call_block_briefs": 42,
+        "prospects_csvs": 138,
         "site_digests": 23
       },
-      "prospects_rows": 4516,
+      "prospects_rows": 4576,
       "digest_entries": 1480,
-      "pool_phones": 5944,
+      "pool_phones": 5973,
       "digest_linked_listings": 33
     },
     "coverage_unflagged_listings": {
       "map_embed": 869,
       "attribute_chips": 1000,
       "about": 83,
+      "hours": 275,
       "since_year": 961,
-      "website_button": 335,
-      "hours": 142,
+      "website_button": 397,
       "services": 3,
       "address_added": 2
     },
@@ -207,6 +207,15 @@
         "found_in_source": true
       },
       {
+        "business": "Coco Nails",
+        "url": "/nails/coco-nails-broomfield/",
+        "field": "hours",
+        "value": "Mon: 9:30 AM–7 PM; Tue: Closed; Wed: 9:30 AM–7 PM; Thu: 9:30 AM–7 PM; Fri: 9:30 AM–7 PM; Sat: 9:30 AM–6 PM; Sun: 11 AM–5 PM",
+        "source_file": "yourtownpros-job6-enrichment.json",
+        "evidence_matched": "Mon: 9:30 AM–7 PM; Tue: Closed; Wed: 9:30 AM–7 PM; Thu: 9:30 AM–7 PM; Fri: 9:30 AM–7 PM; Sat: 9:30 AM–6 PM; Sun: 11 AM–5 PM",
+        "found_in_source": false
+      },
+      {
         "business": "Lightning Landscaping",
         "url": "/lawn-and-landscaping/lightning-landscaping-aurora/",
         "field": "since",
@@ -225,6 +234,15 @@
         "found_in_source": true
       },
       {
+        "business": "Beaver Tree Service",
+        "url": "/lawn-and-landscaping/beaver-tree-service-aurora/",
+        "field": "hours",
+        "value": "Mon: 8 AM–7 PM; Tue: 8 AM–7 PM; Wed: 8 AM–7 PM; Thu: 8 AM–7 PM; Fri: 8 AM–7 PM; Sat: 8 AM–7 PM; Sun: Closed",
+        "source_file": "yourtownpros-job5-enrichment.json",
+        "evidence_matched": "Mon: 8 AM–7 PM; Tue: 8 AM–7 PM; Wed: 8 AM–7 PM; Thu: 8 AM–7 PM; Fri: 8 AM–7 PM; Sat: 8 AM–7 PM; Sun: Closed",
+        "found_in_source": false
+      },
+      {
         "business": "Final Gear Transmissions",
         "url": "/auto-repair/final-gear-transmissions-westminster/",
         "field": "about",
@@ -232,6 +250,15 @@
         "source_file": "prospects-waveA-trades.csv",
         "evidence_matched": "Joe's transmission shop, loyal repeat customers.",
         "found_in_source": true
+      },
+      {
+        "business": "Galindo Painting LLC",
+        "url": "/painting/galindo-painting-llc-aurora/",
+        "field": "hours",
+        "value": "Mon: 8 AM–8 PM; Tue: 8 AM–8 PM; Wed: 8 AM–8 PM; Thu: 8 AM–8 PM; Fri: 8 AM–8 PM; Sat: 8 AM–2 PM; Sun: Closed",
+        "source_file": "yourtownpros-job5-enrichment.json",
+        "evidence_matched": "Mon: 8 AM–8 PM; Tue: 8 AM–8 PM; Wed: 8 AM–8 PM; Thu: 8 AM–8 PM; Fri: 8 AM–8 PM; Sat: 8 AM–2 PM; Sun: Closed",
+        "found_in_source": false
       },
       {
         "business": "Suite Success Dry Cleaners",
@@ -243,43 +270,16 @@
         "found_in_source": true
       },
       {
-        "business": "Arrcon Electric and Construction",
-        "url": "/electricians/arrcon-electric-and-construction-commerce-city/",
-        "field": "about",
-        "value": "In business since 1991 (BBB).",
-        "source_file": "prospects-wave2A-north.csv",
-        "evidence_matched": "In business since 1991 (BBB).",
-        "found_in_source": true
-      },
-      {
-        "business": "Scorpion Towing and Recovery",
-        "url": "/towing/scorpion-towing-and-recovery-westminster/",
-        "field": "about",
-        "value": "Family run since 2014, motor-club work, low rating.",
-        "source_file": "prospects-waveA-trades.csv",
-        "evidence_matched": "Family run since 2014, motor-club work, low rating.",
-        "found_in_source": true
-      },
-      {
-        "business": "G & H Electric Co",
-        "url": "/electricians/g-and-h-electric-co-wheat-ridge/",
-        "field": "website",
-        "value": "http://ghelectric.org",
-        "source_file": "prospects-wave3A-west.csv",
-        "evidence_matched": "http://ghelectric.org",
-        "found_in_source": true
-      },
-      {
-        "business": "Magic Nails Erie",
-        "url": "/nails/magic-nails-erie-erie/",
-        "field": "about",
-        "value": "Erie Hwy 7 location only - not the Arapahoe Rd Magic Nails which has a site.",
-        "source_file": "prospects-wave4B-boulder.csv",
-        "evidence_matched": "Erie Hwy 7 location only - not the Arapahoe Rd Magic Nails w",
-        "found_in_source": true
+        "business": "P&A Complete Auto Repair",
+        "url": "/auto-repair/panda-complete-auto-repair-aurora/",
+        "field": "hours",
+        "value": "Mon: 8 AM–6 PM; Tue: 8 AM–6 PM; Wed: 8 AM–6 PM; Thu: 8 AM–6 PM; Fri: 8 AM–6 PM; Sat: Closed; Sun: Closed",
+        "source_file": "yourtownpros-job6-enrichment.json",
+        "evidence_matched": "Mon: 8 AM–6 PM; Tue: 8 AM–6 PM; Wed: 8 AM–6 PM; Thu: 8 AM–6 PM; Fri: 8 AM–6 PM; Sat: Closed; Sun: Closed",
+        "found_in_source": false
       }
     ],
-    "enrichment_spot_check_passed": 10,
+    "enrichment_spot_check_passed": 6,
     "dnc": {
       "flag_names": [
         "King Brothers Jewelers",
@@ -378,7 +378,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false
         },
         "King Brothers Jewelers": {
@@ -387,7 +387,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false
         },
         "Floreria Flor de Luna": {
@@ -396,7 +396,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false
         },
         "Mayfair Cleaners": {
@@ -405,7 +405,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         },
@@ -415,7 +415,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         },
@@ -425,7 +425,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         },
@@ -435,7 +435,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         },
@@ -445,7 +445,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         },
@@ -455,7 +455,7 @@
           "match_form_present": true,
           "claim_strip_present": true,
           "attr_chips_present": false,
-          "website_button_present": false,
+          "website_button_present": true,
           "enriched_about_present": false,
           "category_flagged_last": true
         }
@@ -788,13 +788,15 @@
       "collections",
       "edit_suggestions",
       "match_requests",
+      "messages",
       "owner_highlights",
       "photos",
       "profiles",
       "questions",
       "review_votes",
       "reviews",
-      "saved_pros"
+      "saved_pros",
+      "threads"
     ],
     "listing_slug_mismatches": [],
     "listings_missing_save_or_reviews": []
@@ -861,13 +863,13 @@
     "claims_verification": {
       "verify_data_entries": 5063,
       "with_email": 121,
-      "with_website": 350,
-      "with_domain": 350,
+      "with_website": 412,
+      "with_domain": 412,
       "with_facebook": 6,
       "join_stats": {
         "with_email": 121,
-        "with_website": 348,
-        "with_domain": 348,
+        "with_website": 410,
+        "with_domain": 410,
         "with_facebook": 6
       },
       "email_spot_trace_checked": 10,
@@ -941,7 +943,7 @@
         "address",
         "website"
       ],
-      "with_website": 350,
+      "with_website": 412,
       "with_address": 878,
       "website_matches_verify_data": true
     },
@@ -1273,7 +1275,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 7184,
+    "repo_diff_files": 6251,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1488,12 +1490,12 @@
     "verify_data_reconciled": true,
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
-      331,
-      350
+      350,
+      412
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
-    "changed_html_set_size": 7184,
+    "changed_html_set_size": 6251,
     "changed_files_fully_explained": true,
     "file_set_unchanged": true,
     "nonhtml_changed_exact": true,
@@ -1562,8 +1564,8 @@
     "job4_biz_data_reconciled": true,
     "job4_verify_data_domain_delta": true,
     "job4_verify_data_domains_before_after": [
-      331,
-      350
+      350,
+      412
     ],
     "job4_hours_website_page_sets": true,
     "closed_removed_exactly_mcmahan": true,
@@ -1579,17 +1581,20 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 49,
-    "open_now_category_entries_count": 136,
+    "open_now_category_pages_count": 84,
+    "open_now_category_entries_count": 231,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 403,
+      "parsed": 748,
       "all24": 3,
       "unparseable": [
+        "Closed Saturday &amp; Sunday",
+        "Grooming: Mon - Thurs by appointment",
         "Wednesday: 9:00 am"
       ],
       "unknown": [
+        "auto-repair/automotive-concepts-inc-alamosa",
         "auto-repair/poudre-auto-repair-fort-collins",
         "cleaners/super-cleaners-chandler",
         "hvac/balance-point-heating-cooling-and-plumbing-fort-collins",
@@ -1597,19 +1602,101 @@
         "med-spas/pearl-skin-and-body-rejuvenation-colorado-springs",
         "nails/harmony-nail-lounge-colorado-springs",
         "nails/luxury-nails-and-spa-lincoln",
+        "pet-grooming/all-4-paws-alamosa",
         "pet-grooming/wagz-pet-market-and-grooming-fort-collins",
         "plumbers/jt-plumbing-heating-and-air-fort-collins"
       ]
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 133,
+    "open_now_determined_listings": 264,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
     "nonhtml_changed_exact_v54": true,
     "partner_placements_unchanged": true,
     "v50_v51_v52_v53_wiring_intact": true,
+    "standing_invariants_held": true
+  },
+  "v55_checks": {
+    "note": "v5.5: OWNER MESSAGING + GOATCOUNTER ACTION EVENTS + JOB 5 AND JOB 6 DATA MERGES. (1) Messaging (Yelp gap audit row 11): schema v12 (rankly-plan/yourtownpros-supabase-schema-v12.sql, applied separately by the back office, never by this build) adds threads + messages: a thread belongs to one business and one signed-in customer and records the review or match request that opened it; messages are private between the two parties (no moderation status, no public rendering anywhere), RLS admits only the thread's customer and the business's approved owner (the v6 claims test), inserts pin the caller to their own side and role, bodies are 1 to 2000 characters, and the v4 throttle pattern caps threads at 10 per customer per day and messages at 30 per sender per day. Client side, the shared thread logic (THREAD_HELPERS_JS) is fixture-proven in node like the v5.3 helpers: anonymous submitters and category-wide broker rows (business_slug '') never create threads; a signed-in review or scoped match request creates or reuses the customer's thread for that business, storing the new review or match_request id (.select('id') on the inserts; an RLS-invisible insert result still threads, without the id). Owners read and reply in the new /business/ Messages pane; customers in the new /account/ Messages section. Until schema v12 is applied every threads query errors and is swallowed or renders an empty state: the review and the match request themselves always save first. (2) Action events (row 10 completion): listing pages only fire GoatCounter event counts for phone, website and directions clicks under /_events/<kind>/<slug>, a prefix the pageview classification never reads as a listing path; yourtownpros-fetch-gc.py aggregates event rows separately into the snapshot's listing_events map, and the /business/ numbers card gains a What visitors did block rendered from it for the selected business (real counts only, labeled as analytics; absent when the snapshot or the events are). The snapshot shipped here was refreshed before the build (22 human pageviews, window Nov 10-11; its listing_events was aggregated from that same export, which contains no event rows yet, so the map is empty and the block renders nowhere). (3) Job 5 + Job 6 merges (the v5.2 pattern, third and fourth rounds): 45 + 120 keyed rows state 19 + 45 websites and 39 + 107 hours sets; four flagged (do-not-call) rows stay unenriched (La Boheme Salon in Job 5; Mayfair Cleaners, Centennial Ignition Switch and Aspen Park Vet in Job 6), so 18 + 44 websites and 38 + 104 hours sets actually merge into the same enrichment records; the union is now Jobs 2+4+5+6 and the v5.2 reconciliation was revised in place to run over it: every in-force value renders on its listing (Job 6 restates 11 Job 2 slugs' hours in Google's colon form, same times, and wins as the later stated value), verify-data and biz-data reconcile exactly, and the hours and website page sets move by exactly the merged sets. Job 6's seven Facebook rows gain no website (their hours merge); Bark N Wash is temporarily closed (data only, no removal), Silver & Gold Barbers stays listed (closure unconfirmed), and phone mismatch notes are ignored, as enrichment never touches phones. Open Now grows with the new hours listings; the parser fixture reconciles over the full rendered string set exactly, including Job 6's overnight Thursday string at 4 Paws Pet Grooming (an 8 AM open and a 1:30 AM close, past midnight), which the parser's overnight rule resolves to 480 to 1530 and the parser fixture proves as a semantic case. No files are added or removed; totals are unchanged (5,063 listings, 6,914 sitemap URLs, 7,189 HTML files). No price anywhere; no em dashes in shipped copy.",
+    "job5_stats": {
+      "keys_loaded": 45,
+      "rows_keyed": 45,
+      "rows_unkeyed": [],
+      "flagged_skipped": [
+        "hair-salons/la-boheme-salon-and-boutique-alamosa"
+      ],
+      "websites_applied": 18,
+      "websites_overridden": 0,
+      "websites_already_present": 0,
+      "hours_applied": 38,
+      "hours_overridden": 0,
+      "hours_already_present": 0,
+      "facebook_only_rows": 0
+    },
+    "job6_stats": {
+      "keys_loaded": 120,
+      "rows_keyed": 120,
+      "rows_unkeyed": [],
+      "flagged_skipped": [
+        "cleaners/mayfair-cleaners-centennial",
+        "handyman/centennial-ignition-switch-repair-and-replacement-centennial",
+        "veterinary/aspen-park-vet-hospital-conifer"
+      ],
+      "websites_applied": 44,
+      "websites_overridden": 0,
+      "websites_already_present": 0,
+      "hours_applied": 104,
+      "hours_overridden": 9,
+      "hours_already_present": 0,
+      "facebook_only_rows": 7
+    },
+    "job5_enrichment_counts_exact": true,
+    "job5_all_rows_keyed": true,
+    "job5_flagged_rows_skipped_exact": true,
+    "job6_enrichment_counts_exact": true,
+    "job6_all_rows_keyed": true,
+    "job6_flagged_rows_skipped_exact": true,
+    "job6_facebook_rows_gain_no_website": true,
+    "union_merged_values_render_on_listings": true,
+    "union_verify_data_reconciled": true,
+    "union_biz_data_reconciled": true,
+    "union_page_sets_exact": true,
+    "schema12_tables_and_rules": true,
+    "thread_fixture_ok": true,
+    "messaging_scripts_syntax": true,
+    "messaging_hook_on_every_listing": true,
+    "review_insert_calls_thread_hook": true,
+    "match_script_threads_signed_in_scoped_only": true,
+    "account_messages_section": true,
+    "business_messages_pane": true,
+    "events_script_on_every_listing_nowhere_else": true,
+    "events_snapshot_key_shipped": true,
+    "events_fetch_tool_aggregates": true,
+    "actions_block_copy": true,
+    "hours_listings_total": 275,
+    "open_now_determined_listings_v55": 264,
+    "open_now_unknown_listings_v55": [
+      "auto-repair/automotive-concepts-inc-alamosa",
+      "auto-repair/poudre-auto-repair-fort-collins",
+      "cleaners/super-cleaners-chandler",
+      "hvac/balance-point-heating-cooling-and-plumbing-fort-collins",
+      "hvac/hooley-heating-and-air-conditioning-fort-collins",
+      "med-spas/pearl-skin-and-body-rejuvenation-colorado-springs",
+      "nails/harmony-nail-lounge-colorado-springs",
+      "nails/luxury-nails-and-spa-lincoln",
+      "pet-grooming/all-4-paws-alamosa",
+      "pet-grooming/wagz-pet-market-and-grooming-fort-collins",
+      "plumbers/jt-plumbing-heating-and-air-fort-collins"
+    ],
+    "totals_unchanged": true,
+    "structure_matches_v54_after_deltas": true,
+    "changed_files_fully_explained": true,
+    "file_set_matches_v54": true,
+    "nonhtml_changed_exact_v55": true,
+    "partner_placements_unchanged": true,
+    "v50_v51_v52_v53_v54_wiring_intact": true,
     "standing_invariants_held": true
   },
   "partner_placements_detail": [

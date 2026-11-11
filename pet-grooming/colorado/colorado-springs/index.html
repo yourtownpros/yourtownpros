@@ -462,7 +462,7 @@ input,textarea,select{font-size:16px}
 <aside class="cat-map"><div class="mappanel"><div id="ytp-map" class="ytp-map"></div></div></aside></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "2 Groomers in Colorado Springs, CO", "numberOfItems": 2, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Happy Hounds Pet Grooming", "url": "https://yourtownpros.com/pet-grooming/happy-hounds-pet-grooming-colorado-springs/"}, {"@type": "ListItem", "position": 2, "name": "Mountain High Pet Grooming", "url": "https://yourtownpros.com/pet-grooming/mountain-high-pet-grooming-colorado-springs/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Pet Grooming", "item": "https://yourtownpros.com/pet-grooming/"}, {"@type": "ListItem", "position": 3, "name": "Colorado", "item": "https://yourtownpros.com/pet-grooming/colorado/"}, {"@type": "ListItem", "position": 4, "name": "2 Groomers in Colorado Springs, CO"}]}</script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "pet-grooming/happy-hounds-pet-grooming-colorado-springs", "lat": 38.915620369038, "lng": -104.784840890202, "name": "Happy Hounds Pet Grooming", "url": "/pet-grooming/happy-hounds-pet-grooming-colorado-springs/", "img": "https://images.unsplash.com/photo-1591946614720-90a587da4a36?auto=format&fit=crop&w=252&h=168&q=60", "stars": "★★★★⯨ 4.5 · 18 reviews", "feat": false}, {"slug": "pet-grooming/mountain-high-pet-grooming-colorado-springs", "lat": 38.865904463127, "lng": -104.761912074575, "name": "Mountain High Pet Grooming", "url": "/pet-grooming/mountain-high-pet-grooming-colorado-springs/", "img": "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 38.83388, "lng": -104.82136, "city": "Colorado Springs", "state": "CO"}</script><script type="application/json" id="ytp-hours">{"pet-grooming/happy-hounds-pet-grooming-colorado-springs": {"h": ["Mon Closed", "Tue 8:30 AM–5 PM", "Wed 8:30 AM–5 PM", "Thu 8:30 AM–5 PM", "Fri 8:30 AM–5 PM", "Sat 9 AM–5:30 PM", "Sun Closed"], "tz": "America/Denver"}, "pet-grooming/mountain-high-pet-grooming-colorado-springs": {"h": ["Mon Closed", "Tue 12–5 PM", "Wed 9 AM–4 PM", "Thu 12–5 PM", "Fri 9 AM–1 PM", "Sat 9 AM–1 PM", "Sun Closed"], "tz": "America/Denver"}}</script><script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "pet-grooming/happy-hounds-pet-grooming-colorado-springs", "lat": 38.915620369038, "lng": -104.784840890202, "name": "Happy Hounds Pet Grooming", "url": "/pet-grooming/happy-hounds-pet-grooming-colorado-springs/", "img": "https://images.unsplash.com/photo-1591946614720-90a587da4a36?auto=format&fit=crop&w=252&h=168&q=60", "stars": "★★★★⯨ 4.5 · 18 reviews", "feat": false}, {"slug": "pet-grooming/mountain-high-pet-grooming-colorado-springs", "lat": 38.865904463127, "lng": -104.761912074575, "name": "Mountain High Pet Grooming", "url": "/pet-grooming/mountain-high-pet-grooming-colorado-springs/", "img": "https://images.unsplash.com/photo-1450778869180-41d0601e046e?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 38.83388, "lng": -104.82136, "city": "Colorado Springs", "state": "CO"}</script><script type="application/json" id="ytp-hours">{"pet-grooming/happy-hounds-pet-grooming-colorado-springs": {"h": ["Mon Closed", "Tue 8:30 AM–5 PM", "Wed 8:30 AM–5 PM", "Thu 8:30 AM–5 PM", "Fri 8:30 AM–5 PM", "Sat 9 AM–5:30 PM", "Sun Closed"], "tz": "America/Denver"}, "pet-grooming/mountain-high-pet-grooming-colorado-springs": {"h": ["Mon: Closed", "Tue: 12–5 PM", "Wed: 9 AM–4 PM", "Thu: 12–5 PM", "Fri: 9 AM–1 PM", "Sat: 9 AM–1 PM", "Sun: Closed"], "tz": "America/Denver"}}</script><script>
 (function(){
 var list=document.getElementById("results-list");if(!list)return;
 var cards=Array.prototype.slice.call(list.querySelectorAll(".result-card"));
@@ -565,6 +565,21 @@ sync();
 </script><script>
 ytpOnReady(function(A){
 var form=document.getElementById("ytp-match-form");if(!form)return;
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
 form.addEventListener("submit",function(ev){
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value){ev.preventDefault();return}
 if(!A.sb)return;
@@ -586,13 +601,23 @@ preferred_time:(form.querySelector("[name='when']")||{}).value||"",
 notes:notes,
 status:"new"};
 var done=false;function once(){if(!done){done=true;go()}}
+function thread55(mid){
+if(!A.user||!slug)return;
+try{
+A.sb.from("threads").select("id,business_slug,customer_id").eq("business_slug",slug).eq("customer_id",A.user.id).then(function(r){
+var plan=ytpPlanThread55((r&&!r.error&&r.data)?r.data:[],slug,A.user.id,{match_request_id:mid||null});
+if(!plan||plan.action!=="create")return;
+A.sb.from("threads").insert(plan.row).then(function(){}).catch(function(){});
+}).catch(function(){});
+}catch(e){}
+}
 function fb(){
 var rw={business_slug:slug,
 name:row.name,phone:row.phone,vertical:row.vertical,city:row.city,need:row.need,preferred_time:row.preferred_time,
 notes:(notes?notes+" ":"")+"[ytp-src:"+src+"]",
 status:"new"};
-try{A.sb.from("match_requests").insert(rw).then(once).catch(once)}catch(e){once()}}
-try{A.sb.from("match_requests").insert(row).then(function(r){if(r&&r.error)fb();else once()}).catch(function(){fb()})}catch(e){fb()}
+try{A.sb.from("match_requests").insert(rw).select("id").then(function(r){thread55(r&&r.data&&r.data[0]?r.data[0].id:null);once()}).catch(once)}catch(e){once()}}
+try{A.sb.from("match_requests").insert(row).select("id").then(function(r){if(r&&r.error)fb();else{thread55(r.data&&r.data[0]?r.data[0].id:null);once()}}).catch(function(){fb()})}catch(e){fb()}
 setTimeout(once,1500);
 });
 });

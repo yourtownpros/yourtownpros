@@ -458,6 +458,7 @@ input,textarea,select{font-size:16px}
 <button type="button" data-sec="bizinfo">Business information</button>
 <button type="button" data-sec="photos">Photos</button>
 <button type="button" data-sec="requests">Requests <span class="reqbadge" id="biz-req-badge" hidden></span></button>
+<button type="button" data-sec="messages">Messages</button>
 <button type="button" data-sec="reviews">Reviews</button>
 <button type="button" data-sec="upgrades">Page upgrades</button>
 </nav>
@@ -478,6 +479,7 @@ input,textarea,select{font-size:16px}
 <h3>Your numbers</h3>
 <p>Visitor and lead counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>
 </div>
+<div id="biz-actions55"></div>
 </section>
 <section class="bizsec" id="sec-bizinfo" hidden>
 <h2>Business information</h2>
@@ -539,6 +541,11 @@ input,textarea,select{font-size:16px}
 <h2>Requests</h2>
 <p class="listed">These are customer requests that arrived through your own listing page or from your card on a results page, plus any Featured priority requests routed to your business. Requests sent from a town and trade page in general come to us as the broker, so they are not listed here. The count of new requests is kept on this device, so it can differ between your phone and your computer.</p>
 <div id="biz-requests"><p class="listed">Loading...</p></div>
+</section>
+<section class="bizsec" id="sec-messages" hidden>
+<h2>Messages</h2>
+<p class="listed">Private conversations with signed-in customers who wrote a review or requested a match on your listing. Only you and the customer can read a thread, and nothing here appears on your public listing.</p>
+<div id="biz-messages"><p class="listed">Loading...</p></div>
 </section>
 <section class="bizsec" id="sec-reviews" hidden>
 <h2>Reviews</h2>
@@ -654,7 +661,7 @@ business's requests seen, which clears the badge and the
 Overview reminder. A separate listener, so the v3.9
 section wiring above stays untouched. */
 for(var n50=0;n50<navBtns.length;n50++){(function(b){if(b.getAttribute("data-sec")==="requests")b.addEventListener("click",function(){markReqSeen()})})(navBtns[n50])}
-function startSection(){var h=(location.hash||"").replace("#","");return {overview:1,bizinfo:1,photos:1,requests:1,reviews:1,upgrades:1}[h]?h:"overview"}
+function startSection(){var h=(location.hash||"").replace("#","");return {overview:1,bizinfo:1,photos:1,requests:1,reviews:1,upgrades:1,messages:1}[h]?h:"overview"}
 function showNoOwner(claims){
 if(main)main.hidden=true;if(noown)noown.hidden=false;
 var box=$("biz-claim-status");if(!box)return;
@@ -1032,6 +1039,87 @@ var pickWrap=$("biz-pickwrap"),pick=$("biz-pick");
 if(bizList.length>1&&pickWrap&&pick){pickWrap.hidden=false;pick.innerHTML=bizList.map(function(b){return '<option value="'+esc(b.slug)+'">'+esc(b.name)+"</option>"}).join("");pick.addEventListener("change",function(){cur=pick.value;loadBiz(cur)})}
 fetch("/biz-data.json").then(function(r2){return r2.json()}).then(function(d){bizData=d||{}}).catch(function(){}).then(function(){
 selectSection(startSection());renderOverview();loadBiz(cur)})}).catch(function(){showNoOwner([])});
+});
+</script><script>
+/* v5.5: business Messages pane + What visitors did. */
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
+ytpOnReady(function(A){
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+var actBox=document.getElementById("biz-actions55");
+var gcEv=null;
+function currentSlug(){var sel=document.getElementById("biz-pick");return sel?sel.value:""}
+function renderActions(){
+if(!actBox)return;
+var slug=currentSlug();
+var ev=(gcEv&&slug)?gcEv[slug]:null;
+if(!ev||!(ev.call||ev.website||ev.directions)){actBox.innerHTML="";return}
+actBox.innerHTML='<div class="card"><h3>What visitors did</h3><p>Called from your listing: <strong>'+(ev.call||0)+'</strong><br>Visited your website: <strong>'+(ev.website||0)+'</strong><br>Asked for directions: <strong>'+(ev.directions||0)+'</strong></p><p class="listed">Counts come from YourTownPros analytics, never estimates.</p></div>';
+}
+if(actBox){
+fetch("/gc-snapshot.json").then(function(r){return r.json()}).then(function(d){gcEv=(d&&d.listing_events)?d.listing_events:null;renderActions()}).catch(function(){});
+var pick=document.getElementById("biz-pick");
+if(pick)pick.addEventListener("change",renderActions);
+document.querySelectorAll(".biznav button").forEach(function(b){b.addEventListener("click",function(){setTimeout(renderActions,60)})});
+setTimeout(renderActions,1200);
+}
+var msgBox=document.getElementById("biz-messages");
+if(!msgBox)return;
+if(!A.sb){msgBox.innerHTML='<p class="listed">Messages are unavailable right now.</p>';return}
+if(!A.user){msgBox.innerHTML='<p class="listed">Sign in to see customer messages.</p>';return}
+var names={};
+function renderThread(t){
+var wrap=document.createElement("div");wrap.className="card";
+wrap.innerHTML='<h3>'+esc(names[t.business_slug]||t.business_slug)+'</h3><div class="msglist"><p class="listed">Loading...</p></div><form class="acctform msgform"><label>Your reply</label><textarea rows="3" maxlength="2000" required></textarea><button type="submit">Send reply</button><p class="listed msgnote"></p></form>';
+msgBox.appendChild(wrap);
+var list=wrap.querySelector(".msglist");
+function loadMsgs(){
+A.sb.from("messages").select("sender_role,body,created_at").eq("thread_id",t.id).order("created_at",{ascending:true}).then(function(r){
+var ms=(r&&!r.error&&r.data)?r.data:[];
+if(!ms.length){list.innerHTML='<p class="listed">No messages yet. Say hello below.</p>';return}
+list.innerHTML=ms.map(function(m){return '<p><strong>'+(m.sender_role==="owner"?"You":"Customer")+'</strong> <span class="listed">'+esc(String(m.created_at||"").slice(0,10))+'</span><br>'+esc(m.body)+'</p>'}).join("");
+}).catch(function(){list.innerHTML='<p class="listed">Could not load messages.</p>'});
+}
+loadMsgs();
+var form=wrap.querySelector(".msgform");
+form.addEventListener("submit",function(ev){
+ev.preventDefault();
+var ta=form.querySelector("textarea");
+var body=ytpValidMessage55(ta.value);
+var note=form.querySelector(".msgnote");
+if(!body){if(note)note.textContent="Write a message first (up to 2000 characters).";return}
+A.sb.from("messages").insert({thread_id:t.id,sender_id:A.user.id,sender_role:"owner",body:body}).then(function(r){
+if(r&&r.error){if(note)note.textContent="Could not send. Please try again.";return}
+ta.value="";if(note)note.textContent="Sent.";loadMsgs();
+}).catch(function(){if(note)note.textContent="Could not send. Please try again."});
+});
+}
+function loadOwner(){
+A.sb.from("claims").select("business_slug").eq("user_id",A.user.id).eq("status","approved").then(function(r){
+var slugs=((r&&!r.error&&r.data)?r.data:[]).map(function(x){return x.business_slug});
+if(!slugs.length){msgBox.innerHTML='<p class="listed">No claimed business yet.</p>';return}
+A.sb.from("threads").select("id,business_slug,created_at").in("business_slug",slugs).order("created_at",{ascending:false}).then(function(r2){
+var threads=(r2&&!r2.error&&r2.data)?r2.data:[];
+if(!threads.length){msgBox.innerHTML='<p class="listed">No customer messages yet. When a signed-in customer writes a review or requests a match on your listing, the conversation appears here.</p>';return}
+msgBox.innerHTML="";
+threads.forEach(renderThread);
+}).catch(function(){msgBox.innerHTML='<p class="listed">No customer messages yet.</p>'});
+}).catch(function(){msgBox.innerHTML='<p class="listed">Could not load messages.</p>'});
+}
+fetch("/biz-data.json").then(function(r){return r.json()}).then(function(d){Object.keys(d||{}).forEach(function(k){names[k]=(d[k]&&d[k].name)||k});loadOwner()}).catch(function(){loadOwner()});
 });
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>

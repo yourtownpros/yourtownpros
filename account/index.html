@@ -454,7 +454,7 @@ input,textarea,select{font-size:16px}
 <div id="acct-claims"><p class="listed">Loading...</p></div>
 <h2 id="saved">Saved pros</h2>
 <div id="acct-saved" class="grid"><p class="listed">Loading...</p></div><div id="acct-colwrap"><h2>Collections</h2><div id="acct-collections"><p class="listed">Loading...</p></div><div class="acctform"><label for="col-new-name">New collection</label><input type="text" id="col-new-name" placeholder="Collection name"><label class="pptoggle"><input type="checkbox" id="col-new-public"> Public: anyone with your profile link can see it</label><button type="button" id="col-new-btn">Create collection</button> <span id="col-new-msg" class="listed"></span></div></div>
-<h2>My reviews</h2>
+<div id="acct-msgwrap"><h2>Messages</h2><div id="acct-messages"><p class="listed">Loading...</p></div></div><h2>My reviews</h2>
 <div id="acct-reviews"><p class="listed">Loading...</p></div>
 <h2>My businesses</h2>
 <div id="acct-biz"><p class="listed">Loading...</p></div>
@@ -644,6 +644,65 @@ A.sb.from("profiles").update({is_public:pub,public_slug:slug?slug:null}).eq("id"
 if(r&&r.error){var e=String((r.error&&r.error.message)||"");if((r.error&&r.error.code==="23505")||/duplicate|unique/i.test(e)){fail("That link name is taken. Try another.")}else{fail("Could not save. Please try again.")}return}
 mySlug=slug;myPublic=pub;if(ppMsg)ppMsg.textContent="Saved.";renderPpView();renderCols()}).catch(function(){fail("Could not save. Please try again.")})});
 loadCols();
+});
+</script><script>
+/* v5.5: account Messages (private owner messaging). */
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
+ytpOnReady(function(A){
+var box=document.getElementById("acct-messages");if(!box)return;
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+if(!A.sb){box.innerHTML='<p class="listed">Messages are unavailable right now.</p>';return}
+if(!A.user){box.innerHTML='<p class="listed">Sign in to see your messages.</p>';return}
+var names={};
+function renderThread(t){
+var wrap=document.createElement("div");wrap.className="card";
+wrap.innerHTML='<h3>'+esc(names[t.business_slug]||t.business_slug)+'</h3><div class="msglist"><p class="listed">Loading...</p></div><form class="acctform msgform"><label>Your reply</label><textarea rows="3" maxlength="2000" required></textarea><button type="submit">Send reply</button><p class="listed msgnote"></p></form>';
+box.appendChild(wrap);
+var list=wrap.querySelector(".msglist");
+function loadMsgs(){
+A.sb.from("messages").select("sender_role,body,created_at").eq("thread_id",t.id).order("created_at",{ascending:true}).then(function(r){
+var ms=(r&&!r.error&&r.data)?r.data:[];
+if(!ms.length){list.innerHTML='<p class="listed">No messages yet. Say hello below.</p>';return}
+list.innerHTML=ms.map(function(m){return '<p><strong>'+(m.sender_role==="owner"?"Business":"You")+'</strong> <span class="listed">'+esc(String(m.created_at||"").slice(0,10))+'</span><br>'+esc(m.body)+'</p>'}).join("");
+}).catch(function(){list.innerHTML='<p class="listed">Could not load messages.</p>'});
+}
+loadMsgs();
+var form=wrap.querySelector(".msgform");
+form.addEventListener("submit",function(ev){
+ev.preventDefault();
+var ta=form.querySelector("textarea");
+var body=ytpValidMessage55(ta.value);
+var note=form.querySelector(".msgnote");
+if(!body){if(note)note.textContent="Write a message first (up to 2000 characters).";return}
+A.sb.from("messages").insert({thread_id:t.id,sender_id:A.user.id,sender_role:"customer",body:body}).then(function(r){
+if(r&&r.error){if(note)note.textContent="Could not send. Please try again.";return}
+ta.value="";if(note)note.textContent="Sent.";loadMsgs();
+}).catch(function(){if(note)note.textContent="Could not send. Please try again."});
+});
+}
+function loadThreads(){
+A.sb.from("threads").select("id,business_slug,created_at").eq("customer_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
+var threads=(r&&!r.error&&r.data)?r.data:[];
+if(!threads.length){box.innerHTML='<p class="listed">No messages yet. When you write a review or request a match while signed in, the business can reply to you here.</p>';return}
+box.innerHTML="";
+threads.forEach(renderThread);
+}).catch(function(){box.innerHTML='<p class="listed">No messages yet.</p>'});
+}
+fetch("/biz-data.json").then(function(r){return r.json()}).then(function(d){Object.keys(d||{}).forEach(function(k){names[k]=(d[k]&&d[k].name)||k});loadThreads()}).catch(function(){loadThreads()});
 });
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>

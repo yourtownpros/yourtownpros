@@ -462,7 +462,7 @@ input,textarea,select{font-size:16px}
 <aside class="cat-map"><div class="mappanel"><div id="ytp-map" class="ytp-map"></div></div></aside></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "2 HVAC Companies in Colorado Springs, CO", "numberOfItems": 2, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Falling Star HVAC & Plumbing", "url": "https://yourtownpros.com/hvac/falling-star-hvac-and-plumbing-colorado-springs/"}, {"@type": "ListItem", "position": 2, "name": "Mechanical Concepts Inc", "url": "https://yourtownpros.com/hvac/mechanical-concepts-inc-colorado-springs/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "HVAC", "item": "https://yourtownpros.com/hvac/"}, {"@type": "ListItem", "position": 3, "name": "Colorado", "item": "https://yourtownpros.com/hvac/colorado/"}, {"@type": "ListItem", "position": 4, "name": "2 HVAC Companies in Colorado Springs, CO"}]}</script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "hvac/falling-star-hvac-and-plumbing-colorado-springs", "lat": 38.835683174383, "lng": -104.739346191311, "name": "Falling Star HVAC & Plumbing", "url": "/hvac/falling-star-hvac-and-plumbing-colorado-springs/", "img": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}, {"slug": "hvac/mechanical-concepts-inc-colorado-springs", "lat": 38.835429375832, "lng": -104.840619010008, "name": "Mechanical Concepts Inc", "url": "/hvac/mechanical-concepts-inc-colorado-springs/", "img": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 38.83388, "lng": -104.82136, "city": "Colorado Springs", "state": "CO"}</script><script type="application/json" id="ytp-hours">{"hvac/falling-star-hvac-and-plumbing-colorado-springs": {"h": ["Mon 8 AM–5 PM", "Tue 8 AM–5 PM", "Wed 8 AM–5 PM", "Thu 8 AM–5 PM", "Fri 8 AM–5 PM", "Sat Closed", "Sun Closed"], "tz": "America/Denver"}, "hvac/mechanical-concepts-inc-colorado-springs": {"h": ["Mon 7 AM–5 PM", "Tue 7 AM–5 PM", "Wed 7 AM–5 PM", "Thu 7 AM–5 PM", "Fri 7 AM–5 PM", "Sat 7 AM–5 PM", "Sun Closed"], "tz": "America/Denver"}}</script><script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "hvac/falling-star-hvac-and-plumbing-colorado-springs", "lat": 38.835683174383, "lng": -104.739346191311, "name": "Falling Star HVAC & Plumbing", "url": "/hvac/falling-star-hvac-and-plumbing-colorado-springs/", "img": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}, {"slug": "hvac/mechanical-concepts-inc-colorado-springs", "lat": 38.835429375832, "lng": -104.840619010008, "name": "Mechanical Concepts Inc", "url": "/hvac/mechanical-concepts-inc-colorado-springs/", "img": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 38.83388, "lng": -104.82136, "city": "Colorado Springs", "state": "CO"}</script><script type="application/json" id="ytp-hours">{"hvac/falling-star-hvac-and-plumbing-colorado-springs": {"h": ["Mon 8 AM–5 PM", "Tue 8 AM–5 PM", "Wed 8 AM–5 PM", "Thu 8 AM–5 PM", "Fri 8 AM–5 PM", "Sat Closed", "Sun Closed"], "tz": "America/Denver"}, "hvac/mechanical-concepts-inc-colorado-springs": {"h": ["Mon: 7 AM–5 PM", "Tue: 7 AM–5 PM", "Wed: 7 AM–5 PM", "Thu: 7 AM–5 PM", "Fri: 7 AM–5 PM", "Sat: 7 AM–5 PM", "Sun: Closed"], "tz": "America/Denver"}}</script><script>
 (function(){
 var list=document.getElementById("results-list");if(!list)return;
 var cards=Array.prototype.slice.call(list.querySelectorAll(".result-card"));
@@ -565,6 +565,21 @@ sync();
 </script><script>
 ytpOnReady(function(A){
 var form=document.getElementById("ytp-match-form");if(!form)return;
+function ytpThreadKey55(businessSlug,customerId){
+if(!businessSlug||!customerId)return null;
+return businessSlug+"|"+customerId}
+function ytpPlanThread55(existing,businessSlug,customerId,source){
+if(!businessSlug||!customerId)return null;
+var key=ytpThreadKey55(businessSlug,customerId);
+var rows=existing||[];
+for(var i=0;i<rows.length;i++){
+if(ytpThreadKey55(rows[i].business_slug,rows[i].customer_id)===key)
+return {action:"reuse",thread:rows[i]}}
+var src=source||{};
+return {action:"create",row:{business_slug:businessSlug,customer_id:customerId,review_id:src.review_id||null,match_request_id:src.match_request_id||null}}}
+function ytpValidMessage55(body){
+var b=String(body==null?"":body).trim();
+return b.length>=1&&b.length<=2000?b:null}
 form.addEventListener("submit",function(ev){
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value){ev.preventDefault();return}
 if(!A.sb)return;
@@ -586,13 +601,23 @@ preferred_time:(form.querySelector("[name='when']")||{}).value||"",
 notes:notes,
 status:"new"};
 var done=false;function once(){if(!done){done=true;go()}}
+function thread55(mid){
+if(!A.user||!slug)return;
+try{
+A.sb.from("threads").select("id,business_slug,customer_id").eq("business_slug",slug).eq("customer_id",A.user.id).then(function(r){
+var plan=ytpPlanThread55((r&&!r.error&&r.data)?r.data:[],slug,A.user.id,{match_request_id:mid||null});
+if(!plan||plan.action!=="create")return;
+A.sb.from("threads").insert(plan.row).then(function(){}).catch(function(){});
+}).catch(function(){});
+}catch(e){}
+}
 function fb(){
 var rw={business_slug:slug,
 name:row.name,phone:row.phone,vertical:row.vertical,city:row.city,need:row.need,preferred_time:row.preferred_time,
 notes:(notes?notes+" ":"")+"[ytp-src:"+src+"]",
 status:"new"};
-try{A.sb.from("match_requests").insert(rw).then(once).catch(once)}catch(e){once()}}
-try{A.sb.from("match_requests").insert(row).then(function(r){if(r&&r.error)fb();else once()}).catch(function(){fb()})}catch(e){fb()}
+try{A.sb.from("match_requests").insert(rw).select("id").then(function(r){thread55(r&&r.data&&r.data[0]?r.data[0].id:null);once()}).catch(once)}catch(e){once()}}
+try{A.sb.from("match_requests").insert(row).select("id").then(function(r){if(r&&r.error)fb();else{thread55(r.data&&r.data[0]?r.data[0].id:null);once()}}).catch(function(){fb()})}catch(e){fb()}
 setTimeout(once,1500);
 });
 });

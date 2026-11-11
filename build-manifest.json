@@ -1,5 +1,5 @@
 {
-  "version": "v5.1",
+  "version": "v5.2",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -165,10 +165,10 @@
       "source_files": {
         "research_notes": 58,
         "call_block_briefs": 38,
-        "prospects_csvs": 126,
+        "prospects_csvs": 129,
         "site_digests": 23
       },
-      "prospects_rows": 4338,
+      "prospects_rows": 4386,
       "digest_entries": 1480,
       "pool_phones": 5807,
       "digest_linked_listings": 33
@@ -178,9 +178,9 @@
       "attribute_chips": 1000,
       "about": 83,
       "since_year": 961,
-      "website_button": 313,
+      "website_button": 316,
       "services": 3,
-      "hours": 2,
+      "hours": 109,
       "address_added": 2
     },
     "total_listings": 5062
@@ -852,13 +852,13 @@
     "claims_verification": {
       "verify_data_entries": 5064,
       "with_email": 121,
-      "with_website": 328,
-      "with_domain": 328,
+      "with_website": 331,
+      "with_domain": 331,
       "with_facebook": 6,
       "join_stats": {
         "with_email": 121,
-        "with_website": 326,
-        "with_domain": 326,
+        "with_website": 329,
+        "with_domain": 329,
         "with_facebook": 6
       },
       "email_spot_trace_checked": 10,
@@ -932,7 +932,7 @@
         "address",
         "website"
       ],
-      "with_website": 328,
+      "with_website": 331,
       "with_address": 879,
       "website_matches_verify_data": true
     },
@@ -1264,7 +1264,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 7155,
+    "repo_diff_files": 112,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1453,6 +1453,45 @@
     "placements_reconciled": true,
     "standing_invariants_held": true,
     "css_v51_present": true
+  },
+  "v52_checks": {
+    "note": "v5.2: DATA REFRESH in the v4.6 pattern (same businesses, same pages; totals must not move). Claude's verified Job 2 enrichment for the 124 newest Colorado listings merges into the enrichment records (prep: prep-yourtownpros-job2-enrichment.py from the master CSV, under the parent verification rules of 2026-11-11): 91 real websites (the 2 Facebook-only rows state no website and gain none anywhere; their hours still merge) and 107 hours sets, hours text verbatim including the Wednesday holiday gaps. A stated value wins over an older enrichment value for these 124 (overrides counted in the stats); a blank never erases. Surfaces that move, all from the one record: the listing's Visit paragraph and JSON-LD sameAs, the listing Hours block, the card data-web flag for newly-webbed businesses and the category filter rail's Has-a-website count derived from that flag, verify-data.json (website/domain) and biz-data.json (website). Category cards print no website link for regular businesses (only the data-web filter flag exists there), so cards are otherwise left alone, as the task allows. JT Plumbing keeps (970) 818-1613: phones are not part of this merge and the master states none. The structural rule is the enumerated changed-file set plus _norm52 content equality inside it, the data-build form of the standing comparison. CHECK REVISION (documented pattern, in place): the v4.8 structural comparison now runs both sides through _norm52 too, so the older byte-equality chain keeps asserting that nothing undescribed moved; the v4.9 desktop-header check strips V51_CSS from both sides (the repo now holds v5.1), and v5.1's added_files_exact accepts the empty added set that a v5.1 repo implies (v5.2 adds no files). build-manifest.json also changes, by construction; it is written after these checks run, so at check time it is the one file the repo holds that the fresh tree lacks, and the file-set check allows exactly that absence.",
+    "job2_stats": {
+      "keys_loaded": 124,
+      "rows_keyed": 124,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "websites_applied": 50,
+      "websites_overridden": 47,
+      "websites_already_present": 41,
+      "hours_applied": 107,
+      "hours_overridden": 0,
+      "hours_already_present": 0,
+      "facebook_only_rows": 2
+    },
+    "enrichment_counts_exact": true,
+    "all_rows_keyed": true,
+    "no_flagged_rows_merged": true,
+    "merged_values_render_on_listings": true,
+    "facebook_rows_gain_no_website": true,
+    "hours_pages_move_by_merged_set": true,
+    "website_pages_move_by_merged_set": true,
+    "verify_data_reconciled": true,
+    "verify_data_domain_delta": true,
+    "verify_data_domains_before_after": [
+      328,
+      331
+    ],
+    "biz_data_reconciled": true,
+    "changed_html_set_exact": true,
+    "changed_html_set_size": 112,
+    "changed_files_fully_explained": true,
+    "file_set_unchanged": true,
+    "nonhtml_changed_exact": true,
+    "totals_unchanged": true,
+    "partner_placements_unchanged": true,
+    "v50_v51_wiring_intact": true,
+    "standing_invariants_held": true
   },
   "partner_placements_detail": [
     {

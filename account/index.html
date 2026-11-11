@@ -424,6 +424,17 @@ input,textarea,select{font-size:16px}
 .hlchip{background:#eef4fb;border:1px solid #cfdff2;color:var(--ink);border-radius:999px;padding:5px 12px;font-size:.86rem;font-weight:600}
 .hlgrid{display:grid;gap:8px;margin:10px 0}
 .hlgrid label{display:flex;gap:8px;align-items:center;font-weight:600}
+
+.colitem{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:6px 0;border-top:1px solid #eee7d8}
+.colitem .meta{margin:0}
+.coladd{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.coladd select{padding:7px 9px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:14px;color:#1c2430}
+.coltools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.coltools input[type="text"]{padding:8px 10px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.pptoggle{display:flex;gap:8px;align-items:center;font-weight:600;margin:10px 0}
+.ppurl{color:#43586a;font-size:14px}
+.memhead{display:flex;gap:14px;align-items:center;margin:6px 0 4px}
+.memavatar{width:56px;height:56px;border-radius:50%;background:#0e7a5f;color:#fff;font-weight:800;font-size:24px;display:flex;align-items:center;justify-content:center;flex:none}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -433,11 +444,11 @@ input,textarea,select{font-size:16px}
 <div id="ytp-acct-main" hidden>
 <h2>Profile</h2>
 <p>Signed in as <strong id="acct-name"></strong></p>
-<div class="acctform"><label for="acct-city">Your city</label><input type="text" id="acct-city"><button type="button" id="acct-city-save">Save city</button> <span id="acct-city-msg" class="listed"></span></div>
+<div class="acctform"><label for="acct-city">Your city</label><input type="text" id="acct-city"><button type="button" id="acct-city-save">Save city</button> <span id="acct-city-msg" class="listed"></span></div><div id="acct-pubwrap"><h2>Public profile</h2><p class="listed">Your public profile shows your name as first name and last initial, your city, your approved reviews, and any collections you mark public. Nothing else is shown, and you can turn it off any time.</p><div class="acctform"><label for="pp-slug">Your profile link name</label><span class="ppurl">yourtownpros.com/members/?u=</span><input type="text" id="pp-slug" placeholder="e.g. rob-s"><label class="pptoggle"><input type="checkbox" id="pp-public"> Make my profile public</label><button type="button" id="pp-save">Save public profile</button> <span id="pp-msg" class="listed"></span></div><p id="pp-viewrow" hidden><a id="pp-view" href="/members/">View your public profile</a></p></div>
 <h2>My claims</h2>
 <div id="acct-claims"><p class="listed">Loading...</p></div>
 <h2 id="saved">Saved pros</h2>
-<div id="acct-saved" class="grid"><p class="listed">Loading...</p></div>
+<div id="acct-saved" class="grid"><p class="listed">Loading...</p></div><div id="acct-colwrap"><h2>Collections</h2><div id="acct-collections"><p class="listed">Loading...</p></div><div class="acctform"><label for="col-new-name">New collection</label><input type="text" id="col-new-name" placeholder="Collection name"><label class="pptoggle"><input type="checkbox" id="col-new-public"> Public: anyone with your profile link can see it</label><button type="button" id="col-new-btn">Create collection</button> <span id="col-new-msg" class="listed"></span></div></div>
 <h2>My reviews</h2>
 <div id="acct-reviews"><p class="listed">Loading...</p></div>
 <h2>My businesses</h2>
@@ -488,6 +499,146 @@ var rows=(r&&r.data)||[];var box=document.getElementById("acct-biz");
 if(!rows.length){box.innerHTML='<p class="listed">When a claim is approved, your business appears here with a link to its dashboard.</p>';return}
 box.innerHTML=rows.map(function(c){return '<div class="card"><h3>'+esc(c.business_name)+'</h3><p class="listed">Listing updates and review responses live in the business dashboard.</p><p style="margin:8px 0 2px"><a class="claimbtn" href="/business/">Open the business dashboard</a></p></div>'}).join("")}).catch(function(){});
 });
+});
+</script><script>
+/* v5.3: collections and public-profile settings on
+/account/. A separate script on purpose: ACCOUNT_SCRIPT
+stays byte-identical to every earlier build, and this
+script adds its two sections (their static shells ride
+inside #ytp-acct-main as #acct-pubwrap and
+#acct-colwrap) entirely through its own Supabase calls.
+Collections run against the collections and
+collection_items tables (schema v11): the owner reads
+and writes only their own rows under RLS, a collection
+is private unless its public flag is set, and a
+collection name is user text, escaped at every render.
+The Saved pros grid renders from ACCOUNT_SCRIPT's own
+fetch, so the per-card add-to-collection control is
+injected by watching that grid (MutationObserver) and
+again whenever the collections reload. Until schema
+v11 is applied the queries error, the collections
+section renders its empty state, and the profile save
+fails plainly; nothing shows a success it did not get.
+*/
+function ytpShortName(name){
+var p=String(name==null?"":name).trim().split(/\s+/).filter(function(x){return x});
+if(!p.length)return "";
+return p.length>1?p[0]+" "+p[1].charAt(0)+".":p[0]}
+function ytpValidSlug(s){
+s=String(s==null?"":s);
+if(!/^[a-z0-9][a-z0-9-]{2,29}$/.test(s))return false;
+var reserved=["account","business","claim","claimed","admin","members","member","api","login","logout","signup","settings","add-business","for-business","match-thanks","privacy","terms","search","support","help","about","dashboard","saved","reviews"];
+return reserved.indexOf(s)<0}
+ytpOnReady(function(A){
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+if(!A||!A.user||!A.sb)return;
+var bizIdx=null,cols=[],colItems={},savedSlugs=[],mySlug="",myPublic=false;
+function urlFor(slug){return "/"+slug+"/"}
+function bizName(slug){var e=bizIdx&&bizIdx[slug];return e?e.name:slug}
+function bizWhere(slug){var e=bizIdx&&bizIdx[slug];return e?(e.city+", "+e.state):""}
+fetch("/biz-data.json").then(function(r){return r.json()}).then(function(d){bizIdx=d||{};renderCols()}).catch(function(){});
+var colBox=document.getElementById("acct-collections");
+function shareHtml(c){
+if(!c.is_public)return "";
+if(myPublic&&mySlug)return '<div class="meta">Share link: <a href="/members/?u='+esc(mySlug)+"#collection-"+c.id+'">yourtownpros.com/members/?u='+esc(mySlug)+"</a></div>";
+return '<div class="meta">Turn on your public profile above to get a share link for this collection.</div>'}
+function renderCols(){
+if(!colBox)return;
+if(!cols.length){colBox.innerHTML='<p class="listed">No collections yet. Create one below, then add your saved pros to it.</p>';return}
+colBox.innerHTML=cols.map(function(c){
+var items=colItems[c.id]||[];
+var h='<div class="card" data-colcard="'+c.id+'"><h3>'+esc(c.name)+'</h3><div class="meta">'+items.length+(items.length===1?" pro":" pros")+" \u00b7 "+(c.is_public?"Public":"Private")+"</div>"+shareHtml(c);
+h+=items.map(function(slug){return '<div class="colitem"><a href="'+urlFor(slug)+'">'+esc(bizName(slug))+'</a><span class="meta">'+esc(bizWhere(slug))+'</span><button type="button" class="savebtn" data-colremove="'+esc(slug)+'">Remove</button></div>'}).join("");
+var avail=savedSlugs.filter(function(s){return items.indexOf(s)<0});
+if(avail.length){h+='<div class="coladd"><select data-colsel aria-label="Saved pro to add">'+avail.map(function(s){return '<option value="'+esc(s)+'">'+esc(bizName(s))+"</option>"}).join("")+'</select><button type="button" class="savebtn" data-coladd>Add saved pro</button></div>'}
+h+='<div class="coltools"><input type="text" data-colname value="'+esc(c.name)+'" aria-label="Collection name"><button type="button" class="savebtn" data-colrename>Save name</button></div>';
+h+='<label class="pptoggle"><input type="checkbox" data-colpub'+(c.is_public?" checked":"")+"> Public: anyone with your profile link can see this collection</label>";
+h+='<div class="coltools"><button type="button" class="savebtn" data-coldel>Delete collection</button> <span class="listed" data-colmsg></span></div></div>';
+return h}).join("")}
+function loadCols(){
+A.sb.from("collections").select("id,name,is_public,created_at").eq("user_id",A.user.id).order("created_at",{ascending:true}).then(function(r){
+if(r&&r.error){cols=[];colItems={};renderCols();enhanceSaved();return}
+cols=(r&&r.data)||[];
+if(!cols.length){colItems={};renderCols();enhanceSaved();return}
+var ids=cols.map(function(c){return c.id});
+A.sb.from("collection_items").select("collection_id,business_slug,created_at").in("collection_id",ids).order("created_at",{ascending:true}).then(function(r2){
+colItems={};
+((r2&&!r2.error&&r2.data)||[]).forEach(function(it){(colItems[it.collection_id]=colItems[it.collection_id]||[]).push(it.business_slug)});
+renderCols();enhanceSaved()}).catch(function(){renderCols();enhanceSaved()})}).catch(function(){cols=[];colItems={};renderCols();enhanceSaved()})}
+function colCard(t){return t&&t.closest?t.closest("[data-colcard]"):null}
+function colId(card){return card?Number(card.getAttribute("data-colcard")):0}
+function colMsg(card,text){if(!card)return;var m=card.querySelector("[data-colmsg]");if(m)m.textContent=text}
+if(colBox){
+colBox.addEventListener("click",function(ev){
+var t=ev.target;if(!t||!t.getAttribute)return;
+var card=colCard(t),cid=colId(card);if(!cid)return;
+if(t.hasAttribute("data-colremove")){
+var slug=t.getAttribute("data-colremove");
+A.sb.from("collection_items").delete().eq("collection_id",cid).eq("business_slug",slug).then(function(r){if(r&&r.error){colMsg(card,"Could not remove. Please try again.");return}loadCols()}).catch(function(){colMsg(card,"Could not remove. Please try again.")});
+return}
+if(t.hasAttribute("data-coladd")){
+var sel=card.querySelector("[data-colsel]");var addSlug=sel?sel.value:"";
+if(!addSlug)return;
+A.sb.from("collection_items").insert({collection_id:cid,business_slug:addSlug}).then(function(r){if(r&&r.error){colMsg(card,"That pro is already in this collection.");return}loadCols()}).catch(function(){colMsg(card,"Could not add. Please try again.")});
+return}
+if(t.hasAttribute("data-colrename")){
+var inp=card.querySelector("[data-colname]");var name=inp?inp.value.trim():"";
+if(!name){colMsg(card,"Give the collection a name first.");return}
+A.sb.from("collections").update({name:name}).eq("id",cid).eq("user_id",A.user.id).then(function(r){if(r&&r.error){colMsg(card,"Could not save. Please try again.");return}loadCols()}).catch(function(){colMsg(card,"Could not save. Please try again.")});
+return}
+if(t.hasAttribute("data-coldel")){
+if(t.getAttribute("data-arm")!=="1"){t.setAttribute("data-arm","1");t.textContent="Click again to delete";return}
+A.sb.from("collections").delete().eq("id",cid).eq("user_id",A.user.id).then(function(r){if(r&&r.error){colMsg(card,"Could not delete. Please try again.");return}loadCols()}).catch(function(){colMsg(card,"Could not delete. Please try again.")});
+return}});
+colBox.addEventListener("change",function(ev){
+var t=ev.target;if(!t||!t.hasAttribute||!t.hasAttribute("data-colpub"))return;
+var card=colCard(t),cid=colId(card);if(!cid)return;
+A.sb.from("collections").update({is_public:!!t.checked}).eq("id",cid).eq("user_id",A.user.id).then(function(r){if(r&&r.error){colMsg(card,"Could not save. Please try again.");t.checked=!t.checked;return}loadCols()}).catch(function(){colMsg(card,"Could not save. Please try again.");t.checked=!t.checked})})}
+var newBtn=document.getElementById("col-new-btn");
+if(newBtn)newBtn.addEventListener("click",function(){
+var nameEl=document.getElementById("col-new-name"),pubEl=document.getElementById("col-new-public"),msg=document.getElementById("col-new-msg");
+var name=nameEl?nameEl.value.trim():"";
+if(!name){if(msg)msg.textContent="Give the collection a name first.";return}
+A.sb.from("collections").insert({user_id:A.user.id,name:name,is_public:!!(pubEl&&pubEl.checked)}).then(function(r){
+if(r&&r.error){if(msg)msg.textContent="Could not create it. Please try again.";return}
+if(nameEl)nameEl.value="";if(pubEl)pubEl.checked=false;if(msg)msg.textContent="Created.";loadCols()}).catch(function(){if(msg)msg.textContent="Could not create it. Please try again."})});
+A.sb.from("saved_pros").select("business_slug").eq("user_id",A.user.id).then(function(r){savedSlugs=((r&&r.data)||[]).map(function(x){return x.business_slug});renderCols()}).catch(function(){});
+function enhanceSaved(){
+var grid=document.getElementById("acct-saved");if(!grid||!cols.length)return;
+var opts=cols.map(function(c){return '<option value="'+c.id+'">'+esc(c.name)+"</option>"}).join("");
+var btns=grid.querySelectorAll("[data-unsave]");
+for(var i=0;i<btns.length;i++){(function(btn){
+var slug=btn.getAttribute("data-unsave"),card=btn.parentNode;if(!card)return;
+var wrap=card.querySelector("[data-colpick]");
+if(wrap){var sel0=wrap.querySelector("[data-colpicksel]");if(sel0)sel0.innerHTML=opts;return}
+wrap=document.createElement("div");wrap.className="coladd";wrap.setAttribute("data-colpick","");
+wrap.innerHTML='<select data-colpicksel aria-label="Collection">'+opts+'</select><button type="button" class="savebtn" data-colpickbtn>Add to collection</button> <span class="listed" data-colpickmsg></span>';
+card.appendChild(wrap);
+wrap.querySelector("[data-colpickbtn]").addEventListener("click",function(){
+var sel=wrap.querySelector("[data-colpicksel]");var cid=Number(sel?sel.value:0);var m=wrap.querySelector("[data-colpickmsg]");
+if(!cid)return;
+A.sb.from("collection_items").insert({collection_id:cid,business_slug:slug}).then(function(r){
+if(r&&r.error){if(m)m.textContent="Already in that collection.";return}
+if(m)m.textContent="Added.";loadCols()}).catch(function(){if(m)m.textContent="Could not add. Please try again."})});
+})(btns[i])}}
+var savedGrid=document.getElementById("acct-saved");
+if(savedGrid&&window.MutationObserver){new MutationObserver(function(){enhanceSaved()}).observe(savedGrid,{childList:true})}
+var ppSlug=document.getElementById("pp-slug"),ppPub=document.getElementById("pp-public"),ppMsg=document.getElementById("pp-msg"),ppViewRow=document.getElementById("pp-viewrow"),ppView=document.getElementById("pp-view");
+function renderPpView(){if(!ppViewRow||!ppView)return;if(myPublic&&mySlug){ppView.setAttribute("href","/members/?u="+mySlug);ppViewRow.hidden=false}else{ppViewRow.hidden=true}}
+A.sb.from("profiles").select("public_slug,is_public").eq("id",A.user.id).then(function(r){
+var row=r&&!r.error&&r.data&&r.data[0];if(!row)return;
+mySlug=row.public_slug||"";myPublic=row.is_public===true;
+if(ppSlug)ppSlug.value=mySlug;if(ppPub)ppPub.checked=myPublic;renderPpView();renderCols()}).catch(function(){});
+var ppSave=document.getElementById("pp-save");
+if(ppSave)ppSave.addEventListener("click",function(){
+var slug=ppSlug?ppSlug.value.trim().toLowerCase():"",pub=!!(ppPub&&ppPub.checked);
+function fail(t){if(ppMsg)ppMsg.textContent=t}
+if(pub&&!slug){fail("Choose a link name first, then save.");return}
+if(slug&&!ytpValidSlug(slug)){fail("Link names use lowercase letters, numbers and hyphens, 3 to 30 characters, and cannot be a reserved word.");return}
+A.sb.from("profiles").update({is_public:pub,public_slug:slug?slug:null}).eq("id",A.user.id).then(function(r){
+if(r&&r.error){var e=String((r.error&&r.error.message)||"");if((r.error&&r.error.code==="23505")||/duplicate|unique/i.test(e)){fail("That link name is taken. Try another.")}else{fail("Could not save. Please try again.")}return}
+mySlug=slug;myPublic=pub;if(ppMsg)ppMsg.textContent="Saved.";renderPpView();renderCols()}).catch(function(){fail("Could not save. Please try again.")})});
+loadCols();
 });
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>

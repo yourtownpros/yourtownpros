@@ -1,5 +1,5 @@
 {
-  "version": "v5.2",
+  "version": "v5.3",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -82,10 +82,11 @@
     "terms": 1,
     "claimed": 1,
     "account": 1,
+    "members": 1,
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 7189
+    "total_html": 7190
   },
   "search_index_entries": 5064,
   "search_upgrade": {
@@ -100,9 +101,9 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 7185,
-    "pages_with_fbmenu": 7185,
-    "total_html": 7189
+    "pages_with_brand_home_anchor": 7186,
+    "pages_with_fbmenu": 7186,
+    "total_html": 7190
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -629,6 +630,12 @@
         "max": 79,
         "over_160": 0
       },
+      "members": {
+        "count": 1,
+        "min": 111,
+        "max": 111,
+        "over_160": 0
+      },
       "business": {
         "count": 1,
         "min": 109,
@@ -765,10 +772,10 @@
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 7189,
-    "supabase_client_files": 7189,
-    "auth_init_files": 7189,
-    "total_html_files": 7189,
+    "goatcounter_files": 7190,
+    "supabase_client_files": 7190,
+    "auth_init_files": 7190,
+    "total_html_files": 7190,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -777,6 +784,8 @@
       "change_requests",
       "claimed_listings",
       "claims",
+      "collection_items",
+      "collections",
       "edit_suggestions",
       "match_requests",
       "owner_highlights",
@@ -987,7 +996,7 @@
       "add_business_forms_with_honeypot": 1,
       "honeypot_inputs_total": 11315,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 7188,
+      "guard_script_pages": 7189,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -1014,7 +1023,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 7189,
+    "viewport_pages": 7190,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1264,7 +1273,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 112,
+    "repo_diff_files": 7184,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1479,18 +1488,46 @@
     "verify_data_reconciled": true,
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
-      328,
+      331,
       331
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
-    "changed_html_set_size": 112,
+    "changed_html_set_size": 7184,
     "changed_files_fully_explained": true,
     "file_set_unchanged": true,
     "nonhtml_changed_exact": true,
     "totals_unchanged": true,
     "partner_placements_unchanged": true,
     "v50_v51_wiring_intact": true,
+    "standing_invariants_held": true
+  },
+  "v53_checks": {
+    "note": "v5.3: COLLECTIONS and PUBLIC PROFILES, the last Yelp-gap class A items except the social layer (deliberately not built). /account/ gains a Collections section and a Public profile settings block, both client-side against Supabase in a NEW script (ACCOUNT53_SCRIPT); ACCOUNT_SCRIPT is byte-identical to every earlier build. One static shell at /members/ renders any public member client-side from the ?u= slug in MEMBER_SCRIPT; the URL uses the query string, NOT the clean path through the custom 404, because on GitHub Pages a clean /members/<slug>/ path can only be answered by 404.html with a real HTTP 404 status, which would put a sitewide-critical file in play for a cosmetic gain; the query form follows the /claim/?business= precedent, returns 200, is noindexed and stays out of the sitemap, and 404.html is untouched. Schema v11 (parent applies): collections + collection_items with owner-full and public-select-only-when-public RLS and a 10/day insert throttle; profiles gains public_slug (unique, format-checked in the database) and is_public, a public-read policy where is_public is true, and the v4 guard re-asserted freezing is_owner and id only, so the member's own public_slug and is_public stay self-updatable by design. Display names shorten client-side with ytpShortName, the same computation the header menu uses. CHECK REVISIONS (documented pattern, in place): the table-ref whitelist gains collections and collection_items; the v4.8 structural comparison and the v5.2 explained-diff both run both sides through _norm53; the v4.9 desktop-header check strips V53_CSS from both sides; the v4.7, v5.0, v5.1 and v5.2 HTML totals move 7,189 to 7,190 (the one shell page) under their existing key names; v5.1's added_files_exact also accepts exactly [members/index.html]; v5.2's file-set check accepts the same one added file, its changed-set key accepts the normalized explanation (the Job 2 set is empty against a v5.2 repo and V53_CSS moves every raw page), its non-html changed set also accepts empty, and its diff loop skips files with no repo counterpart.",
+    "account_script_unchanged_and_separate": true,
+    "account_sections_present": true,
+    "collections_client_ops": true,
+    "account53_reads_are_owner_scoped": true,
+    "public_profile_settings_ops": true,
+    "member_shell_present": true,
+    "member_noindex_and_unsitemapped": true,
+    "js_syntax_account53": true,
+    "js_syntax_member": true,
+    "js_syntax_helpers": true,
+    "slug_and_shortname_fixture_math": true,
+    "slug_and_shortname_fixture_output": "OK",
+    "schema_v11_collections": true,
+    "schema_v11_profiles": true,
+    "schema_v11_guard_and_degradation": true,
+    "privacy_profile_lookup_filters_public": true,
+    "privacy_shell_no_private_tables": true,
+    "privacy_reviews_and_collections_filtered": true,
+    "css_v53_present": true,
+    "totals_one_shell_added": true,
+    "added_files_exact_members": true,
+    "structure_matches_v52_after_deltas": true,
+    "partner_placements_unchanged": true,
+    "v50_v51_v52_wiring_intact": true,
     "standing_invariants_held": true
   },
   "partner_placements_detail": [
@@ -22088,7 +22125,7 @@
     "url_count": 6915
   },
   "link_check": {
-    "internal_hrefs_checked": 749660,
+    "internal_hrefs_checked": 749748,
     "broken": []
   },
   "phone_spot_check": {

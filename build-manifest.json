@@ -1,5 +1,5 @@
 {
-  "version": "v3.1",
+  "version": "v3.2",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -84,9 +84,15 @@
     "category_index_entries": 1154,
     "category_index_broken": [],
     "coordinates": {
-      "source": null,
-      "entries_with_coords": 0
+      "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
+      "entries_with_coords": 308,
+      "unmatched": []
     }
+  },
+  "v32_checks": {
+    "pages_with_brand_home_anchor": 6674,
+    "pages_with_fbmenu": 6674,
+    "total_html": 6674
   },
   "search_target_check": {
     "index_urls": 4924,
@@ -125,7 +131,7 @@
     "url_count": 6672
   },
   "link_check": {
-    "internal_hrefs_checked": 540576,
+    "internal_hrefs_checked": 547250,
     "broken": []
   },
   "phone_spot_check": {

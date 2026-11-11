@@ -1,5 +1,5 @@
 {
-  "version": "v3",
+  "version": "v3.1",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -78,6 +78,16 @@
     "total_html": 6674
   },
   "search_index_entries": 4924,
+  "search_upgrade": {
+    "cities_index_entries": 308,
+    "cities_index_broken": [],
+    "category_index_entries": 1154,
+    "category_index_broken": [],
+    "coordinates": {
+      "source": null,
+      "entries_with_coords": 0
+    }
+  },
   "search_target_check": {
     "index_urls": 4924,
     "index_broken": [],
@@ -115,7 +125,7 @@
     "url_count": 6672
   },
   "link_check": {
-    "internal_hrefs_checked": 540575,
+    "internal_hrefs_checked": 540576,
     "broken": []
   },
   "phone_spot_check": {

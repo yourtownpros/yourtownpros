@@ -22,6 +22,12 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .fbdrop a{display:block;color:#1c2430;padding:9px 12px;border-radius:6px;white-space:nowrap}
 .fbdrop a:hover{background:#e8f3ee;color:#0e7a5f}
 .fbmenu.open .fbdrop{display:block}
+
+@media (max-width:767px){
+.wrap{padding:20px 16px 44px}
+header{padding:14px 16px}
+img,iframe{max-width:100%}
+}
 </style><link rel="canonical" href="https://yourtownpros.com/match-thanks/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"></head><body><script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
 <div class="wrap"><h1>Request received</h1><p class="sub">Thanks. We are matching you with a local pro now, and you will hear back by phone, usually the same day.</p><p><a href="/">Back to YourTownPros</a></p></div>
@@ -32,9 +38,15 @@ var menus=document.querySelectorAll(".fbmenu,.cnav-item");
 function setBtn(m,open){var b=m.querySelector("button");if(b)b.setAttribute("aria-expanded",open?"true":"false")}
 function closeAll(except){for(var i=0;i<menus.length;i++){if(menus[i]!==except){menus[i].classList.remove("open");setBtn(menus[i],false)}}}
 for(var j=0;j<menus.length;j++){(function(m){var b=m.querySelector("button");if(!b)return;
-b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true)}});
+b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true);
+/* v4.2: below 1200px the category nav is a scrollable row and its
+dropdown is position:fixed (V42_CSS), so pin its top just under the
+nav row; the scroll container cannot clip a fixed panel. */
+if(m.classList.contains("cnav-item")&&window.innerWidth<1200){var d=m.querySelector(".cnav-drop");if(d){var nv=m.closest?m.closest(".catnav"):null;var nb=nv?nv.getBoundingClientRect().bottom:b.getBoundingClientRect().bottom;d.style.top=(nb+8)+"px"}}}});
 m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget)){m.classList.remove("open");setBtn(m,false)}});
 })(menus[j])}
+var navs=document.querySelectorAll(".catnav");
+for(var n=0;n<navs.length;n++){navs[n].addEventListener("scroll",function(){closeAll(null)})}
 document.addEventListener("click",function(){closeAll(null)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(null)});
 })();

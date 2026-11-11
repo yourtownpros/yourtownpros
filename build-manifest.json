@@ -1,5 +1,5 @@
 {
-  "version": "v4.1",
+  "version": "v4.2",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -140,13 +140,13 @@
     },
     "house_page_check": {
       "Rankly Design": {
-        "claim_strip_present": false,
+        "claim_strip_present": true,
         "match_form_present": false,
         "featured_badge_present": true,
         "featured_label_present": true
       },
       "Renaud Naturals": {
-        "claim_strip_present": false,
+        "claim_strip_present": true,
         "match_form_present": false,
         "featured_badge_present": true,
         "featured_label_present": true
@@ -162,7 +162,7 @@
         "prospects_csvs": 123,
         "site_digests": 23
       },
-      "prospects_rows": 4256,
+      "prospects_rows": 4308,
       "digest_entries": 1480,
       "pool_phones": 5729,
       "digest_linked_listings": 33
@@ -969,6 +969,44 @@
     "backup_tool": "rankly-plan/yourtownpros-backup.py",
     "runbook": "rankly-plan/yourtownpros-incident-runbook.md"
   },
+  "v42_checks": {
+    "note": "v4.2: house claim strips restored (same component, slugged link, sign-in gating; no match form added) + full mobile/tablet pass. Desktop >= 1200px unchanged: all layout rules live in two max-width media blocks appended last (V42_CSS). Category nav decision: at tablet/phone the nav is one scrollable row and its dropdowns become position:fixed panels pinned under the nav row by HEADER_SCRIPT, because a plain overflow-x:auto row clips absolutely positioned dropdowns; dropdowns stay fully usable. Category phone order comes from display:contents on the results column plus explicit order values.",
+    "house_claim_strips": {
+      "Rankly Design": {
+        "claim_strip_present": true,
+        "claim_link_carries_slug": true,
+        "match_form_absent": true,
+        "featured_badge_present": true
+      },
+      "Renaud Naturals": {
+        "claim_strip_present": true,
+        "claim_link_carries_slug": true,
+        "match_form_absent": true,
+        "featured_badge_present": true
+      }
+    },
+    "viewport_pages": 7003,
+    "viewport_missing": [],
+    "breakpoint_blocks_in_families": {
+      "homepage": true,
+      "category": true,
+      "listing": true,
+      "hub": true,
+      "claim": true,
+      "for_business": true,
+      "account": true,
+      "business": true,
+      "legal": true,
+      "404": true
+    },
+    "category_filters_toggle_pages": 1155,
+    "category_phone_order_rules": true,
+    "category_map_phone_flags": true,
+    "pin_popup_max_width": 280,
+    "fixed_widths_over_360_outside_media": [],
+    "match_thanks_responsive_patch": true,
+    "honeypots_still_on_forms": true
+  },
   "search_target_check": {
     "index_urls": 4926,
     "index_broken": [],
@@ -1009,7 +1047,7 @@
     "url_count": 6730
   },
   "link_check": {
-    "internal_hrefs_checked": 645508,
+    "internal_hrefs_checked": 645510,
     "broken": []
   },
   "phone_spot_check": {

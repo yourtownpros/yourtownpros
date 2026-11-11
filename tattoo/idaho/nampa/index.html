@@ -283,12 +283,83 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 
 .hpf{position:absolute!important;left:-9999px!important;top:-9999px!important;width:1px;height:1px;overflow:hidden}
 .hpf label{margin:0}
+
+.ftoggle{display:none}
+@media (max-width:1199px){
+html,body{overflow-x:clip}
+img,iframe{max-width:100%}
+.cnav-btn{min-height:44px;padding:10px 8px}
+.fbbtn,.hsignin{min-height:44px}
+.hclaim{min-height:44px;display:inline-flex;align-items:center}
+.fbdrop a,.udrop a,.udrop button{min-height:44px;display:flex;align-items:center}
+.claimbtn,.tel,.rtel,.savebtn{min-height:44px}
+.match button,.reviews button[type=submit],.acctform button,.respbox button{min-height:44px}
+.fbtn,.sortbtn{min-height:44px}
+.mlink{display:inline-flex;align-items:center;min-height:44px}
+.picklist a{min-height:44px;display:flex;align-items:center}
+.catnav{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.catnav::-webkit-scrollbar{display:none}
+.cnav-item{flex:0 0 auto}
+.cnav-drop{position:fixed;left:12px;right:12px;width:auto;min-width:0;max-height:62vh;overflow-y:auto}
+.herocontent h1{font-size:38px}
+.cat-layout{grid-template-columns:minmax(0,1fr)}
+.cat-side{position:static;order:1}
+.cat-map{position:static;order:2;height:320px}
+.cat-main{order:3;min-width:0}
+.ftoggle{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:48px;padding:10px 14px;background:#fff;border:1px solid #d8dde3;border-radius:10px;font:inherit;font-weight:700;color:#12212e;cursor:pointer}
+.cat-side .frail{display:none}
+.cat-layout.fopen .cat-side .frail{display:block}
+.cat-side .frail h2{display:none}
+.tradegrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bizdash{grid-template-columns:minmax(0,1fr)}
+.biznav{position:static;display:flex;flex-wrap:nowrap;overflow-x:auto;gap:4px;padding-bottom:6px}
+.biznav button{width:auto;flex:0 0 auto;min-height:44px}
+}
+@media (max-width:767px){
+.wrap{padding:22px 16px 48px}
+input,textarea,select{font-size:16px}
+.match input,.match textarea,.match select,.reviews select,.reviews textarea,.acctform input,.acctform select,.acctform textarea,.searchwrap input,.bizpick select,.respbox textarea{font-size:16px}
+.htop{row-gap:8px}
+.brand{font-size:20px}
+.hright{gap:8px}
+.hclaim{padding:8px 12px}
+.herofull-v3{height:620px}
+.herocontent-v3{padding:112px 16px 0}
+.herocontent h1{font-size:30px;line-height:1.15}
+.herocontent .hsub{font-size:16px}
+.hsearch{flex-direction:column}
+.hsearch .fld:first-child{border-right:0;border-bottom:1px solid #e2e6ea}
+.hsearch button{border-radius:0 0 10px 10px;padding:14px}
+.slidecap .sh{font-size:19px}
+.grid{grid-template-columns:minmax(0,1fr)}
+.tradegrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.photocard img{height:110px}
+.cat-main{display:contents}
+.cat-main .filterbar{order:2}
+.cat-map{order:3;height:300px}
+.cat-main>.sponcard{order:4}
+.cat-main #results-list{order:5}
+.cat-main #noresults{order:6}
+.cat-main .match{order:7}
+.cat-main>p,.cat-main .railcard{order:8}
+.result-card img{width:104px;height:96px}
+.leaflet-popup-content{max-width:272px}
+.photoband-img{height:150px}
+.lmap{height:260px}
+.savebtn{width:100%}
+.claimstrip{flex-direction:column;align-items:stretch}
+.claimstrip a{display:inline-flex;align-items:center;min-height:44px}
+.pcard{flex-direction:column}
+.pcard img{width:100%;height:130px}
+.factlist div{flex-direction:column;gap:2px}
+.codebox{font-size:15px;overflow-wrap:anywhere}
+}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div><div class="searchwrap"><input id="ytp-search" type="search" placeholder="Search a business or town" autocomplete="off" aria-label="Search businesses"><div id="ytp-results"></div></div></header>
 <div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Pet Grooming <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/pet-grooming/california/yuba-city/">Pet Grooming in Yuba City, CA</a><span class="cnct" aria-hidden="true">(13)</span><a href="/pet-grooming/puerto-rico/san-juan/">Pet Grooming in San Juan, PR</a><span class="cnct" aria-hidden="true">(11)</span><a href="/pet-grooming/oregon/portland/">Pet Grooming in Portland, OR</a><span class="cnct" aria-hidden="true">(9)</span><a href="/pet-grooming/washington/seattle/">Pet Grooming in Seattle, WA</a><span class="cnct" aria-hidden="true">(9)</span><a href="/pet-grooming/montana/billings/">Pet Grooming in Billings, MT</a><span class="cnct" aria-hidden="true">(8)</span><a href="/pet-grooming/nebraska/omaha/">Pet Grooming in Omaha, NE</a><span class="cnct" aria-hidden="true">(8)</span><a href="/pet-grooming/">All pet grooming by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Tattoo <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/tattoo/montana/billings/">Tattoo in Billings, MT</a><span class="cnct" aria-hidden="true">(10)</span><a href="/tattoo/california/riverside/">Tattoo in Riverside, CA</a><span class="cnct" aria-hidden="true">(10)</span><a href="/tattoo/arizona/tucson/">Tattoo in Tucson, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/tattoo/montana/missoula/">Tattoo in Missoula, MT</a><span class="cnct" aria-hidden="true">(8)</span><a href="/tattoo/montana/bozeman/">Tattoo in Bozeman, MT</a><span class="cnct" aria-hidden="true">(7)</span><a href="/tattoo/south-dakota/rapid-city/">Tattoo in Rapid City, SD</a><span class="cnct" aria-hidden="true">(7)</span><a href="/tattoo/">All tattoo by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Repair <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/auto-repair/california/salinas/">Auto Repair in Salinas, CA</a><span class="cnct" aria-hidden="true">(15)</span><a href="/auto-repair/california/hanford/">Auto Repair in Hanford, CA</a><span class="cnct" aria-hidden="true">(13)</span><a href="/auto-repair/california/turlock/">Auto Repair in Turlock, CA</a><span class="cnct" aria-hidden="true">(12)</span><a href="/auto-repair/california/brawley/">Auto Repair in Brawley, CA</a><span class="cnct" aria-hidden="true">(11)</span><a href="/auto-repair/nebraska/omaha/">Auto Repair in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/auto-repair/montana/billings/">Auto Repair in Billings, MT</a><span class="cnct" aria-hidden="true">(10)</span><a href="/auto-repair/">All auto repair by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Hair Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/hair-salons/nebraska/hastings/">Hair Salons in Hastings, NE</a><span class="cnct" aria-hidden="true">(12)</span><a href="/hair-salons/nebraska/omaha/">Hair Salons in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/hair-salons/arizona/scottsdale/">Hair Salons in Scottsdale, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/hair-salons/arizona/tucson/">Hair Salons in Tucson, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/hair-salons/colorado/alamosa/">Hair Salons in Alamosa, CO</a><span class="cnct" aria-hidden="true">(7)</span><a href="/hair-salons/south-dakota/brandon/">Hair Salons in Brandon, SD</a><span class="cnct" aria-hidden="true">(7)</span><a href="/hair-salons/">All hair salon by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Nail Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/nails/south-dakota/sioux-falls/">Nail Salons in Sioux Falls, SD</a><span class="cnct" aria-hidden="true">(11)</span><a href="/nails/washington/tacoma/">Nail Salons in Tacoma, WA</a><span class="cnct" aria-hidden="true">(11)</span><a href="/nails/arizona/gilbert/">Nail Salons in Gilbert, AZ</a><span class="cnct" aria-hidden="true">(10)</span><a href="/nails/puerto-rico/san-juan/">Nail Salons in San Juan, PR</a><span class="cnct" aria-hidden="true">(10)</span><a href="/nails/california/los-angeles-encino/">Nail Salons in Los Angeles (Encino), CA</a><span class="cnct" aria-hidden="true">(9)</span><a href="/nails/arizona/tucson/">Nail Salons in Tucson, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/nails/">All nail salon by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Plumbers <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/plumbers/kansas/wichita/">Plumbers in Wichita, KS</a><span class="cnct" aria-hidden="true">(8)</span><a href="/plumbers/nebraska/lincoln/">Plumbers in Lincoln, NE</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/south-dakota/rapid-city/">Plumbers in Rapid City, SD</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/arizona/tucson/">Plumbers in Tucson, AZ</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/california/hemet/">Plumbers in Hemet, CA</a><span class="cnct" aria-hidden="true">(6)</span><a href="/plumbers/south-dakota/vermillion/">Plumbers in Vermillion, SD</a><span class="cnct" aria-hidden="true">(6)</span><a href="/plumbers/">All plumbing by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Electricians <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/electricians/nebraska/omaha/">Electricians in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/electricians/nebraska/lincoln/">Electricians in Lincoln, NE</a><span class="cnct" aria-hidden="true">(10)</span><a href="/electricians/south-dakota/rapid-city/">Electricians in Rapid City, SD</a><span class="cnct" aria-hidden="true">(9)</span><a href="/electricians/arizona/tucson/">Electricians in Tucson, AZ</a><span class="cnct" aria-hidden="true">(8)</span><a href="/electricians/oklahoma/oklahoma-city/">Electricians in Oklahoma City, OK</a><span class="cnct" aria-hidden="true">(7)</span><a href="/electricians/oregon/oregon-city/">Electricians in Oregon City, OR</a><span class="cnct" aria-hidden="true">(7)</span><a href="/electricians/">All electrical by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/barbers/">Barbers</a><a href="/tanning/">Tanning Salons</a><a href="/med-spas/">Med Spas</a><a href="/massage/">Massage</a><a href="/towing/">Towing</a><a href="/hvac/">HVAC</a><a href="/roofing/">Roofing</a><a href="/painting/">Painters</a><a href="/lawn-and-landscaping/">Lawn &amp; Landscaping</a><a href="/handyman/">Handyman</a><a href="/cleaners/">Cleaners &amp; Laundry</a><a href="/florists/">Florists</a><a href="/bakeries-and-cafes/">Bakeries &amp; Cafes</a><a href="/jewelry/">Jewelry</a><a href="/veterinary/">Veterinary</a><a href="/fitness/">Fitness</a><a href="/locksmiths/">Locksmiths</a></div></div></div>
 <main class="wrap"><div class="crumb"><a href="/">Home</a> / <a href="/tattoo/">Tattoo</a> / <a href="/tattoo/idaho/">Idaho</a> / Nampa</div><h1>3 Tattoo Shops in Nampa, ID</h1>
-<p class="sub">In Canyon County, Idaho.</p><div class="cat-layout"><aside class="cat-side"><div class="frail" id="ytp-filters"><h2>Filters</h2><div class="fgroup"><p class="flab">Rating</p><button type="button" class="fbtn filtbtn active" data-filt="0">Any rating</button><button type="button" class="fbtn filtbtn" data-filt="4">4.0+</button><button type="button" class="fbtn filtbtn" data-filt="4.5">4.5+</button></div><div class="fgroup"><p class="flab">Features</p><label><input type="checkbox" class="attrchk" value="family-owned"> Family-owned <span class="fcount">(3)</span></label><label><input type="checkbox" class="attrchk" value="locally-owned"> Locally owned <span class="fcount">(3)</span></label></div></div></aside><div class="cat-main">
+<p class="sub">In Canyon County, Idaho.</p><div class="cat-layout"><aside class="cat-side"><button type="button" class="ftoggle" id="ytp-ftoggle" aria-expanded="false" aria-controls="ytp-filters">Filters <span class="car">&#9662;</span></button><div class="frail" id="ytp-filters"><h2>Filters</h2><div class="fgroup"><p class="flab">Rating</p><button type="button" class="fbtn filtbtn active" data-filt="0">Any rating</button><button type="button" class="fbtn filtbtn" data-filt="4">4.0+</button><button type="button" class="fbtn filtbtn" data-filt="4.5">4.5+</button></div><div class="fgroup"><p class="flab">Features</p><label><input type="checkbox" class="attrchk" value="family-owned"> Family-owned <span class="fcount">(3)</span></label><label><input type="checkbox" class="attrchk" value="locally-owned"> Locally owned <span class="fcount">(3)</span></label></div></div></aside><div class="cat-main">
 <div class="filterbar"><span class="rcount">3 results</span><span>Sort: <button type="button" class="fbtn sortbtn active" data-sort="reviews">Most reviewed</button> <button type="button" class="fbtn sortbtn" data-sort="rating">Highest rated</button></span> <a class="mlink" href="#match">Request a match</a></div>
 <div id="results-list"><article class="result-card" data-rating="4.8" data-reviews="299" data-slug="tattoo/munsters-ink-tattoo-nampa" data-attrs="family-owned locally-owned" data-web="0"><img src="https://images.unsplash.com/photo-1542727365-19732a80dcfd?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60" srcset="https://images.unsplash.com/photo-1542727365-19732a80dcfd?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60 1x, https://images.unsplash.com/photo-1542727365-19732a80dcfd?auto=format&amp;fit=crop&amp;w=504&amp;h=336&amp;q=55 2x" width="252" height="168" loading="lazy" decoding="async" alt="Stock photo: tattoo in Nampa, ID"><div class="pbody"><h2><span class="rnum">1.</span> <a href="/tattoo/munsters-ink-tattoo-nampa/">Munsters Ink Tattoo</a></h2><div class="stars">★★★★★ 4.8 · 299 reviews</div><div class="meta">Nampa, ID</div><div class="rlinks"><a class="rtel" href="tel:+12086971562">(208) 697-1562</a><a href="/tattoo/munsters-ink-tattoo-nampa/">View Munsters Ink Tattoo</a><a href="/tattoo/munsters-ink-tattoo-nampa/#match" aria-label="Request a match with Munsters Ink Tattoo">Request a match</a></div></div></article><article class="result-card" data-rating="4.8" data-reviews="295" data-slug="tattoo/american-classic-tattoo-nampa" data-attrs="family-owned locally-owned" data-web="0"><img src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60" srcset="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60 1x, https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&amp;fit=crop&amp;w=504&amp;h=336&amp;q=55 2x" width="252" height="168" loading="lazy" decoding="async" alt="Stock photo: tattoo in Nampa, ID"><div class="pbody"><h2><span class="rnum">2.</span> <a href="/tattoo/american-classic-tattoo-nampa/">American Classic Tattoo</a></h2><div class="stars">★★★★★ 4.8 · 295 reviews</div><div class="meta">Nampa, ID</div><div class="rlinks"><a class="rtel" href="tel:+12084619215">(208) 461-9215</a><a href="/tattoo/american-classic-tattoo-nampa/">View American Classic Tattoo</a><a href="/tattoo/american-classic-tattoo-nampa/#match" aria-label="Request a match with American Classic Tattoo">Request a match</a></div></div></article><article class="result-card" data-rating="5.0" data-reviews="45" data-slug="tattoo/temptation-tattoo-and-body-piercing-nampa" data-attrs="family-owned locally-owned" data-web="0"><img src="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60" srcset="https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60 1x, https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?auto=format&amp;fit=crop&amp;w=504&amp;h=336&amp;q=55 2x" width="252" height="168" loading="lazy" decoding="async" alt="Stock photo: tattoo in Nampa, ID"><div class="pbody"><h2><span class="rnum">3.</span> <a href="/tattoo/temptation-tattoo-and-body-piercing-nampa/">Temptation Tattoo &amp; Body Piercing</a></h2><div class="stars">★★★★★ 5.0 · 45 reviews</div><div class="meta">Nampa, ID</div><div class="rlinks"><a class="rtel" href="tel:+12084098560">(208) 409-8560</a><a href="/tattoo/temptation-tattoo-and-body-piercing-nampa/">View Temptation Tattoo &amp; Body Piercing</a><a href="/tattoo/temptation-tattoo-and-body-piercing-nampa/#match" aria-label="Request a match with Temptation Tattoo &amp; Body Piercing">Request a match</a></div></div></article></div>
 <p id="noresults" style="display:none">No businesses match those filters yet.</p>
@@ -332,19 +403,21 @@ if(map&&layer){layer.clearLayers();markers={};var pts=[];var v=0;
 for(var k=0;k<cards.length;k++){var card=cards[k];if(card.style.display==="none")continue;v++;
 var slug=card.getAttribute("data-slug");var p=pins[slug];if(!p)continue;
 var mk=L.marker([p.lat,p.lng],{icon:iconFor(v)});
-mk.bindPopup(popHtml(p));
+mk.bindPopup(popHtml(p),{maxWidth:280});
 (function(cd,m){m.on("click",function(){cd.scrollIntoView({block:"center",behavior:"smooth"});cd.classList.add("hl");setTimeout(function(){cd.classList.remove("hl")},1800)})})(card,mk);
 markers[slug]=mk;layer.addLayer(mk);pts.push([p.lat,p.lng])}
 if(pts.length&&!map._ytpFit){map.fitBounds(pts,{padding:[24,24]});map._ytpFit=true}}}
 var mapEl=document.getElementById("ytp-map");
 var cityEl=document.getElementById("ytp-citymap");var cityD=null;
 if(cityEl){try{cityD=JSON.parse(cityEl.textContent)}catch(e){}}
-if(mapEl&&window.L){map=L.map(mapEl);
+if(mapEl&&window.L){var phoneMap=window.matchMedia&&window.matchMedia("(max-width: 767px)").matches;
+map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:undefined);
+if(phoneMap){mapEl.addEventListener("click",function(){if(map.dragging&&!map.dragging.enabled())map.dragging.enable()})}
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
 layer=L.layerGroup().addTo(map);
 var hasPins=false;for(var key in pins){hasPins=true;break}
 if(!hasPins&&cityD&&typeof cityD.lat==="number"){map.setView([cityD.lat,cityD.lng],12);
-L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state))}}
+L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state),{maxWidth:280})}}
 for(var ci=0;ci<cards.length;ci++){(function(card){card.addEventListener("click",function(e){if(e.target.closest("a"))return;var m=markers[card.getAttribute("data-slug")];if(m&&map){map.panTo(m.getLatLng());m.openPopup()}}) })(cards[ci])}
 function setActive(sel,btn){var bs=document.querySelectorAll(sel);for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i]===btn)}
 var fT=0;
@@ -361,6 +434,8 @@ for(var i=0;i<fb.length;i++){(function(b){b.addEventListener("click",function(){
 var ab=document.querySelectorAll(".attrchk");
 for(var i=0;i<ab.length;i++)ab[i].addEventListener("change",applyFilters);
 var wb=document.getElementById("webchk");if(wb)wb.addEventListener("change",applyFilters);
+var ftog=document.getElementById("ytp-ftoggle");
+if(ftog){ftog.addEventListener("click",function(){var lay=ftog.closest(".cat-layout");if(!lay)return;var open=lay.classList.toggle("fopen");ftog.setAttribute("aria-expanded",open?"true":"false")})}
 sync();
 })();
 </script></main>
@@ -371,9 +446,15 @@ var menus=document.querySelectorAll(".fbmenu,.cnav-item");
 function setBtn(m,open){var b=m.querySelector("button");if(b)b.setAttribute("aria-expanded",open?"true":"false")}
 function closeAll(except){for(var i=0;i<menus.length;i++){if(menus[i]!==except){menus[i].classList.remove("open");setBtn(menus[i],false)}}}
 for(var j=0;j<menus.length;j++){(function(m){var b=m.querySelector("button");if(!b)return;
-b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true)}});
+b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true);
+/* v4.2: below 1200px the category nav is a scrollable row and its
+dropdown is position:fixed (V42_CSS), so pin its top just under the
+nav row; the scroll container cannot clip a fixed panel. */
+if(m.classList.contains("cnav-item")&&window.innerWidth<1200){var d=m.querySelector(".cnav-drop");if(d){var nv=m.closest?m.closest(".catnav"):null;var nb=nv?nv.getBoundingClientRect().bottom:b.getBoundingClientRect().bottom;d.style.top=(nb+8)+"px"}}}});
 m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget)){m.classList.remove("open");setBtn(m,false)}});
 })(menus[j])}
+var navs=document.querySelectorAll(".catnav");
+for(var n=0;n<navs.length;n++){navs[n].addEventListener("scroll",function(){closeAll(null)})}
 document.addEventListener("click",function(){closeAll(null)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(null)});
 })();

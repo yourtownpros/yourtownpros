@@ -1,5 +1,5 @@
 {
-  "version": "v3.3",
+  "version": "v3.4",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -149,6 +149,308 @@
       }
     }
   },
+  "enrichment": {
+    "note": "v3.4: facts joined at build time from the Rankly research files listed in load_enrichment's docstring. Coverage counts below are over unflagged listings only; flagged listings are excluded from every enrichment field (they can still show a map from their directory address, per the owner's flagged-treatment spec).",
+    "sources": {
+      "source_files": {
+        "research_notes": 58,
+        "call_block_briefs": 35,
+        "prospects_csvs": 120,
+        "site_digests": 23
+      },
+      "prospects_rows": 4204,
+      "digest_entries": 1480,
+      "pool_phones": 5712,
+      "digest_linked_listings": 33
+    },
+    "coverage_unflagged_listings": {
+      "map_embed": 740,
+      "attribute_chips": 976,
+      "about": 47,
+      "since_year": 948,
+      "website_button": 216,
+      "services": 3,
+      "hours": 2,
+      "address_added": 2
+    },
+    "total_listings": 4924
+  },
+  "v34_checks": {
+    "enrichment_spot_check": [
+      {
+        "business": "Mighty Muffler Pros",
+        "url": "/auto-repair/mighty-muffler-pros-westminster/",
+        "field": "about",
+        "value": "Family owned 43 years, exhaust specialist, busy shop.",
+        "source_file": "prospects-waveA-trades.csv",
+        "evidence_matched": "Family owned 43 years, exhaust specialist, busy shop.",
+        "found_in_source": true
+      },
+      {
+        "business": "Wheat Ridge Auto Service",
+        "url": "/auto-repair/wheat-ridge-auto-service-wheat-ridge/",
+        "field": "about",
+        "value": "owner-operated by Gary Bryan.",
+        "source_file": "prospects-wave3A-west.csv",
+        "evidence_matched": "owner-operated by Gary Bryan.",
+        "found_in_source": true
+      },
+      {
+        "business": "Lightning Landscaping",
+        "url": "/lawn-and-landscaping/lightning-landscaping-aurora/",
+        "field": "since",
+        "value": "2002",
+        "source_file": "rankly-call-list-v25-2026-11-10.csv",
+        "evidence_matched": "since 2002",
+        "found_in_source": true
+      },
+      {
+        "business": "Deluxe Barbers and Styling Shop",
+        "url": "/barbers/deluxe-barbers-and-styling-shop-longmont/",
+        "field": "about",
+        "value": "Susan and Teresa are the barbers per Places listing.",
+        "source_file": "prospects-wave4B-boulder.csv",
+        "evidence_matched": "Susan and Teresa are the barbers per Places listing.",
+        "found_in_source": true
+      },
+      {
+        "business": "Final Gear Transmissions",
+        "url": "/auto-repair/final-gear-transmissions-westminster/",
+        "field": "about",
+        "value": "Joe's transmission shop, loyal repeat customers.",
+        "source_file": "prospects-waveA-trades.csv",
+        "evidence_matched": "Joe's transmission shop, loyal repeat customers.",
+        "found_in_source": true
+      },
+      {
+        "business": "Suite Success Dry Cleaners",
+        "url": "/cleaners/suite-success-dry-cleaners-wheat-ridge/",
+        "field": "since",
+        "value": "1992",
+        "source_file": "rankly-call-list-v25-2026-11-10.csv",
+        "evidence_matched": "since 1992",
+        "found_in_source": true
+      },
+      {
+        "business": "Arrcon Electric and Construction",
+        "url": "/electricians/arrcon-electric-and-construction-commerce-city/",
+        "field": "about",
+        "value": "In business since 1991 (BBB).",
+        "source_file": "prospects-wave2A-north.csv",
+        "evidence_matched": "In business since 1991 (BBB).",
+        "found_in_source": true
+      },
+      {
+        "business": "Scorpion Towing and Recovery",
+        "url": "/towing/scorpion-towing-and-recovery-westminster/",
+        "field": "about",
+        "value": "Family run since 2014, motor-club work, low rating.",
+        "source_file": "prospects-waveA-trades.csv",
+        "evidence_matched": "Family run since 2014, motor-club work, low rating.",
+        "found_in_source": true
+      },
+      {
+        "business": "G & H Electric Co",
+        "url": "/electricians/g-and-h-electric-co-wheat-ridge/",
+        "field": "website",
+        "value": "http://ghelectric.org",
+        "source_file": "prospects-wave3A-west.csv",
+        "evidence_matched": "http://ghelectric.org",
+        "found_in_source": true
+      },
+      {
+        "business": "Magic Nails Erie",
+        "url": "/nails/magic-nails-erie-erie/",
+        "field": "about",
+        "value": "Erie Hwy 7 location only - not the Arapahoe Rd Magic Nails which has a site.",
+        "source_file": "prospects-wave4B-boulder.csv",
+        "evidence_matched": "Erie Hwy 7 location only - not the Arapahoe Rd Magic Nails w",
+        "found_in_source": true
+      }
+    ],
+    "enrichment_spot_check_passed": 10,
+    "dnc": {
+      "flag_names": [
+        "King Brothers Jewelers",
+        "COCO Massage",
+        "Floreria Flor de Luna",
+        "Mayfair Cleaners",
+        "Centennial Ignition Switch Repair & Replacement",
+        "La Despensa Latina",
+        "Aspen Park Vet Hospital",
+        "La Boheme Salon & Boutique",
+        "Sacred Pain",
+        "American Plumbing & Heating",
+        "Electric Tattoo"
+      ],
+      "matched": [
+        {
+          "business": "Electric Tattoo",
+          "city": "Longmont",
+          "state": "CO",
+          "phone": "303-523-7309",
+          "url": "/tattoo/electric-tattoo-longmont/"
+        },
+        {
+          "business": "King Brothers Jewelers",
+          "city": "Thornton",
+          "state": "CO",
+          "phone": "(720) 660-8068",
+          "url": "/jewelry/king-brothers-jewelers-thornton/"
+        },
+        {
+          "business": "Floreria Flor de Luna",
+          "city": "Federal Heights",
+          "state": "CO",
+          "phone": "(720) 705-4538",
+          "url": "/florists/floreria-flor-de-luna-federal-heights/"
+        },
+        {
+          "business": "Mayfair Cleaners",
+          "city": "Centennial",
+          "state": "CO",
+          "phone": "(303) 770-8248",
+          "url": "/cleaners/mayfair-cleaners-centennial/"
+        },
+        {
+          "business": "Centennial Ignition Switch Repair & Replacement",
+          "city": "Centennial",
+          "state": "CO",
+          "phone": "(720) 580-2980",
+          "url": "/handyman/centennial-ignition-switch-repair-and-replacement-centennial/"
+        },
+        {
+          "business": "Aspen Park Vet Hospital",
+          "city": "Conifer",
+          "state": "CO",
+          "phone": "(303) 838-3771",
+          "url": "/veterinary/aspen-park-vet-hospital-conifer/"
+        },
+        {
+          "business": "La Boheme Salon & Boutique",
+          "city": "Alamosa",
+          "state": "CO",
+          "phone": "(719) 778-2277",
+          "url": "/hair-salons/la-boheme-salon-and-boutique-alamosa/"
+        },
+        {
+          "business": "Sacred Pain",
+          "city": "San Juan",
+          "state": "PR",
+          "phone": "(787) 596-2562",
+          "url": "/tattoo/sacred-pain-san-juan/"
+        },
+        {
+          "business": "American Plumbing & Heating",
+          "city": "Casper",
+          "state": "WY",
+          "phone": "(307) 234-0000",
+          "url": "/plumbers/american-plumbing-and-heating-casper/"
+        }
+      ],
+      "unmatched_names": [
+        "COCO Massage",
+        "La Despensa Latina"
+      ],
+      "near_miss_not_flagged": [
+        {
+          "business": "Standard Electric Tattooing",
+          "city": "Lawrence",
+          "state": "KS",
+          "url": "/tattoo/standard-electric-tattooing-lawrence/"
+        }
+      ],
+      "page_check": {
+        "Electric Tattoo": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false
+        },
+        "King Brothers Jewelers": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false
+        },
+        "Floreria Flor de Luna": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false
+        },
+        "Mayfair Cleaners": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        },
+        "Centennial Ignition Switch Repair & Replacement": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        },
+        "Aspen Park Vet Hospital": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        },
+        "La Boheme Salon & Boutique": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        },
+        "Sacred Pain": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        },
+        "American Plumbing & Heating": {
+          "banner_present": true,
+          "rail_high": true,
+          "match_form_present": true,
+          "claim_strip_present": true,
+          "attr_chips_present": false,
+          "website_button_present": false,
+          "enriched_about_present": false,
+          "category_flagged_last": true
+        }
+      }
+    }
+  },
   "search_target_check": {
     "index_urls": 4926,
     "index_broken": [],
@@ -186,7 +488,7 @@
     "url_count": 6680
   },
   "link_check": {
-    "internal_hrefs_checked": 547880,
+    "internal_hrefs_checked": 575298,
     "broken": []
   },
   "phone_spot_check": {

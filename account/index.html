@@ -354,6 +354,9 @@ input,textarea,select{font-size:16px}
 .factlist div{flex-direction:column;gap:2px}
 .codebox{font-size:15px;overflow-wrap:anywhere}
 }
+
+.docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
+.docup input[type=file]{display:block;margin-top:8px;max-width:100%}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -390,12 +393,19 @@ document.getElementById("acct-city-save").addEventListener("click",function(){
 var city=document.getElementById("acct-city").value.trim();
 A.sb.from("profiles").upsert({id:A.user.id,display_name:A.displayName(),city:city}).then(function(r){var m=document.getElementById("acct-city-msg");if(m)m.textContent=(r&&r.error)?"Could not save. Please try again.":"Saved."}).catch(function(){})});
 fetch("/search-index.json").then(function(r){return r.json()}).then(function(d){for(var i=0;i<d.length;i++)idx[d[i].url]=d[i]}).catch(function(){}).then(function(){
-A.sb.from("claims").select("business_slug,business_name,status,created_at,verify_method,verify_code").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
+function loadClaims(withDoc){
+var sel="business_slug,business_name,status,created_at,verify_method,verify_code,notes"+(withDoc?",document_path":"");
+A.sb.from("claims").select(sel).eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
+if(r&&r.error){if(withDoc)loadClaims(false);return}
 var rows=(r&&r.data)||[];var box=document.getElementById("acct-claims");
 if(!rows.length){box.innerHTML='<p class="listed">No claims yet.</p>';return}
 box.innerHTML=rows.map(function(c){var extra="";
 if(c.status==="pending"&&(c.verify_method==="website"||c.verify_method==="facebook")&&c.verify_code){extra='<div class="meta">Your verification code: <span class="acctcode">'+esc(c.verify_code)+"</span>. Put it on your "+(c.verify_method==="website"?"website (a page, a meta tag, or a DNS TXT record)":"Facebook page as a public post")+" and we will approve your claim automatically once our check finds it.</div>"}
-return '<div class="card"><h3><a href="'+urlFor(c.business_slug)+'">'+esc(c.business_name)+'</a></h3><div class="meta">Status: '+esc(c.status)+"</div>"+extra+"</div>"}).join("")}).catch(function(){});
+if(c.status==="pending"&&c.verify_method==="document"){
+var hasDoc=!!(c.document_path||(c.notes&&c.notes.indexOf("document_path: ")===0));
+extra=hasDoc?'<div class="meta">Document received. We review documents by hand.</div>':'<div class="meta">Document still needed: email a photo of a business license or a utility bill that matches the listing name and address to yourtownpros@gmail.com and mention the business name.</div>'}
+return '<div class="card"><h3><a href="'+urlFor(c.business_slug)+'">'+esc(c.business_name)+'</a></h3><div class="meta">Status: '+esc(c.status)+"</div>"+extra+"</div>"}).join("")}).catch(function(){if(withDoc)loadClaims(false)})}
+loadClaims(true);
 A.sb.from("saved_pros").select("business_slug").eq("user_id",A.user.id).then(function(r){
 var rows=(r&&r.data)||[];var box=document.getElementById("acct-saved");
 if(!rows.length){box.innerHTML='<p class="listed">No saved pros yet. Tap Save on any listing to keep it here.</p>';return}

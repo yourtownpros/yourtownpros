@@ -354,6 +354,9 @@ input,textarea,select{font-size:16px}
 .factlist div{flex-direction:column;gap:2px}
 .codebox{font-size:15px;overflow-wrap:anywhere}
 }
+
+.docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
+.docup input[type=file]{display:block;margin-top:8px;max-width:100%}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -371,7 +374,11 @@ box.innerHTML="<div class='codebox'>Your verification code for "+esc(d.business)
 }else if(d.method==="email"){
 box.innerHTML="<p>Your account email matches this business, so your claim approves automatically once our check runs, usually within a day. Nothing else for you to do.</p>";
 }else if(d.method==="document"){
+if(d.doc==="uploaded"){
+box.innerHTML="<p>Your document is in for "+esc(d.business)+", and we will review it by hand. Nothing else for you to do. If you would rather send a clearer copy, you can email it instead to yourtownpros@gmail.com and mention "+esc(d.business)+".</p>";
+}else{
 box.innerHTML="<p>To finish: email a photo of a business license or a utility bill that matches the listing name and address to yourtownpros@gmail.com and mention "+esc(d.business)+". We review documents by hand.</p>";
+}
 }
 })();
 </script><p><a href="/">Back to YourTownPros</a></p></main>

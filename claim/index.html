@@ -354,6 +354,9 @@ input,textarea,select{font-size:16px}
 .factlist div{flex-direction:column;gap:2px}
 .codebox{font-size:15px;overflow-wrap:anywhere}
 }
+
+.docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
+.docup input[type=file]{display:block;margin-top:8px;max-width:100%}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -378,6 +381,7 @@ input,textarea,select{font-size:16px}
 <input type="hidden" name="business_slug" id="claim-slug">
 <div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
 <div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div>
+<div class="docup" id="claim-doc-block" hidden><label for="claim-doc-file">Upload your document</label><p class="listed" style="margin:0">A photo of a business license or a utility bill that matches the listing name and address. A photo or a PDF, up to 10 MB. It goes straight to us with your claim, and we review documents by hand.</p><input type="file" id="claim-doc-file" accept="image/*,application/pdf"><p class="fine" id="claim-doc-msg" style="color:#a33"></p></div>
 <label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required>
 <label for="claim-role">Your role</label><input type="text" name="role" id="claim-role" placeholder="Owner, manager, family member">
 <label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
@@ -422,8 +426,9 @@ out+="<label class='vmethod'><input type='radio' name='vm' value='facebook'><str
 }else{
 out+="<label class='vmethod off'><input type='radio' name='vm' value='facebook' disabled><strong>Post a code on the business Facebook page</strong><span class='vnote'>We do not have a Facebook page on file for this business, so this method is not available.</span></label>";
 }
-out+="<label class='vmethod'><input type='radio' name='vm' value='document'><strong>Send a document</strong><span class='vnote'>Email a photo of a business license or a utility bill that matches this listing's name and address to yourtownpros@gmail.com and mention the business name. We review documents by hand.</span></label>";
+out+="<label class='vmethod'><input type='radio' name='vm' value='document'><strong>Upload a document</strong><span class='vnote'>Upload a photo of a business license or a utility bill that matches this listing's name and address, right here in this form. We review documents by hand. If uploading does not work for you, email it to yourtownpros@gmail.com instead and mention the business name.</span></label>";
 box.innerHTML=out;
+var db=$("claim-doc-block");if(db){var chk=box.querySelector("input[name='vm']:checked");db.hidden=!(chk&&chk.value==="document")}
 }
 function pickSlug(slug){
 if(!searchIdx)return;
@@ -456,12 +461,24 @@ var nm=p.get("name").toLowerCase();
 for(var i=0;i<d.length;i++){if(d[i].name.toLowerCase()===nm){chosen={slug:d[i].url.replace(/^\/+|\/+$/g,""),name:d[i].name,city:d[i].city,trade:d[i].trade,where:(d[i].city||"")+(d[i].state?", "+d[i].state:"")};resolve();break}}
 }}).catch(function(){});
 fetch("/verify-data.json").then(function(r){return r.json()}).then(function(d){verifyData=d;if(chosen)renderMethods()}).catch(function(){});
+if(form)form.addEventListener("change",function(ev){
+if(!ev.target||ev.target.name!=="vm")return;
+var db=$("claim-doc-block");if(db)db.hidden=ev.target.value!=="document";
+});
+var docFile=$("claim-doc-file");
+if(docFile)docFile.addEventListener("change",function(){
+var m=$("claim-doc-msg");if(!m)return;
+var f=docFile.files&&docFile.files.length?docFile.files[0]:null;
+m.textContent=(f&&f.size>10485760)?"That file is too big. Please pick a photo or PDF under 10 MB.":"";
+});
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
 if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
 var radios=form.querySelectorAll("input[name='vm']"),method="";
 for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}
 if(!method){var me=$("ytp-claim-error");if(me)me.textContent="Pick a verification method so we know how you will prove the business is yours.";return}
+var docF=(method==="document"&&docFile&&docFile.files&&docFile.files.length)?docFile.files[0]:null;
+if(docF&&docF.size>10485760){var dm=$("claim-doc-msg");if(dm)dm.textContent="That file is too big. Please pick a photo or PDF under 10 MB.";var de=$("ytp-claim-error");if(de)de.textContent="Your document is too big to upload. Pick a smaller file, or remove it and we will tell you how to email it instead.";return}
 var row={business_slug:chosen.slug,
 business_name:chosen.name,
 user_id:A.user.id,
@@ -472,12 +489,31 @@ relationship:($("claim-role").value||"Owner").trim()||"Owner",
 status:"pending",
 verify_method:method,
 verify_code:(method==="website"||method==="facebook")?code:""};
-function done(){try{sessionStorage.setItem("ytpClaim",JSON.stringify({method:method,code:row.verify_code,business:chosen.name,slug:chosen.slug}))}catch(e){}
+var sub=$("ytp-claim-submit");if(sub)sub.disabled=true;
+var docState="";
+function doneClaim(){try{sessionStorage.setItem("ytpClaim",JSON.stringify({method:method,code:row.verify_code,business:chosen.name,slug:chosen.slug,doc:docState}))}catch(e){}
 window.location.href="/claimed/"}
-A.sb.from("claims").insert(row).then(function(r){
-if(r&&r.error){var slim={business_slug:row.business_slug,business_name:row.business_name,user_id:row.user_id,contact_name:row.contact_name,contact_email:row.contact_email,contact_phone:row.contact_phone,relationship:row.relationship,status:"pending"};
-A.sb.from("claims").insert(slim).then(function(r2){if(r2&&r2.error){fail()}else{done()}}).catch(fail)}
-else{done()}}).catch(fail)});
+function failClaim(){if(sub)sub.disabled=false;fail()}
+function insertClaim(rw,docPath){
+A.sb.from("claims").insert(rw).then(function(r){
+if(r&&r.error){
+var retry;
+if(docPath){retry={business_slug:rw.business_slug,business_name:rw.business_name,user_id:rw.user_id,contact_name:rw.contact_name,contact_email:rw.contact_email,contact_phone:rw.contact_phone,relationship:rw.relationship,status:"pending",verify_method:rw.verify_method,verify_code:rw.verify_code,notes:"document_path: "+docPath}}
+else{retry={business_slug:rw.business_slug,business_name:rw.business_name,user_id:rw.user_id,contact_name:rw.contact_name,contact_email:rw.contact_email,contact_phone:rw.contact_phone,relationship:rw.relationship,status:"pending"}}
+A.sb.from("claims").insert(retry).then(function(r2){if(r2&&r2.error){failClaim()}else{doneClaim()}}).catch(failClaim)}
+else{doneClaim()}}).catch(failClaim)}
+if(docF){
+var ext="bin";var em=/\.([A-Za-z0-9]{1,8})$/.exec(docF.name||"");
+if(em){ext=em[1].toLowerCase()}else if(docF.type==="image/png"){ext="png"}else if(docF.type==="image/jpeg"){ext="jpg"}else if(docF.type==="application/pdf"){ext="pdf"}
+var a8=new Uint32Array(2),sfx="";
+if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a8);sfx=(a8[0].toString(16)+a8[1].toString(16)).toUpperCase().slice(0,8)}else{sfx=Math.random().toString(16).slice(2,10).toUpperCase()}
+var dpath=A.user.id+"/"+chosen.slug+"-"+sfx+"."+ext;
+A.sb.storage.from("claim-documents").upload(dpath,docF,{cacheControl:"3600",upsert:false}).then(function(up){
+if(up&&up.error){row.notes="Document upload failed in the claim form; the claimant was shown the email route instead.";insertClaim(row,null)}
+else{row.document_path=dpath;docState="uploaded";insertClaim(row,dpath)}
+}).catch(function(){row.notes="Document upload failed in the claim form; the claimant was shown the email route instead.";insertClaim(row,null)});
+}else{insertClaim(row,null)}
+});
 });
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>

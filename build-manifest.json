@@ -1,5 +1,5 @@
 {
-  "version": "v4.2",
+  "version": "v4.3",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -1006,6 +1006,18 @@
     "fixed_widths_over_360_outside_media": [],
     "match_thanks_responsive_patch": true,
     "honeypots_still_on_forms": true
+  },
+  "v43_checks": {
+    "note": "v4.3: in-flow document upload for claims. The document method shows a file input in the claim form; on submit the file uploads to the private claim-documents bucket at <user_id>/<slug>-<suffix>.<ext> BEFORE the claim insert, which then carries document_path. If that insert errors (schema v5 not applied yet), it retries without the column and keeps the path in notes prefixed 'document_path: '. If the upload fails, the claim still inserts, notes the fallback, and /claimed/ shows the email instructions as before. Document review stays manual in the back office; nothing approves client-side.",
+    "file_input_on_claim_page": true,
+    "upload_bucket_referenced": true,
+    "upload_before_insert_with_path": true,
+    "insert_document_path_payload": true,
+    "no_column_fallback_retry": true,
+    "upload_failure_fallback": true,
+    "size_guard_10mb": true,
+    "claimed_copy_both_ways": true,
+    "account_document_labels": true
   },
   "search_target_check": {
     "index_urls": 4926,

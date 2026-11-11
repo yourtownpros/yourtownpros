@@ -1,5 +1,5 @@
 {
-  "version": "v3.8",
+  "version": "v3.9",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -76,9 +76,10 @@
     "terms": 1,
     "claimed": 1,
     "account": 1,
+    "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 7002
+    "total_html": 7003
   },
   "search_index_entries": 4926,
   "search_upgrade": {
@@ -93,9 +94,9 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 6998,
-    "pages_with_fbmenu": 6998,
-    "total_html": 7002
+    "pages_with_brand_home_anchor": 6999,
+    "pages_with_fbmenu": 6999,
+    "total_html": 7003
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -611,6 +612,12 @@
         "max": 79,
         "over_160": 0
       },
+      "business": {
+        "count": 1,
+        "min": 109,
+        "max": 109,
+        "over_160": 0
+      },
       "privacy": {
         "count": 1,
         "min": 55,
@@ -740,10 +747,10 @@
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 7002,
-    "supabase_client_files": 7002,
-    "auth_init_files": 7002,
-    "total_html_files": 7002,
+    "goatcounter_files": 7003,
+    "supabase_client_files": 7003,
+    "auth_init_files": 7003,
+    "total_html_files": 7003,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -863,6 +870,53 @@
     "sweep_script_compiles": true,
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v2.sql"
   },
+  "v39_checks": {
+    "note": "v3.9: owner dashboard at /business/ (noindex, out of sitemap): left nav Overview / Business Information / Reviews / Page Upgrades over a client-side pane. Header account menu gains a Business dashboard entry unhidden only when the profile is_owner probe passes. The dashboard gates on at least one approved claim; signed-in users without one see their claim statuses and the /claim/ route. Overview shows a card per claimed business (approved date from claims.decided_at), a Reminders checklist computed from the owner's real change requests and reviews, the Featured upsell card (no price) and the v4.0 numbers note; NO performance numbers are shown. Business Information renders the listing's current facts from /biz-data.json (same rows and website evidence as the public listing) plus the moderated change-request form (moved from /account/, which now links here) and the owner's submitted requests with statuses. Reviews lists the business's YourTownPros reviews, pending and approved with status labels, and an owner response box on approved reviews; the response update writes ONLY response_text + response_at and the listing renders it under the review, labeled Response from the owner, preferring response_text over the legacy owner_response. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v3.sql BEFORE pushing v3.9; every read/write of the new columns retries without them, so the site degrades gracefully if the migration lands late.",
+    "business_page": {
+      "sections": [
+        "overview",
+        "bizinfo",
+        "reviews",
+        "upgrades"
+      ],
+      "noindex_not_in_sitemap": true,
+      "upgrades_section_has_price": false,
+      "header_menu_pages_missing_entry": [],
+      "listing_pages_missing_response_rendering": [],
+      "dashboard_reviews_operations": [
+        "select",
+        "update"
+      ],
+      "response_update_columns": [
+        "response_at",
+        "response_text"
+      ],
+      "account_links_to_dashboard": true,
+      "dashboard_script_node_check": "pass"
+    },
+    "biz_data": {
+      "entries": 4926,
+      "fields": [
+        "name",
+        "trade",
+        "city",
+        "state",
+        "phone",
+        "address",
+        "website"
+      ],
+      "with_website": 231,
+      "with_address": 749,
+      "website_matches_verify_data": true
+    },
+    "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
+    "schema_v3_flags": {
+      "reviews_update_policy": "row-level: Postgres RLS cannot restrict which columns an UPDATE touches",
+      "field_restriction_enforced_by": "the dashboard client writing only response_text and response_at",
+      "hardening_recommended": "BEFORE UPDATE trigger on reviews reverting every column except response_text and response_at for non-service roles",
+      "flagged_for": "v4.1 RLS audit"
+    }
+  },
   "search_target_check": {
     "index_urls": 4926,
     "index_broken": [],
@@ -903,7 +957,7 @@
     "url_count": 6730
   },
   "link_check": {
-    "internal_hrefs_checked": 638426,
+    "internal_hrefs_checked": 645508,
     "broken": []
   },
   "phone_spot_check": {

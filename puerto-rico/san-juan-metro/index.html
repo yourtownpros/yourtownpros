@@ -10,7 +10,12 @@ A.firstName=function(){var n=fullName();return n?n.split(/\s+/)[0]:(A.user?(A.us
 A.displayName=function(){var n=fullName();if(!n)return A.user?A.user.email||"":"";var p=n.split(/\s+/);return p.length>1?p[0]+" "+p[1].charAt(0)+".":p[0]};
 A.signIn=function(){if(!A.sb)return;A.sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:window.location.href}})};
 A.signOut=function(){if(!A.sb)return;A.sb.auth.signOut().then(function(){window.location.reload()})};
-function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}}
+var ownerProbed=false;
+function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
+if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
+if(ownerProbed)return;ownerProbed=true;
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");
 if(ub&&um){ub.addEventListener("click",function(e){e.stopPropagation();var open=um.classList.toggle("open");ub.setAttribute("aria-expanded",open?"true":"false")});

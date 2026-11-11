@@ -374,6 +374,15 @@ input,textarea,select{font-size:16px}
 @media (max-width:767px){
 .cat-main>.partnercard{order:8}
 }
+
+.photogal{margin:2px 0 18px}
+.photogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.photogrid figure{margin:0}
+.photogrid img{width:100%;height:150px;object-fit:cover;border-radius:10px;display:block}
+.photogrid figcaption{font-size:13px;color:#43586a;margin-top:4px}
+.revphotos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.revphotos img{width:160px;height:120px;object-fit:cover;border-radius:8px;display:block}
+.ordbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -422,11 +431,15 @@ if(saveBtn.classList.contains("saved")){A.sb.from("saved_pros").delete().eq("use
 else{A.sb.from("saved_pros").insert({user_id:A.user.id,business_slug:slug}).then(function(r){if(r&&!r.error)setSave(true)}).catch(function(){})}})}
 var list=document.getElementById("ytp-reviews-list");
 if(list){
+/* v4.8: approved review photos render inside their review,
+from the per-listing map baked as window.YTP_REVIEW_PHOTOS
+(review id -> static photo paths). No map, no photos: the
+markup is then exactly what it was before. */
 function renderReviews(rows){
 if(!rows.length){list.innerHTML='<p class="listed">No YourTownPros reviews yet. Reviews from customers appear here after a quick check.</p>';return}
-list.innerHTML=rows.map(function(x){var rt=x.response_text||x.owner_response||"";var resp=rt?'<p class="listed"><strong>Response from the owner:</strong> '+esc(rt)+"</p>":"";return '<div class="review"><div class="stars">'+stars(Number(x.rating))+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p><p class="listed">By '+esc(x.author_display)+"</p>"+resp+"</div>"}).join("")}
+list.innerHTML=rows.map(function(x){var rt=x.response_text||x.owner_response||"";var resp=rt?'<p class="listed"><strong>Response from the owner:</strong> '+esc(rt)+"</p>":"";var rp=(window.YTP_REVIEW_PHOTOS||{})[String(x.id)]||[];var ph=rp.length?'<div class="revphotos">'+rp.map(function(u){return '<img src="'+u+'" width="160" height="120" loading="lazy" alt="Photo from a customer review">'}).join("")+"</div>":"";return '<div class="review"><div class="stars">'+stars(Number(x.rating))+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p>'+ph+'<p class="listed">By '+esc(x.author_display)+"</p>"+resp+"</div>"}).join("")}
 function loadReviews(withResp){
-var sel="author_display,rating,body,owner_response"+(withResp?",response_text,response_at":"");
+var sel="id,author_display,rating,body,owner_response"+(withResp?",response_text,response_at":"");
 A.sb.from("reviews").select(sel).eq("business_slug",slug).eq("status","approved").order("created_at",{ascending:false}).then(function(r){
 if(r&&r.error){if(withResp){loadReviews(false)}else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}return}
 renderReviews((r&&r.data)||[])}).catch(function(){if(withResp){loadReviews(false)}else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}})}

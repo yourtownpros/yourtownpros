@@ -374,6 +374,15 @@ input,textarea,select{font-size:16px}
 @media (max-width:767px){
 .cat-main>.partnercard{order:8}
 }
+
+.photogal{margin:2px 0 18px}
+.photogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.photogrid figure{margin:0}
+.photogrid img{width:100%;height:150px;object-fit:cover;border-radius:10px;display:block}
+.photogrid figcaption{font-size:13px;color:#43586a;margin-top:4px}
+.revphotos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.revphotos img{width:160px;height:120px;object-fit:cover;border-radius:8px;display:block}
+.ordbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -448,6 +457,7 @@ input,textarea,select{font-size:16px}
 </form>
 </div>
 <h3 style="margin-top:20px">Your photo submissions</h3>
+<p class="listed">Your submissions are listed in the order they appear on your listing once approved. Use Move up and Move down to set that order: the first photo becomes the main photo on your listing. Changing the order never changes a photo's review status.</p>
 <div id="biz-photos"><p class="listed">Loading...</p></div>
 </section>
 <section class="bizsec" id="sec-requests" hidden>
@@ -536,7 +546,7 @@ var sb=$("ytp-biz-signin");if(sb)sb.addEventListener("click",function(){A.signIn
 if(!A.user||!A.sb){if(out)out.hidden=false;return}
 if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
-var myPhotos=[],photosTable=null,myRequests=[];
+var myPhotos=[],photosTable=null,photosOrd=false,myRequests=[];
 var gcData=null,numbersNote=null;
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
@@ -669,19 +679,54 @@ A.sb.from("reviews").select(sel).eq("business_slug",slug).order("created_at",{as
 if(r&&r.error){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}return}
 myReviews=(r&&r.data)||[];renderReviews();renderChecklist()}).catch(function(){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}})}
 function photoLabel(st){if(st==="approved")return '<span class="statlab">Approved</span>';if(st==="rejected")return '<span class="statlab rej">Not approved</span>';return '<span class="statlab pend">In review</span>'}
+function orderedPhotos(){
+return myPhotos.slice().sort(function(a,b){
+var sa=a.sort_order||0,sb=b.sort_order||0;
+if(sa!==sb)return sa-sb;
+return String(a.created_at||"")<String(b.created_at||"")?-1:1})}
 function renderPhotos(){
 var box=$("biz-photos");if(!box)return;
 if(photosTable===false){box.innerHTML='<p class="listed">Photo uploads are being switched on for owner accounts. Please check back shortly.</p>';return}
 if(!myPhotos.length){box.innerHTML='<p class="listed">No photos sent yet for this business. When you send one, it shows here while we review it.</p>';return}
-box.innerHTML=myPhotos.map(function(p){
+var ord=orderedPhotos();
+box.innerHTML=ord.map(function(p,i){
 var h='<div class="card"><h3>'+(p.caption?esc(p.caption):"Photo")+" "+photoLabel(p.status)+'</h3><div class="meta">Sent '+fmtDate(p.created_at)+".</div>";
 if(p.status==="pending")h+='<div class="meta">Photos go live only after we review them.</div>';
 if(p.status==="approved")h+='<div class="meta">Approved. We add approved photos to listings in a site update.</div>';
-return h+"</div>"}).join("")}
-function loadPhotos(slug){
-A.sb.from("photos").select("id,caption,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
-if(r&&r.error){photosTable=false;myPhotos=[];renderPhotos();return}
-photosTable=true;myPhotos=(r&&r.data)||[];renderPhotos()}).catch(function(){photosTable=false;myPhotos=[];renderPhotos()})}
+if(photosOrd&&ord.length>1){
+h+='<div class="meta">Position '+(i+1)+' of '+ord.length+' in your listing order.';
+if(i>0)h+=' <button type="button" class="ordbtn" data-move="'+p.id+':-1">Move up</button>';
+if(i<ord.length-1)h+=' <button type="button" class="ordbtn" data-move="'+p.id+':1">Move down</button>';
+h+="</div>"}
+return h+"</div>"}).join("");
+var mb=box.querySelectorAll("[data-move]");
+for(var bi=0;bi<mb.length;bi++){(function(btn){btn.addEventListener("click",function(){
+var pr=btn.getAttribute("data-move").split(":");movePhoto(pr[0],parseInt(pr[1],10))})})(mb[bi])}}
+/* v4.8: ordering writes sort_order only, on the owner's own
+rows (the update policy is own-row scoped and the database
+guard freezes every other field), then renumbers the whole
+list so positions stay 0..n-1 with no ties. Any failure
+leaves the displayed order untouched and simply re-renders
+from the rows as loaded. */
+function movePhoto(id,dir){
+var ord=orderedPhotos();var ix=-1;
+for(var i=0;i<ord.length;i++){if(String(ord[i].id)===String(id))ix=i}
+if(ix<0)return;var jx=ix+dir;if(jx<0||jx>=ord.length)return;
+var t=ord[ix];ord[ix]=ord[jx];ord[jx]=t;
+var ups=[];
+for(var k=0;k<ord.length;k++){if((ord[k].sort_order||0)!==k)ups.push({id:ord[k].id,val:k})}
+if(!ups.length){myPhotos=ord;renderPhotos();return}
+var n=0,failed=false;
+function step(){
+if(n>=ups.length){if(!failed){for(var m=0;m<ord.length;m++)ord[m].sort_order=m;myPhotos=ord}renderPhotos();return}
+var u=ups[n];n++;
+A.sb.from("photos").update({sort_order:u.val}).eq("id",u.id).eq("user_id",A.user.id).then(function(r){if(r&&r.error)failed=true;step()}).catch(function(){failed=true;step()})}
+step()}
+function loadPhotos(slug,withOrd){
+var sel=withOrd?"id,caption,status,created_at,sort_order":"id,caption,status,created_at";
+A.sb.from("photos").select(sel).eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
+if(r&&r.error){if(withOrd){loadPhotos(slug,false)}else{photosTable=false;myPhotos=[];renderPhotos()}return}
+photosTable=true;photosOrd=!!withOrd;myPhotos=(r&&r.data)||[];renderPhotos()}).catch(function(){if(withOrd){loadPhotos(slug,false)}else{photosTable=false;myPhotos=[];renderPhotos()}})}
 function renderRequests(){
 var box=$("biz-requests");if(!box)return;
 if(!myRequests.length){box.innerHTML='<p class="listed">No requests from your listing page yet. When a customer asks to be matched from your listing page, or a Featured priority request is routed to your business, it appears here with their contact details.</p>';return}
@@ -701,7 +746,7 @@ myRequests=(r&&!r.error&&r.data)||[];renderRequests()}).catch(function(){myReque
 function loadBiz(slug){
 renderFacts();renderNumbers();renderFeat();renderPartner();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
-loadReviews(slug,true);loadPhotos(slug);loadRequests(slug)}
+loadReviews(slug,true);loadPhotos(slug,true);loadRequests(slug)}
 var phForm=$("biz-photo-form");
 if(phForm)phForm.addEventListener("submit",function(ev){ev.preventDefault();if(!cur)return;
 var msg=phForm.querySelector(".photo-msg");

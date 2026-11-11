@@ -383,6 +383,35 @@ input,textarea,select{font-size:16px}
 .revphotos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
 .revphotos img{width:160px;height:120px;object-fit:cover;border-radius:8px;display:block}
 .ordbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
+
+.histbox{margin:2px 0 12px}
+.histavg{font-weight:700;margin:0 0 8px}
+.histrow{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:13px;color:#43586a}
+.histrow .hstar{width:46px;flex:none;font-weight:600;color:#1c2430}
+.histbar{flex:1;background:#eef3f6;border-radius:6px;height:10px;overflow:hidden}
+.histbar i{display:block;height:100%;background:#0e7a5f;border-radius:6px}
+.histrow .hcount{width:70px;flex:none}
+.revtools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0}
+.revtools label{display:inline;font-weight:600;font-size:14px;margin:0}
+.revtools select,.revtools input{padding:8px 10px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.helpbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-top:6px}
+.helpbtn.on{background:#0e7a5f;color:#fff}
+.qasec{margin:26px 0}
+.qa-q{border-top:1px solid #e4e0d5;padding:12px 0}
+.qa-a{margin:8px 0 0 18px;padding:8px 12px;background:#f7f5ef;border-radius:8px}
+.ownerbadge{display:inline-block;background:#0e7a5f;color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.qapend{margin:14px 0}
+.qaform label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
+.qaform textarea{width:100%;padding:10px 12px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.qaform button[type="submit"]{background:#12212e;color:#fff;padding:10px 18px;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;min-height:44px}
+@media (max-width:1199px){
+.header-home{position:static;background:#12212e;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+.herofull{margin-top:0}
+.herocontent-v3{padding-top:44px}
+}
+@media (max-width:767px){
+.revtools input,.qaform textarea{font-size:16px}
+}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -469,6 +498,9 @@ input,textarea,select{font-size:16px}
 <h2>Reviews</h2>
 <p class="listed">YourTownPros reviews are written by customers here and checked by us before they publish. They are a separate system from your Google rating, which stays on your listing exactly as Google reports it.</p>
 <div id="biz-reviews"><p class="listed">Loading...</p></div>
+<h3 style="margin-top:20px">Customer questions</h3>
+<p class="listed">Questions customers asked on your listing that are waiting for moderation. They are not public yet. You can answer them from your listing page, and answers appear after the same check.</p>
+<div id="biz-questions"><p class="listed">Loading...</p></div>
 </section>
 <section class="bizsec" id="sec-upgrades" hidden>
 <h2>Page upgrades: Featured</h2>
@@ -546,7 +578,7 @@ var sb=$("ytp-biz-signin");if(sb)sb.addEventListener("click",function(){A.signIn
 if(!A.user||!A.sb){if(out)out.hidden=false;return}
 if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
-var myPhotos=[],photosTable=null,photosOrd=false,myRequests=[];
+var myPhotos=[],photosTable=null,photosOrd=false,myRequests=[],myQuestions=[];
 var gcData=null,numbersNote=null;
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
@@ -678,6 +710,18 @@ var sel="id,rating,body,status,author_display,created_at,owner_response"+(withRe
 A.sb.from("reviews").select(sel).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
 if(r&&r.error){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}return}
 myReviews=(r&&r.data)||[];renderReviews();renderChecklist()}).catch(function(){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}})}
+/* v4.9: pending customer questions for the selected
+business (read-only; owners answer from the listing page,
+where the same questions appear in the Ask the Community
+section while they await moderation). */
+function renderQuestions(){
+var box=$("biz-questions");if(!box)return;
+if(!myQuestions.length){box.innerHTML='<p class="listed">No customer questions are waiting for moderation on this business.</p>';return}
+box.innerHTML=myQuestions.map(function(x){
+return '<div class="card"><p style="margin:0">'+esc(x.body)+'</p><p class="listed" style="margin:2px 0 0">Asked '+fmtDate(x.created_at)+' \u00b7 Awaiting moderation. <a href="'+urlFor(cur)+'">Answer it on your listing page</a></p></div>'}).join("")}
+function loadQuestions(slug){
+A.sb.from("questions").select("id,body,created_at").eq("business_slug",slug).eq("status","pending").order("created_at",{ascending:false}).then(function(r){
+myQuestions=(r&&!r.error&&r.data)||[];renderQuestions()}).catch(function(){myQuestions=[];renderQuestions()})}
 function photoLabel(st){if(st==="approved")return '<span class="statlab">Approved</span>';if(st==="rejected")return '<span class="statlab rej">Not approved</span>';return '<span class="statlab pend">In review</span>'}
 function orderedPhotos(){
 return myPhotos.slice().sort(function(a,b){
@@ -746,7 +790,7 @@ myRequests=(r&&!r.error&&r.data)||[];renderRequests()}).catch(function(){myReque
 function loadBiz(slug){
 renderFacts();renderNumbers();renderFeat();renderPartner();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
-loadReviews(slug,true);loadPhotos(slug,true);loadRequests(slug)}
+loadReviews(slug,true);loadPhotos(slug,true);loadRequests(slug);loadQuestions(slug)}
 var phForm=$("biz-photo-form");
 if(phForm)phForm.addEventListener("submit",function(ev){ev.preventDefault();if(!cur)return;
 var msg=phForm.querySelector(".photo-msg");

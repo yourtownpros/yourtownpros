@@ -1,5 +1,5 @@
 {
-  "version": "v4.8",
+  "version": "v4.9",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -754,12 +754,15 @@
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
+      "answers",
       "change_requests",
       "claimed_listings",
       "claims",
       "match_requests",
       "photos",
       "profiles",
+      "questions",
+      "review_votes",
       "reviews",
       "saved_pros"
     ],
@@ -1266,6 +1269,59 @@
     "dashboard_requests_pane_present": true,
     "san_juan_merge_unchanged": true,
     "single_trade_hub_noindex_unchanged": true
+  },
+  "v49_checks": {
+    "note": "v4.9: review depth and community (Yelp gap audit rows 3 to 6) plus the mobile header hotfix. Listings gain a YourTownPros star histogram (fixture-tested math, labeled, never blended with the Google rating), sort and search over the loaded reviews, Helpful votes, and an Ask the Community section; /business/ shows pending questions. PARENT MUST APPLY schema v8 (yourtownpros-supabase-schema-v8.sql: review_votes, questions, answers with the v4 security pattern and an answers owner stamp) for votes and Q&A to work end to end; until then every v4.9 surface degrades softly. Mobile hotfix: at 1199px and below the homepage header returns to normal flow (position: static), the hero pull-up is cancelled and its content padding drops to spacing; desktop is byte identical, asserted below. Two documented check revisions: the v3.6 table whitelist gains the three v8 tables, and the v4.8 structural comparison normalizes both sides with the v4.9 deltas stripped (_norm49).",
+    "schema_v8_file_present": true,
+    "schema_v8_tables": true,
+    "schema_v8_votes_rls": true,
+    "schema_v8_qa_rls": true,
+    "schema_v8_security_pattern": true,
+    "schema_v8_throttles": true,
+    "histogram_fixture_math": true,
+    "histogram_fixture": {
+      "total": 9,
+      "counts": [
+        1,
+        1,
+        1,
+        2,
+        4
+      ],
+      "pct": [
+        11,
+        11,
+        11,
+        22,
+        44
+      ],
+      "avg": 3.8,
+      "hasText": true
+    },
+    "listing_tools_wired": true,
+    "histogram_labeled_ytp_only": true,
+    "helpful_votes_wired": true,
+    "qa_section_wired": true,
+    "dashboard_pending_questions": true,
+    "mobile_nav_in_flow": true,
+    "mobile_nav_not_positioned_over_hero": true,
+    "mobile_hero_clearance_rule": true,
+    "desktop_header_rules_unchanged": true,
+    "totals_match_v48": true,
+    "structure_matches_v48": true,
+    "no_broken_internal_links": true,
+    "no_em_dash_files": true,
+    "no_aggregate_rating_files": true,
+    "honeypots_intact": true,
+    "renaud_phone_exactly_two_files": true,
+    "rankly_pages_phone_free": true,
+    "featured_no_price": true,
+    "claimed_listings_wiring": true,
+    "dashboard_photos_pane_present": true,
+    "dashboard_requests_pane_present": true,
+    "partner_placements_unchanged": true,
+    "v48_photo_wiring_present": true,
+    "empty_photos_snapshot_unchanged": true
   },
   "partner_placements_detail": [
     {

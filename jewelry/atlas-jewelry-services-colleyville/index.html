@@ -383,6 +383,35 @@ input,textarea,select{font-size:16px}
 .revphotos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
 .revphotos img{width:160px;height:120px;object-fit:cover;border-radius:8px;display:block}
 .ordbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
+
+.histbox{margin:2px 0 12px}
+.histavg{font-weight:700;margin:0 0 8px}
+.histrow{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:13px;color:#43586a}
+.histrow .hstar{width:46px;flex:none;font-weight:600;color:#1c2430}
+.histbar{flex:1;background:#eef3f6;border-radius:6px;height:10px;overflow:hidden}
+.histbar i{display:block;height:100%;background:#0e7a5f;border-radius:6px}
+.histrow .hcount{width:70px;flex:none}
+.revtools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0}
+.revtools label{display:inline;font-weight:600;font-size:14px;margin:0}
+.revtools select,.revtools input{padding:8px 10px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.helpbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-top:6px}
+.helpbtn.on{background:#0e7a5f;color:#fff}
+.qasec{margin:26px 0}
+.qa-q{border-top:1px solid #e4e0d5;padding:12px 0}
+.qa-a{margin:8px 0 0 18px;padding:8px 12px;background:#f7f5ef;border-radius:8px}
+.ownerbadge{display:inline-block;background:#0e7a5f;color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.qapend{margin:14px 0}
+.qaform label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
+.qaform textarea{width:100%;padding:10px 12px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.qaform button[type="submit"]{background:#12212e;color:#fff;padding:10px 18px;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;min-height:44px}
+@media (max-width:1199px){
+.header-home{position:static;background:#12212e;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+.herofull{margin-top:0}
+.herocontent-v3{padding-top:44px}
+}
+@media (max-width:767px){
+.revtools input,.qaform textarea{font-size:16px}
+}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -401,7 +430,7 @@ input,textarea,select{font-size:16px}
 <label for="m-service">What do you need?</label><input id="m-service" type="text" name="service" placeholder="Example: ring resizing, size 7 to size 8">
 <label for="m-when">Preferred day or time</label><input id="m-when" type="text" name="when">
 <label for="m-notes">Anything else?</label><textarea id="m-notes" name="notes" rows="2"></textarea>
-<button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro. We do not sell your number.</div></form></div><h2>About this listing</h2><p>Atlas Jewelry Services is a jewelry business in Colleyville, Texas, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 32.88096, "lng": -97.15501, "city": "Colleyville, TX"}</script><div class="reviews" id="reviews"><h2>YourTownPros reviews</h2><div id="ytp-reviews-list"><p class="listed">Loading reviews...</p></div><div id="ytp-review-prompt"><p>Sign in to write a review.</p><button type="button" class="claimbtn" id="ytp-review-signin">Sign in</button></div><form id="ytp-write-review" hidden><label for="ytp-rev-rating">Your rating</label><select id="ytp-rev-rating"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select><label for="ytp-rev-body">Your review</label><textarea id="ytp-rev-body" rows="3" required></textarea><button type="submit">Post review</button></form></div>
+<button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro. We do not sell your number.</div></form></div><h2>About this listing</h2><p>Atlas Jewelry Services is a jewelry business in Colleyville, Texas, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 32.88096, "lng": -97.15501, "city": "Colleyville, TX"}</script><div class="reviews" id="reviews"><h2>YourTownPros reviews</h2><div id="ytp-rev-tools" hidden><div id="ytp-rev-hist"></div><div class="revtools"><label for="ytp-rev-sort">Sort</label><select id="ytp-rev-sort"><option value="new">Newest</option><option value="high">Highest rated</option><option value="low">Lowest rated</option></select><label for="ytp-rev-search">Search</label><input type="search" id="ytp-rev-search" placeholder="Search reviews"></div></div><div id="ytp-reviews-list"><p class="listed">Loading reviews...</p></div><div id="ytp-review-prompt"><p>Sign in to write a review.</p><button type="button" class="claimbtn" id="ytp-review-signin">Sign in</button></div><form id="ytp-write-review" hidden><label for="ytp-rev-rating">Your rating</label><select id="ytp-rev-rating"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select><label for="ytp-rev-body">Your review</label><textarea id="ytp-rev-body" rows="3" required></textarea><button type="submit">Post review</button></form></div><div class="qasec" id="community"><h2>Ask the Community</h2><p class="listed">Questions about this business, answered by customers and by the business itself. Questions and answers appear after a quick check.</p><div id="ytp-qa-list"><p class="listed">Loading questions...</p></div><div id="ytp-qa-pending"></div><div id="ytp-ask-prompt"><p>Sign in to ask a question.</p><button type="button" class="claimbtn" id="ytp-ask-signin">Sign in</button></div><form class="qaform" id="ytp-ask-form" hidden><label for="ytp-ask-body">Your question</label><textarea id="ytp-ask-body" rows="3" required></textarea><button type="submit">Post question</button></form></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "JewelryStore", "@id": "https://yourtownpros.com/jewelry/atlas-jewelry-services-colleyville/#business", "name": "Atlas Jewelry Services", "url": "https://yourtownpros.com/jewelry/atlas-jewelry-services-colleyville/", "telephone": "+18174031278", "address": {"@type": "PostalAddress", "addressLocality": "Colleyville", "addressRegion": "TX", "addressCountry": "US"}, "sameAs": ["https://atlasjewelryservices.com"]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Jewelry", "item": "https://yourtownpros.com/jewelry/"}, {"@type": "ListItem", "position": 3, "name": "Texas", "item": "https://yourtownpros.com/jewelry/texas/"}, {"@type": "ListItem", "position": 4, "name": "Jewelry in Colleyville"}, {"@type": "ListItem", "position": 5, "name": "Atlas Jewelry Services"}]}</script><div class="similar"><h2>Similar pros nearby</h2><div class="grid"><div class="card"><h3><a href="/jewelry/cooper-fine-jewelers-texarkana/">Cooper Fine Jewelers</a></h3><div class="stars">★★★★⯨ 4.4 · 219 reviews</div><div class="listed">Listed in Texarkana</div><div class="meta">Texarkana, TX</div><div class="meta">(903) 793-4611</div></div><div class="card"><h3><a href="/jewelry/david-gardners-jewelers-college-station/">David Gardner&#x27;s Jewelers</a></h3><div class="stars">★★★★⯨ 4.7 · 118 reviews</div><div class="listed">Listed in College Station</div><div class="meta">College Station, TX</div><div class="meta">(979) 268-0800</div></div><div class="card"><h3><a href="/jewelry/acori-diamonds-and-design-friendswood/">ACORI Diamonds &amp; Design</a></h3><div class="stars">★★★★★ 4.8 · 71 reviews</div><div class="listed">Listed in Friendswood</div><div class="meta">Friendswood, TX</div><div class="meta">(281) 482-4755</div></div><div class="card"><h3><a href="/jewelry/ernst-jewelers-huntsville/">Ernst Jewelers</a></h3><div class="stars">★★★★★ 5.0 · 43 reviews</div><div class="listed">Listed in Huntsville</div><div class="meta">Huntsville, TX</div><div class="meta">(936) 295-7621</div></div></div><p><a href="/jewelry/texas/">More Jewelry in Texas</a> · <a href="/jewelry/texas/">Other pros in Texas</a></p></div><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 (function(){
@@ -435,14 +464,75 @@ if(list){
 from the per-listing map baked as window.YTP_REVIEW_PHOTOS
 (review id -> static photo paths). No map, no photos: the
 markup is then exactly what it was before. */
+/* v4.9: review depth state and helpers. The histogram math
+is the build-fixture-tested ytpHistogram (baked in below):
+counts come from the loaded approved reviews only, and the
+average shows under its own YourTownPros label; nothing
+here reads or mixes the Google rating. Sort and search
+re-render the loaded rows client-side. Helpful votes read
+and write the review_votes table (schema v8); while that
+table is unavailable the buttons render without counts,
+and a signed-out click asks for sign-in first. */
+function ytpHistogram(rows){
+var counts=[0,0,0,0,0],text=0,total=0,sum=0,i,r,rt;
+rows=rows||[];
+for(i=0;i<rows.length;i++){r=rows[i];rt=Number(r&&r.rating);
+if(rt>=1&&rt<=5){counts[rt-1]++;total++;sum+=rt}
+if(r&&String(r.body||"").trim())text++}
+var pct=counts.map(function(c){return total?Math.round(100*c/total):0});
+return {total:total,counts:counts,pct:pct,avg:total?Math.round(10*sum/total)/10:0,hasText:text>0}}
+var revAll=[],revSort="new",revQuery="";
+var revCounts={},revMine={},revVotesLoaded=false;
+function revFiltered(){
+var q=revQuery.trim().toLowerCase();
+var rows=revAll.filter(function(x){return !q||(String(x.body||"").toLowerCase().indexOf(q)>-1||String(x.author_display||"").toLowerCase().indexOf(q)>-1)});
+function byDateDesc(a,b){return String(a.created_at||"")<String(b.created_at||"")?1:(String(a.created_at||"")>String(b.created_at||"")?-1:0)}
+if(revSort==="high")rows.sort(function(a,b){return (Number(b.rating)-Number(a.rating))||byDateDesc(a,b)});
+else if(revSort==="low")rows.sort(function(a,b){return (Number(a.rating)-Number(b.rating))||byDateDesc(a,b)});
+else rows.sort(byDateDesc);
+return rows}
+function revPaint(){
+var tools=document.getElementById("ytp-rev-tools"),hist=document.getElementById("ytp-rev-hist");
+if(revAll.length&&tools)tools.hidden=false;
+if(hist){var h=ytpHistogram(revAll);
+if(h.hasText&&h.total){hist.innerHTML='<div class="histbox"><p class="histavg">'+h.avg.toFixed(1)+' average from '+h.total+' YourTownPros reviews</p>'+[5,4,3,2,1].map(function(s){return '<div class="histrow"><span class="hstar">'+s+' stars</span><span class="histbar"><i style="width:'+h.pct[s-1]+'%"></i></span><span class="hcount">'+h.counts[s-1]+' ('+h.pct[s-1]+'%)</span></div>'}).join("")+"</div>"}
+else hist.innerHTML=""}
+var rows=revFiltered();
+if(revAll.length&&!rows.length){list.innerHTML='<p class="listed">No reviews match your search.</p>';return}
+renderReviews(rows)}
+function revHelpfulHtml(x){
+var c=revCounts[String(x.id)];
+return '<div><button type="button" class="helpbtn'+(revMine[String(x.id)]?" on":"")+'" data-help="'+x.id+'">Helpful'+(typeof c==="number"?" ("+c+")":"")+"</button></div>"}
+function revWireHelpful(){
+var btns=list.querySelectorAll("[data-help]");
+for(var i=0;i<btns.length;i++){(function(btn){btn.addEventListener("click",function(){
+if(!A.user||!A.sb){A.signIn();return}
+var id=Number(btn.getAttribute("data-help")),key=String(id);
+if(revMine[key]){A.sb.from("review_votes").delete().eq("user_id",A.user.id).eq("review_id",id).then(function(r){if(r&&!r.error){delete revMine[key];revCounts[key]=Math.max(0,(revCounts[key]||1)-1);revPaint()}}).catch(function(){})}
+else{A.sb.from("review_votes").insert({review_id:id,user_id:A.user.id}).then(function(r){if(r&&!r.error){revMine[key]=true;revCounts[key]=(revCounts[key]||0)+1;revPaint()}}).catch(function(){})}})})}
+if(revVotesLoaded||!A.sb)return;
+revVotesLoaded=true;
+var ids=revAll.map(function(x){return x.id});
+if(!ids.length)return;
+A.sb.from("review_votes").select("review_id").in("review_id",ids).then(function(r){
+if(!r||r.error||!r.data)return;
+revCounts={};for(var j=0;j<r.data.length;j++){var k=String(r.data[j].review_id);revCounts[k]=(revCounts[k]||0)+1}
+if(!A.user){revPaint();return}
+A.sb.from("review_votes").select("review_id").eq("user_id",A.user.id).in("review_id",ids).then(function(r2){
+if(r2&&!r2.error&&r2.data){revMine={};for(var m=0;m<r2.data.length;m++)revMine[String(r2.data[m].review_id)]=true}
+revPaint()}).catch(function(){revPaint()})}).catch(function(){})}
+var revSortEl=document.getElementById("ytp-rev-sort"),revSearchEl=document.getElementById("ytp-rev-search");
+if(revSortEl)revSortEl.addEventListener("change",function(){revSort=revSortEl.value;revPaint()});
+if(revSearchEl)revSearchEl.addEventListener("input",function(){revQuery=revSearchEl.value;revPaint()});
+/* end v4.9 helpers */
 function renderReviews(rows){
 if(!rows.length){list.innerHTML='<p class="listed">No YourTownPros reviews yet. Reviews from customers appear here after a quick check.</p>';return}
-list.innerHTML=rows.map(function(x){var rt=x.response_text||x.owner_response||"";var resp=rt?'<p class="listed"><strong>Response from the owner:</strong> '+esc(rt)+"</p>":"";var rp=(window.YTP_REVIEW_PHOTOS||{})[String(x.id)]||[];var ph=rp.length?'<div class="revphotos">'+rp.map(function(u){return '<img src="'+u+'" width="160" height="120" loading="lazy" alt="Photo from a customer review">'}).join("")+"</div>":"";return '<div class="review"><div class="stars">'+stars(Number(x.rating))+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p>'+ph+'<p class="listed">By '+esc(x.author_display)+"</p>"+resp+"</div>"}).join("")}
+list.innerHTML=rows.map(function(x){var rt=x.response_text||x.owner_response||"";var resp=rt?'<p class="listed"><strong>Response from the owner:</strong> '+esc(rt)+"</p>":"";var rp=(window.YTP_REVIEW_PHOTOS||{})[String(x.id)]||[];var ph=rp.length?'<div class="revphotos">'+rp.map(function(u){return '<img src="'+u+'" width="160" height="120" loading="lazy" alt="Photo from a customer review">'}).join("")+"</div>":"";return '<div class="review"><div class="stars">'+stars(Number(x.rating))+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p>'+ph+'<p class="listed">By '+esc(x.author_display)+"</p>"+resp+revHelpfulHtml(x)+"</div>"}).join("");revWireHelpful()}
 function loadReviews(withResp){
 var sel="id,author_display,rating,body,owner_response"+(withResp?",response_text,response_at":"");
 A.sb.from("reviews").select(sel).eq("business_slug",slug).eq("status","approved").order("created_at",{ascending:false}).then(function(r){
 if(r&&r.error){if(withResp){loadReviews(false)}else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}return}
-renderReviews((r&&r.data)||[])}).catch(function(){if(withResp){loadReviews(false)}else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}})}
+revAll=(r&&r.data)||[];revVotesLoaded=false;revPaint()}).catch(function(){if(withResp){loadReviews(false)}else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}})}
 if(A.sb){loadReviews(true)}
 else{list.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'}}
 var wf=document.getElementById("ytp-write-review"),wp=document.getElementById("ytp-review-prompt"),pb=document.getElementById("ytp-review-signin");
@@ -455,6 +545,71 @@ A.sb.from("reviews").insert({business_slug:slug,user_id:A.user.id,author_display
 if(r&&r.error){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"}
 else{wf.innerHTML="<p>Thanks, your review appears after a quick check.</p>"}}).catch(function(){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"})})}
 else{if(wf)wf.hidden=true;if(wp)wp.hidden=false}
+});
+</script><script>
+/* v4.9: Ask the Community. Approved questions and their
+approved answers render from the questions and answers
+tables (schema v8). Asking and answering require sign-in
+and land as pending, with copy that says they appear
+after a quick check. An answer the database stamped as
+the business owner's carries a Business owner badge. The
+listing's approved-claim owner also sees its pending
+questions here, marked as awaiting moderation, so they
+can answer before publication. While the tables are
+unavailable the section shows a soft note and nothing
+else on the page changes. */
+ytpOnReady(function(A){
+var slug="jewelry/atlas-jewelry-services-colleyville";
+var sec=document.getElementById("community");
+if(!sec)return;
+var box=document.getElementById("ytp-qa-list");
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function fmtDate(s){if(!s)return "";var d=new Date(s);if(isNaN(d.getTime()))return "";return d.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}
+var questions=[],answers=[],pendingQs=[],isOwner=false;
+function oneQ(x,pend,byQ){
+var ans=(byQ[x.id]||[]).map(function(a){return '<div class="qa-a"><p style="margin:0">'+esc(a.body)+'</p><p class="listed" style="margin:2px 0 0">Answer'+(a.author_is_owner?'<span class="ownerbadge">Business owner</span>':"")+" \u00b7 "+fmtDate(a.created_at)+"</p></div>"}).join("");
+var form="";
+if(A.user&&A.sb)form='<form class="qaform ytp-ans-form" data-q="'+x.id+'"><label>Your answer</label><textarea rows="2" required></textarea><button type="submit">Post answer</button><p class="listed qa-msg"></p></form>';
+return '<div class="qa-q"><p style="margin:0"><strong>Q:</strong> '+esc(x.body)+'</p><p class="listed" style="margin:2px 0 0">Asked '+fmtDate(x.created_at)+(pend?' \u00b7 <span class="statlab pend">Awaiting moderation</span>':"")+"</p>"+ans+form+"</div>"}
+function renderQA(){
+var byQ={};
+for(var i=0;i<answers.length;i++){(byQ[answers[i].question_id]=byQ[answers[i].question_id]||[]).push(answers[i])}
+box.innerHTML=questions.length?questions.map(function(x){return oneQ(x,false,byQ)}).join(""):'<p class="listed">No questions yet. Ask the first one below.</p>';
+var pbox=document.getElementById("ytp-qa-pending");
+if(pbox){
+if(isOwner&&pendingQs.length){pbox.innerHTML='<div class="qapend"><h3 style="margin-top:0">Questions waiting for review</h3><p class="listed">These questions were asked about your business and are awaiting moderation. They are not public yet. You can answer now; your answer appears once it is approved.</p>'+pendingQs.map(function(x){return oneQ(x,true,byQ)}).join("")+"</div>"}
+else pbox.innerHTML=""}
+wireAnsForms()}
+function wireAnsForms(){
+var fs=sec.querySelectorAll(".ytp-ans-form");
+for(var i=0;i<fs.length;i++){(function(f){f.addEventListener("submit",function(ev){ev.preventDefault();
+var ta=f.querySelector("textarea"),msg=f.querySelector(".qa-msg"),body=ta?ta.value.trim():"";
+if(!body)return;
+A.sb.from("answers").insert({question_id:Number(f.getAttribute("data-q")),business_slug:slug,user_id:A.user.id,body:body,status:"pending"}).then(function(r){
+if(r&&r.error){if(msg)msg.textContent="Something went wrong saving your answer. Please try again."}
+else f.innerHTML="<p>Thanks, your answer appears after a quick check.</p>"}).catch(function(){if(msg)msg.textContent="Something went wrong saving your answer. Please try again."})})})(fs[i])}}
+function softNote(){box.innerHTML='<p class="listed">Questions are being switched on for listings right now. Please check back shortly.</p>'}
+function loadQA(){
+if(!A.sb){softNote();return}
+A.sb.from("questions").select("id,body,created_at").eq("business_slug",slug).eq("status","approved").order("created_at",{ascending:false}).then(function(r){
+if(r&&r.error){softNote();return}
+questions=(r&&r.data)||[];
+A.sb.from("answers").select("id,question_id,body,created_at,author_is_owner").eq("business_slug",slug).eq("status","approved").order("created_at",{ascending:true}).then(function(r2){
+answers=(r2&&!r2.error&&r2.data)||[];renderQA()}).catch(function(){answers=[];renderQA()})}).catch(function(){softNote()})}
+if(A.user&&A.sb){
+A.sb.from("claims").select("id").eq("user_id",A.user.id).eq("business_slug",slug).eq("status","approved").then(function(r){
+if(r&&!r.error&&r.data&&r.data.length){isOwner=true;
+A.sb.from("questions").select("id,body,created_at").eq("business_slug",slug).eq("status","pending").order("created_at",{ascending:false}).then(function(r2){pendingQs=(r2&&!r2.error&&r2.data)||[];renderQA()}).catch(function(){})}}).catch(function(){})}
+loadQA();
+var askForm=document.getElementById("ytp-ask-form"),askPrompt=document.getElementById("ytp-ask-prompt"),askPb=document.getElementById("ytp-ask-signin");
+if(askPb)askPb.addEventListener("click",function(){A.signIn()});
+if(A.user&&A.sb){if(askForm)askForm.hidden=false;if(askPrompt)askPrompt.hidden=true;
+if(askForm)askForm.addEventListener("submit",function(ev){ev.preventDefault();
+var body=document.getElementById("ytp-ask-body").value.trim();if(!body)return;
+A.sb.from("questions").insert({business_slug:slug,user_id:A.user.id,body:body,status:"pending"}).then(function(r){
+if(r&&r.error){askForm.innerHTML="<p>Something went wrong saving your question. Please try again.</p>"}
+else askForm.innerHTML="<p>Thanks, your question appears after a quick check.</p>"}).catch(function(){askForm.innerHTML="<p>Something went wrong saving your question. Please try again.</p>"})})}
+else{if(askForm)askForm.hidden=true;if(askPrompt)askPrompt.hidden=false}
 });
 </script><script>
 /* v4.4: claim-state awareness on listings. The page renders

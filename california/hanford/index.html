@@ -383,6 +383,35 @@ input,textarea,select{font-size:16px}
 .revphotos{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
 .revphotos img{width:160px;height:120px;object-fit:cover;border-radius:8px;display:block}
 .ordbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-left:6px}
+
+.histbox{margin:2px 0 12px}
+.histavg{font-weight:700;margin:0 0 8px}
+.histrow{display:flex;align-items:center;gap:8px;margin:3px 0;font-size:13px;color:#43586a}
+.histrow .hstar{width:46px;flex:none;font-weight:600;color:#1c2430}
+.histbar{flex:1;background:#eef3f6;border-radius:6px;height:10px;overflow:hidden}
+.histbar i{display:block;height:100%;background:#0e7a5f;border-radius:6px}
+.histrow .hcount{width:70px;flex:none}
+.revtools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin:10px 0}
+.revtools label{display:inline;font-weight:600;font-size:14px;margin:0}
+.revtools select,.revtools input{padding:8px 10px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.helpbtn{background:#fff;border:1px solid #0e7a5f;color:#0b5c46;font-weight:700;font-size:13px;border-radius:8px;padding:4px 10px;cursor:pointer;margin-top:6px}
+.helpbtn.on{background:#0e7a5f;color:#fff}
+.qasec{margin:26px 0}
+.qa-q{border-top:1px solid #e4e0d5;padding:12px 0}
+.qa-a{margin:8px 0 0 18px;padding:8px 12px;background:#f7f5ef;border-radius:8px}
+.ownerbadge{display:inline-block;background:#0e7a5f;color:#fff;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}
+.qapend{margin:14px 0}
+.qaform label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
+.qaform textarea{width:100%;padding:10px 12px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.qaform button[type="submit"]{background:#12212e;color:#fff;padding:10px 18px;border:0;border-radius:8px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:10px;min-height:44px}
+@media (max-width:1199px){
+.header-home{position:static;background:#12212e;box-shadow:0 1px 8px rgba(0,0,0,.25)}
+.herofull{margin-top:0}
+.herocontent-v3{padding-top:44px}
+}
+@media (max-width:767px){
+.revtools input,.qaform textarea{font-size:16px}
+}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>

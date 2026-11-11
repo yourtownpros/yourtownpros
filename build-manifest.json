@@ -1,5 +1,5 @@
 {
-  "version": "v4.9",
+  "version": "v5.0",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -926,10 +926,10 @@
   "v40_checks": {
     "note": "v4.0: data plumbing for honest numbers. Optional reviews snapshot (approved YourTownPros reviews only, fetched by yourtownpros-fetch-reviews.py) drives the extractive 'What people say on YourTownPros' block on listings with >= 2 approved text reviews: complete sentences quoted verbatim, chosen by representativeness within the business's own review text, count stated; no paraphrase, no star-derived language. Optional GoatCounter snapshot (real per-hit export via yourtownpros-fetch-gc.py) ships as /gc-snapshot.json and the /business/ Overview numbers card shows a claimed business's real listing/category views with window and counting start labeled; absent a snapshot or an entry, the v3.9 note stays word-for-word. The Bleed Report is a back-office tool (yourtownpros-bleed-report.py) for Robert's one-to-one delivery; both GoatCounter tools refuse to write anything without the API token.",
     "reviews_snapshot_present": false,
-    "gc_snapshot_present": false,
+    "gc_snapshot_present": true,
     "sentiment_businesses": [],
     "sentiment_blocks_in_tree": 0,
-    "gc_snapshot_in_tree": false,
+    "gc_snapshot_in_tree": true,
     "business_numbers_note_intact": true,
     "dashboard_gc_wiring": true,
     "tools_py_compile": {
@@ -1322,6 +1322,62 @@
     "partner_placements_unchanged": true,
     "v48_photo_wiring_present": true,
     "empty_photos_snapshot_unchanged": true
+  },
+  "v50_checks": {
+    "note": "v5.0: owner value loop (audit chunk 3). Per-card Request actions scope the match flow to the card's business (listing form carries the slug, arrival flagged ?src=card and recorded as source card), one unified match script writes every match_requests row with its source, the /business/ Requests pane gains a device-local unread badge plus a New requests waiting reminder, and the numbers card gains real leads-by-action counts from the fixture-tested ytpLeadGroups. PARENT MUST APPLY schema v9 (yourtownpros-supabase-schema-v9.sql: match_requests.source, its vocabulary constraint and the grouping index; no policy changes) for the source column to exist; until then inserts retry with the source as a notes marker and the dashboard read falls back to the v4.5 column set, so every surface works in every window. Two checks were revised in the documented pattern: the v4.8 structural comparison normalizes both sides through _norm50 and _norm49 and corrects the repo side for the two phone numbers fixed in the source data after v4.9 shipped (pairs derived from the trees' biz-data.json), and the v4.9 desktop-header check strips V50_CSS from the new style and V49_CSS from both sides.",
+    "schema_v9_file_present": true,
+    "schema_v9_column": true,
+    "schema_v9_vocabulary": true,
+    "schema_v9_index": true,
+    "per_card_links_match_instrumentation": true,
+    "per_card_targets_scoped": true,
+    "per_card_count": 26126,
+    "flagged_never_card_target": true,
+    "flagged_listings_unscoped": true,
+    "match_script_pages_complete": true,
+    "match_script_wired_everywhere": true,
+    "match_script_payload": true,
+    "category_broker_forms_scoped": true,
+    "featured_routing_unchanged": true,
+    "featured_category_pages": 2,
+    "scoped_form_copy_honest": true,
+    "dashboard_badge_wired": true,
+    "dashboard_reminder_wired": true,
+    "dashboard_device_local_copy": true,
+    "dashboard_requests_read_source": true,
+    "dashboard_request_via_labels": true,
+    "leads_grouping_shipped": true,
+    "leads_by_action_fixture_math": true,
+    "leads_fixture": {
+      "listing": 1,
+      "card": 3,
+      "featured": 4,
+      "other": 0,
+      "total": 8
+    },
+    "leads_counts_copy": true,
+    "zero_state_honesty": true,
+    "structure_matches_v49_after_deltas": true,
+    "phone_corrections_applied_to_repo_side": 4,
+    "totals_match_v49": true,
+    "businesses_total_5050": true,
+    "sitemap_total_6886": true,
+    "html_total_7159": true,
+    "no_broken_internal_links": true,
+    "no_em_dash_files": true,
+    "no_aggregate_rating_files": true,
+    "honeypots_intact": true,
+    "renaud_phone_exactly_two_files": true,
+    "rankly_pages_phone_free": true,
+    "featured_no_price": true,
+    "claimed_listings_wiring": true,
+    "dashboard_photos_pane_present": true,
+    "dashboard_requests_pane_present": true,
+    "partner_placements_unchanged": true,
+    "v48_photo_wiring_present": true,
+    "v49_review_community_wiring": true,
+    "mobile_header_fix_present": true,
+    "desktop_header_rules_unchanged": true
   },
   "partner_placements_detail": [
     {
@@ -21806,7 +21862,7 @@
     "url_count": 6886
   },
   "link_check": {
-    "internal_hrefs_checked": 681873,
+    "internal_hrefs_checked": 703855,
     "broken": []
   },
   "phone_spot_check": {

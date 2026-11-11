@@ -412,6 +412,10 @@ input,textarea,select{font-size:16px}
 @media (max-width:767px){
 .revtools input,.qaform textarea{font-size:16px}
 }
+
+.reqbadge{display:inline-block;min-width:20px;padding:1px 6px;border-radius:10px;background:#b3261e;color:#fff;font-size:12px;font-weight:800;text-align:center;vertical-align:middle;margin-left:4px}
+.reqbadge[hidden]{display:none}
+.cardreq a{font-weight:700}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -429,7 +433,7 @@ input,textarea,select{font-size:16px}
 <button type="button" data-sec="overview" class="on">Overview</button>
 <button type="button" data-sec="bizinfo">Business information</button>
 <button type="button" data-sec="photos">Photos</button>
-<button type="button" data-sec="requests">Requests</button>
+<button type="button" data-sec="requests">Requests <span class="reqbadge" id="biz-req-badge" hidden></span></button>
 <button type="button" data-sec="reviews">Reviews</button>
 <button type="button" data-sec="upgrades">Page upgrades</button>
 </nav>
@@ -491,7 +495,7 @@ input,textarea,select{font-size:16px}
 </section>
 <section class="bizsec" id="sec-requests" hidden>
 <h2>Requests</h2>
-<p class="listed">These are customer requests that arrived through your own listing page, plus any Featured priority requests routed to your business. Requests sent from a town and trade page in general come to us as the broker, so they are not listed here.</p>
+<p class="listed">These are customer requests that arrived through your own listing page or from your card on a results page, plus any Featured priority requests routed to your business. Requests sent from a town and trade page in general come to us as the broker, so they are not listed here. The count of new requests is kept on this device, so it can differ between your phone and your computer.</p>
 <div id="biz-requests"><p class="listed">Loading...</p></div>
 </section>
 <section class="bizsec" id="sec-reviews" hidden>
@@ -580,6 +584,18 @@ if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
 var myPhotos=[],photosTable=null,photosOrd=false,myRequests=[],myQuestions=[];
 var gcData=null,numbersNote=null;
+function ytpLeadSource(r){
+r=r||{};var s=String(r.source||"");
+if(!s){var m=/\[ytp-src:(listing|card|featured|category)\]/.exec(String(r.notes||""));if(m)s=m[1]}
+if(s==="listing")return "listing";
+if(s==="card")return "card";
+if(s==="featured"||s==="")return "featured";
+return "other"}
+function ytpLeadGroups(rows){
+var g={listing:0,card:0,featured:0,other:0,total:0};
+rows=rows||[];
+for(var i=0;i<rows.length;i++){g[ytpLeadSource(rows[i])]++;g.total++}
+return g}
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
 function bizName(b){var f=facts(b.slug);return (f&&f.name)||b.name||b.slug}
@@ -589,6 +605,11 @@ function selectSection(name){
 for(var i=0;i<navBtns.length;i++){var on=navBtns[i].getAttribute("data-sec")===name;navBtns[i].classList.toggle("on",on);var sec=$("sec-"+navBtns[i].getAttribute("data-sec"));if(sec)sec.hidden=!on}
 }
 for(var n=0;n<navBtns.length;n++){(function(b){b.addEventListener("click",function(){selectSection(b.getAttribute("data-sec"))})})(navBtns[n])}
+/* v5.0: opening the Requests pane marks the current
+business's requests seen, which clears the badge and the
+Overview reminder. A separate listener, so the v3.9
+section wiring above stays untouched. */
+for(var n50=0;n50<navBtns.length;n50++){(function(b){if(b.getAttribute("data-sec")==="requests")b.addEventListener("click",function(){markReqSeen()})})(navBtns[n50])}
 function startSection(){var h=(location.hash||"").replace("#","");return {overview:1,bizinfo:1,photos:1,requests:1,reviews:1,upgrades:1}[h]?h:"overview"}
 function showNoOwner(claims){
 if(main)main.hidden=true;if(noown)noown.hidden=false;
@@ -612,10 +633,22 @@ function renderNumbers(){
 var card=$("biz-numbers");if(!card)return;
 if(numbersNote===null)numbersNote=card.innerHTML;
 var g=(gcData&&cur)?gcData[cur]:null;
-if(!g||typeof g.listing_views!=="number"){if(card.innerHTML!==numbersNote)card.innerHTML=numbersNote;return}
-var h='<h3>Your numbers</h3><p>Counting since '+esc(fmtDay(g.since))+', in the last '+g.window_days+' days: <strong>'+g.listing_views+'</strong> views of your listing page';
+var hasG=!!(g&&typeof g.listing_views==="number");
+/* v5.0: the leads-by-action counts join the card. They are
+the business's real recorded match requests, grouped by
+how each one arrived (ytpLeadGroups, fixture-tested at
+build time); they show whenever requests exist, with or
+without a GoatCounter snapshot. With neither, the honest
+static placeholder stays, exactly as v4.0 left it. */
+var grp=ytpLeadGroups(myRequests);
+if(!hasG&&!grp.total){if(card.innerHTML!==numbersNote)card.innerHTML=numbersNote;return}
+var h='<h3>Your numbers</h3>';
+if(hasG){h+='<p>Counting since '+esc(fmtDay(g.since))+', in the last '+g.window_days+' days: <strong>'+g.listing_views+'</strong> views of your listing page';
 if(typeof g.category_views==="number")h+=' and <strong>'+g.category_views+'</strong> views of your category page';
-h+='. These are your real GoatCounter counts, never estimates.</p>';
+h+='. These are your real GoatCounter counts, never estimates.</p>'}
+if(grp.total){h+='<p>Match requests recorded for this business: <strong>'+grp.total+'</strong> in total: '+grp.listing+' from your listing page, '+grp.card+' from a results card and '+grp.featured+' Featured priority.';
+if(grp.other)h+=' Plus '+grp.other+' that arrived another way.';
+h+=' These counts come from the requests themselves, never estimates.</p>'}
 card.innerHTML=h}
 function featWords(e){
 if(!e)return "";
@@ -668,6 +701,12 @@ var waiting=appr.filter(function(x){return !(x.response_text||x.owner_response)}
 if(!appr.length){items.push({done:false,text:"No customer reviews yet. When reviews arrive, you can respond to each one from the Reviews tab."})}
 else if(waiting.length){items.push({done:false,text:"Respond to your customer reviews: "+waiting.length+" of "+appr.length+" still waiting for a reply."})}
 else{items.push({done:true,text:"You have responded to every customer review."})}
+/* v5.0: the lead alert. Driven by the same rows the
+Requests pane shows and the same device-local last-seen
+mark as the nav badge. */
+var un50=reqUnread();
+if(un50>0){items.push({done:false,text:"New requests waiting: "+un50+" new customer "+(un50===1?"request":"requests")+" for this business since your last visit. Open the Requests tab to see "+(un50===1?"it":"them")+"."})}
+
 box.innerHTML='<ul class="checklist">'+items.map(function(it){return '<li><span class="'+(it.done?"ck":"todo")+'">'+(it.done?"Done: ":"To do: ")+"</span>"+esc(it.text)+"</li>"}).join("")+"</ul>"}
 function renderFacts(){
 var box=$("biz-facts");if(!box||!cur)return;
@@ -782,11 +821,51 @@ if(q.need)meta.push("Needs: "+esc(q.need));
 if(q.preferred_time)meta.push("Preferred time: "+esc(q.preferred_time));
 if(q.city)meta.push(esc(q.city));
 if(meta.length)h+='<div class="meta">'+meta.join(" \u00b7 ")+"</div>";
-h+='<div class="meta">Received '+fmtDate(q.created_at)+". Status: "+esc(q.status||"new")+".</div>";
+/* v5.0: each row says how it arrived, from the same
+classifier the Overview counts use. */
+var via50={listing:"your listing page",card:"a results card",featured:"Featured priority",other:"another way"}[ytpLeadSource(q)];
+h+='<div class="meta">Received '+fmtDate(q.created_at)+" via "+via50+". Status: "+esc(q.status||"new")+".</div>";
 return h+"</div>"}).join("")}
-function loadRequests(slug){
-A.sb.from("match_requests").select("name,phone,need,preferred_time,city,status,created_at").eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
-myRequests=(r&&!r.error&&r.data)||[];renderRequests()}).catch(function(){myRequests=[];renderRequests()})}
+/* v5.0: lead alerts. The last-seen mark is one JSON map in
+localStorage, keyed by this account, holding per business
+the newest request timestamp the owner has seen. It is
+device-local by design: it lives in this browser only, so
+the unread count can differ between the owner's phone and
+computer (the Requests pane copy says exactly that). No
+server state, no email: opening the Requests pane is what
+marks requests seen. */
+function reqSeenKey50(){return "ytpReqSeen:"+A.user.id}
+function reqSeenMap50(){try{var m=JSON.parse(localStorage.getItem(reqSeenKey50())||"{}");return m&&typeof m==="object"?m:{}}catch(e){return{}}}
+function reqUnread(){
+if(!cur)return 0;
+var seen=reqSeenMap50()[cur]||"";
+var n=0;
+for(var i=0;i<myRequests.length;i++){if(String(myRequests[i].created_at||"")>seen)n++}
+return n}
+function renderReqBadge(){
+var b=$("biz-req-badge");if(!b)return;
+var n=reqUnread();
+b.hidden=!n;
+b.textContent=n?String(n):""}
+function markReqSeen(){
+if(!cur)return;
+var newest="";
+for(var i=0;i<myRequests.length;i++){var t=String(myRequests[i].created_at||"");if(t>newest)newest=t}
+if(!newest)newest=new Date().toISOString();
+try{var m=reqSeenMap50();m[cur]=newest;localStorage.setItem(reqSeenKey50(),JSON.stringify(m))}catch(e){}
+renderReqBadge();renderChecklist()}
+function afterRequests50(){
+renderRequests();renderReqBadge();renderChecklist();renderNumbers();
+var sec=$("sec-requests");
+if(sec&&!sec.hidden)markReqSeen()}
+function loadRequests(slug,plain){
+/* v5.0: read the source column when schema v9 is applied;
+on any error fall back once to the v4.5 column set, the
+same retry pattern as loadReviews and loadPhotos. */
+var sel="name,phone,need,preferred_time,city,status,created_at"+(plain?"":",source");
+A.sb.from("match_requests").select(sel).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
+if(r&&r.error){if(!plain){loadRequests(slug,true)}else{myRequests=[];afterRequests50()}return}
+myRequests=(r&&r.data)||[];afterRequests50()}).catch(function(){if(!plain){loadRequests(slug,true)}else{myRequests=[];afterRequests50()}})}
 function loadBiz(slug){
 renderFacts();renderNumbers();renderFeat();renderPartner();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});

@@ -65,7 +65,7 @@ var ownerProbed=false;
 function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
-try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
 function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");

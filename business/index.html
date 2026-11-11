@@ -357,6 +357,15 @@ input,textarea,select{font-size:16px}
 
 .docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
 .docup input[type=file]{display:block;margin-top:8px;max-width:100%}
+
+.cbadge{display:inline-block;background:#eef6f2;color:#0b5c46;border:1px solid #0e7a5f;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
+.claimedline{margin:10px 0 0}
+.managebar{background:#12212e;color:#fff;border-radius:10px;padding:12px 16px;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.managebar .mb-label{font-weight:700;font-size:15px}
+.managebar .mb-btns{display:flex;flex-wrap:wrap;gap:8px}
+.managebar .mbtn{display:inline-flex;align-items:center;min-height:36px;background:#fff;color:#12212e;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;text-decoration:none}
+.featsteps{margin:10px 0 0;padding-left:22px}
+.featsteps li{margin:0 0 10px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -383,7 +392,7 @@ input,textarea,select{font-size:16px}
 <div id="biz-cards"><p class="listed">Loading...</p></div>
 <h2 style="margin-top:22px">Reminders</h2>
 <div id="biz-checklist"><p class="listed">Loading...</p></div>
-<div class="card">
+<div class="card" id="biz-feat-card">
 <h3>Get more from your listing</h3>
 <p>Featured businesses get the Sponsored top spot in their town and trade, a booking block on their listing, and first claim on matched customers. Featured starts with a free taste week.</p>
 <p style="margin:8px 0 2px"><a class="claimbtn" href="/for-business/#featured">See how Featured works</a></p>
@@ -420,7 +429,8 @@ input,textarea,select{font-size:16px}
 </section>
 <section class="bizsec" id="sec-upgrades" hidden>
 <h2>Page upgrades: Featured</h2>
-<div class="card">
+<div id="biz-upg-state"></div>
+<div class="card" id="biz-upg-card">
 <h3>What Featured includes</h3>
 <ul>
 <li>The Sponsored top spot on your town and trade page, labeled Sponsored.</li>
@@ -428,13 +438,13 @@ input,textarea,select{font-size:16px}
 <li>First claim on matched customers in your town and trade: when someone asks us to find a pro, your business is offered first.</li>
 </ul>
 <p>Featured is exclusive: one business per town and trade. It starts with a free taste week of routed demand, then a flat monthly lease for as long as you keep the spot. There is nothing to buy on this page; talk to us and we will set it up.</p>
-<p style="margin:8px 0 2px"><a class="claimbtn" href="/for-business/#matching">Talk to us about Featured</a></p>
+<p style="margin:8px 0 2px"><a class="claimbtn" href="/for-business/#featured">See how Featured works</a></p>
 </div>
 </section>
 </div>
 </div>
 </div>
-<script>
+<script>window.YTP_FEAT={"by_slug": {"website-design/rankly-design-westminster": {"state": "house", "taste_start": "", "taste_end": "", "name": "Rankly Design", "city": "Westminster", "state_abbr": "CO", "trade": "Website Design"}, "natural-skincare/renaud-naturals-loveland": {"state": "house", "taste_start": "", "taste_end": "", "name": "Renaud Naturals", "city": "Loveland", "state_abbr": "CO", "trade": "Natural Skincare"}}, "by_cat": {"website-design|CO|Westminster": {"slug": "website-design/rankly-design-westminster", "name": "Rankly Design", "state": "house"}, "natural-skincare|CO|Loveland": {"slug": "natural-skincare/renaud-naturals-loveland", "name": "Renaud Naturals", "state": "house"}}}</script><script>
 ytpOnReady(function(A){
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function stars(r){var f=Math.max(0,Math.min(5,Math.round(Number(r)||0))),out="";for(var i=0;i<f;i++)out+="\u2605";for(var j=f;j<5;j++)out+="\u2606";return out}
@@ -477,6 +487,45 @@ var h='<h3>Your numbers</h3><p>Counting since '+esc(fmtDay(g.since))+', in the l
 if(typeof g.category_views==="number")h+=' and <strong>'+g.category_views+'</strong> views of your category page';
 h+='. These are your real GoatCounter counts, never estimates.</p>';
 card.innerHTML=h}
+function featWords(e){
+if(!e)return "";
+if(e.state==="house")return "Featured is on for this listing as a house listing, and stays on.";
+if(e.state==="taste")return "The free taste week is running"+(e.taste_end?" through "+e.taste_end:"")+". After the taste week it continues as a flat monthly lease for as long as the spot is kept.";
+if(e.state==="leased")return "The flat monthly lease is active, and the spot is exclusive to this business.";
+return "Featured is on for this listing."}
+function featLiveList(){
+return '<ul><li>The Sponsored top spot on the town and trade page, labeled Sponsored.</li><li>The Featured badge and a booking block on the listing.</li><li>First claim on matched customers in the town and trade.</li></ul>'}
+function featStateFor(slug){
+var F=window.YTP_FEAT||{by_slug:{},by_cat:{}};
+if(F.by_slug[slug])return {kind:"mine",entry:F.by_slug[slug]};
+var f=facts(slug);
+if(!f)return null;
+var holder=F.by_cat[slug.split("/")[0]+"|"+f.state+"|"+f.city];
+if(holder&&holder.slug!==slug)return {kind:"taken",holder:holder,f:f};
+return {kind:"open",f:f}}
+var featCardOrig=null;
+function renderFeat(){
+if(!cur)return;
+var st=featStateFor(cur);
+var card=$("biz-feat-card"),state=$("biz-upg-state"),upg=$("biz-upg-card");
+if(!st)return;
+if(featCardOrig===null&&card)featCardOrig=card.innerHTML;
+var name=bizName({slug:cur});
+if(st.kind==="mine"){
+if(card)card.innerHTML='<h3>Featured is on for '+esc(name)+'</h3><p>'+esc(featWords(st.entry))+'</p>'+featLiveList();
+if(state)state.innerHTML='<div class="card"><h3>Featured is on for '+esc(name)+'</h3><p>'+esc(featWords(st.entry))+'</p><p>What is live:</p>'+featLiveList()+'</div>';
+if(upg)upg.hidden=true;
+}else if(st.kind==="taken"){
+var note='<h3>Featured in '+esc(st.f.city)+'</h3><p style="margin:0">The Featured spot for '+esc(st.f.trade)+' in '+esc(st.f.city)+' is currently held by '+esc(st.holder.name)+'. Spots are exclusive: one business per town and trade. <a href="/for-business/#featured">See how Featured works</a></p>';
+if(card)card.innerHTML=note;
+if(state)state.innerHTML='<div class="card">'+note+'</div>';
+if(upg)upg.hidden=true;
+}else{
+if(card&&featCardOrig!==null)card.innerHTML=featCardOrig;
+if(state)state.innerHTML="";
+if(upg)upg.hidden=false;
+}
+}
 function renderChecklist(){
 var box=$("biz-checklist");if(!box||!cur)return;
 var b=null;for(var i=0;i<bizList.length;i++){if(bizList[i].slug===cur)b=bizList[i]}
@@ -532,7 +581,7 @@ A.sb.from("reviews").select(sel).eq("business_slug",slug).order("created_at",{as
 if(r&&r.error){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}return}
 myReviews=(r&&r.data)||[];renderReviews();renderChecklist()}).catch(function(){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}})}
 function loadBiz(slug){
-renderFacts();renderNumbers();
+renderFacts();renderNumbers();renderFeat();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
 loadReviews(slug,true)}
 var crForm=$("biz-cr-form");
@@ -592,7 +641,7 @@ var ownerProbed=false;
 function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
-try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
 function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");

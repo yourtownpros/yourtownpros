@@ -357,6 +357,15 @@ input,textarea,select{font-size:16px}
 
 .docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
 .docup input[type=file]{display:block;margin-top:8px;max-width:100%}
+
+.cbadge{display:inline-block;background:#eef6f2;color:#0b5c46;border:1px solid #0e7a5f;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
+.claimedline{margin:10px 0 0}
+.managebar{background:#12212e;color:#fff;border-radius:10px;padding:12px 16px;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.managebar .mb-label{font-weight:700;font-size:15px}
+.managebar .mb-btns{display:flex;flex-wrap:wrap;gap:8px}
+.managebar .mbtn{display:inline-flex;align-items:center;min-height:36px;background:#fff;color:#12212e;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;text-decoration:none}
+.featsteps{margin:10px 0 0;padding-left:22px}
+.featsteps li{margin:0 0 10px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -367,10 +376,20 @@ input,textarea,select{font-size:16px}
 <p>Every real business in our directory gets a listing with its name, address, phone number, and public review summary. You do not have to do anything, and the listing is always free. Unclaimed listings cannot be edited, and matched customers are not sent to unclaimed listings first.</p>
 <h2>Claimed: free, verified</h2>
 <p>Claim your listing and, once we verify you own or manage the business, you can request updates to your hours, your description, your services list and your photos. Every change is reviewed by a person before it goes live, so the directory stays accurate. Claimed owners also hear from us when customers ask for their kind of work nearby.</p>
-<h2 id="featured">Featured: paid, exclusive per town</h2>
-<p>One business per town and trade can be Featured. Featured listings sit at the top of their category with a Sponsored label, get an online booking button on their listing, and receive matched customers first. Featured placement is a paid option; claiming stays free either way.</p>
+<h2 id="featured">How Featured works</h2>
+<p>Featured is the paid top spot on YourTownPros, built on top of a claimed listing. Claiming stays free either way; Featured is the upgrade. Here is exactly how it works.</p>
+<ol class="featsteps">
+<li><strong>One spot per town and trade.</strong> Only one business holds the Featured spot for its kind of work in its town. While you hold it, no competitor in the same town and trade can take it.</li>
+<li><strong>The top card, the badge, and booking.</strong> The holder gets the labeled Sponsored top card on its town and trade page, a Featured badge on its listing, and a booking block on the listing so customers can book or contact it directly.</li>
+<li><strong>Matched customers come to you first.</strong> When a customer asks us to find a pro in your town and trade, that request is flagged Featured priority and recorded against your business, so you hear about the work before anyone else.</li>
+<li><strong>It starts with a free taste week.</strong> The first week of routed demand is free, so you see real requests before paying anything.</li>
+<li><strong>Then a flat monthly lease.</strong> After the taste week, Featured continues as a flat monthly lease for as long as you keep the spot, exclusive to your business in your town and trade.</li>
+<li><strong>Counted from real data.</strong> Results are counted from real visitor data: views of your listing and its category page, and the matched requests sent your way. We never use estimates.</li>
+</ol>
+<div id="fb-feat-state"></div>
 <h2 id="matching">Matched customers</h2>
 <p>When a customer asks YourTownPros to find them a pro instead of calling around, that request becomes a matched customer. Matched requests are routed to Featured businesses first, so the Featured business in a town hears about the work before anyone else. If no Featured business covers that town and trade yet, the YourTownPros team handles the request and connects the customer with a local pro directly. Claiming your listing is free, and it is how we know who to contact about work nearby. Featured is what puts a business first in line.</p>
+<div id="fb-claimpitch">
 <h2>Start with a free claim</h2>
 <p>Sign in with Google to send your claim. Your account is how you manage the listing once it is approved.</p>
 <div id="ytp-claim-gate"><p>Sign in to claim your business.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
@@ -390,6 +409,9 @@ input,textarea,select{font-size:16px}
 <label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
 <label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
 <button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
+</div>
+<div id="fb-claim-pending" hidden></div>
+<div id="fb-claim-approved" hidden></div>
 <script>
 ytpOnReady(function(A){
 var gate=document.getElementById("ytp-claim-gate"),wrap=document.getElementById("ytp-claimwrap"),form=document.getElementById("ytp-claim-form");
@@ -517,6 +539,53 @@ else{row.document_path=dpath;docState="uploaded";insertClaim(row,dpath)}
 }else{insertClaim(row,null)}
 });
 });
+</script><script>window.YTP_FEAT={"by_slug": {"website-design/rankly-design-westminster": {"state": "house", "taste_start": "", "taste_end": "", "name": "Rankly Design", "city": "Westminster", "state_abbr": "CO", "trade": "Website Design"}, "natural-skincare/renaud-naturals-loveland": {"state": "house", "taste_start": "", "taste_end": "", "name": "Renaud Naturals", "city": "Loveland", "state_abbr": "CO", "trade": "Natural Skincare"}}, "by_cat": {"website-design|CO|Westminster": {"slug": "website-design/rankly-design-westminster", "name": "Rankly Design", "state": "house"}, "natural-skincare|CO|Loveland": {"slug": "natural-skincare/renaud-naturals-loveland", "name": "Renaud Naturals", "state": "house"}}}</script><script>
+/* v4.4: /for-business/ knows the visitor's claim state. Signed
+out or no claims: the page renders exactly as built. A pending
+claim swaps the claim pitch for an in-review note; an approved
+claim swaps it for a claimed note with a dashboard button and
+adds a Featured state line for that business, computed from
+the Featured map baked into this page (window.YTP_FEAT) plus
+/biz-data.json facts. Every failure leaves the page as built. */
+ytpOnReady(function(A){
+if(!A.user||!A.sb)return;
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function featLine(slug,f){
+var F=window.YTP_FEAT||{by_slug:{},by_cat:{}};
+var box=document.getElementById("fb-feat-state");if(!box)return;
+var name=f?f.name:slug,trade=f?f.trade:"your trade",city=f?f.city:"your town";
+var mine=F.by_slug[slug];
+if(mine){
+var words=mine.state==="house"?"Featured is on for "+esc(name)+" as a house listing, and stays on.":(mine.state==="taste"?"The free taste week for "+esc(name)+" is running"+(mine.taste_end?" through "+esc(mine.taste_end):"")+". After the taste week it continues as a flat monthly lease for as long as the spot is kept.":"The flat monthly lease for "+esc(name)+" is active, and the spot is exclusive.");
+box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">'+words+' <a href="/business/">Open your business dashboard</a></p></div>';
+return}
+var holder=F.by_cat[slug.split("/")[0]+"|"+(f?f.state:"")+"|"+city];
+if(holder&&holder.slug!==slug){
+box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is currently held by '+esc(holder.name)+'. Spots are exclusive: one business per town and trade. <a href="#matching">Talk to us</a> about your options.</p></div>';
+return}
+box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is open. It starts with a free taste week of routed demand, then a flat monthly lease for as long as you keep the spot. <a href="#matching">Talk to us</a> and we will set it up.</p></div>';
+}
+A.sb.from("claims").select("business_slug,business_name,status,created_at").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
+var claims=(r&&r.data)||[];
+if(!claims.length)return;
+var appr=null,pend=null,i;
+for(i=0;i<claims.length;i++){
+if(claims[i].status==="approved"&&!appr)appr=claims[i];
+if(claims[i].status==="pending"&&!pend)pend=claims[i];
+}
+var pitch=document.getElementById("fb-claimpitch");
+if(appr){
+if(pitch)pitch.hidden=true;
+var boxA=document.getElementById("fb-claim-approved");
+if(boxA){boxA.hidden=false;boxA.innerHTML='<h2>Your listing is claimed</h2><p>'+esc(appr.business_name)+' is claimed on this account. Manage it from your business dashboard: request updates, respond to reviews and see your numbers.</p><p style="margin:8px 0 2px"><a class="claimbtn" href="/business/">Open the business dashboard</a></p>'}
+fetch("/biz-data.json").then(function(r2){return r2.json()}).then(function(d){featLine(appr.business_slug,(d||{})[appr.business_slug]||null)}).catch(function(){featLine(appr.business_slug,null)});
+}else if(pend){
+if(pitch)pitch.hidden=true;
+var boxP=document.getElementById("fb-claim-pending");
+if(boxP){boxP.hidden=false;boxP.innerHTML='<h2>Your claim is in review</h2><p>Your claim for '+esc(pend.business_name)+' is in review. Most claims are approved within a day once the proof is in place. You can check its status any time on <a href="/account/">your account page</a>.</p>'}
+}
+}).catch(function(){});
+});
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>
 <script>
@@ -552,7 +621,7 @@ var ownerProbed=false;
 function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
-try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
 function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");

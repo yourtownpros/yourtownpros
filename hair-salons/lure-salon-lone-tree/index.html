@@ -357,6 +357,15 @@ input,textarea,select{font-size:16px}
 
 .docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
 .docup input[type=file]{display:block;margin-top:8px;max-width:100%}
+
+.cbadge{display:inline-block;background:#eef6f2;color:#0b5c46;border:1px solid #0e7a5f;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
+.claimedline{margin:10px 0 0}
+.managebar{background:#12212e;color:#fff;border-radius:10px;padding:12px 16px;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.managebar .mb-label{font-weight:700;font-size:15px}
+.managebar .mb-btns{display:flex;flex-wrap:wrap;gap:8px}
+.managebar .mbtn{display:inline-flex;align-items:center;min-height:36px;background:#fff;color:#12212e;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;text-decoration:none}
+.featsteps{margin:10px 0 0;padding-left:22px}
+.featsteps li{margin:0 0 10px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -426,6 +435,42 @@ if(r&&r.error){wf.innerHTML="<p>Something went wrong saving your review. Please 
 else{wf.innerHTML="<p>Thanks, your review appears after a quick check.</p>"}}).catch(function(){wf.innerHTML="<p>Something went wrong saving your review. Please try again.</p>"})})}
 else{if(wf)wf.hidden=true;if(wp)wp.hidden=false}
 });
+</script><script>
+/* v4.4: claim-state awareness on listings. The page renders
+exactly as built unless the public claimed_listings view
+(schema v5) positively answers for this slug: then the claim
+strip is replaced by a Claimed badge in the name block, and
+when the signed-in user holds that approved claim, an owner
+manage bar appears at the top of the listing. The swap code
+sits inside the success branch after the error guard, so any
+error, empty answer or unreachable Supabase leaves the page
+exactly as rendered. */
+ytpOnReady(function(A){
+if(!A.sb)return;
+var slug="hair-salons/lure-salon-lone-tree";
+A.sb.from("claimed_listings").select("business_slug").eq("business_slug",slug).then(function(r){
+if(!r||r.error||!r.data||!r.data.length)return;
+var strip=document.querySelector(".claimstrip");
+if(strip)strip.parentNode.removeChild(strip);
+var band=document.querySelector(".photoband-img");
+var h1=document.querySelector("h1");
+var line=document.createElement("p");
+line.className="claimedline";
+line.innerHTML='<span class="cbadge">\u2713 Claimed</span>';
+if(band&&band.parentNode){band.parentNode.insertBefore(line,band)}
+else if(h1&&h1.parentNode){h1.parentNode.insertBefore(line,h1.nextSibling)}
+if(!A.user)return;
+A.sb.from("claims").select("id").eq("user_id",A.user.id).eq("business_slug",slug).eq("status","approved").then(function(r2){
+if(!r2||r2.error||!r2.data||!r2.data.length)return;
+var main=document.querySelector("main");
+if(!main)return;
+var bar=document.createElement("div");
+bar.className="managebar";
+bar.innerHTML='<span class="mb-label">You manage this listing</span><span class="mb-btns"><a class="mbtn" href="/business/">Business dashboard</a><a class="mbtn" href="/business/#bizinfo">Edit business info</a><a class="mbtn" href="/business/#reviews">Reviews</a><a class="mbtn" href="/for-business/#featured">Promote</a></span>';
+main.insertBefore(bar,main.firstChild);
+}).catch(function(){});
+}).catch(function(){});
+});
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>
 <script>
@@ -461,7 +506,7 @@ var ownerProbed=false;
 function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
-try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
 function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");

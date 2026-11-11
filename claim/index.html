@@ -357,6 +357,15 @@ input,textarea,select{font-size:16px}
 
 .docup{background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 12px}
 .docup input[type=file]{display:block;margin-top:8px;max-width:100%}
+
+.cbadge{display:inline-block;background:#eef6f2;color:#0b5c46;border:1px solid #0e7a5f;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
+.claimedline{margin:10px 0 0}
+.managebar{background:#12212e;color:#fff;border-radius:10px;padding:12px 16px;margin:0 0 16px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.managebar .mb-label{font-weight:700;font-size:15px}
+.managebar .mb-btns{display:flex;flex-wrap:wrap;gap:8px}
+.managebar .mbtn{display:inline-flex;align-items:center;min-height:36px;background:#fff;color:#12212e;font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;text-decoration:none}
+.featsteps{margin:10px 0 0;padding-left:22px}
+.featsteps li{margin:0 0 10px}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -550,7 +559,7 @@ var ownerProbed=false;
 function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)return;
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
-try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true)link.hidden=false}).catch(function(){})}catch(e){}}
+try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
 function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");

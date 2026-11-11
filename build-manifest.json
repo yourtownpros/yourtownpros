@@ -1,5 +1,5 @@
 {
-  "version": "v4.3",
+  "version": "v4.4",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -755,6 +755,7 @@
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
       "change_requests",
+      "claimed_listings",
       "claims",
       "match_requests",
       "profiles",
@@ -1019,6 +1020,25 @@
     "claimed_copy_both_ways": true,
     "account_document_labels": true
   },
+  "v44_checks": {
+    "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
+    "claimed_listings_query_files": 6081,
+    "claimed_listings_query_pages_expected": 6081,
+    "listing_badge_swap_code": true,
+    "manage_bar_markup": true,
+    "manage_bar_links": true,
+    "manage_bar_no_photo_button": true,
+    "category_badge_code": true,
+    "sponsored_card_carries_slug": true,
+    "header_owner_swap_logic": true,
+    "featured_section_present": true,
+    "featured_six_steps": true,
+    "featured_no_price": true,
+    "dashboard_featured_buttons_point_to_featured": true,
+    "for_business_state_branches": true,
+    "page_upgrades_state_logic": true,
+    "fallback_no_swap_on_error": true
+  },
   "search_target_check": {
     "index_urls": 4926,
     "index_broken": [],
@@ -1059,7 +1079,7 @@
     "url_count": 6730
   },
   "link_check": {
-    "internal_hrefs_checked": 645510,
+    "internal_hrefs_checked": 665218,
     "broken": []
   },
   "phone_spot_check": {

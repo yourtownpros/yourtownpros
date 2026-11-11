@@ -1,5 +1,5 @@
 {
-  "version": "v3.6",
+  "version": "v3.7",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -67,6 +67,7 @@
     "state_overview": 16,
     "state_vertical_hub": 243,
     "city_hub": 307,
+    "county_hub": 316,
     "category": 1155,
     "listing": 4926,
     "claim": 1,
@@ -77,7 +78,7 @@
     "account": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 6686
+    "total_html": 7002
   },
   "search_index_entries": 4926,
   "search_upgrade": {
@@ -92,9 +93,9 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 6682,
-    "pages_with_fbmenu": 6682,
-    "total_html": 6686
+    "pages_with_brand_home_anchor": 6998,
+    "pages_with_fbmenu": 6998,
+    "total_html": 7002
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -156,13 +157,13 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 35,
+        "call_block_briefs": 36,
         "prospects_csvs": 120,
         "site_digests": 23
       },
       "prospects_rows": 4204,
       "digest_entries": 1480,
-      "pool_phones": 5712,
+      "pool_phones": 5729,
       "digest_linked_listings": 33
     },
     "coverage_unflagged_listings": {
@@ -568,6 +569,12 @@
         "max": 159,
         "over_160": 0
       },
+      "county_hub": {
+        "count": 316,
+        "min": 151,
+        "max": 158,
+        "over_160": 0
+      },
       "vertical_hub": {
         "count": 26,
         "min": 73,
@@ -733,10 +740,10 @@
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 6686,
-    "supabase_client_files": 6686,
-    "auth_init_files": 6686,
-    "total_html_files": 6686,
+    "goatcounter_files": 7002,
+    "supabase_client_files": 7002,
+    "auth_init_files": 7002,
+    "total_html_files": 7002,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -748,6 +755,61 @@
     ],
     "listing_slug_mismatches": [],
     "listings_missing_save_or_reviews": []
+  },
+  "v37_checks": {
+    "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters (listing pages keep the facade), Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template.",
+    "geocoding": {
+      "candidates": 727,
+      "from_cache": 727,
+      "submitted": 0,
+      "matched": 679,
+      "no_match": 48,
+      "unattempted": 0,
+      "census_ok": true,
+      "error": null
+    },
+    "pins": {
+      "category_pages": 1155,
+      "pages_with_map": 201,
+      "pages_facade_only": 954,
+      "total_pins": 462,
+      "dnc_flagged_pinned": 8
+    },
+    "county": {
+      "city_groups_total": 701,
+      "cities_with_county": 701,
+      "cities_unresolved": [],
+      "sources": {
+        "census_plurality": 123,
+        "geonames_place": 578
+      },
+      "category_pages_with_county": 1155,
+      "category_pages_total": 1155,
+      "hubs_total": 316,
+      "hubs_in_sitemap": 131,
+      "hubs_noindex": 185
+    },
+    "sitemap_segments": {
+      "chunks": {
+        "sitemap-listings.xml": 4926,
+        "sitemap-categories.xml": 1155,
+        "sitemap-hubs.xml": 644,
+        "sitemap-misc.xml": 5
+      },
+      "by_template": {
+        "listings": 4926,
+        "categories": 1155,
+        "hubs": 644,
+        "misc": 5
+      }
+    },
+    "indexnow_key_file": "55051a1a62ab0c1d6b1547cc3c6a66d8.txt",
+    "leaflet": {
+      "version": "1.9.4",
+      "css_sri": "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=",
+      "js_sri": "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=",
+      "category_pages_only": true
+    }
   },
   "search_target_check": {
     "index_urls": 4926,
@@ -775,18 +837,21 @@
   "sitemap": {
     "index": "sitemap.xml",
     "chunks": [
-      "sitemap-1.xml",
-      "sitemap-2.xml",
-      "sitemap-3.xml",
-      "sitemap-4.xml",
-      "sitemap-5.xml",
-      "sitemap-6.xml",
-      "sitemap-7.xml"
+      "sitemap-listings.xml",
+      "sitemap-categories.xml",
+      "sitemap-hubs.xml",
+      "sitemap-misc.xml"
     ],
-    "url_count": 6599
+    "segments": {
+      "listings": 4926,
+      "categories": 1155,
+      "hubs": 644,
+      "misc": 5
+    },
+    "url_count": 6730
   },
   "link_check": {
-    "internal_hrefs_checked": 609590,
+    "internal_hrefs_checked": 638426,
     "broken": []
   },
   "phone_spot_check": {

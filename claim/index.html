@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Claim Your Free Business Listing | YourTownPros</title><meta name="description" content="Claim your free YourTownPros listing to update your hours, services, photos and description. Owners sign in, send a claim, and we verify it by phone."><link rel="canonical" href="https://yourtownpros.com/claim/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="YourTownPros"><meta property="og:title" content="Claim Your Free Business Listing"><meta property="og:description" content="Claim your free YourTownPros listing to update your hours, services, photos and description. Owners sign in, send a claim, and we verify it by phone."><meta property="og:url" content="https://yourtownpros.com/claim/"><meta property="og:image" content="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&h=630&q=70"><meta name="twitter:card" content="summary_large_image">
+<title>Claim Your Free Business Listing | YourTownPros</title><meta name="description" content="Claim your free YourTownPros listing to update your hours, services, photos and description. Prove the business is yours with an email match, a website code."><link rel="canonical" href="https://yourtownpros.com/claim/"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="YourTownPros"><meta property="og:title" content="Claim Your Free Business Listing"><meta property="og:description" content="Claim your free YourTownPros listing to update your hours, services, photos and description. Prove the business is yours with an email match, a website code."><meta property="og:url" content="https://yourtownpros.com/claim/"><meta property="og:image" content="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&h=630&q=70"><meta name="twitter:card" content="summary_large_image">
 <style>*{box-sizing:border-box}body{margin:0;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1c2430;background:#fbfaf7;line-height:1.55}
 a{color:#0e7a5f}header{background:#12212e;color:#fff;padding:18px 24px}header .brand{font-size:22px;font-weight:800;letter-spacing:.2px}header .brand span{color:#35c08d}header nav a{color:#cfe3da;margin-right:18px;text-decoration:none;font-size:14px}
 .wrap{max-width:920px;margin:0 auto;padding:28px 20px 60px}h1{font-size:32px;margin:.2em 0 .3em}h2{font-size:22px;margin-top:36px}.sub{color:#5a6672;font-size:17px}
@@ -105,8 +105,6 @@ header{position:sticky;top:0;z-index:60;box-shadow:0 1px 8px rgba(0,0,0,.25)}
 .cat-rail .match{margin-top:0}
 .railcard{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 18px;margin:0 0 18px}
 .railcard h3{margin:0 0 8px;font-size:18px}
-.mapcard{padding:0;overflow:hidden}
-.mapcard iframe{width:100%;height:380px;border:0;display:block}
 .nearlinks a{display:block;padding:5px 0;color:#0e7a5f;text-decoration:none;font-weight:600}
 .filterbar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:10px 14px;margin:14px 0 6px;font-size:14px}
 .filterbar .rcount{font-weight:800}
@@ -166,8 +164,6 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .feat h2{margin:6px 0 6px;color:#fff;font-size:19px}
 img.hslide{object-fit:cover;width:100%;height:100%}
 .photoband-img{width:100%;height:180px;object-fit:cover;border-radius:12px;display:block;margin:12px 0 18px}
-.map-facade{display:flex;align-items:center;justify-content:center;background:#e8f3ee;color:#0e7a5f;font-weight:800;font-size:17px;text-decoration:none;text-align:center;padding:10px}
-.map-facade:hover{background:#d9ecdf}
 .cnav-drop .cnct{display:block;color:#5a6672;font-size:12px;padding:0 11px 6px;margin-top:-4px}
 .railcard h2{margin:0 0 8px;font-size:18px}
 .savebar{margin:12px 0 4px}
@@ -209,6 +205,48 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 .udrop a:hover,.udrop button:hover{background:#e8f3ee;color:#0e7a5f}
 .header-home .hright .udrop a{color:#1c2430}
 .header-home .hright .udrop a:hover{background:#e8f3ee;color:#0e7a5f}
+
+/* v3.8 category two-pane layout: filters | results | sticky map panel */
+.cat-layout{grid-template-columns:232px minmax(0,1fr) minmax(340px,42%)}
+.cat-map{position:sticky;top:96px;height:calc(100vh - 96px)}
+.cat-map .mappanel{height:100%;display:flex;flex-direction:column;background:#fff;border:1px solid #e4e0d5;border-radius:12px;overflow:hidden}
+.cat-map .ytp-map{flex:1 1 auto;height:auto;min-height:0}
+.mapcap{margin:0;padding:9px 14px;font-size:13px;color:#5a6672;border-top:1px solid #e4e0d5;background:#fff}
+.mlink{font-weight:700}
+.cat-main .match{margin-top:26px}
+@media(max-width:1024px){
+.cat-layout{grid-template-columns:minmax(0,1fr)}
+.cat-map{position:static;height:320px;order:1}
+.cat-side{position:static;order:2}
+.cat-main{order:3}
+}
+.ytp-pop{width:210px}
+.ytp-pop img{width:100%;height:112px;object-fit:cover;border-radius:8px;display:block}
+.ytp-pop .pname{font-weight:800;font-size:15px;margin:7px 0 2px;line-height:1.25}
+.ytp-pop .pstars{color:#7a5200;font-size:13px;margin:0 0 4px}
+.ytp-pop .pview{font-weight:700;font-size:13px}
+/* listing-page Leaflet map (replaces the v3.6 facade slot) */
+.lmapwrap{margin:16px 0}
+.lmap{height:300px;width:100%;background:#e8f3ee;border-radius:12px;overflow:hidden}
+.lmapwrap .mapcap{border:1px solid #e4e0d5;border-top:0;border-radius:0 0 12px 12px}
+/* featured booking block */
+.bookblock{background:#e8f3ee;border:1px solid #0e7a5f;border-radius:12px;padding:16px 18px;margin:16px 0}
+.bookblock h2{margin:0 0 6px;font-size:19px}
+.bookblock p{margin:0}
+/* claim flow: business picker, verification methods, code boxes */
+.picklist{margin:8px 0;border:1px solid #e4e0d5;border-radius:10px;overflow:hidden}
+.picklist button{display:block;width:100%;text-align:left;background:#fff;border:0;border-bottom:1px solid #e4e0d5;padding:10px 14px;font:inherit;cursor:pointer}
+.picklist button:last-child{border-bottom:0}
+.picklist button:hover{background:#e8f3ee}
+.bizcard{background:#fff;border:1px solid #e4e0d5;border-left:4px solid #0e7a5f;border-radius:10px;padding:14px 18px;margin:12px 0}
+.bizcard h3{margin:0 0 2px}
+.vmethod{display:block;background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:12px 14px;margin:0 0 10px;cursor:pointer}
+.vmethod input{margin-right:8px}
+.vmethod .vnote{display:block;font-size:13px;color:#5a6672;margin:5px 0 0 24px}
+.vmethod.off{opacity:.55;cursor:default}
+.codebox{background:#12212e;color:#fff;border-radius:10px;padding:14px 18px;margin:14px 0;font-size:17px}
+.codebox strong{letter-spacing:.08em}
+.acctcode{font-weight:800;letter-spacing:.05em}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
@@ -219,41 +257,118 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 <p>Once we verify you own or manage the business, you can request updates to your hours, your description, your services list and your photos. Every change is reviewed by a person before it goes live, so listings stay accurate for everyone.</p>
 <h2>What claiming does not include</h2>
 <p>Featured placement at the top of your town, the online booking button, and first access to matched customers are separate paid options. Claiming your listing is free and always will be.</p>
+<h2>How verification works</h2>
+<p>To keep listings in the right hands, every claim includes one quick proof that the business is yours. When you pick your business below, the form shows the proofs that work for it: an automatic match when your account email is the email we already have for the business (or shares its website domain), a short code you put on your website, in your DNS, or on the business Facebook page, or a photo of a business license or utility bill emailed to us. Approval is automatic once our check finds your proof. Only when none of those work do we call the phone number on the listing as a last step.</p>
 <h2>Request your claim</h2>
 <p>Sign in with Google to send your claim. Your account is how you manage the listing once it is approved, and signing in helps us check the claim really comes from the business.</p>
 <div id="ytp-claim-gate"><p>Sign in to claim your business.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
 <div id="ytp-claimwrap" hidden><form id="ytp-claim-form" class="match" style="margin:0">
-<label for="claim-business">Business name</label><input type="text" name="business" id="claim-business" required>
-<label for="claim-city">City</label><input type="text" name="city" id="claim-city" required>
+<label for="claim-pick-q">Find your business</label><input type="text" id="claim-pick-q" placeholder="Start typing your business name" autocomplete="off">
+<div class="picklist" id="claim-pick-list"></div>
+<div class="bizcard" id="ytp-bizcard" hidden></div>
+<label for="claim-business">Business name</label><input type="text" name="business" id="claim-business" readonly required>
+<label for="claim-city">City</label><input type="text" name="city" id="claim-city" readonly required>
+<input type="hidden" name="business_slug" id="claim-slug">
+<div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div>
 <label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required>
 <label for="claim-role">Your role</label><input type="text" name="role" id="claim-role" placeholder="Owner, manager, family member">
 <label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
 <label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
-<input type="hidden" name="business_slug" id="claim-slug">
 <label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
-<button type="submit">Request claim</button><div class="fine">We may call the phone number on the listing to confirm the claim before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
+<button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
 <script>
 ytpOnReady(function(A){
 var gate=document.getElementById("ytp-claim-gate"),wrap=document.getElementById("ytp-claimwrap"),form=document.getElementById("ytp-claim-form");
 var p=new URLSearchParams(location.search);
-function setv(id,val){var el=document.getElementById(id);if(el&&val)el.value=val}
-setv("claim-business",p.get("name"));setv("claim-city",p.get("city"));setv("claim-slug",p.get("business"));
-var gb=document.getElementById("ytp-claim-signin");if(gb)gb.addEventListener("click",function(){A.signIn()});
-function fail(){var e=document.getElementById("ytp-claim-error");if(e)e.textContent="Something went wrong sending your claim. Please try again."}
-if(A.user&&A.sb){
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+var searchIdx=null,verifyData=null,chosen=null,code="";
+function newCode(){var h="";var a=new Uint32Array(3);if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a);h=(a[0].toString(16)+a[1].toString(16)+a[2].toString(16)).toUpperCase()}else{h=Math.random().toString(16).slice(2,14).toUpperCase()}return "YTP-"+h.slice(0,6)}
+code=newCode();
+function domainOf(u){if(!u)return "";var s=String(u).split("://").pop().split("/")[0].toLowerCase();return s.indexOf("www.")===0?s.slice(4):s}
+function acctDomain(){return (A.user&&A.user.email?String(A.user.email).split("@").pop().toLowerCase():"")}
+function resolve(){
+if(!chosen){return}
+var nameEl=$("claim-business"),cityEl=$("claim-city"),slugEl=$("claim-slug");
+if(nameEl)nameEl.value=chosen.name;if(cityEl)cityEl.value=chosen.city;if(slugEl)slugEl.value=chosen.slug;
+var card=$("ytp-bizcard");
+if(card){card.hidden=false;card.innerHTML="<h3>"+esc(chosen.name)+"</h3><p class='listed' style='margin:0'>"+esc(chosen.where)+"</p>"}
+renderMethods();
+var sub=$("ytp-claim-submit");if(sub)sub.disabled=false;
+}
+function renderMethods(){
+var box=$("claim-verify");if(!box||!chosen)return;
+var vd=(verifyData&&verifyData[chosen.slug])||{email:"",website:"",domain:"",facebook:""};
+var acctEmail=(A.user&&A.user.email)?String(A.user.email).toLowerCase():"";
+var ad=acctDomain(),wd=vd.domain||domainOf(vd.website);
+var autoOk=!!((vd.email&&acctEmail&&vd.email===acctEmail)||(wd&&ad&&wd===ad));
+var out="<p class='listed' style='margin:0 0 8px'>Pick how you will prove this business is yours. Approval is automatic once our check finds your proof, usually within a day.</p>";
+out+="<label class='vmethod"+(autoOk?"":" off")+"'><input type='radio' name='vm' value='email'"+(autoOk?" checked":" disabled")+"><strong>Email match</strong><span class='vnote'>"+(autoOk?"Good news: your account email matches this business, so this claim approves automatically once we check it. Nothing else for you to do.":(vd.email?"We have a contact email on file for this business, but it is not the email you signed in with, so this method is not available. Pick another method below.":"We do not have a contact email on file for this business, so this method is not available. Pick another method below."))+"</span></label>";
+if(vd.website){
+out+="<label class='vmethod'><input type='radio' name='vm' value='website'><strong>Put a code on your website or in your DNS</strong><span class='vnote'>After you submit this claim we show you a short code. Add a page or a meta tag containing the code on "+esc(domainOf(vd.website))+", or add a DNS TXT record containing the code. Our check looks for it and approves your claim automatically.</span></label>";
+}else{
+out+="<label class='vmethod off'><input type='radio' name='vm' value='website' disabled><strong>Put a code on your website or in your DNS</strong><span class='vnote'>We do not have a website on file for this business, so this method is not available.</span></label>";
+}
+if(vd.facebook){
+out+="<label class='vmethod'><input type='radio' name='vm' value='facebook'><strong>Post a code on the business Facebook page</strong><span class='vnote'>After you submit this claim we show you a short code. Post it publicly on the business Facebook page and our check will find it and approve your claim automatically.</span></label>";
+}else{
+out+="<label class='vmethod off'><input type='radio' name='vm' value='facebook' disabled><strong>Post a code on the business Facebook page</strong><span class='vnote'>We do not have a Facebook page on file for this business, so this method is not available.</span></label>";
+}
+out+="<label class='vmethod'><input type='radio' name='vm' value='document'><strong>Send a document</strong><span class='vnote'>Email a photo of a business license or a utility bill that matches this listing's name and address to yourtownpros@gmail.com and mention the business name. We review documents by hand.</span></label>";
+box.innerHTML=out;
+}
+function pickSlug(slug){
+if(!searchIdx)return;
+for(var i=0;i<searchIdx.length;i++){var e=searchIdx[i];
+if(e.url.replace(/^\/+|\/+$/g,"")===slug){chosen={slug:slug,name:e.name,city:e.city,trade:e.trade,where:(e.city||"")+(e.state?", "+e.state:"")};resolve();return}}
+}
+function wirePicker(){
+var q=$("claim-pick-q"),list=$("claim-pick-list");if(!q||!list)return;
+q.addEventListener("input",function(){
+var term=q.value.trim().toLowerCase();list.innerHTML="";
+if(term.length<2||!searchIdx)return;
+var hits=[];
+for(var i=0;i<searchIdx.length&&hits.length<8;i++){var e=searchIdx[i];
+if(e.name.toLowerCase().indexOf(term)>=0)hits.push(e)}
+list.innerHTML=hits.map(function(e){return "<button type='button' data-slug='"+esc(e.url.replace(/^\/+|\/+$/g,""))+"'>"+esc(e.name)+" <span class='listed'>"+esc(e.city||"")+(e.state?", "+esc(e.state):"")+"</span></button>"}).join("");
+var btns=list.querySelectorAll("button");
+for(var j=0;j<btns.length;j++){(function(b){b.addEventListener("click",function(){pickSlug(b.getAttribute("data-slug"));list.innerHTML=""})})(btns[j])}
+});
+}
+function fail(){var e=$("ytp-claim-error");if(e)e.textContent="Something went wrong sending your claim. Please try again."}
+var gb=$("ytp-claim-signin");if(gb)gb.addEventListener("click",function(){A.signIn()});
+if(!(A.user&&A.sb)){if(gate)gate.hidden=false;if(wrap)wrap.hidden=true;return}
 if(gate)gate.hidden=true;if(wrap)wrap.hidden=false;
-setv("claim-email",A.user.email);
-var cname=document.getElementById("claim-name");if(cname&&!cname.value)cname.value=(A.user.user_metadata&&A.user.user_metadata.full_name)||A.displayName();
+var emailEl=$("claim-email");if(emailEl)emailEl.value=A.user.email||"";
+var cname=$("claim-name");if(cname&&!cname.value)cname.value=(A.user.user_metadata&&A.user.user_metadata.full_name)||A.displayName();
+var wantSlug=(p.get("business")||"").replace(/^\/+|\/+$/g,"");
+fetch("/search-index.json").then(function(r){return r.json()}).then(function(d){searchIdx=d;wirePicker();
+if(wantSlug){pickSlug(wantSlug)}else if(p.get("name")){
+var nm=p.get("name").toLowerCase();
+for(var i=0;i<d.length;i++){if(d[i].name.toLowerCase()===nm){chosen={slug:d[i].url.replace(/^\/+|\/+$/g,""),name:d[i].name,city:d[i].city,trade:d[i].trade,where:(d[i].city||"")+(d[i].state?", "+d[i].state:"")};resolve();break}}
+}}).catch(function(){});
+fetch("/verify-data.json").then(function(r){return r.json()}).then(function(d){verifyData=d;if(chosen)renderMethods()}).catch(function(){});
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
-var row={business_slug:(document.getElementById("claim-slug").value||"").trim(),
-business_name:document.getElementById("claim-business").value.trim(),
+if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
+var radios=form.querySelectorAll("input[name='vm']"),method="";
+for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}
+if(!method){var me=$("ytp-claim-error");if(me)me.textContent="Pick a verification method so we know how you will prove the business is yours.";return}
+var row={business_slug:chosen.slug,
+business_name:chosen.name,
 user_id:A.user.id,
-contact_name:document.getElementById("claim-name").value.trim(),
-contact_email:document.getElementById("claim-email").value.trim(),
-contact_phone:document.getElementById("claim-phone").value.trim(),
-relationship:(document.getElementById("claim-role").value||"Owner").trim()||"Owner"};
-A.sb.from("claims").insert(row).then(function(r){if(r&&r.error){fail()}else{window.location.href="/claimed/"}}).catch(fail)})}
-else{if(gate)gate.hidden=false;if(wrap)wrap.hidden=true}
+contact_name:$("claim-name").value.trim(),
+contact_email:$("claim-email").value.trim(),
+contact_phone:$("claim-phone").value.trim(),
+relationship:($("claim-role").value||"Owner").trim()||"Owner",
+status:"pending",
+verify_method:method,
+verify_code:(method==="website"||method==="facebook")?code:""};
+function done(){try{sessionStorage.setItem("ytpClaim",JSON.stringify({method:method,code:row.verify_code,business:chosen.name,slug:chosen.slug}))}catch(e){}
+window.location.href="/claimed/"}
+A.sb.from("claims").insert(row).then(function(r){
+if(r&&r.error){var slim={business_slug:row.business_slug,business_name:row.business_name,user_id:row.user_id,contact_name:row.contact_name,contact_email:row.contact_email,contact_phone:row.contact_phone,relationship:row.relationship,status:"pending"};
+A.sb.from("claims").insert(slim).then(function(r2){if(r2&&r2.error){fail()}else{done()}}).catch(fail)}
+else{done()}}).catch(fail)});
 });
 </script></main>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>

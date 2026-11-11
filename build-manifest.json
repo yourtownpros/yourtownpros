@@ -1,5 +1,5 @@
 {
-  "version": "v3.7",
+  "version": "v3.8",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -589,8 +589,8 @@
       },
       "claim": {
         "count": 1,
-        "min": 149,
-        "max": 149,
+        "min": 157,
+        "max": 157,
         "over_160": 0
       },
       "for_business": {
@@ -749,6 +749,7 @@
     "supabase_tables_referenced": [
       "change_requests",
       "claims",
+      "match_requests",
       "profiles",
       "reviews",
       "saved_pros"
@@ -757,7 +758,7 @@
     "listings_missing_save_or_reviews": []
   },
   "v37_checks": {
-    "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters (listing pages keep the facade), Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template.",
+    "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
       "candidates": 727,
       "from_cache": 727,
@@ -771,7 +772,7 @@
     "pins": {
       "category_pages": 1155,
       "pages_with_map": 201,
-      "pages_facade_only": 954,
+      "pages_facade_only": 0,
       "total_pins": 462,
       "dnc_flagged_pinned": 8
     },
@@ -808,8 +809,59 @@
       "version": "1.9.4",
       "css_sri": "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=",
       "js_sri": "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=",
-      "category_pages_only": true
+      "category_pages_only": false,
+      "note": "v3.7 shipped Leaflet on category pages only; v3.8 extends it to listing pages."
     }
+  },
+  "v38_checks": {
+    "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
+    "claims_verification": {
+      "verify_data_entries": 4926,
+      "with_email": 24,
+      "with_website": 231,
+      "with_domain": 231,
+      "with_facebook": 6,
+      "join_stats": {
+        "with_email": 24,
+        "with_website": 229,
+        "with_domain": 229,
+        "with_facebook": 6
+      },
+      "email_spot_trace_checked": 10,
+      "email_spot_trace_untraced": [],
+      "claim_links_with_slug": 4924,
+      "claim_links_missing_slug": []
+    },
+    "featured": {
+      "config_entries": 2,
+      "active_slugs": [
+        "natural-skincare/renaud-naturals-loveland",
+        "website-design/rankly-design-westminster"
+      ],
+      "expired_tastes_omitted": [],
+      "category_pages_with_featured": 2,
+      "rendering_mismatches": []
+    },
+    "category_layout": {
+      "grid_columns": "232px minmax(0,1fr) minmax(340px,42%)",
+      "map_panel": "sticky, top 96px, height calc(100vh - 96px)",
+      "stack_below": "1024px, map first at 320px",
+      "pages_with_pins": 201,
+      "pages_city_centered": 954,
+      "pages_with_facade_markup": 0,
+      "duplicate_location_line_pages": [],
+      "popup_payload_missing": []
+    },
+    "listing_maps": {
+      "pin_mode": 679,
+      "city_mode": 4247,
+      "no_map_no_city_coords": 0,
+      "bad": [],
+      "get_directions_links": 749
+    },
+    "facade_files_site_wide": [],
+    "sweep_script_compiles": true,
+    "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v2.sql"
   },
   "search_target_check": {
     "index_urls": 4926,

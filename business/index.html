@@ -311,7 +311,7 @@ img.hslide{object-fit:cover;width:100%;height:100%}
 <p>Featured businesses get the Sponsored top spot in their town and trade, a booking block on their listing, and first claim on matched customers. Featured starts with a free taste week.</p>
 <p style="margin:8px 0 2px"><a class="claimbtn" href="/for-business/#featured">See how Featured works</a></p>
 </div>
-<div class="card">
+<div class="card" id="biz-numbers">
 <h3>Your numbers</h3>
 <p>Visitor and lead counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>
 </div>
@@ -368,6 +368,7 @@ var sb=$("ytp-biz-signin");if(sb)sb.addEventListener("click",function(){A.signIn
 if(!A.user||!A.sb){if(out)out.hidden=false;return}
 if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
+var gcData=null,numbersNote=null;
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
 function bizName(b){var f=facts(b.slug);return (f&&f.name)||b.name||b.slug}
@@ -389,6 +390,16 @@ box.innerHTML=bizList.map(function(b){var f=facts(b.slug);var where=f?esc(f.city
 var appr=b.decided?"Claim approved "+fmtDate(b.decided)+".":"Claim approved.";
 return '<div class="card"><h3><a href="'+urlFor(b.slug)+'">'+esc(bizName(b))+'</a></h3>'+(where?'<div class="meta">'+where+'</div>':"")+'<div class="meta">'+appr+' <a href="'+urlFor(b.slug)+'">View your listing</a></div></div>'}).join("");
 renderChecklist()}
+function fmtDay(s){var p=String(s||"").split("-");if(p.length!==3)return String(s||"");var M=["January","February","March","April","May","June","July","August","September","October","November","December"];var m=Number(p[1]);return (M[m-1]||p[1])+" "+Number(p[2])+", "+p[0]}
+function renderNumbers(){
+var card=$("biz-numbers");if(!card)return;
+if(numbersNote===null)numbersNote=card.innerHTML;
+var g=(gcData&&cur)?gcData[cur]:null;
+if(!g||typeof g.listing_views!=="number"){if(card.innerHTML!==numbersNote)card.innerHTML=numbersNote;return}
+var h='<h3>Your numbers</h3><p>Counting since '+esc(fmtDay(g.since))+', in the last '+g.window_days+' days: <strong>'+g.listing_views+'</strong> views of your listing page';
+if(typeof g.category_views==="number")h+=' and <strong>'+g.category_views+'</strong> views of your category page';
+h+='. These are your real GoatCounter counts, never estimates.</p>';
+card.innerHTML=h}
 function renderChecklist(){
 var box=$("biz-checklist");if(!box||!cur)return;
 var b=null;for(var i=0;i<bizList.length;i++){if(bizList[i].slug===cur)b=bizList[i]}
@@ -444,7 +455,7 @@ A.sb.from("reviews").select(sel).eq("business_slug",slug).order("created_at",{as
 if(r&&r.error){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}return}
 myReviews=(r&&r.data)||[];renderReviews();renderChecklist()}).catch(function(){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}})}
 function loadBiz(slug){
-renderFacts();
+renderFacts();renderNumbers();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
 loadReviews(slug,true)}
 var crForm=$("biz-cr-form");
@@ -454,6 +465,7 @@ var msg=crForm.querySelector(".cr-msg");
 A.sb.from("change_requests").insert(row).then(function(r){
 if(r&&r.error){if(msg)msg.textContent="Could not send. Please try again."}
 else{if(msg)msg.textContent="Request sent. We review every change before it goes live.";myCRs.unshift({field:row.field,current_value:row.current_value,requested_value:row.requested_value,status:"pending",created_at:new Date().toISOString()});renderCRs();renderChecklist();crForm.querySelector(".cr-requested").value=""}}).catch(function(){if(msg)msg.textContent="Could not send. Please try again."})});
+fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcData=d||null;renderNumbers()}).catch(function(){});
 A.sb.from("claims").select("business_slug,business_name,status,created_at,decided_at").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
 var claims=(r&&r.data)||[];
 var approved=[];

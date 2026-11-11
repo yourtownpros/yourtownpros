@@ -1,5 +1,5 @@
 {
-  "version": "v3.9",
+  "version": "v4.0",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -916,6 +916,22 @@
       "hardening_recommended": "BEFORE UPDATE trigger on reviews reverting every column except response_text and response_at for non-service roles",
       "flagged_for": "v4.1 RLS audit"
     }
+  },
+  "v40_checks": {
+    "note": "v4.0: data plumbing for honest numbers. Optional reviews snapshot (approved YourTownPros reviews only, fetched by yourtownpros-fetch-reviews.py) drives the extractive 'What people say on YourTownPros' block on listings with >= 2 approved text reviews: complete sentences quoted verbatim, chosen by representativeness within the business's own review text, count stated; no paraphrase, no star-derived language. Optional GoatCounter snapshot (real per-hit export via yourtownpros-fetch-gc.py) ships as /gc-snapshot.json and the /business/ Overview numbers card shows a claimed business's real listing/category views with window and counting start labeled; absent a snapshot or an entry, the v3.9 note stays word-for-word. The Bleed Report is a back-office tool (yourtownpros-bleed-report.py) for Robert's one-to-one delivery; both GoatCounter tools refuse to write anything without the API token.",
+    "reviews_snapshot_present": false,
+    "gc_snapshot_present": false,
+    "sentiment_businesses": [],
+    "sentiment_blocks_in_tree": 0,
+    "gc_snapshot_in_tree": false,
+    "business_numbers_note_intact": true,
+    "dashboard_gc_wiring": true,
+    "tools_py_compile": {
+      "yourtownpros-bleed-report.py": true,
+      "yourtownpros-fetch-reviews.py": true,
+      "yourtownpros-fetch-gc.py": true
+    },
+    "goatcounter_tools_token_gate": true
   },
   "search_target_check": {
     "index_urls": 4926,

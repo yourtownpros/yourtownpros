@@ -1,5 +1,5 @@
 {
-  "version": "v3.2",
+  "version": "v3.3",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -63,25 +63,25 @@
   },
   "pages": {
     "homepage": 1,
-    "vertical_hub": 24,
+    "vertical_hub": 26,
     "state_overview": 16,
-    "state_vertical_hub": 241,
+    "state_vertical_hub": 243,
     "city_hub": 308,
-    "category": 1154,
-    "listing": 4924,
+    "category": 1156,
+    "listing": 4926,
     "claim": 1,
     "for_business": 1,
     "privacy": 1,
     "terms": 1,
     "claimed": 1,
     "match_thanks_copied": 1,
-    "total_html": 6674
+    "total_html": 6682
   },
-  "search_index_entries": 4924,
+  "search_index_entries": 4926,
   "search_upgrade": {
     "cities_index_entries": 308,
     "cities_index_broken": [],
-    "category_index_entries": 1154,
+    "category_index_entries": 1156,
     "category_index_broken": [],
     "coordinates": {
       "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
@@ -90,12 +90,67 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 6674,
-    "pages_with_fbmenu": 6674,
-    "total_html": 6674
+    "pages_with_brand_home_anchor": 6682,
+    "pages_with_fbmenu": 6682,
+    "total_html": 6682
+  },
+  "house_featured": {
+    "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
+    "listings": {
+      "Rankly Design": "/website-design/rankly-design-westminster/",
+      "Renaud Naturals": "/natural-skincare/renaud-naturals-loveland/"
+    },
+    "verticals": [
+      "natural-skincare",
+      "website-design"
+    ]
+  },
+  "v33_checks": {
+    "hero_dot_buttons": 3,
+    "hero_dot_click_wiring": true,
+    "house_listings": [
+      "/website-design/rankly-design-westminster/",
+      "/natural-skincare/renaud-naturals-loveland/"
+    ],
+    "renaud_phone_files": [
+      "natural-skincare/colorado/loveland/index.html",
+      "natural-skincare/renaud-naturals-loveland/index.html"
+    ],
+    "rankly_pages_phone_check": {
+      "website-design/index.html": {
+        "phone_number_matches": [],
+        "tel_hrefs": 0
+      },
+      "website-design/colorado/index.html": {
+        "phone_number_matches": [],
+        "tel_hrefs": 0
+      },
+      "website-design/colorado/westminster/index.html": {
+        "phone_number_matches": [],
+        "tel_hrefs": 0
+      },
+      "website-design/rankly-design-westminster/index.html": {
+        "phone_number_matches": [],
+        "tel_hrefs": 0
+      }
+    },
+    "house_page_check": {
+      "Rankly Design": {
+        "claim_strip_present": false,
+        "match_form_present": false,
+        "featured_badge_present": true,
+        "featured_label_present": true
+      },
+      "Renaud Naturals": {
+        "claim_strip_present": false,
+        "match_form_present": false,
+        "featured_badge_present": true,
+        "featured_label_present": true
+      }
+    }
   },
   "search_target_check": {
-    "index_urls": 4924,
+    "index_urls": 4926,
     "index_broken": [],
     "category_groups_checked": 1154,
     "category_broken": [],
@@ -128,10 +183,10 @@
       "sitemap-6.xml",
       "sitemap-7.xml"
     ],
-    "url_count": 6672
+    "url_count": 6680
   },
   "link_check": {
-    "internal_hrefs_checked": 547250,
+    "internal_hrefs_checked": 547880,
     "broken": []
   },
   "phone_spot_check": {

@@ -22,15 +22,19 @@ a{color:#0e7a5f}header{background:#12212e;color:#fff;padding:18px 24px}header .b
 .fbdrop a:hover{background:#e8f3ee;color:#0e7a5f}
 .fbmenu.open .fbdrop{display:block}
 </style></head><body>
-<header><div class="htop"><div class="brand">YourTown<span>Pros</span></div><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><a class="hclaim" href="/claim/">Claim your business</a></div></div><nav><a href="/">Home</a><a href="/pet-grooming/colorado/">Pet Grooming</a><a href="/tattoo/colorado/">Tattoo</a></nav></header>
+<header><div class="htop"><div class="brand">YourTown<span>Pros</span></div><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
 <div class="wrap"><h1>Request received</h1><p class="sub">Thanks. We are matching you with a local pro now, and you will hear back by phone, usually the same day.</p><p><a href="/">Back to YourTownPros</a></p></div>
 <footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.</footer>
 <script>
-(function(){var m=document.querySelector(".fbmenu");if(!m)return;var b=m.querySelector(".fbbtn");
-function close(){m.classList.remove("open");b.setAttribute("aria-expanded","false")}
-b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false")});
-document.addEventListener("click",function(e){if(!m.contains(e.target))close()});
-document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
-m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget))close()});
+(function(){
+var menus=document.querySelectorAll(".fbmenu,.cnav-item");
+function setBtn(m,open){var b=m.querySelector("button");if(b)b.setAttribute("aria-expanded",open?"true":"false")}
+function closeAll(except){for(var i=0;i<menus.length;i++){if(menus[i]!==except){menus[i].classList.remove("open");setBtn(menus[i],false)}}}
+for(var j=0;j<menus.length;j++){(function(m){var b=m.querySelector("button");if(!b)return;
+b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true)}});
+m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget)){m.classList.remove("open");setBtn(m,false)}});
+})(menus[j])}
+document.addEventListener("click",function(){closeAll(null)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(null)});
 })();
 </script></body></html>

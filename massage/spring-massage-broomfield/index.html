@@ -81,15 +81,58 @@ header{position:sticky;top:0;z-index:60;box-shadow:0 1px 8px rgba(0,0,0,.25)}
 .fbdrop a{display:block;color:#1c2430;padding:9px 12px;border-radius:6px;white-space:nowrap}
 .fbdrop a:hover{background:#e8f3ee;color:#0e7a5f}
 .fbmenu.open .fbdrop{display:block}
+
+.header-home{position:absolute;top:0;left:0;right:0;z-index:75;background:transparent;box-shadow:none;color:#fff;padding-bottom:6px}
+.header-home .fbbtn{color:#fff}
+.header-home .hright a{color:#fff}
+.header-home .hright a.hclaim{background:#0e7a5f;color:#fff}
+.catnav{overflow:visible;flex-wrap:wrap;position:relative;z-index:65;row-gap:4px}
+.cnav-item{position:relative}
+.cnav-btn{background:none;border:0;padding:4px 2px;color:#1c2430;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap}
+.cnav-btn .car{font-size:10px}
+.cnav-drop{display:none;position:absolute;left:0;top:calc(100% + 10px);background:#fff;border:1px solid #e4e0d5;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.22);min-width:232px;padding:6px;z-index:95;text-align:left}
+.cnav-drop a{display:block;color:#1c2430;padding:8px 11px;border-radius:6px;white-space:nowrap;font-weight:500;font-size:14px}
+.cnav-drop a:hover{background:#e8f3ee;color:#0e7a5f}
+.cnav-item.open .cnav-drop{display:block}
+.catnav-home{background:transparent;border-bottom:0;padding-left:0;padding-right:0}
+.catnav-home .cnav-btn{color:#fff}
+.herofull-v3{height:560px}
+.hoverlay-v3{background:linear-gradient(180deg,rgba(18,33,46,.55) 0%,rgba(18,33,46,0) 30%,rgba(18,33,46,0) 60%,rgba(18,33,46,.7) 100%)}
+.herocontent-v3{padding:128px 20px 0}
+.secttl{font-size:30px;font-weight:800;margin:44px 0 14px}
+.cat-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:26px;align-items:start;margin-top:8px}
+.cat-rail{position:sticky;top:96px}
+.cat-rail .match{margin-top:0}
+.railcard{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 18px;margin:0 0 18px}
+.railcard h3{margin:0 0 8px;font-size:18px}
+.mapcard{padding:0;overflow:hidden}
+.mapcard iframe{width:100%;height:380px;border:0;display:block}
+.nearlinks a{display:block;padding:5px 0;color:#0e7a5f;text-decoration:none;font-weight:600}
+.filterbar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;background:#fff;border:1px solid #e4e0d5;border-radius:10px;padding:10px 14px;margin:14px 0 6px;font-size:14px}
+.filterbar .rcount{font-weight:800}
+.fbtn{background:#f1efe8;border:1px solid #d8d4c8;color:#1c2430;padding:5px 11px;border-radius:16px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600}
+.fbtn.active{background:#0e7a5f;border-color:#0e7a5f;color:#fff}
+.result-card{display:flex;gap:16px;background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 18px;margin:12px 0}
+.result-card img{width:150px;height:124px;object-fit:cover;border-radius:8px;flex:none}
+.result-card h3{margin:0 0 4px;font-size:19px}
+.result-card h3 a{color:#1c2430;text-decoration:none}
+.result-card h3 a:hover{color:#0e7a5f;text-decoration:underline}
+.rnum{color:#0e7a5f}
+.rlinks{margin-top:9px;font-size:14px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.rlinks a{font-weight:600}
+.rtel{display:inline-block;background:#0e7a5f;color:#fff;padding:7px 13px;border-radius:8px;text-decoration:none;font-weight:700}
+footer a{margin-left:10px}
+@media(max-width:940px){.cat-layout{grid-template-columns:1fr}.cat-rail{position:static}.herocontent-v3{padding-top:118px}}
+@media(max-width:560px){.result-card img{width:104px;height:96px}.secttl{font-size:25px}}
 </style></head><body>
-<header><div class="htop"><div class="brand">YourTown<span>Pros</span></div><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><a class="hclaim" href="/claim/">Claim your business</a></div></div><nav><a href="/">Home</a><a href="/pet-grooming/">Pet Grooming</a><a href="/tattoo/">Tattoo</a><a href="/nails/">Nail Salons</a><a href="/barbers/">Barbers</a><a href="/tanning/">Tanning Salons</a><a href="/hair-salons/">Hair Salons</a><a href="/med-spas/">Med Spas</a><a href="/massage/">Massage</a><a href="/auto-repair/">Auto Repair</a><a href="/towing/">Towing</a><a href="/plumbers/">Plumbers</a><a href="/electricians/">Electricians</a><a href="/hvac/">HVAC</a><a href="/roofing/">Roofing</a><a href="/painting/">Painters</a><a href="/lawn-and-landscaping/">Lawn &amp; Landscaping</a><a href="/handyman/">Handyman</a><a href="/cleaners/">Cleaners &amp; Laundry</a><a href="/florists/">Florists</a><a href="/bakeries-and-cafes/">Bakeries &amp; Cafes</a><a href="/jewelry/">Jewelry</a><a href="/veterinary/">Veterinary</a><a href="/fitness/">Fitness</a><a href="/locksmiths/">Locksmiths</a></nav></header>
-<div class="catnav"><a href="/pet-grooming/">Pet Grooming</a><a href="/tattoo/">Tattoo</a><a href="/auto-repair/">Auto Repair</a><a href="/hair-salons/">Hair Salons</a><a href="/nails/">Nail Salons</a><a href="/plumbers/">Plumbers</a><a href="/electricians/">Electricians</a><a href="/florists/">Florists</a><a href="/cleaners/">Cleaners &amp; Laundry</a><a href="/med-spas/">Med Spas</a></div>
+<header><div class="htop"><div class="brand">YourTown<span>Pros</span></div><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a></div></div><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
+<div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Pet Grooming <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/pet-grooming/california/yuba-city/">Yuba City, CA (13)</a><a href="/pet-grooming/oregon/portland/">Portland, OR (9)</a><a href="/pet-grooming/puerto-rico/san-juan-metro/">San Juan metro, PR (9)</a><a href="/pet-grooming/washington/seattle/">Seattle, WA (9)</a><a href="/pet-grooming/montana/billings/">Billings, MT (8)</a><a href="/pet-grooming/nebraska/omaha/">Omaha, NE (8)</a><a href="/pet-grooming/">All Pet Grooming by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Tattoo <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/tattoo/montana/billings/">Billings, MT (10)</a><a href="/tattoo/california/riverside/">Riverside, CA (10)</a><a href="/tattoo/arizona/tucson/">Tucson, AZ (9)</a><a href="/tattoo/montana/missoula/">Missoula, MT (8)</a><a href="/tattoo/montana/bozeman/">Bozeman, MT (7)</a><a href="/tattoo/south-dakota/rapid-city/">Rapid City, SD (7)</a><a href="/tattoo/">All Tattoo by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Repair <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/auto-repair/california/salinas/">Salinas, CA (15)</a><a href="/auto-repair/california/hanford/">Hanford, CA (13)</a><a href="/auto-repair/california/turlock/">Turlock, CA (12)</a><a href="/auto-repair/california/brawley/">Brawley, CA (11)</a><a href="/auto-repair/nebraska/omaha/">Omaha, NE (11)</a><a href="/auto-repair/montana/billings/">Billings, MT (10)</a><a href="/auto-repair/">All Auto Repair by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Hair Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/hair-salons/nebraska/hastings/">Hastings, NE (12)</a><a href="/hair-salons/nebraska/omaha/">Omaha, NE (11)</a><a href="/hair-salons/arizona/scottsdale/">Scottsdale, AZ (9)</a><a href="/hair-salons/arizona/tucson/">Tucson, AZ (9)</a><a href="/hair-salons/colorado/alamosa/">Alamosa, CO (7)</a><a href="/hair-salons/south-dakota/brandon/">Brandon, SD (7)</a><a href="/hair-salons/">All Hair Salons by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Nail Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/nails/south-dakota/sioux-falls/">Sioux Falls, SD (11)</a><a href="/nails/washington/tacoma/">Tacoma, WA (11)</a><a href="/nails/arizona/gilbert/">Gilbert, AZ (10)</a><a href="/nails/puerto-rico/san-juan/">San Juan, PR (10)</a><a href="/nails/california/los-angeles-encino/">Los Angeles (Encino), CA (9)</a><a href="/nails/arizona/tucson/">Tucson, AZ (9)</a><a href="/nails/">All Nail Salons by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Plumbers <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/plumbers/kansas/wichita/">Wichita, KS (8)</a><a href="/plumbers/nebraska/lincoln/">Lincoln, NE (7)</a><a href="/plumbers/south-dakota/rapid-city/">Rapid City, SD (7)</a><a href="/plumbers/arizona/tucson/">Tucson, AZ (7)</a><a href="/plumbers/california/hemet/">Hemet, CA (6)</a><a href="/plumbers/south-dakota/vermillion/">Vermillion, SD (6)</a><a href="/plumbers/">All Plumbers by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Electricians <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/electricians/nebraska/omaha/">Omaha, NE (11)</a><a href="/electricians/nebraska/lincoln/">Lincoln, NE (10)</a><a href="/electricians/south-dakota/rapid-city/">Rapid City, SD (9)</a><a href="/electricians/arizona/tucson/">Tucson, AZ (8)</a><a href="/electricians/oklahoma/oklahoma-city/">Oklahoma City, OK (7)</a><a href="/electricians/oregon/oregon-city/">Oregon City, OR (7)</a><a href="/electricians/">All Electricians by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/barbers/">Barbers</a><a href="/tanning/">Tanning Salons</a><a href="/med-spas/">Med Spas</a><a href="/massage/">Massage</a><a href="/towing/">Towing</a><a href="/hvac/">HVAC</a><a href="/roofing/">Roofing</a><a href="/painting/">Painters</a><a href="/lawn-and-landscaping/">Lawn &amp; Landscaping</a><a href="/handyman/">Handyman</a><a href="/cleaners/">Cleaners &amp; Laundry</a><a href="/florists/">Florists</a><a href="/bakeries-and-cafes/">Bakeries &amp; Cafes</a><a href="/jewelry/">Jewelry</a><a href="/veterinary/">Veterinary</a><a href="/fitness/">Fitness</a><a href="/locksmiths/">Locksmiths</a></div></div></div>
 <div class="wrap"><div class="crumb"><a href="/">Home</a> / <a href="/massage/">Massage</a> / <a href="/massage/colorado/">Colorado</a> / <a href="/massage/colorado/broomfield/">Broomfield</a></div>
 <h1>Spring Massage</h1><span class="pill">Massage</span><span class="pill">Broomfield, CO</span><div class="photoband" style="background-image:url(https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&amp;fit=crop&amp;w=1200&amp;q=70)"></div><p>6650 W 120th Ave A-6</p>
 <p><a class="tel" href="tel:+17205005548">Call (720) 500-5548</a></p>
 <div class="claimstrip"><p><strong>Is this your business?</strong> Claim this listing to request updates to your hours, services, description and photos.</p><a class="claimbtn" href="/claim/?business=Spring%20Massage&amp;city=Broomfield&amp;vertical=Massage">Claim this business</a></div>
 <div class="feat"><div class="k">Sponsored · Featured spot open</div><h3>One massage business in Broomfield gets this spot</h3><p style="margin:0">The featured business in Broomfield appears first here, and gets an online booking button on its listing so customers can book without calling. This placement is exclusive to one business per town.</p></div>
-<div class="match"><h3>Get matched with a Broomfield massage pro</h3><p style="margin:0">Want help booking? Tell us what you need and we will match you with a Broomfield massage pro who has room, usually the same day. Free for customers, and no obligation.</p>
+<div class="match" id="match"><h3>Get matched with a Broomfield massage pro</h3><p style="margin:0">Want help booking? Tell us what you need and we will match you with a Broomfield massage pro who has room, usually the same day. Free for customers, and no obligation.</p>
 <form action="https://formsubmit.co/yourtownpros@gmail.com" method="POST">
 <input type="hidden" name="_subject" value="Match request: Massage, Broomfield (via Spring Massage listing)"><input type="hidden" name="_template" value="table"><input type="hidden" name="_next" value="https://yourtownpros.com/match-thanks/">
 <label>Your name</label><input type="text" name="name" required>
@@ -99,13 +142,17 @@ header{position:sticky;top:0;z-index:60;box-shadow:0 1px 8px rgba(0,0,0,.25)}
 <label>Anything else?</label><textarea name="notes" rows="2"></textarea>
 <button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro. We do not sell your number.</div></form></div><h2>About this listing</h2><p>Spring Massage is a massage business in Broomfield, Colorado, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Spring Massage", "telephone": "(720) 500-5548", "address": {"@type": "PostalAddress", "addressLocality": "Broomfield", "addressRegion": "CO", "addressCountry": "US", "streetAddress": "6650 W 120th Ave A-6"}}</script></div>
-<footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.</footer>
+<footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>
 <script>
-(function(){var m=document.querySelector(".fbmenu");if(!m)return;var b=m.querySelector(".fbbtn");
-function close(){m.classList.remove("open");b.setAttribute("aria-expanded","false")}
-b.addEventListener("click",function(e){e.stopPropagation();var o=m.classList.toggle("open");b.setAttribute("aria-expanded",o?"true":"false")});
-document.addEventListener("click",function(e){if(!m.contains(e.target))close()});
-document.addEventListener("keydown",function(e){if(e.key==="Escape")close()});
-m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget))close()});
+(function(){
+var menus=document.querySelectorAll(".fbmenu,.cnav-item");
+function setBtn(m,open){var b=m.querySelector("button");if(b)b.setAttribute("aria-expanded",open?"true":"false")}
+function closeAll(except){for(var i=0;i<menus.length;i++){if(menus[i]!==except){menus[i].classList.remove("open");setBtn(menus[i],false)}}}
+for(var j=0;j<menus.length;j++){(function(m){var b=m.querySelector("button");if(!b)return;
+b.addEventListener("click",function(e){e.stopPropagation();var was=m.classList.contains("open");closeAll(m);if(!was){m.classList.add("open");setBtn(m,true)}});
+m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget)){m.classList.remove("open");setBtn(m,false)}});
+})(menus[j])}
+document.addEventListener("click",function(){closeAll(null)});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(null)});
 })();
 </script></body></html>

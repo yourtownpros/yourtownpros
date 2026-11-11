@@ -382,6 +382,8 @@ input,textarea,select{font-size:16px}
 <nav class="biznav" aria-label="Business dashboard sections">
 <button type="button" data-sec="overview" class="on">Overview</button>
 <button type="button" data-sec="bizinfo">Business information</button>
+<button type="button" data-sec="photos">Photos</button>
+<button type="button" data-sec="requests">Requests</button>
 <button type="button" data-sec="reviews">Reviews</button>
 <button type="button" data-sec="upgrades">Page upgrades</button>
 </nav>
@@ -422,6 +424,28 @@ input,textarea,select{font-size:16px}
 <h3 style="margin-top:20px">Your requests</h3>
 <div id="biz-crs"><p class="listed">Loading...</p></div>
 </section>
+<section class="bizsec" id="sec-photos" hidden>
+<h2>Photos</h2>
+<p class="listed">Add photos of your business: the shop, your team at work, your finished work. Every photo is reviewed by us before it can appear on your listing, so nothing goes live without a check.</p>
+<div class="card">
+<h3>Add a photo</h3>
+<form class="acctform" id="biz-photo-form">
+<label>Photo (an image file, up to 10 MB)</label>
+<input type="file" id="biz-photo-file" accept="image/*">
+<label>Caption (optional)</label>
+<input type="text" id="biz-photo-caption" maxlength="140" placeholder="What does this photo show?">
+<button type="submit">Send photo for review</button>
+<p class="listed photo-msg"></p>
+</form>
+</div>
+<h3 style="margin-top:20px">Your photo submissions</h3>
+<div id="biz-photos"><p class="listed">Loading...</p></div>
+</section>
+<section class="bizsec" id="sec-requests" hidden>
+<h2>Requests</h2>
+<p class="listed">These are customer requests that arrived through your own listing page, plus any Featured priority requests routed to your business. Requests sent from a town and trade page in general come to us as the broker, so they are not listed here.</p>
+<div id="biz-requests"><p class="listed">Loading...</p></div>
+</section>
 <section class="bizsec" id="sec-reviews" hidden>
 <h2>Reviews</h2>
 <p class="listed">YourTownPros reviews are written by customers here and checked by us before they publish. They are a separate system from your Google rating, which stays on your listing exactly as Google reports it.</p>
@@ -455,6 +479,7 @@ var sb=$("ytp-biz-signin");if(sb)sb.addEventListener("click",function(){A.signIn
 if(!A.user||!A.sb){if(out)out.hidden=false;return}
 if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
+var myPhotos=[],photosTable=null,myRequests=[];
 var gcData=null,numbersNote=null;
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
@@ -465,7 +490,7 @@ function selectSection(name){
 for(var i=0;i<navBtns.length;i++){var on=navBtns[i].getAttribute("data-sec")===name;navBtns[i].classList.toggle("on",on);var sec=$("sec-"+navBtns[i].getAttribute("data-sec"));if(sec)sec.hidden=!on}
 }
 for(var n=0;n<navBtns.length;n++){(function(b){b.addEventListener("click",function(){selectSection(b.getAttribute("data-sec"))})})(navBtns[n])}
-function startSection(){var h=(location.hash||"").replace("#","");return {overview:1,bizinfo:1,reviews:1,upgrades:1}[h]?h:"overview"}
+function startSection(){var h=(location.hash||"").replace("#","");return {overview:1,bizinfo:1,photos:1,requests:1,reviews:1,upgrades:1}[h]?h:"overview"}
 function showNoOwner(claims){
 if(main)main.hidden=true;if(noown)noown.hidden=false;
 var box=$("biz-claim-status");if(!box)return;
@@ -580,10 +605,66 @@ var sel="id,rating,body,status,author_display,created_at,owner_response"+(withRe
 A.sb.from("reviews").select(sel).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
 if(r&&r.error){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}return}
 myReviews=(r&&r.data)||[];renderReviews();renderChecklist()}).catch(function(){if(withResp){loadReviews(slug,false)}else{myReviews=[];renderReviews();renderChecklist()}})}
+function photoLabel(st){if(st==="approved")return '<span class="statlab">Approved</span>';if(st==="rejected")return '<span class="statlab rej">Not approved</span>';return '<span class="statlab pend">In review</span>'}
+function renderPhotos(){
+var box=$("biz-photos");if(!box)return;
+if(photosTable===false){box.innerHTML='<p class="listed">Photo uploads are being switched on for owner accounts. Please check back shortly.</p>';return}
+if(!myPhotos.length){box.innerHTML='<p class="listed">No photos sent yet for this business. When you send one, it shows here while we review it.</p>';return}
+box.innerHTML=myPhotos.map(function(p){
+var h='<div class="card"><h3>'+(p.caption?esc(p.caption):"Photo")+" "+photoLabel(p.status)+'</h3><div class="meta">Sent '+fmtDate(p.created_at)+".</div>";
+if(p.status==="pending")h+='<div class="meta">Photos go live only after we review them.</div>';
+if(p.status==="approved")h+='<div class="meta">Approved. We add approved photos to listings in a site update.</div>';
+return h+"</div>"}).join("")}
+function loadPhotos(slug){
+A.sb.from("photos").select("id,caption,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
+if(r&&r.error){photosTable=false;myPhotos=[];renderPhotos();return}
+photosTable=true;myPhotos=(r&&r.data)||[];renderPhotos()}).catch(function(){photosTable=false;myPhotos=[];renderPhotos()})}
+function renderRequests(){
+var box=$("biz-requests");if(!box)return;
+if(!myRequests.length){box.innerHTML='<p class="listed">No requests from your listing page yet. When a customer asks to be matched from your listing page, or a Featured priority request is routed to your business, it appears here with their contact details.</p>';return}
+box.innerHTML=myRequests.map(function(q){
+var head="<strong>"+esc(q.name||"Customer")+"</strong>";if(q.phone)head+=" \u00b7 "+esc(q.phone);
+var h='<div class="card"><h3>'+head+'</h3>';
+var meta=[];
+if(q.need)meta.push("Needs: "+esc(q.need));
+if(q.preferred_time)meta.push("Preferred time: "+esc(q.preferred_time));
+if(q.city)meta.push(esc(q.city));
+if(meta.length)h+='<div class="meta">'+meta.join(" \u00b7 ")+"</div>";
+h+='<div class="meta">Received '+fmtDate(q.created_at)+". Status: "+esc(q.status||"new")+".</div>";
+return h+"</div>"}).join("")}
+function loadRequests(slug){
+A.sb.from("match_requests").select("name,phone,need,preferred_time,city,status,created_at").eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){
+myRequests=(r&&!r.error&&r.data)||[];renderRequests()}).catch(function(){myRequests=[];renderRequests()})}
 function loadBiz(slug){
 renderFacts();renderNumbers();renderFeat();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
-loadReviews(slug,true)}
+loadReviews(slug,true);loadPhotos(slug);loadRequests(slug)}
+var phForm=$("biz-photo-form");
+if(phForm)phForm.addEventListener("submit",function(ev){ev.preventDefault();if(!cur)return;
+var msg=phForm.querySelector(".photo-msg");
+var fi=$("biz-photo-file");var f=fi&&fi.files&&fi.files[0];
+if(!f){if(msg)msg.textContent="Choose a photo first.";return}
+if(f.type&&f.type.indexOf("image/")!==0){if(msg)msg.textContent="That file is not an image. Please choose a photo.";return}
+if(f.size>10485760){if(msg)msg.textContent="That photo is over 10 MB. Please choose a smaller one.";return}
+var btn=phForm.querySelector("button[type='submit']");if(btn)btn.disabled=true;
+if(msg)msg.textContent="Sending...";
+var ext="jpg";var em=/\.([A-Za-z0-9]{1,8})$/.exec(f.name||"");
+if(em){ext=em[1].toLowerCase()}else if(f.type==="image/png"){ext="png"}else if(f.type==="image/webp"){ext="webp"}
+var a8=new Uint32Array(2),sfx="";
+if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a8);sfx=(a8[0].toString(16)+a8[1].toString(16)).toUpperCase().slice(0,8)}else{sfx=Math.random().toString(16).slice(2,10).toUpperCase()}
+var ppath=A.user.id+"/"+cur+"-"+sfx+"."+ext;
+function soft(){if(msg)msg.textContent="Photo uploads are being switched on for owner accounts. Please try again shortly.";if(btn)btn.disabled=false}
+try{
+A.sb.storage.from("business-photos").upload(ppath,f,{cacheControl:"3600",upsert:false}).then(function(up){
+if(up&&up.error){soft();return}
+var capEl=$("biz-photo-caption");var cap=capEl?capEl.value.trim():"";
+A.sb.from("photos").insert({business_slug:cur,user_id:A.user.id,storage_path:ppath,caption:cap,status:"pending"}).then(function(r){
+if(r&&r.error){soft();return}
+photosTable=true;myPhotos.unshift({caption:cap,status:"pending",created_at:new Date().toISOString()});renderPhotos();
+if(msg)msg.textContent="Photo received. It goes live only after we review it.";
+if(fi)fi.value="";if(capEl)capEl.value="";
+if(btn)btn.disabled=false}).catch(soft)}).catch(soft)}catch(e){soft()}
+});
 var crForm=$("biz-cr-form");
 if(crForm)crForm.addEventListener("submit",function(ev){ev.preventDefault();if(!cur)return;
 var row={business_slug:cur,user_id:A.user.id,field:crForm.querySelector(".cr-field").value,current_value:crForm.querySelector(".cr-current").value.trim(),requested_value:crForm.querySelector(".cr-requested").value.trim(),status:"pending"};

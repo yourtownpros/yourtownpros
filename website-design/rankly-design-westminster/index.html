@@ -458,6 +458,20 @@ var bar=document.createElement("div");
 bar.className="managebar";
 bar.innerHTML='<span class="mb-label">You manage this listing</span><span class="mb-btns"><a class="mbtn" href="/business/">Business dashboard</a><a class="mbtn" href="/business/#bizinfo">Edit business info</a><a class="mbtn" href="/business/#reviews">Reviews</a><a class="mbtn" href="/for-business/#featured">Promote</a></span>';
 main.insertBefore(bar,main.firstChild);
+/* v4.5: the Add photo button exists only when the photos
+table (schema v6) positively answers a probe. It is built
+with DOM calls after the probe, never in the static bar
+markup, so a missing table or any error leaves the bar
+exactly as v4.4. */
+var btns=bar.querySelector(".mb-btns");
+A.sb.from("photos").select("id").eq("user_id",A.user.id).limit(1).then(function(r3){
+if(!r3||r3.error||!btns)return;
+var pb=document.createElement("a");
+pb.className="mbtn";
+pb.setAttribute("href","/business/#photos");
+pb.textContent="Add photo";
+btns.insertBefore(pb,btns.lastChild);
+}).catch(function(){});
 }).catch(function(){});
 }).catch(function(){});
 });

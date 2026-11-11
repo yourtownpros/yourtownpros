@@ -1,5 +1,5 @@
 {
-  "version": "v4.4",
+  "version": "v4.5",
   "source_csv": "rankly-call-list-v25-2026-11-10.csv",
   "total_csv_rows": 5303,
   "phone_duplicates_dropped": 0,
@@ -758,6 +758,7 @@
       "claimed_listings",
       "claims",
       "match_requests",
+      "photos",
       "profiles",
       "reviews",
       "saved_pros"
@@ -1038,6 +1039,28 @@
     "for_business_state_branches": true,
     "page_upgrades_state_logic": true,
     "fallback_no_swap_on_error": true
+  },
+  "v45_checks": {
+    "note": "v4.5: owner toolkit. /business/ gains a Photos pane (storage-first upload to the private business-photos bucket, then a 'pending' photos row; owner submissions listed with In review / Approved / Not approved labels; copy states photos go live only after review) and a Requests pane (match_requests rows for the selected business's own slug only, newest first). The listing manage bar gains an Add photo button only when a runtime probe of the photos table answers without error; it is DOM-built after the probe, so no page carries it statically (v4.4's scan was revised to assert exactly that). Nothing renders a submitted photo publicly in this build; the approval-to-public pipeline is a later version. PARENT MUST APPLY schema v6 (yourtownpros-supabase-schema-v6.sql: photos table + force-pending trigger + throttle, business-photos bucket, match_requests owner select policy) before any of this works end to end; until then both panes fail soft.",
+    "schema_v6_file_present": true,
+    "schema_v6_photos_table": true,
+    "schema_v6_guards": true,
+    "schema_v6_bucket_and_policies": true,
+    "schema_v6_match_requests_owner_read": true,
+    "dashboard_photos_pane": true,
+    "dashboard_nav_photos_requests": true,
+    "photo_upload_bucket_referenced": true,
+    "photo_upload_before_insert": true,
+    "photo_size_guard_10mb": true,
+    "photo_rows_read_scoped": true,
+    "photo_status_labels": true,
+    "dashboard_requests_pane": true,
+    "requests_query_slug_scoped": true,
+    "requests_loaded_per_business": true,
+    "manage_bar_photo_probe_gated": true,
+    "manage_bar_photo_not_static": true,
+    "photos_table_allowlisted": true,
+    "no_public_photo_rendering": true
   },
   "search_target_check": {
     "index_urls": 4926,

@@ -1,5 +1,5 @@
 {
-  "version": "v5.0",
+  "version": "v5.1",
   "source_csv": "rankly-call-list-v28-2026-11-10.csv",
   "total_csv_rows": 5437,
   "phone_duplicates_dropped": 1,
@@ -12,11 +12,11 @@
     "unresolved": 139
   },
   "excluded_category_rows": {
-    "total": 249,
+    "total": 235,
     "restaurant_liquor": 58,
-    "unmapped": 191
+    "unmapped": 177
   },
-  "included_businesses": 5048,
+  "included_businesses": 5062,
   "businesses_by_vertical": {
     "pet-grooming": 457,
     "tattoo": 239,
@@ -41,36 +41,42 @@
     "jewelry": 113,
     "veterinary": 113,
     "fitness": 29,
-    "locksmiths": 3
+    "locksmiths": 3,
+    "spas": 5,
+    "auto-glass": 5,
+    "pet-boarding": 2,
+    "dance-studios": 1,
+    "bookstores": 1
   },
   "businesses_by_state": {
     "AZ": 228,
     "CA": 874,
-    "CO": 760,
+    "CO": 771,
     "ID": 80,
     "KS": 226,
     "MT": 218,
     "NE": 298,
-    "NV": 75,
+    "NV": 76,
     "NM": 26,
     "OK": 345,
     "OR": 245,
     "PR": 96,
-    "SD": 495,
+    "SD": 496,
     "TX": 562,
     "WA": 254,
-    "WY": 266
+    "WY": 267
   },
   "pages": {
     "homepage": 1,
-    "vertical_hub": 26,
+    "vertical_hub": 31,
     "state_overview": 16,
-    "state_vertical_hub": 244,
-    "city_hub": 308,
+    "state_vertical_hub": 252,
+    "city_hub": 309,
     "county_hub": 316,
-    "category": 1185,
-    "listing": 5050,
+    "category": 1186,
+    "listing": 5064,
     "claim": 1,
+    "add_business": 1,
     "for_business": 1,
     "privacy": 1,
     "terms": 1,
@@ -79,24 +85,24 @@
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 7159
+    "total_html": 7189
   },
-  "search_index_entries": 5050,
+  "search_index_entries": 5064,
   "search_upgrade": {
-    "cities_index_entries": 308,
+    "cities_index_entries": 309,
     "cities_index_broken": [],
-    "category_index_entries": 1185,
+    "category_index_entries": 1186,
     "category_index_broken": [],
     "coordinates": {
       "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
-      "entries_with_coords": 308,
+      "entries_with_coords": 309,
       "unmatched": []
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 7155,
-    "pages_with_fbmenu": 7155,
-    "total_html": 7159
+    "pages_with_brand_home_anchor": 7185,
+    "pages_with_fbmenu": 7185,
+    "total_html": 7189
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -158,26 +164,26 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 37,
+        "call_block_briefs": 38,
         "prospects_csvs": 126,
         "site_digests": 23
       },
       "prospects_rows": 4338,
       "digest_entries": 1480,
-      "pool_phones": 5749,
+      "pool_phones": 5807,
       "digest_linked_listings": 33
     },
     "coverage_unflagged_listings": {
-      "map_embed": 859,
+      "map_embed": 870,
       "attribute_chips": 1000,
-      "about": 82,
+      "about": 83,
       "since_year": 961,
-      "website_button": 310,
+      "website_button": 313,
       "services": 3,
       "hours": 2,
       "address_added": 2
     },
-    "total_listings": 5048
+    "total_listings": 5062
   },
   "v34_checks": {
     "enrichment_spot_check": [
@@ -470,6 +476,11 @@
       "jewelry": 7,
       "lawn-and-landscaping": 5,
       "locksmiths": 3,
+      "spas": 5,
+      "auto-glass": 5,
+      "pet-boarding": 5,
+      "dance-studios": 5,
+      "bookstores": 5,
       "massage": 5,
       "med-spas": 4,
       "nails": 6,
@@ -541,25 +552,25 @@
     "titles_over_65": {},
     "description_stats_by_kind": {
       "listing": {
-        "count": 5050,
+        "count": 5064,
         "min": 81,
         "max": 160,
         "over_160": 0
       },
       "category": {
-        "count": 1185,
+        "count": 1186,
         "min": 141,
         "max": 160,
         "over_160": 0
       },
       "city_hub": {
-        "count": 308,
+        "count": 309,
         "min": 126,
         "max": 160,
         "over_160": 0
       },
       "state_vertical_hub": {
-        "count": 244,
+        "count": 252,
         "min": 79,
         "max": 160,
         "over_160": 0
@@ -577,7 +588,7 @@
         "over_160": 0
       },
       "vertical_hub": {
-        "count": 26,
+        "count": 31,
         "min": 73,
         "max": 157,
         "over_160": 0
@@ -592,6 +603,12 @@
         "count": 1,
         "min": 157,
         "max": 157,
+        "over_160": 0
+      },
+      "add_business": {
+        "count": 1,
+        "min": 125,
+        "max": 125,
         "over_160": 0
       },
       "for_business": {
@@ -639,7 +656,7 @@
     "img_check_scope": "generated pages only (written pages + claimed + 404); the copied pilot match-thanks page is excluded",
     "homepage_h1_count": 1,
     "single_trade_noindex_hubs": {
-      "count": 79,
+      "count": 80,
       "urls": [
         "/arizona/gilbert/",
         "/california/brawley/",
@@ -690,6 +707,7 @@
         "/nebraska/gering/",
         "/nebraska/norfolk/",
         "/nebraska/plattsmouth/",
+        "/nevada/henderson/",
         "/oklahoma/ardmore/",
         "/oklahoma/chickasha/",
         "/oklahoma/guymon/",
@@ -741,24 +759,27 @@
         "to": "/veterinary/puerto-rico/san-juan/"
       }
     ],
-    "cities_index_entries": 308,
+    "cities_index_entries": 309,
     "sitemap_lastmod_complete": true,
     "check_adjustments": "link check: an href resolving to a real file in the tree (favicon links) counts as resolved, not only directory pages; em dash check skips the binary brand art (.png/.ico), which carries no copy."
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 7159,
-    "supabase_client_files": 7159,
-    "auth_init_files": 7159,
-    "total_html_files": 7159,
+    "goatcounter_files": 7189,
+    "supabase_client_files": 7189,
+    "auth_init_files": 7189,
+    "total_html_files": 7189,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
       "answers",
+      "business_submissions",
       "change_requests",
       "claimed_listings",
       "claims",
+      "edit_suggestions",
       "match_requests",
+      "owner_highlights",
       "photos",
       "profiles",
       "questions",
@@ -772,20 +793,20 @@
   "v37_checks": {
     "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
-      "candidates": 843,
-      "from_cache": 843,
+      "candidates": 854,
+      "from_cache": 854,
       "submitted": 0,
-      "matched": 788,
-      "no_match": 55,
+      "matched": 798,
+      "no_match": 56,
       "unattempted": 0,
       "census_ok": true,
       "error": null
     },
     "pins": {
-      "category_pages": 1185,
-      "pages_with_map": 232,
+      "category_pages": 1186,
+      "pages_with_map": 233,
       "pages_facade_only": 0,
-      "total_pins": 571,
+      "total_pins": 574,
       "dnc_flagged_pinned": 8
     },
     "county": {
@@ -796,8 +817,8 @@
         "census_plurality": 124,
         "geonames_place": 578
       },
-      "category_pages_with_county": 1185,
-      "category_pages_total": 1185,
+      "category_pages_with_county": 1186,
+      "category_pages_total": 1186,
       "hubs_total": 316,
       "hubs_in_sitemap": 131,
       "hubs_noindex": 185
@@ -805,16 +826,16 @@
     "sitemap_segments": {
       "chunks": {
         "sitemap-listings.xml": 5000,
-        "sitemap-listings-2.xml": 50,
-        "sitemap-categories.xml": 1185,
-        "sitemap-hubs.xml": 646,
-        "sitemap-misc.xml": 5
+        "sitemap-listings-2.xml": 64,
+        "sitemap-categories.xml": 1186,
+        "sitemap-hubs.xml": 659,
+        "sitemap-misc.xml": 6
       },
       "by_template": {
-        "listings": 5050,
-        "categories": 1185,
-        "hubs": 646,
-        "misc": 5
+        "listings": 5064,
+        "categories": 1186,
+        "hubs": 659,
+        "misc": 6
       }
     },
     "indexnow_key_file": "55051a1a62ab0c1d6b1547cc3c6a66d8.txt",
@@ -829,20 +850,20 @@
   "v38_checks": {
     "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
     "claims_verification": {
-      "verify_data_entries": 5050,
-      "with_email": 118,
-      "with_website": 325,
-      "with_domain": 325,
+      "verify_data_entries": 5064,
+      "with_email": 121,
+      "with_website": 328,
+      "with_domain": 328,
       "with_facebook": 6,
       "join_stats": {
-        "with_email": 118,
-        "with_website": 323,
-        "with_domain": 323,
+        "with_email": 121,
+        "with_website": 326,
+        "with_domain": 326,
         "with_facebook": 6
       },
       "email_spot_trace_checked": 10,
       "email_spot_trace_untraced": [],
-      "claim_links_with_slug": 5048,
+      "claim_links_with_slug": 5062,
       "claim_links_missing_slug": []
     },
     "featured": {
@@ -859,18 +880,18 @@
       "grid_columns": "232px minmax(0,1fr) minmax(340px,42%)",
       "map_panel": "sticky, top 96px, height calc(100vh - 96px)",
       "stack_below": "1024px, map first at 320px",
-      "pages_with_pins": 232,
+      "pages_with_pins": 233,
       "pages_city_centered": 953,
       "pages_with_facade_markup": 0,
       "duplicate_location_line_pages": [],
       "popup_payload_missing": []
     },
     "listing_maps": {
-      "pin_mode": 788,
-      "city_mode": 4262,
+      "pin_mode": 798,
+      "city_mode": 4266,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 868
+      "get_directions_links": 879
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -901,7 +922,7 @@
       "dashboard_script_node_check": "pass"
     },
     "biz_data": {
-      "entries": 5050,
+      "entries": 5064,
       "fields": [
         "name",
         "trade",
@@ -911,8 +932,8 @@
         "address",
         "website"
       ],
-      "with_website": 325,
-      "with_address": 868,
+      "with_website": 328,
+      "with_address": 879,
       "website_matches_verify_data": true
     },
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
@@ -960,11 +981,13 @@
     },
     "honeypots": {
       "field": "company_website",
-      "match_forms_with_honeypot": 6233,
+      "match_forms_with_honeypot": 6248,
       "claim_forms_with_honeypot": 2,
-      "honeypot_inputs_total": 6235,
+      "suggest_forms_with_honeypot": 5064,
+      "add_business_forms_with_honeypot": 1,
+      "honeypot_inputs_total": 11315,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 7158,
+      "guard_script_pages": 7188,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -991,7 +1014,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 7159,
+    "viewport_pages": 7189,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1005,7 +1028,7 @@
       "legal": true,
       "404": true
     },
-    "category_filters_toggle_pages": 1185,
+    "category_filters_toggle_pages": 1186,
     "category_phone_order_rules": true,
     "category_map_phone_flags": true,
     "pin_popup_max_width": 280,
@@ -1027,8 +1050,8 @@
   },
   "v44_checks": {
     "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
-    "claimed_listings_query_files": 6235,
-    "claimed_listings_query_pages_expected": 6235,
+    "claimed_listings_query_files": 6250,
+    "claimed_listings_query_pages_expected": 6250,
     "listing_badge_swap_code": true,
     "manage_bar_markup": true,
     "manage_bar_links": true,
@@ -1081,8 +1104,8 @@
     "dashboard_requests_pane_present": true,
     "san_juan_merge_unchanged": true,
     "single_trade_hub_noindex_unchanged": true,
-    "fort_collins_listing_pages": 63,
-    "colorado_springs_listing_pages": 69,
+    "fort_collins_listing_pages": 70,
+    "colorado_springs_listing_pages": 70,
     "fort_collins_listings_present": true,
     "colorado_springs_listings_present": true
   },
@@ -1193,15 +1216,15 @@
     "placements_recorded_match_tree": true,
     "placements": {
       "renaud-naturals": {
-        "listing_page": 995,
-        "category_page": 215,
+        "listing_page": 1000,
+        "category_page": 216,
         "city_hub": 187,
-        "state_vertical_hub": 45,
+        "state_vertical_hub": 46,
         "state_hub": 15,
-        "vertical_hub": 3
+        "vertical_hub": 4
       }
     },
-    "placement_pages_total": 1460,
+    "placement_pages_total": 1468,
     "max_one_partner_card_per_page": true,
     "every_card_labeled_with_slug": true,
     "cards_display_only_no_form_no_phone": true,
@@ -1241,7 +1264,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 7154,
+    "repo_diff_files": 7155,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1331,7 +1354,7 @@
     "schema_v9_index": true,
     "per_card_links_match_instrumentation": true,
     "per_card_targets_scoped": true,
-    "per_card_count": 26126,
+    "per_card_count": 26176,
     "flagged_never_card_target": true,
     "flagged_listings_unscoped": true,
     "match_script_pages_complete": true,
@@ -1358,11 +1381,11 @@
     "leads_counts_copy": true,
     "zero_state_honesty": true,
     "structure_matches_v49_after_deltas": true,
-    "phone_corrections_applied_to_repo_side": 4,
+    "phone_corrections_applied_to_repo_side": 0,
     "totals_match_v49": true,
-    "businesses_total_5050": true,
-    "sitemap_total_6886": true,
-    "html_total_7159": true,
+    "businesses_total_5064": true,
+    "sitemap_total_6915": true,
+    "html_total_7189": true,
     "no_broken_internal_links": true,
     "no_em_dash_files": true,
     "no_aggregate_rating_files": true,
@@ -1378,6 +1401,58 @@
     "v49_review_community_wiring": true,
     "mobile_header_fix_present": true,
     "desktop_header_rules_unchanged": true
+  },
+  "v51_checks": {
+    "note": "v5.1: Yelp gaps chunk 4 (corrections, submissions, highlights, logos) plus the category taxonomy fix. TAXONOMY: five research categories that fell out as unmapped now map honestly, appended LAST so no existing first match moves: Spa to a NEW spas vertical (label Spas, schema DaySpa); none of the captured rows is verified as a medical spa, so med-spas was deliberately NOT used (absolute data integrity). Auto Glass to its own vertical (a distinct trade, like Yelp's own category). Pet Boarding/Daycare to a new pet-boarding vertical in the pet family. Dance Studio and Bookstore to their own verticals. The honest keywords capture every state-resolved row carrying those categories, so 14 businesses are added, not just the 8 named in the v4.6 delta: the 8 named plus Quick-Set Auto Glass (Henderson NV), Bayfield Glass (Bayfield/Ignacio CO), Red's Auto Glass (Jackson WY), Happy Dog Kennels (Sioux Falls SD), Simple Beauty Esthetics LLC (Milliken CO, category Spa) and Two Pretty Girls Spa (Fort Morgan CO, category Spa/IV). The 2 flyer businesses stay excluded (blank city/state, unresolved before mapping, exactly as v5.0). Deltas: businesses 5050 to 5064, listings 5050 to 5064, category pages 1185 to 1186 (only spas Fort Collins reaches the 2 member group rule), vertical hubs 26 to 31, state-vertical hubs 244 to 252, city hubs 308 to 309 (Henderson NV reaches 5 included businesses and becomes the 80th single-trade noindex hub), county hubs 316 unchanged, sitemap 6886 to 6915 (the 28 new sitemap pages plus /add-business/), HTML 7159 to 7189 (29 new files plus /add-business/). Partner placements move 1460 to 1468, exactly reconciled in v47_checks: Renaud gains buyer fit on spas in the relevance config (day and aesthetics spas buy professional skincare wholesale, the same footing as salons; the salon copy pattern already names spas), which puts a partner card on the 5 spa listings (3 at 66 in the Northern Front Range, 2 at 62 same state), the spas Fort Collins category page (66), the spas Colorado state-vertical hub (67) and the spas vertical hub (67); the other four new verticals are unrelated for Renaud and gain nothing, and Rankly stays at 0 static placements as designed. The CATNAV More menu gains the five verticals on every page and the For Business menu gains Add a business; both are normalized in _norm51. SUGGEST AN EDIT: every listing, flagged included (suggestions are about data accuracy, so the bare treatment keeps the correction channel; the box sits after the claim strip and nothing else changes there), inserts into edit_suggestions with a honeypot; nothing renders publicly from it. ADD A BUSINESS: /add-business/ is indexed like /claim/ (the established utility page precedent), inserts into business_submissions; its copy promises no listing and no date and says submissions also feed prospecting. HIGHLIGHTS: the controlled vocabulary lives in HIGHLIGHT_VOCAB (the task's ten items, facts an owner can truthfully claim, no quality claims), the /business/ Business Information pane writes owner_highlights rows (cap four active picks, enforced client-side; moderation back-office only), and approved picks render client-side on the listing under a card that says they are picked by the owner; flagged listings keep the bare treatment (no mount). LOGOS: photos kind 'logo' (schema v10); logo_map and logo_img ride beside photos_maps without changing its signature; an approved logo renders before the H1 on the listing and at the top of cards beside the name, never in or over the photo band; the dashboard Photos pane uploads storage-first with kind 'logo' and the fetch tool derives the logos map. With zero approved logos the tree carries no logo markup at all (fixture-proven). GC: the GoatCounter snapshot now exists (15 pageviews; Renaud listing_views 2) and ships as /gc-snapshot.json by the v4.0 machinery. CHECK REVISIONS, all documented in place: the v3.6 table whitelist gains the three new tables; the v4.1 honeypot accounting gains the suggest and add-business forms (v4.6/v4.7 honeypot sums follow); v4.6 single_trade_hub 79 to 80 (Henderson); v4.7 totals_match_v46 moves to the v5.1 totals; v4.5's photo select and v4.8's ordering select gain the kind column (the dashboard now reads kind to split logos out of the photo list; v6/v7 fallback reads stay); the v4.8 structural rule now fails only on repo files MISSING from the build and records the added set (equality was the v5.0 rule, a growing site cannot keep it); the v4.8 snapshot-ref checks include logo files; v47 placements gains the reconciled +8; v50 totals keys rename to the new numbers; the v4.9 desktop-header check strips V51_CSS from the new side and V50_CSS from both sides (the repo now holds v5.0); the tree-wide image check exempts logo images from the width/height attribute rule (owner-supplied, arbitrary aspect; the CSS caps the box; alt still required). _norm51 normalizes the v5.1 deltas: the new CSS, the two menu additions, the suggest box and scripts, the highlights mount, logo images, the baked relevance deltas for the new verticals, and the count-only changes the 14 new businesses cause on hubs, county pages, the state overviews, the homepage and 404. PARENT MUST APPLY schema v10 (yourtownpros-supabase-schema-v10.sql: edit_suggestions, business_submissions, owner_highlights, photos kind widening) after this build; until then the new forms degrade to plain Could not send states and the highlights mount stays empty, with no fake success anywhere.",
+    "taxonomy_new_verticals_present": true,
+    "taxonomy_named_eight_listed": true,
+    "taxonomy_added_businesses_exact": true,
+    "taxonomy_new_vertical_counts": true,
+    "taxonomy_existing_verticals_unchanged": true,
+    "taxonomy_verify_data_covers_new": true,
+    "taxonomy_unmapped_now_177": true,
+    "flyer_rows_still_excluded": true,
+    "totals_businesses_5064": true,
+    "totals_category_1186": true,
+    "totals_vertical_hubs_31": true,
+    "totals_state_vertical_hubs_252": true,
+    "totals_city_hubs_309": true,
+    "totals_county_hubs_316": true,
+    "totals_sitemap_6915": true,
+    "totals_html_7189": true,
+    "suggest_box_on_every_listing": true,
+    "suggest_on_flagged_listings": true,
+    "suggest_payload": true,
+    "suggest_honeypot": true,
+    "suggest_script_syntax": true,
+    "add_business_page": true,
+    "add_business_honeypot": true,
+    "add_business_script_syntax": true,
+    "highlights_vocab_exact": true,
+    "highlights_mounts_on_unflagged_listings": true,
+    "highlights_listing_script": true,
+    "highlights_script_syntax": true,
+    "highlights_dashboard": true,
+    "logo_map_matches_snapshot": true,
+    "logo_no_markup_without_logos": true,
+    "logo_dashboard_wiring": true,
+    "logo_fixture": {
+      "present": true,
+      "logo_map_exact": true,
+      "owner_review_maps_untouched": true,
+      "img_renders": true,
+      "img_absent_without_logo": true,
+      "fetch_logos_key_matches": true
+    },
+    "logo_fixture_build": false,
+    "logo_fixture_pages_rendered": true,
+    "schema_v10_file": true,
+    "gc_snapshot_shipped": true,
+    "added_files_exact": true,
+    "structure_matches_v50_after_deltas": true,
+    "placements_reconciled": true,
+    "standing_invariants_held": true,
+    "css_v51_present": true
   },
   "partner_placements_detail": [
     {
@@ -2389,6 +2464,20 @@
       "total": 62
     },
     {
+      "url": "/spas/simple-beauty-esthetics-llc-milliken/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": "milliken",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
       "url": "/hair-salons/rael-studio-by-gina-rael-llc-johnstown/",
       "surface": "listing_page",
       "profile": "renaud-naturals",
@@ -2548,6 +2637,20 @@
       "profile": "renaud-naturals",
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "hair-salons",
+      "city_slug": "fort-morgan",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/spas/two-pretty-girls-spa-fort-morgan/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
       "city_slug": "fort-morgan",
       "state": "CO",
       "tier": "buyer",
@@ -14891,6 +14994,34 @@
       "total": 66
     },
     {
+      "url": "/spas/barcelona-clinical-spa-fort-collins/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": "fort-collins",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
+      "url": "/spas/green-fig-aesthetics-and-wellness-spa-fort-collins/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": "fort-collins",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
       "url": "/hair-salons/hair-headquarters-colorado-springs/",
       "surface": "listing_page",
       "profile": "renaud-naturals",
@@ -15302,6 +15433,20 @@
       "profile": "renaud-naturals",
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "med-spas",
+      "city_slug": "fort-collins",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
+      "url": "/spas/mandara-skin-and-body-spa-fort-collins/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
       "city_slug": "fort-collins",
       "state": "CO",
       "tier": "buyer",
@@ -18319,6 +18464,20 @@
       "a": 10,
       "g": 10,
       "total": 60
+    },
+    {
+      "url": "/spas/colorado/fort-collins/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": "fort-collins",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
     },
     {
       "url": "/arizona/gilbert/",
@@ -21569,6 +21728,20 @@
       "total": 65
     },
     {
+      "url": "/spas/colorado/",
+      "surface": "state_vertical_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": null,
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 12,
+      "total": 67
+    },
+    {
       "url": "/arizona/",
       "surface": "state_hub",
       "profile": "renaud-naturals",
@@ -21819,14 +21992,28 @@
       "a": 15,
       "g": 10,
       "total": 65
+    },
+    {
+      "url": "/spas/",
+      "surface": "vertical_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "spas",
+      "city_slug": null,
+      "state": null,
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
     }
   ],
   "search_target_check": {
-    "index_urls": 5050,
+    "index_urls": 5064,
     "index_broken": [],
-    "category_groups_checked": 1183,
+    "category_groups_checked": 1184,
     "category_broken": [],
-    "city_hub_groups_checked": 308,
+    "city_hub_groups_checked": 309,
     "city_hub_broken": []
   },
   "brighton_test": {
@@ -21854,15 +22041,15 @@
       "sitemap-misc.xml"
     ],
     "segments": {
-      "listings": 5050,
-      "categories": 1185,
-      "hubs": 646,
-      "misc": 5
+      "listings": 5064,
+      "categories": 1186,
+      "hubs": 659,
+      "misc": 6
     },
-    "url_count": 6886
+    "url_count": 6915
   },
   "link_check": {
-    "internal_hrefs_checked": 703855,
+    "internal_hrefs_checked": 749660,
     "broken": []
   },
   "phone_spot_check": {

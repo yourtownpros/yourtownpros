@@ -1,5 +1,5 @@
 {
-  "version": "v5.9.18",
+  "version": "v5.9.19",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-2026-11-12.csv",
   "total_csv_rows": 10868,
   "phone_duplicates_dropped": 2,
@@ -181,10 +181,10 @@
       "source_files": {
         "research_notes": 114,
         "call_block_briefs": 85,
-        "prospects_csvs": 329,
+        "prospects_csvs": 331,
         "site_digests": 23
       },
-      "prospects_rows": 7739,
+      "prospects_rows": 7930,
       "digest_entries": 1480,
       "pool_phones": 8714,
       "digest_linked_listings": 1441
@@ -193,7 +193,7 @@
       "map_embed": 6079,
       "attribute_chips": 1671,
       "about": 668,
-      "hours": 1304,
+      "hours": 1493,
       "since_year": 1464,
       "website_button": 3687,
       "services": 72,
@@ -1671,12 +1671,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 361,
-    "open_now_category_entries_count": 1205,
+    "open_now_category_pages_count": 412,
+    "open_now_category_entries_count": 1384,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 1599,
+      "parsed": 1687,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -1737,7 +1737,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 1261,
+    "open_now_determined_listings": 1450,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -1803,8 +1803,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 1304,
-    "open_now_determined_listings_v55": 1261,
+    "hours_listings_total": 1493,
+    "open_now_determined_listings_v55": 1450,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/automotive-concepts-inc-alamosa",
@@ -2062,7 +2062,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 2295,
-    "detail_pill_pages": 361
+    "detail_pill_pages": 412
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -2407,6 +2407,41 @@
     "vertical_club_pulled_to_fragment": true,
     "hours_pages_1305": true,
     "fragment_count_8997": true,
+    "fragment_on_exactly_module_pages_without_hours": true,
+    "open_now_mount_exactly_where_hours_render": true,
+    "totals_listings_10314": true,
+    "totals_category_2295": true,
+    "totals_city_hubs_493": true,
+    "totals_county_hubs_604": true,
+    "totals_state_overviews_31": true,
+    "totals_html_14289": true,
+    "totals_sitemap_13744": true,
+    "zero_listings_lost_vs_repo": true,
+    "no_broken_internal_links": true,
+    "standing_invariants_held": true
+  },
+  "v5919_checks": {
+    "note": "v5.9.19: HOURS LANE BATCH 5 (data only). 189 listings gain recorded hours from their own website or Google profile (sources logged per row in the batch 5 log); 3 of 192 batch rows are held back (SmartMove Erie Towing, undetermined closure status; Perfectly Polished Day Lounge, temporarily closed; Lock Works LLC, single-entry schedule held for a second look). Directory hours coverage 1,304 to 1,493, the hours-honesty fragment set 8,998 to 8,809, no listing, total or sitemap URL moves.",
+    "hours5_stats": {
+      "keys_loaded": 192,
+      "rows_keyed": 189,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [
+        "locksmiths/lock-works-llc-sterling",
+        "spas/perfectly-polished-day-lounge-sterling",
+        "towing/smartmove-erie-towing-erie"
+      ],
+      "hours_applied": 189,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours5_merge_exact": true,
+    "hours5_changed_set_exact": true,
+    "hours5_changed_pages_render_hours": true,
+    "excluded_rows_still_fragmented": true,
+    "hours_pages_1493": true,
+    "fragment_count_8809": true,
     "fragment_on_exactly_module_pages_without_hours": true,
     "open_now_mount_exactly_where_hours_render": true,
     "totals_listings_10314": true,
@@ -44632,7 +44667,7 @@
     "url_count": 13744
   },
   "link_check": {
-    "internal_hrefs_checked": 1150936,
+    "internal_hrefs_checked": 1150747,
     "broken": []
   },
   "phone_spot_check": {

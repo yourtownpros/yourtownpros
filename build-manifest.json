@@ -1,5 +1,5 @@
 {
-  "version": "v5.9.13",
+  "version": "v5.9.15",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-2026-11-12.csv",
   "total_csv_rows": 10769,
   "phone_duplicates_dropped": 2,
@@ -179,11 +179,11 @@
     "sources": {
       "source_files": {
         "research_notes": 114,
-        "call_block_briefs": 83,
-        "prospects_csvs": 328,
+        "call_block_briefs": 84,
+        "prospects_csvs": 329,
         "site_digests": 23
       },
-      "prospects_rows": 7738,
+      "prospects_rows": 7739,
       "digest_entries": 1480,
       "pool_phones": 8714,
       "digest_linked_listings": 1441
@@ -895,8 +895,8 @@
       "unattempted": 0,
       "census_ok": true,
       "error": null,
-      "cache_entries_before": 5729,
-      "cache_matched_before": 5308,
+      "cache_entries_before": 5824,
+      "cache_matched_before": 5390,
       "new_matched_keys": []
     },
     "pins": {
@@ -2290,6 +2290,21 @@
     "totals_state_overviews_29": true,
     "totals_html_13993": true,
     "totals_sitemap_13466": true,
+    "no_broken_internal_links": true,
+    "standing_invariants_held": true
+  },
+  "v5915_checks": {
+    "note": "v5.9.15: LISTING HOURS STATE (one theme, no data change). On the live v5.9.13 tree only 519 of 10,215 listing pages render recorded hours; the Location and hours module on the other pages said nothing about hours at all. A listing with no recorded hours now states 'Hours not listed yet' in the module with a claim line to add them. No hours invented, no Open now mount without hours, flagged and house pages untouched, totals unchanged.",
+    "fragment_on_exactly_module_pages_without_hours": true,
+    "fragment_count_9684": true,
+    "fragment_absent_on_flagged_pages": true,
+    "fragment_absent_on_house_pages": true,
+    "open_now_mount_exactly_where_hours_render": true,
+    "totals_listings_10215": true,
+    "totals_category_2278": true,
+    "totals_html_14134": true,
+    "totals_sitemap_13603": true,
+    "zero_listings_lost_vs_repo": true,
     "no_broken_internal_links": true,
     "standing_invariants_held": true
   },
@@ -44253,7 +44268,7 @@
     "url_count": 13603
   },
   "link_check": {
-    "internal_hrefs_checked": 1130254,
+    "internal_hrefs_checked": 1139938,
     "broken": []
   },
   "phone_spot_check": {

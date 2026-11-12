@@ -1,5 +1,5 @@
 {
-  "version": "v5.8",
+  "version": "v5.9",
   "source_csv": "rankly-call-list-v35-2026-11-11.csv",
   "total_csv_rows": 5851,
   "phone_duplicates_dropped": 1,
@@ -165,13 +165,13 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 43,
-        "prospects_csvs": 155,
+        "call_block_briefs": 44,
+        "prospects_csvs": 159,
         "site_digests": 23
       },
-      "prospects_rows": 4738,
+      "prospects_rows": 4764,
       "digest_entries": 1480,
-      "pool_phones": 5995,
+      "pool_phones": 6093,
       "digest_linked_listings": 36
     },
     "coverage_unflagged_listings": {
@@ -1871,15 +1871,41 @@
     "standing_invariants_held": true,
     "detail_mark_pages": 7724,
     "detail_header_pages": 7724,
-    "detail_added_files": [
-      "logo-mark.svg",
-      "logo.png"
-    ],
-    "detail_nonhtml_delta": [
-      "apple-touch-icon.png",
-      "favicon.ico",
-      "favicon.svg"
-    ]
+    "detail_added_files": [],
+    "detail_nonhtml_delta": []
+  },
+  "v59_checks": {
+    "note": "v5.9: THE STICKY RESULTS TOOLBAR (single theme). Yelp keeps a toolbar above the results stream (count, sort, quick filters) visible while scrolling; here the count and sort sat in the category filterbar, which scrolled away, and the rail's Open now filter stacked away on mobile. The filterbar itself becomes the toolbar (one control set, no duplicates): it gains the toolbar59 class and sticks under the header via the appended V59_CSS block (top 112px at desktop widths; 162px at <=900px and 216px at <=480px, solved from the header's own wrap arithmetic; z-index 40, under the header's 60). The count line takes the toolbar form 'N pros in City, ST' ('1 pro' when one). The sort set gains the Rating button the category script has always handled (data-sort='rating'); Recommended, Most reviewed and the data-gated Distance button are byte-identical. On exactly the pages whose rail carries the Open Now filter (same hours gate), the toolbar gains an Open now pill that MIRRORS the rail's #openchk: passOpen keeps reading the rail checkbox as the single state, and TOOLBAR59_SCRIPT forwards the pill's change to the rail control and reflects the rail's back. No new data, no new claims; cards, map, pins, FAQ, related searches untouched. _norm59 strips exactly these deltas, applied before _norm58 (deeper innermost). The v5.8 checks' repo-relative clauses are revised for the moved baseline (the repo now holds v5.8).",
+    "toolbar_on_all_category_pages": true,
+    "count_matches_rendered_results": true,
+    "sort_set_complete": true,
+    "open_now_pill_matches_rail_gate": true,
+    "pill_mirrors_rail_single_state": true,
+    "sticky_geometry_audit": true,
+    "flagged_listings_structure_unchanged": true,
+    "totals_listings_5484": true,
+    "totals_html_7728": true,
+    "totals_sitemap_7457": true,
+    "zero_yelp_red": true,
+    "standing_invariants_held": true,
+    "geometry59": {
+      "toolbar_tops": {
+        "480": "216px",
+        "767": "162px",
+        "900": "162px",
+        "941": "112px",
+        "1024": "112px",
+        "1200": "112px",
+        "1280": "112px",
+        "1440": "112px",
+        "1920": "112px"
+      },
+      "toolbar_position_1280": "sticky",
+      "toolbar_zindex_1280": "40",
+      "grid_winners_unchanged": true
+    },
+    "detail_category_pages": 1290,
+    "detail_pill_pages": 138
   },
   "partner_placements_detail": [
     {

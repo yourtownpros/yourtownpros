@@ -1,5 +1,5 @@
 {
-  "version": "v5.7",
+  "version": "v5.8",
   "source_csv": "rankly-call-list-v35-2026-11-11.csv",
   "total_csv_rows": 5851,
   "phone_duplicates_dropped": 1,
@@ -1851,6 +1851,35 @@
         }
       }
     }
+  },
+  "v58_checks": {
+    "note": "v5.8: THE BRAND MARK (single theme). The pin + check logo Robert picked on Nov 11 becomes the site mark: favicon.svg is the mark itself (one LOGO_MARK_SVG constant feeds the favicon, /logo-mark.svg and the inline header mark, so they cannot drift), favicon.ico is regenerated from the same geometry by sampling the pin path's cubic segments and rendering with Pillow (the pixel- drawn Y is retired everywhere), the apple-touch-icon carries the same mark on its ink square at 180x180 (its long-standing presentation, so the JSON-LD logo target shows the new mark too), and the mark ships as /logo-mark.svg plus a 512x512 /logo.png for later profile use. In the header the mark sits immediately left of the wordmark in both variants (interior hdr57, homepage overlay) and on the match-thanks patch; styling is the appended V58_CSS block scoped to .brand and .bmark, stripped by _norm58. Do-not-call pages carry the mark too (brand chrome is not enrichment); their treatment markers are asserted unchanged. No data moves: every v5.7 total stands.",
+    "favicon_svg_is_new_mark": true,
+    "favicon_ico_regenerated_from_mark": true,
+    "apple_touch_icon_is_new_mark": true,
+    "logo_assets_emitted": true,
+    "header_mark_on_every_header_page": true,
+    "header_mark_homepage": true,
+    "header_mark_css_scoped": true,
+    "dnc_treatment_unchanged_with_mark": true,
+    "totals_listings_5484": true,
+    "totals_html_7728": true,
+    "totals_sitemap_7457": true,
+    "fileset_exact": true,
+    "nonhtml_delta_brand_only": true,
+    "zero_yelp_red": true,
+    "standing_invariants_held": true,
+    "detail_mark_pages": 7724,
+    "detail_header_pages": 7724,
+    "detail_added_files": [
+      "logo-mark.svg",
+      "logo.png"
+    ],
+    "detail_nonhtml_delta": [
+      "apple-touch-icon.png",
+      "favicon.ico",
+      "favicon.svg"
+    ]
   },
   "partner_placements_detail": [
     {

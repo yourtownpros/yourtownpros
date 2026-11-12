@@ -472,16 +472,121 @@ yields, down to its minimum, before the layout stacks. */
 @media(max-width:1023px){.cat-layout{grid-template-columns:180px minmax(420px,1fr) minmax(260px,300px);gap:16px}}
 @media(max-width:940px){.cat-layout{grid-template-columns:minmax(0,1fr)}.cat-side{position:static;order:1}.cat-map{position:static;height:320px;order:2}.cat-main{order:3}}
 @media(max-width:767px){.cat-main{display:contents}.cat-map{order:3;height:300px}}
+
+/* v5.7 header: white bar, wordmark left, two-field search
+center, business/review/account right; 72px bar + 40px
+category bar = 112px sticky total on interior pages. */
+header.hdr57{background:#fff;color:#12212e;padding:0;box-shadow:0 1px 0 #e4e0d5,0 2px 10px rgba(18,33,46,.06)}
+header.hdr57 .htop{display:flex;align-items:center;gap:20px;flex-wrap:nowrap;max-width:1400px;margin:0 auto;padding:0 24px;height:72px}
+header.hdr57 .brand{color:#12212e;flex:none}
+header.hdr57 .brand span{color:#0e7a5f}
+header.hdr57 .hright{flex:none}
+header.hdr57 .hright a{color:#12212e}
+header.hdr57 .hright a.hclaim{background:#0e7a5f;color:#fff}
+header.hdr57 .fbbtn{color:#12212e}
+header.hdr57 .hsignin{color:#12212e}
+header.hdr57 .catnav{background:transparent;border-bottom:0;max-width:1400px;margin:0 auto;padding:0 24px;height:40px;align-items:center}
+.hsearch57{display:flex;align-items:stretch;flex:1 1 auto;max-width:680px;height:48px;background:#fff;border:1px solid #d8d4c8;border-radius:8px;margin:0 auto}
+.hsearch57 .fld57{flex:1;position:relative;display:flex;min-width:0}
+.hsearch57 .fld57:first-child{border-right:1px solid #e4e0d5}
+.hsearch57 input{flex:1;width:100%;min-width:0;border:0;padding:0 14px;font-size:15px;font-family:inherit;color:#1c2430;background:transparent}
+.hsearch57 input:focus{outline:2px solid #0e7a5f;outline-offset:-2px}
+.hsearch57 .hgo57{background:#0e7a5f;color:#fff;border:0;width:52px;font-size:19px;cursor:pointer;border-radius:0 7px 7px 0;flex:none;font-family:inherit}
+.navpanel57{min-width:320px;padding:10px}
+.navpanel57 a{display:flex;gap:10px;align-items:center}
+.navic57{display:inline-flex;width:26px;height:26px;border-radius:6px;background:#e8f3ee;color:#0e7a5f;align-items:center;justify-content:center;font-size:14px;flex:none}
+.cnav-item.open .cnav-btn{color:#0e7a5f;box-shadow:inset 0 -3px 0 #0e7a5f}
+.catnav-home .cnav-item.open .cnav-btn{color:#fff;box-shadow:inset 0 -3px 0 #fff}
+@media(max-width:900px){header.hdr57 .htop{flex-wrap:wrap;height:auto;padding:10px 16px;row-gap:10px}.hsearch57{order:3;flex-basis:100%;max-width:none}}
+/* v5.7 results split: full viewport, filters 240px fixed,
+results stream capped at 680px, map takes the rest. */
+.wrap:has(>.cat-layout){max-width:none;padding-left:24px;padding-right:24px}
+.cat-layout{grid-template-columns:240px minmax(540px,680px) minmax(300px,1fr);gap:24px}
+.cat-side{top:112px}
+.cat-map{top:112px;height:calc(100vh - 112px)}
+@media(max-width:1200px){.cat-layout{grid-template-columns:200px minmax(460px,1fr) minmax(260px,300px);gap:16px}}
+@media(max-width:1023px){.cat-layout{grid-template-columns:180px minmax(420px,1fr) minmax(240px,280px);gap:14px}}
+@media(max-width:940px){.cat-layout{grid-template-columns:minmax(0,1fr)}.cat-side{position:static;order:1}.cat-map{position:static;height:320px;order:2}.cat-main{order:3}}
+/* v5.7 cards: hairline rows, 24px vertical padding, 160px
+square media (200px on Featured), rating boxes. */
+.result-card{background:transparent;border:0;border-bottom:1px solid #e4e0d5;border-radius:0;padding:24px 0;margin:0;gap:18px}
+.result-card img{width:160px;height:160px}
+.result-card[data-feat="1"] img{width:200px;height:200px}
+.result-card.sponcard{background:#f4faf7;border:2px solid #0e7a5f;border-radius:12px;padding:18px;margin:12px 0}
+.rboxes57{display:inline-flex;gap:2px;vertical-align:middle;margin-right:8px}
+.rbox57{width:18px;height:18px;border-radius:3px;background:#e9e2d2;position:relative;overflow:hidden;flex:none}
+.rbox57 i{position:absolute;left:0;top:0;bottom:0;background:#b07a00}
+.rmeta57{display:inline;font-size:14px;color:#5a6672}
+.rmeta57 strong{color:#12212e;font-size:15px}
+.rtags57{margin:6px 0 0}
+.rtag57{display:inline-block;background:#eef3f6;color:#33505f;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700;margin:0 6px 4px 0;text-decoration:none}
+.rbadges57{margin:6px 0 0}
+.openline57{font-weight:700;color:#0e7a5f}
+.rsnip57{margin:8px 0 0;padding:8px 12px;border-left:3px solid #0e7a5f;background:#f4faf7;font-size:14px;color:#33505f}
+.rsnip57 .rsrc57{display:block;font-size:12px;font-weight:700;color:#0e7a5f;margin-top:4px}
+.ract57{margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.ract57 .rtel{padding:9px 16px}
+.ytp-pin.big57{transform:scale(1.4);background:#0b5c46}
+/* v5.7 category SEO modules: FAQ + related searches. */
+.faq57{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 20px;margin:22px 0}
+.faq57 h2{margin:0 0 6px}
+.faq57 h3{margin:14px 0 4px;font-size:16px}
+.faq57 p{margin:0}
+.rel57{margin:18px 0}
+.rel57 h2{font-size:18px;margin:0 0 8px}
+.rel57 a{display:inline-block;margin:0 14px 6px 0;font-weight:600}
+/* v5.7 business pages: two columns + sticky action rail,
+photo collage header, action bar, split location/hours. */
+.biz57{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;align-items:start;margin-top:6px}
+.bizside57{position:sticky;top:128px;min-width:0}
+.bizmain57{min-width:0}
+.bizcard57{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 18px;margin:0 0 16px}
+.bizcard57 h2{font-size:17px;margin:0 0 10px}
+.bizcard57 .tel{display:block;text-align:center;margin:0 0 10px}
+.bizcard57 a.act57{display:block;text-align:center;padding:9px 12px;border:1px solid #d8d4c8;border-radius:8px;color:#12212e;font-weight:700;text-decoration:none;margin:0 0 10px;background:#fff}
+.bizcard57 a.act57:last-child{margin-bottom:0}
+.bizhero57{position:relative;border-radius:12px;overflow:hidden;margin:12px 0 16px;background:#12212e}
+.bizhero57 .photoband-img{margin:0;border-radius:0;display:block}
+.bizhero57 .claimedline{position:absolute;top:12px;left:12px;margin:0;z-index:2}
+.actbar57{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.actbar57>a,.actbar57>button{background:#fff;border:1px solid #d8d4c8;border-radius:8px;padding:8px 14px;font-weight:700;color:#12212e;text-decoration:none;cursor:pointer;font-family:inherit;font-size:14px}
+.actbar57 .savebar{margin:0}
+.actbar57 .savebtn{border:1px solid #d8d4c8;color:#12212e}
+.actbar57 .savebtn.saved{background:#0e7a5f;border-color:#0e7a5f;color:#fff}
+.lochrs57{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.amen57{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px 14px;margin:6px 0}
+.amen57 span{font-size:14px}
+.amen57 span::before{content:"\2713  ";color:#0e7a5f;font-weight:800}
+@media(max-width:900px){.biz57{grid-template-columns:minmax(0,1fr)}.bizside57{position:static}}
+@media(max-width:700px){.lochrs57{grid-template-columns:minmax(0,1fr)}}
+/* v5.7 footer: four-column sitemap matrix, real pages only. */
+footer{padding:0}
+.foot57{max-width:1240px;margin:0 auto;padding:32px 24px 6px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:24px}
+.foot57 h3{color:#fff;font-size:13px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.foot57 a{display:block;margin:0 0 8px;color:#cfe3da;text-decoration:none;font-size:14px}
+.foot57 a:hover{color:#fff;text-decoration:underline}
+.foot57 .fbrand{font-size:20px;font-weight:800;color:#fff}
+.foot57 .fbrand span{color:#35c08d}
+.foot57 p{margin:8px 0 0;color:#9fb4a9;font-size:13px}
+.footbase57{max-width:1240px;margin:0 auto;padding:6px 24px 26px;color:#9fb4a9;font-size:13px}
+@media(max-width:760px){.foot57{grid-template-columns:1fr 1fr}}
+.secttl57{font-size:20px;font-weight:800;margin:26px 0 10px}
+.pmark57{font-weight:800;color:#33505f}
 </style></head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
-<header><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div></header>
-<div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Pet Grooming <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/pet-grooming/california/yuba-city/">Pet Grooming in Yuba City, CA</a><span class="cnct" aria-hidden="true">(13)</span><a href="/pet-grooming/puerto-rico/san-juan/">Pet Grooming in San Juan, PR</a><span class="cnct" aria-hidden="true">(11)</span><a href="/pet-grooming/oregon/portland/">Pet Grooming in Portland, OR</a><span class="cnct" aria-hidden="true">(9)</span><a href="/pet-grooming/washington/seattle/">Pet Grooming in Seattle, WA</a><span class="cnct" aria-hidden="true">(9)</span><a href="/pet-grooming/montana/billings/">Pet Grooming in Billings, MT</a><span class="cnct" aria-hidden="true">(8)</span><a href="/pet-grooming/nebraska/omaha/">Pet Grooming in Omaha, NE</a><span class="cnct" aria-hidden="true">(8)</span><a href="/pet-grooming/">All pet grooming by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Tattoo <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/tattoo/montana/billings/">Tattoo in Billings, MT</a><span class="cnct" aria-hidden="true">(10)</span><a href="/tattoo/california/riverside/">Tattoo in Riverside, CA</a><span class="cnct" aria-hidden="true">(10)</span><a href="/tattoo/arizona/tucson/">Tattoo in Tucson, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/tattoo/montana/missoula/">Tattoo in Missoula, MT</a><span class="cnct" aria-hidden="true">(8)</span><a href="/tattoo/montana/bozeman/">Tattoo in Bozeman, MT</a><span class="cnct" aria-hidden="true">(7)</span><a href="/tattoo/south-dakota/rapid-city/">Tattoo in Rapid City, SD</a><span class="cnct" aria-hidden="true">(7)</span><a href="/tattoo/">All tattoo by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Repair <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/auto-repair/california/salinas/">Auto Repair in Salinas, CA</a><span class="cnct" aria-hidden="true">(15)</span><a href="/auto-repair/california/hanford/">Auto Repair in Hanford, CA</a><span class="cnct" aria-hidden="true">(13)</span><a href="/auto-repair/california/turlock/">Auto Repair in Turlock, CA</a><span class="cnct" aria-hidden="true">(12)</span><a href="/auto-repair/california/brawley/">Auto Repair in Brawley, CA</a><span class="cnct" aria-hidden="true">(11)</span><a href="/auto-repair/nebraska/omaha/">Auto Repair in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/auto-repair/montana/billings/">Auto Repair in Billings, MT</a><span class="cnct" aria-hidden="true">(10)</span><a href="/auto-repair/">All auto repair by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Hair Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/hair-salons/colorado/pueblo/">Hair Salons in Pueblo, CO</a><span class="cnct" aria-hidden="true">(18)</span><a href="/hair-salons/colorado/greeley/">Hair Salons in Greeley, CO</a><span class="cnct" aria-hidden="true">(13)</span><a href="/hair-salons/nebraska/hastings/">Hair Salons in Hastings, NE</a><span class="cnct" aria-hidden="true">(12)</span><a href="/hair-salons/nebraska/omaha/">Hair Salons in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/hair-salons/colorado/colorado-springs/">Hair Salons in Colorado Springs, CO</a><span class="cnct" aria-hidden="true">(10)</span><a href="/hair-salons/arizona/scottsdale/">Hair Salons in Scottsdale, AZ</a><span class="cnct" aria-hidden="true">(9)</span><a href="/hair-salons/">All hair salon by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Nail Salons <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/nails/south-dakota/sioux-falls/">Nail Salons in Sioux Falls, SD</a><span class="cnct" aria-hidden="true">(11)</span><a href="/nails/washington/tacoma/">Nail Salons in Tacoma, WA</a><span class="cnct" aria-hidden="true">(11)</span><a href="/nails/arizona/gilbert/">Nail Salons in Gilbert, AZ</a><span class="cnct" aria-hidden="true">(10)</span><a href="/nails/puerto-rico/san-juan/">Nail Salons in San Juan, PR</a><span class="cnct" aria-hidden="true">(10)</span><a href="/nails/california/los-angeles-encino/">Nail Salons in Los Angeles (Encino), CA</a><span class="cnct" aria-hidden="true">(9)</span><a href="/nails/colorado/pueblo/">Nail Salons in Pueblo, CO</a><span class="cnct" aria-hidden="true">(9)</span><a href="/nails/">All nail salon by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Plumbers <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/plumbers/kansas/wichita/">Plumbers in Wichita, KS</a><span class="cnct" aria-hidden="true">(8)</span><a href="/plumbers/nebraska/lincoln/">Plumbers in Lincoln, NE</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/south-dakota/rapid-city/">Plumbers in Rapid City, SD</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/arizona/tucson/">Plumbers in Tucson, AZ</a><span class="cnct" aria-hidden="true">(7)</span><a href="/plumbers/california/hemet/">Plumbers in Hemet, CA</a><span class="cnct" aria-hidden="true">(6)</span><a href="/plumbers/south-dakota/vermillion/">Plumbers in Vermillion, SD</a><span class="cnct" aria-hidden="true">(6)</span><a href="/plumbers/">All plumbing by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Electricians <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/electricians/nebraska/omaha/">Electricians in Omaha, NE</a><span class="cnct" aria-hidden="true">(11)</span><a href="/electricians/nebraska/lincoln/">Electricians in Lincoln, NE</a><span class="cnct" aria-hidden="true">(10)</span><a href="/electricians/south-dakota/rapid-city/">Electricians in Rapid City, SD</a><span class="cnct" aria-hidden="true">(9)</span><a href="/electricians/arizona/tucson/">Electricians in Tucson, AZ</a><span class="cnct" aria-hidden="true">(8)</span><a href="/electricians/oklahoma/oklahoma-city/">Electricians in Oklahoma City, OK</a><span class="cnct" aria-hidden="true">(7)</span><a href="/electricians/oregon/oregon-city/">Electricians in Oregon City, OR</a><span class="cnct" aria-hidden="true">(7)</span><a href="/electricians/">All electrical by state</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop"><a href="/barbers/">Barbers</a><a href="/tanning/">Tanning Salons</a><a href="/med-spas/">Med Spas</a><a href="/massage/">Massage</a><a href="/towing/">Towing</a><a href="/hvac/">HVAC</a><a href="/roofing/">Roofing</a><a href="/painting/">Painters</a><a href="/lawn-and-landscaping/">Lawn &amp; Landscaping</a><a href="/handyman/">Handyman</a><a href="/cleaners/">Cleaners &amp; Laundry</a><a href="/florists/">Florists</a><a href="/bakeries-and-cafes/">Bakeries &amp; Cafes</a><a href="/jewelry/">Jewelry</a><a href="/veterinary/">Veterinary</a><a href="/fitness/">Fitness</a><a href="/locksmiths/">Locksmiths</a><a href="/spas/">Spas</a><a href="/auto-glass/">Auto Glass</a><a href="/pet-boarding/">Pet Boarding &amp; Daycare</a><a href="/dance-studios/">Dance Studios</a><a href="/bookstores/">Bookstores</a></div></div></div>
+<header class="hdr57"><div class="htop"><a class="brand" href="/">YourTown<span>Pros</span></a><form class="hsearch57" id="ytp-hform57" role="search" action="/" method="get"><div class="fld57"><input id="ytp-q57" type="text" placeholder="Plumbers, hair salons, auto repair..." autocomplete="off" aria-label="What are you looking for"><div class="sug" id="sug-q57"></div></div><div class="fld57"><input id="ytp-w57" type="text" placeholder="City" autocomplete="off" aria-label="Where"><div class="sug" id="sug-w57"></div></div><button type="submit" class="hgo57" aria-label="Search">&#9906;</button></form><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><a class="hwrite" href="/">Write a Review</a><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div><div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Restaurants <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/bakeries-and-cafes/"><span class="navic57">&#9749;</span>Bakeries &amp; Cafes</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Home &amp; Garden <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/plumbers/"><span class="navic57">&#9874;</span>Plumbers</a><a href="/electricians/"><span class="navic57">&#9889;</span>Electricians</a><a href="/hvac/"><span class="navic57">&#10052;</span>HVAC</a><a href="/roofing/"><span class="navic57">&#9650;</span>Roofing</a><a href="/painting/"><span class="navic57">&#9632;</span>Painters</a><a href="/lawn-and-landscaping/"><span class="navic57">&#10048;</span>Lawn &amp; Landscaping</a><a href="/handyman/"><span class="navic57">&#9874;</span>Handyman</a><a href="/locksmiths/"><span class="navic57">&#9919;</span>Locksmiths</a><a href="/cleaners/"><span class="navic57">&#10024;</span>Cleaners &amp; Laundry</a><a href="/florists/"><span class="navic57">&#9880;</span>Florists</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Services <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/auto-repair/"><span class="navic57">&#9881;</span>Auto Repair</a><a href="/towing/"><span class="navic57">&#10148;</span>Towing</a><a href="/auto-glass/"><span class="navic57">&#9635;</span>Auto Glass</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Health &amp; Beauty <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/hair-salons/"><span class="navic57">&#9986;</span>Hair Salons</a><a href="/barbers/"><span class="navic57">&#9776;</span>Barbers</a><a href="/nails/"><span class="navic57">&#10023;</span>Nail Salons</a><a href="/med-spas/"><span class="navic57">&#10038;</span>Med Spas</a><a href="/spas/"><span class="navic57">&#10047;</span>Spas</a><a href="/massage/"><span class="navic57">&#10049;</span>Massage</a><a href="/tanning/"><span class="navic57">&#9728;</span>Tanning Salons</a><a href="/fitness/"><span class="navic57">&#10025;</span>Fitness</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Travel &amp; Activities <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/dance-studios/"><span class="navic57">&#9835;</span>Dance Studios</a><a href="/bookstores/"><span class="navic57">&#10087;</span>Bookstores</a><a href="/jewelry/"><span class="navic57">&#9733;</span>Jewelry</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/pet-grooming/"><span class="navic57">&#128062;</span>Pet Grooming</a><a href="/pet-boarding/"><span class="navic57">&#8962;</span>Pet Boarding &amp; Daycare</a><a href="/veterinary/"><span class="navic57">&#10010;</span>Veterinary</a><a href="/tattoo/"><span class="navic57">&#10022;</span>Tattoo</a></div></div></div></header>
+
 <main class="wrap"><div class="crumb"><a href="/">Home</a> / <a href="/auto-repair/">Auto Repair</a> / <a href="/auto-repair/california/">California</a> / <a href="/auto-repair/california/clearlake/" title="Auto Repair in California">Auto Repair in Clearlake</a></div>
-<h1>C&amp;G Auto Body</h1><span class="pill">Auto Repair</span><span class="pill">Clearlake, CA</span><img class="photoband-img" src="https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=1200&amp;q=60" srcset="https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=480&amp;q=60 480w, https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=828&amp;q=60 828w, https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=1200&amp;q=60 1200w" sizes="100vw" width="1200" height="180" fetchpriority="high" alt="Stock photo: auto repair in Clearlake, CA"><p>Clearlake, CA</p>
-<p><a class="tel" href="tel:+17076924243">Call (707) 692-4243</a></p>
-<div id="ytp-highlights" data-slug="auto-repair/candg-auto-body-clearlake"></div><div class="savebar"><button type="button" class="savebtn" id="ytp-save" aria-pressed="false">Save this pro</button></div>
-<div class="claimstrip">Is this your business? <a href="/claim/?business=auto-repair/candg-auto-body-clearlake&name=C%26G%20Auto%20Body">Claim this free listing</a> to keep your hours, services and photos current.</div>
-<div class="card suggestbox" id="suggest-edit"><h2>Suggest an edit</h2><p class="listed">Spot something out of date on this listing? Tell us here. A person checks every suggestion against a source before anything on this page changes, and nothing you send appears on the page.</p><form class="sgform" data-slug="auto-repair/candg-auto-body-clearlake" novalidate><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div><div class="formgrid"><div class="fld"><label for="sg-name">Your name</label><input id="sg-name" name="sg_name" required maxlength="120" autocomplete="name"></div><div class="fld"><label for="sg-email">Email (optional)</label><input id="sg-email" type="email" name="sg_email" maxlength="160" autocomplete="email"></div></div><div class="fld"><label for="sg-field">What should change?</label><select id="sg-field" name="sg_field"><option value="name">Business name</option><option value="phone">Phone number</option><option value="address">Address</option><option value="hours">Hours</option><option value="website">Website</option><option value="category">Category</option><option value="closed">Closed or moved</option><option value="other">Something else</option></select></div><div class="fld"><label for="sg-details">Details</label><textarea id="sg-details" name="sg_details" rows="3" required maxlength="2000" placeholder="What is wrong, and what should it say?"></textarea></div><button class="btn btn-brand" type="submit">Send suggestion</button><p class="fine sgmsg" role="status"></p></form></div>
+<div class="bizhero57"><img class="photoband-img" src="https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=1200&amp;q=60" srcset="https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=480&amp;q=60 480w, https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=828&amp;q=60 828w, https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&amp;fit=crop&amp;w=1200&amp;q=60 1200w" sizes="100vw" width="1200" height="180" fetchpriority="high" alt="Stock photo: auto repair in Clearlake, CA"></div>
+<h1>C&amp;G Auto Body</h1><span class="pill">Auto Repair</span><span class="pill">Clearlake, CA</span>
+<div class="actbar57"><a href="#reviews">Write a Review</a><a href="#reviews">Add Photo</a><button type="button" class="share57">Share</button><div class="savebar"><button type="button" class="savebtn" id="ytp-save" aria-pressed="false">Save this pro</button></div></div>
+
+<div class="biz57"><div class="bizmain57">
+<h2>About this listing</h2><p>C&amp;G Auto Body is a auto repair business in Clearlake, California, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p>
+
+<div id="ytp-highlights" data-slug="auto-repair/candg-auto-body-clearlake"></div>
+<h2>Location and hours</h2>
+<div class="lochrs57"><div><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 38.95823, "lng": -122.62637, "city": "Clearlake, CA"}</script></div><div><p>Clearlake, CA</p></div></div>
 <div class="feat"><div class="k">Sponsored · Featured spot open</div><h2>One auto repair business in Clearlake gets this spot</h2><p style="margin:0">The featured business in Clearlake appears first here, and gets an online booking button on its listing so customers can book without calling. This placement is exclusive to one business per town.</p></div>
 <div class="match" id="match"><h2>Get matched with a Clearlake auto repair pro</h2><p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we contact C&amp;G Auto Body about it, and if they cannot take the job, we match you with another Clearlake auto repair pro instead. Free for customers, and no obligation.</p>
 <form action="https://formsubmit.co/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="auto-repair/candg-auto-body-clearlake" data-match-source="listing">
@@ -491,7 +596,12 @@ yields, down to its minimum, before the layout stacks. */
 <label for="m-service">What do you need?</label><input id="m-service" type="text" name="service" placeholder="Example: brakes squeaking on a 2018 F-150">
 <label for="m-when">Preferred day or time</label><input id="m-when" type="text" name="when">
 <label for="m-notes">Anything else?</label><textarea id="m-notes" name="notes" rows="2"></textarea>
-<button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros, not straight to the business. We pass it on for you, and we do not sell your number.</div></form></div><h2>About this listing</h2><p>C&amp;G Auto Body is a auto repair business in Clearlake, California, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 38.95823, "lng": -122.62637, "city": "Clearlake, CA"}</script><div class="reviews" id="reviews"><h2>YourTownPros reviews</h2><div id="ytp-rev-tools" hidden><div id="ytp-rev-hist"></div><div class="revtools"><label for="ytp-rev-sort">Sort</label><select id="ytp-rev-sort"><option value="new">Newest</option><option value="high">Highest rated</option><option value="low">Lowest rated</option></select><label for="ytp-rev-search">Search</label><input type="search" id="ytp-rev-search" placeholder="Search reviews"></div></div><div id="ytp-reviews-list"><p class="listed">Loading reviews...</p></div><div id="ytp-review-prompt"><p>Sign in to write a review.</p><button type="button" class="claimbtn" id="ytp-review-signin">Sign in</button></div><form id="ytp-write-review" hidden><label for="ytp-rev-rating">Your rating</label><select id="ytp-rev-rating"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select><label for="ytp-rev-body">Your review</label><textarea id="ytp-rev-body" rows="3" required></textarea><button type="submit">Post review</button></form></div><div class="qasec" id="community"><h2>Ask the Community</h2><p class="listed">Questions about this business, answered by customers and by the business itself. Questions and answers appear after a quick check.</p><div id="ytp-qa-list"><p class="listed">Loading questions...</p></div><div id="ytp-qa-pending"></div><div id="ytp-ask-prompt"><p>Sign in to ask a question.</p><button type="button" class="claimbtn" id="ytp-ask-signin">Sign in</button></div><form class="qaform" id="ytp-ask-form" hidden><label for="ytp-ask-body">Your question</label><textarea id="ytp-ask-body" rows="3" required></textarea><button type="submit">Post question</button></form></div>
+<button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros, not straight to the business. We pass it on for you, and we do not sell your number.</div></form></div><div class="reviews" id="reviews"><h2>YourTownPros reviews</h2><div id="ytp-rev-tools" hidden><div id="ytp-rev-hist"></div><div class="revtools"><label for="ytp-rev-sort">Sort</label><select id="ytp-rev-sort"><option value="new">Newest</option><option value="high">Highest rated</option><option value="low">Lowest rated</option></select><label for="ytp-rev-search">Search</label><input type="search" id="ytp-rev-search" placeholder="Search reviews"></div></div><div id="ytp-reviews-list"><p class="listed">Loading reviews...</p></div><div id="ytp-review-prompt"><p>Sign in to write a review.</p><button type="button" class="claimbtn" id="ytp-review-signin">Sign in</button></div><form id="ytp-write-review" hidden><label for="ytp-rev-rating">Your rating</label><select id="ytp-rev-rating"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select><label for="ytp-rev-body">Your review</label><textarea id="ytp-rev-body" rows="3" required></textarea><button type="submit">Post review</button></form></div><div class="qasec" id="community"><h2>Ask the Community</h2><p class="listed">Questions about this business, answered by customers and by the business itself. Questions and answers appear after a quick check.</p><div id="ytp-qa-list"><p class="listed">Loading questions...</p></div><div id="ytp-qa-pending"></div><div id="ytp-ask-prompt"><p>Sign in to ask a question.</p><button type="button" class="claimbtn" id="ytp-ask-signin">Sign in</button></div><form class="qaform" id="ytp-ask-form" hidden><label for="ytp-ask-body">Your question</label><textarea id="ytp-ask-body" rows="3" required></textarea><button type="submit">Post question</button></form></div>
+<div class="card suggestbox" id="suggest-edit"><h2>Suggest an edit</h2><p class="listed">Spot something out of date on this listing? Tell us here. A person checks every suggestion against a source before anything on this page changes, and nothing you send appears on the page.</p><form class="sgform" data-slug="auto-repair/candg-auto-body-clearlake" novalidate><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div><div class="formgrid"><div class="fld"><label for="sg-name">Your name</label><input id="sg-name" name="sg_name" required maxlength="120" autocomplete="name"></div><div class="fld"><label for="sg-email">Email (optional)</label><input id="sg-email" type="email" name="sg_email" maxlength="160" autocomplete="email"></div></div><div class="fld"><label for="sg-field">What should change?</label><select id="sg-field" name="sg_field"><option value="name">Business name</option><option value="phone">Phone number</option><option value="address">Address</option><option value="hours">Hours</option><option value="website">Website</option><option value="category">Category</option><option value="closed">Closed or moved</option><option value="other">Something else</option></select></div><div class="fld"><label for="sg-details">Details</label><textarea id="sg-details" name="sg_details" rows="3" required maxlength="2000" placeholder="What is wrong, and what should it say?"></textarea></div><button class="btn btn-brand" type="submit">Send suggestion</button><p class="fine sgmsg" role="status"></p></form></div>
+</div><aside class="bizside57">
+<div class="bizcard57"><h2>Contact</h2><p><a class="tel" href="tel:+17076924243">Call (707) 692-4243</a></p><a class="act57" href="#match">Request a match</a></div>
+<div class="claimstrip">Is this your business? <a href="/claim/?business=auto-repair/candg-auto-body-clearlake&name=C%26G%20Auto%20Body">Claim this free listing</a> to keep your hours, services and photos current.</div>
+</aside></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoRepair", "@id": "https://yourtownpros.com/auto-repair/candg-auto-body-clearlake/#business", "name": "C&G Auto Body", "url": "https://yourtownpros.com/auto-repair/candg-auto-body-clearlake/", "telephone": "+17076924243", "address": {"@type": "PostalAddress", "addressLocality": "Clearlake", "addressRegion": "CA", "addressCountry": "US"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Auto Repair", "item": "https://yourtownpros.com/auto-repair/"}, {"@type": "ListItem", "position": 3, "name": "California", "item": "https://yourtownpros.com/auto-repair/california/"}, {"@type": "ListItem", "position": 4, "name": "Auto Repair in Clearlake", "item": "https://yourtownpros.com/auto-repair/california/clearlake/"}, {"@type": "ListItem", "position": 5, "name": "C&G Auto Body"}]}</script><div class="similar"><h2>Similar pros nearby</h2><div class="grid"><div class="card"><h3><a href="/auto-repair/one-stop-automotive-clearlake/">One Stop Automotive</a></h3><div class="stars">★★★★★ 5.0 · 5 reviews</div><div class="listed">Listed in Clearlake</div><div class="meta">Clearlake, CA</div><div class="meta">(707) 994-8001</div><div class="meta cardreq"><a href="/auto-repair/one-stop-automotive-clearlake/?src=card#match">Request this pro</a></div></div><div class="card"><h3><a href="/auto-repair/hollywood-auto-body-clearlake/">Hollywood Auto Body</a></h3><div class="listed">Listed in Clearlake</div><div class="meta">Clearlake, CA</div><div class="meta">(707) 994-4643</div><div class="meta cardreq"><a href="/auto-repair/hollywood-auto-body-clearlake/?src=card#match">Request this pro</a></div></div><div class="card"><h3><a href="/auto-repair/j-and-s-auto-repairs-clearlake/">J &amp; S Auto Repairs</a></h3><div class="listed">Listed in Clearlake</div><div class="meta">Clearlake, CA</div><div class="meta">(707) 461-4386</div><div class="meta cardreq"><a href="/auto-repair/j-and-s-auto-repairs-clearlake/?src=card#match">Request this pro</a></div></div></div><p><a href="/auto-repair/california/">More Auto Repair in California</a> · <a href="/california/clearlake/">All local businesses in Clearlake, CA</a></p></div><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 (function(){
@@ -902,8 +1012,8 @@ if(h.indexOf("google.com/maps/dir")!==-1){fire("directions");return}
 if(a.textContent&&a.textContent.indexOf("Visit their website")===0)fire("website");
 });
 })();
-</script></main>
-<footer>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored. &copy; 2026 YourTownPros.<a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></footer>
+</script><script>(function(){var b=document.querySelector(".share57");if(!b||!navigator.clipboard)return;b.addEventListener("click",function(){navigator.clipboard.writeText(location.href).then(function(){b.textContent="Link copied"},function(){})})})();</script></main>
+<footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
 <script>
 (function(){
 var menus=document.querySelectorAll(".fbmenu,.cnav-item");
@@ -921,6 +1031,74 @@ var navs=document.querySelectorAll(".catnav");
 for(var n=0;n<navs.length;n++){navs[n].addEventListener("scroll",function(){closeAll(null)})}
 document.addEventListener("click",function(){closeAll(null)});
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(null)});
+})();
+</script><script>
+/* v5.7: header two-field search. Same routing contract as
+the hero search (category + city through the category
+index, else best business/city target); the where field
+prefills from the saved city the hero search stores. */
+(function(){
+var form=document.getElementById("ytp-hform57");if(!form)return;
+var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
+s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
+var D=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null;
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function fetchJ(u,cb){fetch(u).then(function(r){return r.json()}).then(function(d){cb(d)}).catch(function(){cb(null)})}
+function loadD(cb){if(D){cb();return}fetchJ("/search-index.json",function(d){D=d||[];cb()})}
+function loadCT(cb){if(CT){cb();return}fetchJ("/cities-index.json",function(d){CT=d||[];cb()})}
+function loadCAT(cb){if(CAT){cb();return}fetchJ("/category-index.json",function(d){CAT=d||{};cb()})}
+function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
+function sm57(e,q){return e.name.toLowerCase().indexOf(q)>-1||(e.attrs||[]).join(" ").toLowerCase().indexOf(q)>-1||(e.services||[]).join(" ").toLowerCase().indexOf(q)>-1}
+function show(box,items,fn){if(!items.length){box.style.display="none";box.innerHTML="";return}
+box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join("");
+box.style.display="block";
+var links=box.querySelectorAll("a");
+for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
+function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!D){s1.style.display="none";return}
+var seen={},cats=[];
+for(var i=0;i<D.length&&cats.length<4;i++){var e=D[i];
+if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;cats.push({vslug:e.vslug,go:"/"+e.vslug+"/",html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>"})}}
+var biz=D.filter(function(e){return sm57(e,q)}).slice(0,6).map(function(e){return{go:e.url,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>"}});
+show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
+function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
+if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
+var pre=[],sub=[];
+for(var i=0;i<CT.length;i++){var e=CT[i],nm=e.city.toLowerCase();
+if(st&&e.state.toLowerCase().indexOf(st)!==0)continue;
+if(!name||nm.indexOf(name)===0)pre.push(e);else if(nm.indexOf(name)>-1)sub.push(e)}
+return pre.concat(sub)}
+function sugCity(){if(!CT)return;
+var q=f2.value.trim().toLowerCase();
+var ms=cityMatches(q).slice(0,7);
+show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+e.state+"</strong><span>"+e.count+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
+function resolveCity(){if(pickC)return pickC;
+var t=f2.value.trim();if(!t||!CT)return null;
+var low=t.toLowerCase();
+for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===low)return CT[i]}
+for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
+return null}
+function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase();
+if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href=CAT[pickV][city.sslug+"/"+city.cslug];return}
+if(pickB){location.href=pickB;return}
+if(city&&CAT&&q){var key=city.sslug+"/"+city.cslug,seen={},vs=[];
+for(var i=0;i<D.length;i++){var e=D[i];if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;vs.push(e.vslug)}}
+for(var i=0;i<vs.length;i++){if(CAT[vs[i]]&&CAT[vs[i]][key]){location.href=CAT[vs[i]][key];return}}}
+if(city&&q){var m=D.filter(function(e){return e.city===city.city&&e.state===city.state&&(e.vertical.toLowerCase().indexOf(q)>-1||sm57(e,q))});
+if(m.length>=2&&CAT&&CAT[m[0].vslug]&&CAT[m[0].vslug][city.sslug+"/"+city.cslug]){location.href=CAT[m[0].vslug][city.sslug+"/"+city.cslug];return}
+if(m.length===1){location.href=m[0].url;return}}
+if(city){location.href=city.url;return}
+if(q){var b=D.filter(function(e){return sm57(e,q)});
+if(b.length){location.href=b[0].url;return}
+var c=D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1});
+if(c.length){location.href="/"+c[0].vslug+"/";return}}
+location.href="/"}
+form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
+f1.addEventListener("input",function(){pickB=null;pickV=null;loadD(sugBiz)});
+f1.addEventListener("focus",function(){loadD(sugBiz)});
+f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
+f2.addEventListener("focus",function(){loadCT(sugCity)});
+document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
+try{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}catch(x){}
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script>
 (function(){

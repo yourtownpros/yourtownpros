@@ -1,5 +1,5 @@
 {
-  "version": "v5.6",
+  "version": "v5.7",
   "source_csv": "rankly-call-list-v35-2026-11-11.csv",
   "total_csv_rows": 5851,
   "phone_duplicates_dropped": 1,
@@ -166,10 +166,10 @@
       "source_files": {
         "research_notes": 58,
         "call_block_briefs": 43,
-        "prospects_csvs": 151,
+        "prospects_csvs": 155,
         "site_digests": 23
       },
-      "prospects_rows": 4672,
+      "prospects_rows": 4738,
       "digest_entries": 1480,
       "pool_phones": 5995,
       "digest_linked_listings": 36
@@ -906,7 +906,7 @@
       "city_mode": 4306,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 1295
+      "get_directions_links": 2581
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -1279,7 +1279,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 7184,
+    "repo_diff_files": 7724,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1494,12 +1494,12 @@
     "verify_data_reconciled": true,
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
-      412,
+      540,
       540
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
-    "changed_html_set_size": 7184,
+    "changed_html_set_size": 7724,
     "changed_files_fully_explained": true,
     "file_set_unchanged": true,
     "nonhtml_changed_exact": true,
@@ -1568,7 +1568,7 @@
     "job4_biz_data_reconciled": true,
     "job4_verify_data_domain_delta": true,
     "job4_verify_data_domains_before_after": [
-      412,
+      540,
       540
     ],
     "job4_hours_website_page_sets": true,
@@ -1766,6 +1766,91 @@
     "layout_overflow_guards_present": true,
     "layout_card_containment_and_restack": true,
     "standing_invariants_held": true
+  },
+  "v57_checks": {
+    "note": "v5.7: YELP LAYOUT PARITY PASS (templates 1, 2, 7 partial, 12, 13, 14). Layout and shell only: no data changes, so every v5.6 total stands. Header: white bar, two-field search (what + where, 680px by 48px, hairline split, green square submit), For Business + Write a Review + account right, broad-parent nav with icon subcategory panels replacing the city-list dropdowns, sticky total 112px. Category pages: full-viewport split (240px filters, results capped at 680px, map takes the rest, sticky under the 112px header), Recommended default sort, price filter data-gated (renders nowhere: no price-level data exists), distance bands on pinned pages, Yelp card anatomy with 18px fractional rating boxes, snippets only from approved YourTownPros reviews (none exist yet), pin hover sync. Business pages: two-column shape, collage header with the claimed badge in the overlay, action bar (Write a Review, Add Photo, Share, Save), From this business, amenities grid of known positives, Location and Hours split module, sticky contact sidebar; flagged listings keep the bare treatment byte-for-byte. Category SEO: factual Top-rated H1 where two or more listings carry a shown rating, FAQ modules built only from page data with matching FAQPage JSON-LD, related-searches clusters. Footer: four-column matrix of real pages. Homepage: trade matrix grouped under the nav parents. Colors stay ours (green #0e7a5f, gold stars); no Yelp red anywhere.",
+    "totals_listings_5484": true,
+    "totals_html_7728": true,
+    "totals_sitemap_7457": true,
+    "delta_set_exact": true,
+    "header_two_field_search_all_pages": true,
+    "header_sticky_112px": true,
+    "nav_parent_structure": true,
+    "write_a_review_global": true,
+    "footer_matrix_real_pages": true,
+    "match_thanks_same_header": true,
+    "results_split_cascade_single_winner": true,
+    "results_split_geometry_five_widths": true,
+    "results_split_stacks_at_940": true,
+    "business_two_column_geometry": true,
+    "category_recommended_order": true,
+    "category_h1_top_rated_factual": true,
+    "category_faq_from_real_data": true,
+    "price_filter_data_gated": true,
+    "distance_bands_pinned_pages_only": true,
+    "business_pages_two_column": true,
+    "snippets_fixture_and_zero_state": true,
+    "zero_yelp_red": true,
+    "brand_green_present": true,
+    "homepage_trade_matrix_grouped": true,
+    "standing_invariants_held": true,
+    "geometry": {
+      "1024": {
+        "winner": "200px minmax(460px,1fr) minmax(260px,300px)",
+        "solved": {
+          "filters": 200.0,
+          "results": 460.0,
+          "map": 284.0,
+          "results_floor": 460.0,
+          "map_min": 260.0,
+          "ok": true
+        }
+      },
+      "1200": {
+        "winner": "200px minmax(460px,1fr) minmax(260px,300px)",
+        "solved": {
+          "filters": 200.0,
+          "results": 620.0,
+          "map": 300.0,
+          "results_floor": 460.0,
+          "map_min": 260.0,
+          "ok": true
+        }
+      },
+      "1280": {
+        "winner": "240px minmax(540px,680px) minmax(300px,1fr)",
+        "solved": {
+          "filters": 240.0,
+          "results": 644.0,
+          "map": 300.0,
+          "results_floor": 540.0,
+          "map_min": 300.0,
+          "ok": true
+        }
+      },
+      "1440": {
+        "winner": "240px minmax(540px,680px) minmax(300px,1fr)",
+        "solved": {
+          "filters": 240.0,
+          "results": 680.0,
+          "map": 424.0,
+          "results_floor": 540.0,
+          "map_min": 300.0,
+          "ok": true
+        }
+      },
+      "1920": {
+        "winner": "240px minmax(540px,680px) minmax(300px,1fr)",
+        "solved": {
+          "filters": 240.0,
+          "results": 680.0,
+          "map": 904.0,
+          "results_floor": 540.0,
+          "map_min": 300.0,
+          "ok": true
+        }
+      }
+    }
   },
   "partner_placements_detail": [
     {
@@ -24602,7 +24687,7 @@
     "url_count": 7457
   },
   "link_check": {
-    "internal_hrefs_checked": 807223,
+    "internal_hrefs_checked": 615782,
     "broken": []
   },
   "phone_spot_check": {

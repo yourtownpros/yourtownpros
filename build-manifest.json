@@ -1,5 +1,5 @@
 {
-  "version": "v5.9",
+  "version": "v5.9.1",
   "source_csv": "rankly-call-list-v35-2026-11-11.csv",
   "total_csv_rows": 5851,
   "phone_duplicates_dropped": 1,
@@ -165,13 +165,13 @@
     "sources": {
       "source_files": {
         "research_notes": 58,
-        "call_block_briefs": 44,
-        "prospects_csvs": 159,
+        "call_block_briefs": 45,
+        "prospects_csvs": 163,
         "site_digests": 23
       },
-      "prospects_rows": 4764,
+      "prospects_rows": 4794,
       "digest_entries": 1480,
-      "pool_phones": 6093,
+      "pool_phones": 6167,
       "digest_linked_listings": 36
     },
     "coverage_unflagged_listings": {
@@ -1279,7 +1279,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 7724,
+    "repo_diff_files": 16,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -1499,7 +1499,7 @@
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
-    "changed_html_set_size": 7724,
+    "changed_html_set_size": 16,
     "changed_files_fully_explained": true,
     "file_set_unchanged": true,
     "nonhtml_changed_exact": true,
@@ -1906,6 +1906,37 @@
     },
     "detail_category_pages": 1290,
     "detail_pill_pages": 138
+  },
+  "v591_checks": {
+    "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
+    "section_on_all_state_overviews": true,
+    "every_city_hub_linked_exactly_once": true,
+    "no_broken_internal_links": true,
+    "nonstate_pages_unchanged": true,
+    "totals_listings_5484": true,
+    "totals_html_7728": true,
+    "totals_sitemap_7457": true,
+    "zero_yelp_red": true,
+    "standing_invariants_held": true,
+    "detail_city_links_by_state": {
+      "arizona": 11,
+      "california": 72,
+      "colorado": 60,
+      "idaho": 3,
+      "kansas": 14,
+      "montana": 6,
+      "nebraska": 17,
+      "nevada": 5,
+      "new-mexico": 2,
+      "oklahoma": 28,
+      "oregon": 14,
+      "puerto-rico": 4,
+      "south-dakota": 17,
+      "texas": 34,
+      "washington": 20,
+      "wyoming": 13
+    },
+    "detail_state_overviews": 16
   },
   "partner_placements_detail": [
     {
@@ -24742,7 +24773,7 @@
     "url_count": 7457
   },
   "link_check": {
-    "internal_hrefs_checked": 615782,
+    "internal_hrefs_checked": 616102,
     "broken": []
   },
   "phone_spot_check": {

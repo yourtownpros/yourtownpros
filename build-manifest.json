@@ -1,10 +1,10 @@
 {
-  "version": "v5.9.15",
-  "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-2026-11-12.csv",
-  "total_csv_rows": 10769,
+  "version": "v5.9.16",
+  "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-2026-11-12.csv",
+  "total_csv_rows": 10868,
   "phone_duplicates_dropped": 2,
   "state_derivation": {
-    "step1_city_suffix": 8689,
+    "step1_city_suffix": 8788,
     "step2_address_zip": 663,
     "step2b_address_no_zip": 282,
     "step3_city_map": 1049,
@@ -16,31 +16,31 @@
     "restaurant_liquor": 105,
     "unmapped": 433
   },
-  "included_businesses": 10213,
+  "included_businesses": 10312,
   "businesses_by_vertical": {
-    "pet-grooming": 710,
-    "tattoo": 422,
-    "nails": 567,
-    "barbers": 564,
+    "pet-grooming": 712,
+    "tattoo": 425,
+    "nails": 571,
+    "barbers": 565,
     "tanning": 27,
-    "hair-salons": 1022,
-    "med-spas": 504,
-    "massage": 123,
-    "auto-repair": 1552,
+    "hair-salons": 1025,
+    "med-spas": 507,
+    "massage": 124,
+    "auto-repair": 1561,
     "towing": 97,
-    "plumbers": 691,
-    "electricians": 644,
-    "hvac": 232,
-    "roofing": 103,
+    "plumbers": 700,
+    "electricians": 652,
+    "hvac": 248,
+    "roofing": 111,
     "painting": 44,
     "lawn-and-landscaping": 270,
-    "handyman": 53,
+    "handyman": 54,
     "cleaners": 343,
-    "florists": 664,
-    "bakeries-and-cafes": 577,
-    "jewelry": 199,
-    "veterinary": 491,
-    "fitness": 155,
+    "florists": 671,
+    "bakeries-and-cafes": 584,
+    "jewelry": 202,
+    "veterinary": 504,
+    "fitness": 156,
     "locksmiths": 25,
     "spas": 56,
     "auto-glass": 31,
@@ -62,6 +62,7 @@
     "LA": 87,
     "MI": 67,
     "MN": 152,
+    "MS": 99,
     "MO": 99,
     "MT": 258,
     "NE": 336,
@@ -83,12 +84,12 @@
   "pages": {
     "homepage": 1,
     "vertical_hub": 31,
-    "state_overview": 30,
-    "state_vertical_hub": 487,
-    "city_hub": 487,
-    "county_hub": 590,
-    "category": 2278,
-    "listing": 10215,
+    "state_overview": 31,
+    "state_vertical_hub": 505,
+    "city_hub": 493,
+    "county_hub": 604,
+    "category": 2295,
+    "listing": 10314,
     "claim": 1,
     "add_business": 1,
     "for_business": 1,
@@ -100,24 +101,24 @@
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 14134
+    "total_html": 14289
   },
-  "search_index_entries": 10215,
+  "search_index_entries": 10314,
   "search_upgrade": {
-    "cities_index_entries": 487,
+    "cities_index_entries": 493,
     "cities_index_broken": [],
-    "category_index_entries": 2278,
+    "category_index_entries": 2295,
     "category_index_broken": [],
     "coordinates": {
       "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
-      "entries_with_coords": 487,
+      "entries_with_coords": 493,
       "unmatched": []
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 14130,
-    "pages_with_fbmenu": 14130,
-    "total_html": 14134
+    "pages_with_brand_home_anchor": 14285,
+    "pages_with_fbmenu": 14285,
+    "total_html": 14289
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -179,7 +180,7 @@
     "sources": {
       "source_files": {
         "research_notes": 114,
-        "call_block_briefs": 84,
+        "call_block_briefs": 85,
         "prospects_csvs": 329,
         "site_digests": 23
       },
@@ -189,16 +190,16 @@
       "digest_linked_listings": 1441
     },
     "coverage_unflagged_listings": {
-      "map_embed": 5980,
-      "attribute_chips": 1617,
+      "map_embed": 6079,
+      "attribute_chips": 1671,
       "about": 668,
       "hours": 519,
-      "since_year": 1408,
-      "website_button": 3631,
+      "since_year": 1464,
+      "website_button": 3687,
       "services": 72,
       "address_added": 14
     },
-    "total_listings": 10213
+    "total_listings": 10312
   },
   "v34_checks": {
     "enrichment_spot_check": [
@@ -234,7 +235,7 @@
         "url": "/lawn-and-landscaping/lightning-landscaping-aurora/",
         "field": "since",
         "value": "2002",
-        "source_file": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-2026-11-12.csv",
+        "source_file": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-2026-11-12.csv",
         "evidence_matched": "since 2002",
         "found_in_source": true
       },
@@ -279,7 +280,7 @@
         "url": "/cleaners/suite-success-dry-cleaners-wheat-ridge/",
         "field": "since",
         "value": "1992",
-        "source_file": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-2026-11-12.csv",
+        "source_file": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-2026-11-12.csv",
         "evidence_matched": "since 1992",
         "found_in_source": true
       },
@@ -596,37 +597,37 @@
     "titles_over_65": {},
     "description_stats_by_kind": {
       "listing": {
-        "count": 10215,
+        "count": 10314,
         "min": 81,
         "max": 160,
         "over_160": 0
       },
       "category": {
-        "count": 2278,
+        "count": 2295,
         "min": 136,
         "max": 160,
         "over_160": 0
       },
       "city_hub": {
-        "count": 487,
+        "count": 493,
         "min": 126,
         "max": 160,
         "over_160": 0
       },
       "state_vertical_hub": {
-        "count": 487,
+        "count": 505,
         "min": 79,
         "max": 160,
         "over_160": 0
       },
       "state_overview": {
-        "count": 30,
+        "count": 31,
         "min": 150,
         "max": 159,
         "over_160": 0
       },
       "county_hub": {
-        "count": 590,
+        "count": 604,
         "min": 151,
         "max": 158,
         "over_160": 0
@@ -706,7 +707,7 @@
     "img_check_scope": "generated pages only (written pages + claimed + 404); the copied pilot match-thanks page is excluded",
     "homepage_h1_count": 1,
     "single_trade_noindex_hubs": {
-      "count": 119,
+      "count": 121,
       "urls": [
         "/arkansas/jonesboro/",
         "/arizona/gilbert/",
@@ -777,6 +778,8 @@
         "/minnesota/hibbing/",
         "/minnesota/mankato/",
         "/missouri/jefferson-city/",
+        "/mississippi/hattiesburg/",
+        "/mississippi/ridgeland/",
         "/north-dakota/west-fargo/",
         "/north-dakota/williston/",
         "/nebraska/columbus/",
@@ -848,16 +851,16 @@
         "to": "/veterinary/puerto-rico/san-juan/"
       }
     ],
-    "cities_index_entries": 487,
+    "cities_index_entries": 493,
     "sitemap_lastmod_complete": true,
     "check_adjustments": "link check: an href resolving to a real file in the tree (favicon links) counts as resolved, not only directory pages; em dash check skips the binary brand art (.png/.ico), which carries no copy."
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 14134,
-    "supabase_client_files": 14134,
-    "auth_init_files": 14134,
-    "total_html_files": 14134,
+    "goatcounter_files": 14289,
+    "supabase_client_files": 14289,
+    "auth_init_files": 14289,
+    "total_html_files": 14289,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -887,52 +890,52 @@
   "v37_checks": {
     "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
-      "candidates": 5728,
-      "from_cache": 5728,
+      "candidates": 5823,
+      "from_cache": 5823,
       "submitted": 0,
-      "matched": 5307,
-      "no_match": 421,
+      "matched": 5389,
+      "no_match": 434,
       "unattempted": 0,
       "census_ok": true,
       "error": null,
-      "cache_entries_before": 5824,
-      "cache_matched_before": 5390,
+      "cache_entries_before": 5963,
+      "cache_matched_before": 5513,
       "new_matched_keys": []
     },
     "pins": {
-      "category_pages": 2278,
-      "pages_with_map": 1564,
+      "category_pages": 2295,
+      "pages_with_map": 1581,
       "pages_facade_only": 0,
-      "total_pins": 4108,
+      "total_pins": 4142,
       "dnc_flagged_pinned": 9
     },
     "county": {
-      "city_groups_total": 1216,
-      "cities_with_county": 1216,
+      "city_groups_total": 1241,
+      "cities_with_county": 1241,
       "cities_unresolved": [],
       "sources": {
-        "census_plurality": 889,
-        "geonames_place": 327
+        "census_plurality": 913,
+        "geonames_place": 328
       },
-      "category_pages_with_county": 2278,
-      "category_pages_total": 2278,
-      "hubs_total": 590,
-      "hubs_in_sitemap": 188,
-      "hubs_noindex": 402
+      "category_pages_with_county": 2295,
+      "category_pages_total": 2295,
+      "hubs_total": 604,
+      "hubs_in_sitemap": 190,
+      "hubs_noindex": 414
     },
     "sitemap_segments": {
       "chunks": {
         "sitemap-listings.xml": 5000,
         "sitemap-listings-2.xml": 5000,
-        "sitemap-listings-3.xml": 215,
-        "sitemap-categories.xml": 2278,
-        "sitemap-hubs.xml": 1104,
+        "sitemap-listings-3.xml": 314,
+        "sitemap-categories.xml": 2295,
+        "sitemap-hubs.xml": 1129,
         "sitemap-misc.xml": 6
       },
       "by_template": {
-        "listings": 10215,
-        "categories": 2278,
-        "hubs": 1104,
+        "listings": 10314,
+        "categories": 2295,
+        "hubs": 1129,
         "misc": 6
       }
     },
@@ -948,20 +951,20 @@
   "v38_checks": {
     "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
     "claims_verification": {
-      "verify_data_entries": 10215,
-      "with_email": 3264,
-      "with_website": 3646,
-      "with_domain": 3646,
+      "verify_data_entries": 10314,
+      "with_email": 3320,
+      "with_website": 3702,
+      "with_domain": 3702,
       "with_facebook": 10,
       "join_stats": {
-        "with_email": 3264,
-        "with_website": 3644,
-        "with_domain": 3644,
+        "with_email": 3320,
+        "with_website": 3700,
+        "with_domain": 3700,
         "with_facebook": 10
       },
       "email_spot_trace_checked": 10,
       "email_spot_trace_untraced": [],
-      "claim_links_with_slug": 10213,
+      "claim_links_with_slug": 10312,
       "claim_links_missing_slug": []
     },
     "featured": {
@@ -978,18 +981,18 @@
       "grid_columns": "232px minmax(0,1fr) minmax(340px,42%)",
       "map_panel": "sticky, top 96px, height calc(100vh - 96px)",
       "stack_below": "1024px, map first at 320px",
-      "pages_with_pins": 1564,
+      "pages_with_pins": 1581,
       "pages_city_centered": 714,
       "pages_with_facade_markup": 0,
       "duplicate_location_line_pages": [],
       "popup_payload_missing": []
     },
     "listing_maps": {
-      "pin_mode": 5307,
-      "city_mode": 4908,
+      "pin_mode": 5389,
+      "city_mode": 4925,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 11970
+      "get_directions_links": 12168
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -1020,7 +1023,7 @@
       "dashboard_script_node_check": "pass"
     },
     "biz_data": {
-      "entries": 10215,
+      "entries": 10314,
       "fields": [
         "name",
         "trade",
@@ -1030,8 +1033,8 @@
         "address",
         "website"
       ],
-      "with_website": 3646,
-      "with_address": 5990,
+      "with_website": 3702,
+      "with_address": 6089,
       "website_matches_verify_data": true
     },
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
@@ -1079,13 +1082,13 @@
     },
     "honeypots": {
       "field": "company_website",
-      "match_forms_with_honeypot": 12491,
+      "match_forms_with_honeypot": 12607,
       "claim_forms_with_honeypot": 2,
-      "suggest_forms_with_honeypot": 10215,
+      "suggest_forms_with_honeypot": 10314,
       "add_business_forms_with_honeypot": 1,
-      "honeypot_inputs_total": 22709,
+      "honeypot_inputs_total": 22924,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 14133,
+      "guard_script_pages": 14288,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -1112,7 +1115,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 14134,
+    "viewport_pages": 14289,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1126,7 +1129,7 @@
       "legal": true,
       "404": true
     },
-    "category_filters_toggle_pages": 2278,
+    "category_filters_toggle_pages": 2295,
     "category_phone_order_rules": true,
     "category_map_phone_flags": true,
     "pin_popup_max_width": 280,
@@ -1148,8 +1151,8 @@
   },
   "v44_checks": {
     "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
-    "claimed_listings_query_files": 12493,
-    "claimed_listings_query_pages_expected": 12493,
+    "claimed_listings_query_files": 12609,
+    "claimed_listings_query_pages_expected": 12609,
     "listing_badge_swap_code": true,
     "manage_bar_markup": true,
     "manage_bar_links": true,
@@ -1314,15 +1317,15 @@
     "placements_recorded_match_tree": true,
     "placements": {
       "renaud-naturals": {
-        "listing_page": 2148,
-        "category_page": 415,
-        "city_hub": 316,
-        "state_vertical_hub": 82,
-        "state_hub": 29,
+        "listing_page": 2158,
+        "category_page": 416,
+        "city_hub": 319,
+        "state_vertical_hub": 85,
+        "state_hub": 30,
         "vertical_hub": 4
       }
     },
-    "placement_pages_total": 2994,
+    "placement_pages_total": 3012,
     "max_one_partner_card_per_page": true,
     "every_card_labeled_with_slug": true,
     "cards_display_only_no_form_no_phone": true,
@@ -1452,7 +1455,7 @@
     "schema_v9_index": true,
     "per_card_links_match_instrumentation": true,
     "per_card_targets_scoped": true,
-    "per_card_count": 52518,
+    "per_card_count": 52990,
     "flagged_never_card_target": true,
     "flagged_listings_unscoped": true,
     "match_script_pages_complete": true,
@@ -1578,7 +1581,7 @@
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
       0,
-      3646
+      3702
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
@@ -1652,7 +1655,7 @@
     "job4_verify_data_domain_delta": true,
     "job4_verify_data_domains_before_after": [
       0,
-      3646
+      3702
     ],
     "job4_hours_website_page_sets": true,
     "closed_removed_exactly_mcmahan": true,
@@ -2022,8 +2025,8 @@
     "nonhtml_delta_brand_only": true,
     "zero_yelp_red": true,
     "standing_invariants_held": true,
-    "detail_mark_pages": 14130,
-    "detail_header_pages": 14130,
+    "detail_mark_pages": 14285,
+    "detail_header_pages": 14285,
     "detail_added_files": [],
     "detail_nonhtml_delta": []
   },
@@ -2058,7 +2061,7 @@
       "toolbar_zindex_1280": "40",
       "grid_winners_unchanged": true
     },
-    "detail_category_pages": 2278,
+    "detail_category_pages": 2295,
     "detail_pill_pages": 191
   },
   "v591_checks": {
@@ -2086,6 +2089,7 @@
       "louisiana": 4,
       "michigan": 2,
       "minnesota": 9,
+      "mississippi": 6,
       "missouri": 6,
       "montana": 6,
       "nebraska": 17,
@@ -2104,7 +2108,7 @@
       "wisconsin": 8,
       "wyoming": 13
     },
-    "detail_state_overviews": 30
+    "detail_state_overviews": 31
   },
   "v592_checks": {
     "note": "v5.9.2: JOB 10 WESTERN SLOPE DATA MERGE (data-only). Source: v35 call list plus the deduped Job 10 discovery rows via merge-yourtownpros-job10-v592.py; values via yourtownpros-job10-enrichment.json (prep-yourtownpros-job10-enrichment.py). 62 new listings from Job 10 rows plus one derivation knock-on (A Beautiful You, Edwards) = 63 new listings; every other difference from the repo tree is the v5.6 refresh-delta arithmetic over those new listings and their aggregate pages.",
@@ -2294,7 +2298,7 @@
     "standing_invariants_held": true
   },
   "v5915_checks": {
-    "note": "v5.9.15: LISTING HOURS STATE (one theme, no data change). On the live v5.9.13 tree only 519 of 10,215 listing pages render recorded hours; the Location and hours module on the other pages said nothing about hours at all. A listing with no recorded hours now states 'Hours not listed yet' in the module with a claim line to add them. No hours invented, no Open now mount without hours, flagged and house pages untouched, totals unchanged.",
+    "note": "v5.9.15: LISTING HOURS STATE (one theme, no data change). On the live v5.9.13 tree only 519 of 10,215 listing pages render recorded hours; the Location and hours module on the other pages said nothing about hours at all. A listing with no recorded hours now states 'Hours not listed yet' in the module with a claim line to add them. No hours invented, no Open now mount without hours, flagged and house pages untouched, totals unchanged. Revised in place for v5.9.16 (2026-11-12): the wave 65 merge moves the totals and the fragment count; the invariants are unchanged.",
     "fragment_on_exactly_module_pages_without_hours": true,
     "fragment_count_9684": true,
     "fragment_absent_on_flagged_pages": true,
@@ -2305,6 +2309,28 @@
     "totals_html_14134": true,
     "totals_sitemap_13603": true,
     "zero_listings_lost_vs_repo": true,
+    "no_broken_internal_links": true,
+    "standing_invariants_held": true
+  },
+  "v5916_checks": {
+    "note": "v5.9.16: WAVE 65 MISSISSIPPI MERGE REBASED ON v5.9.15 (data only). The v5.9.14 staging was built on the v5.9.13 generator; this build applies the same merge (99 kept rows, 8 category gate drops, 0 NO-MX holds) on the v5.9.15 generator so the hours-honesty fragment survives: the 99 new listings have no recorded hours and carry the fragment, and no shipped page loses it.",
+    "source_csv_is_v5914_merged_source": true,
+    "new_listings_99_vs_repo": true,
+    "all_new_listings_are_mississippi": true,
+    "wave65_spot_slugs_listed": true,
+    "zero_listings_lost_vs_repo": true,
+    "fragment_on_exactly_module_pages_without_hours": true,
+    "fragment_count_9783": true,
+    "fragment_absent_on_flagged_pages": true,
+    "fragment_absent_on_house_pages": true,
+    "open_now_mount_exactly_where_hours_render": true,
+    "totals_listings_10314": true,
+    "totals_category_2295": true,
+    "totals_city_hubs_493": true,
+    "totals_county_hubs_604": true,
+    "totals_state_overviews_31": true,
+    "totals_html_14289": true,
+    "totals_sitemap_13744": true,
     "no_broken_internal_links": true,
     "standing_invariants_held": true
   },
@@ -32382,6 +32408,146 @@
       "total": 60
     },
     {
+      "url": "/nails/sang-nail-spa-madison/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "madison",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/nails/hera-nail-spa-llc-diberville/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "diberville",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/nails/star-nails-spa-diberville/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "diberville",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/hair-salons/studio-4-salon-pass-christian/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "pass-christian",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/hair-salons/creative-touch-day-spa-and-salon-tupelo/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "tupelo",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/med-spas/tupelo-wellness-tupelo/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "tupelo",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/hair-salons/the-studio-oxford/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "oxford",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/nails/mystic-nails-salon-and-spa-diberville/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "diberville",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/med-spas/coast-aesthetics-ocean-springs/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "ocean-springs",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
+      "url": "/med-spas/beautiful-minds-medical-aesthetics-ridgeland/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "ridgeland",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
       "url": "/hair-salons/arkansas/conway/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -37422,6 +37588,20 @@
       "total": 60
     },
     {
+      "url": "/nails/mississippi/diberville/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "diberville",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 10,
+      "total": 60
+    },
+    {
       "url": "/nails/montana/billings/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -40726,6 +40906,48 @@
       "total": 65
     },
     {
+      "url": "/mississippi/diberville/",
+      "surface": "city_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "diberville",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
+      "url": "/mississippi/ridgeland/",
+      "surface": "city_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "ridgeland",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
+      "url": "/mississippi/tupelo/",
+      "surface": "city_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "tupelo",
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
       "url": "/montana/billings/",
       "surface": "city_hub",
       "profile": "renaud-naturals",
@@ -42798,6 +43020,20 @@
       "total": 65
     },
     {
+      "url": "/hair-salons/mississippi/",
+      "surface": "state_vertical_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": null,
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
       "url": "/hair-salons/montana/",
       "surface": "state_vertical_hub",
       "profile": "renaud-naturals",
@@ -43190,6 +43426,20 @@
       "total": 65
     },
     {
+      "url": "/med-spas/mississippi/",
+      "surface": "state_vertical_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": null,
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
       "url": "/med-spas/montana/",
       "surface": "state_vertical_hub",
       "profile": "renaud-naturals",
@@ -43505,6 +43755,20 @@
       "vertical": "nails",
       "city_slug": null,
       "state": "MN",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
+      "url": "/nails/mississippi/",
+      "surface": "state_vertical_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": null,
+      "state": "MS",
       "tier": "buyer",
       "v": 40,
       "a": 15,
@@ -43932,6 +44196,20 @@
       "total": 65
     },
     {
+      "url": "/mississippi/",
+      "surface": "state_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": null,
+      "state": "MS",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 10,
+      "total": 65
+    },
+    {
       "url": "/missouri/",
       "surface": "state_hub",
       "profile": "renaud-naturals",
@@ -44227,11 +44505,11 @@
     }
   ],
   "search_target_check": {
-    "index_urls": 10215,
+    "index_urls": 10314,
     "index_broken": [],
-    "category_groups_checked": 2276,
+    "category_groups_checked": 2293,
     "category_broken": [],
-    "city_hub_groups_checked": 487,
+    "city_hub_groups_checked": 493,
     "city_hub_broken": []
   },
   "brighton_test": {
@@ -44260,15 +44538,15 @@
       "sitemap-misc.xml"
     ],
     "segments": {
-      "listings": 10215,
-      "categories": 2278,
-      "hubs": 1104,
+      "listings": 10314,
+      "categories": 2295,
+      "hubs": 1129,
       "misc": 6
     },
-    "url_count": 13603
+    "url_count": 13744
   },
   "link_check": {
-    "internal_hrefs_checked": 1139938,
+    "internal_hrefs_checked": 1151721,
     "broken": []
   },
   "phone_spot_check": {

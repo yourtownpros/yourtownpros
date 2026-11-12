@@ -1,10 +1,10 @@
 {
-  "version": "v5.9.4",
-  "source_csv": "rankly-call-list-v47-job10-w5253-2026-11-12.csv",
-  "total_csv_rows": 7119,
+  "version": "v5.9.5",
+  "source_csv": "rankly-call-list-v47-job10-w5253-w49-2026-11-12.csv",
+  "total_csv_rows": 7194,
   "phone_duplicates_dropped": 2,
   "state_derivation": {
-    "step1_city_suffix": 5039,
+    "step1_city_suffix": 5114,
     "step2_address_zip": 663,
     "step2b_address_no_zip": 282,
     "step3_city_map": 846,
@@ -16,34 +16,34 @@
     "restaurant_liquor": 104,
     "unmapped": 420
   },
-  "included_businesses": 6480,
+  "included_businesses": 6555,
   "businesses_by_vertical": {
     "pet-grooming": 511,
-    "tattoo": 278,
-    "nails": 439,
-    "barbers": 428,
+    "tattoo": 284,
+    "nails": 445,
+    "barbers": 435,
     "tanning": 22,
-    "hair-salons": 722,
-    "med-spas": 239,
-    "massage": 86,
-    "auto-repair": 1091,
+    "hair-salons": 728,
+    "med-spas": 244,
+    "massage": 89,
+    "auto-repair": 1100,
     "towing": 75,
-    "plumbers": 362,
-    "electricians": 396,
-    "hvac": 97,
+    "plumbers": 366,
+    "electricians": 397,
+    "hvac": 100,
     "roofing": 41,
-    "painting": 37,
-    "lawn-and-landscaping": 158,
-    "handyman": 46,
+    "painting": 41,
+    "lawn-and-landscaping": 159,
+    "handyman": 48,
     "cleaners": 263,
-    "florists": 387,
+    "florists": 396,
     "bakeries-and-cafes": 370,
-    "jewelry": 125,
-    "veterinary": 144,
+    "jewelry": 127,
+    "veterinary": 150,
     "fitness": 73,
     "locksmiths": 12,
     "spas": 32,
-    "auto-glass": 19,
+    "auto-glass": 20,
     "pet-boarding": 15,
     "dance-studios": 11,
     "bookstores": 1
@@ -51,7 +51,7 @@
   "businesses_by_state": {
     "AZ": 228,
     "CA": 874,
-    "CO": 2189,
+    "CO": 2264,
     "ID": 80,
     "KS": 226,
     "MT": 218,
@@ -73,8 +73,8 @@
     "state_vertical_hub": 252,
     "city_hub": 339,
     "county_hub": 319,
-    "category": 1492,
-    "listing": 6482,
+    "category": 1516,
+    "listing": 6557,
     "claim": 1,
     "add_business": 1,
     "for_business": 1,
@@ -86,13 +86,13 @@
     "business": 1,
     "stub": 4,
     "match_thanks_copied": 1,
-    "total_html": 8947
+    "total_html": 9046
   },
-  "search_index_entries": 6482,
+  "search_index_entries": 6557,
   "search_upgrade": {
     "cities_index_entries": 339,
     "cities_index_broken": [],
-    "category_index_entries": 1492,
+    "category_index_entries": 1516,
     "category_index_broken": [],
     "coordinates": {
       "source": "GeoNames US.txt + PR.txt (download.geonames.org/export/dump), most populous populated place per normalized city + state",
@@ -101,9 +101,9 @@
     }
   },
   "v32_checks": {
-    "pages_with_brand_home_anchor": 8943,
-    "pages_with_fbmenu": 8943,
-    "total_html": 8947
+    "pages_with_brand_home_anchor": 9042,
+    "pages_with_fbmenu": 9042,
+    "total_html": 9046
   },
   "house_featured": {
     "note": "Operator's own businesses with the Featured treatment (v3.3). Overlay on the CSV pipeline: included_businesses counts CSV rows only; total listing pages and search entries are CSV + 2.",
@@ -164,27 +164,27 @@
     "note": "v3.4: facts joined at build time from the Rankly research files listed in load_enrichment's docstring. Coverage counts below are over unflagged listings only; flagged listings are excluded from every enrichment field (they can still show a map from their directory address, per the owner's flagged-treatment spec).",
     "sources": {
       "source_files": {
-        "research_notes": 87,
-        "call_block_briefs": 71,
-        "prospects_csvs": 265,
+        "research_notes": 88,
+        "call_block_briefs": 73,
+        "prospects_csvs": 270,
         "site_digests": 23
       },
-      "prospects_rows": 6648,
+      "prospects_rows": 6677,
       "digest_entries": 1480,
-      "pool_phones": 8275,
+      "pool_phones": 8295,
       "digest_linked_listings": 38
     },
     "coverage_unflagged_listings": {
-      "map_embed": 2283,
-      "attribute_chips": 1061,
-      "about": 91,
+      "map_embed": 2358,
+      "attribute_chips": 1079,
+      "about": 94,
       "hours": 490,
-      "since_year": 998,
-      "website_button": 608,
-      "services": 4,
+      "since_year": 1017,
+      "website_button": 651,
+      "services": 7,
       "address_added": 14
     },
-    "total_listings": 6480
+    "total_listings": 6555
   },
   "v34_checks": {
     "enrichment_spot_check": [
@@ -220,7 +220,7 @@
         "url": "/lawn-and-landscaping/lightning-landscaping-aurora/",
         "field": "since",
         "value": "2002",
-        "source_file": "rankly-call-list-v47-job10-w5253-2026-11-12.csv",
+        "source_file": "rankly-call-list-v47-job10-w5253-w49-2026-11-12.csv",
         "evidence_matched": "since 2002",
         "found_in_source": true
       },
@@ -265,7 +265,7 @@
         "url": "/cleaners/suite-success-dry-cleaners-wheat-ridge/",
         "field": "since",
         "value": "1992",
-        "source_file": "rankly-call-list-v47-job10-w5253-2026-11-12.csv",
+        "source_file": "rankly-call-list-v47-job10-w5253-w49-2026-11-12.csv",
         "evidence_matched": "since 1992",
         "found_in_source": true
       },
@@ -554,13 +554,13 @@
     "titles_over_65": {},
     "description_stats_by_kind": {
       "listing": {
-        "count": 6482,
+        "count": 6557,
         "min": 81,
         "max": 160,
         "over_160": 0
       },
       "category": {
-        "count": 1492,
+        "count": 1516,
         "min": 139,
         "max": 160,
         "over_160": 0
@@ -774,10 +774,10 @@
   },
   "accounts_wiring": {
     "note": "Accounts wiring (Supabase, publishable key in client code): header Sign in + user menu on every page, listing Save buttons backed by saved_pros, YourTownPros reviews fetched client-side (approved only, separate from Google ratings), /claim/ requires sign-in and inserts into claims, /account/ page with profile, claims, saved pros, reviews and change requests. Progressive enhancement: all directory content is static and works with Supabase unreachable.",
-    "goatcounter_files": 8947,
-    "supabase_client_files": 8947,
-    "auth_init_files": 8947,
-    "total_html_files": 8947,
+    "goatcounter_files": 9046,
+    "supabase_client_files": 9046,
+    "auth_init_files": 9046,
+    "total_html_files": 9046,
     "account_page_noindex_not_in_sitemap": true,
     "claim_pages_formsubmit_free": true,
     "supabase_tables_referenced": [
@@ -807,23 +807,23 @@
   "v37_checks": {
     "note": "v3.7: Leaflet + OpenStreetMap category maps with numbered pins synced to the result cards under sort and filters, Census batch geocoding with an on-disk cache, left filter rail (rating + enrichment attributes + Has a website; no price filter), county layer with county hubs, IndexNow key emission, sitemap segmented by template. v3.8 supersedes two v3.7 details: every category page now carries a Leaflet map (city-centered when no member is geocoded), and listing pages moved from the facade to native Leaflet as well.",
     "geocoding": {
-      "candidates": 2241,
-      "from_cache": 2241,
+      "candidates": 2316,
+      "from_cache": 2316,
       "submitted": 0,
-      "matched": 2066,
-      "no_match": 175,
+      "matched": 2134,
+      "no_match": 182,
       "unattempted": 0,
       "census_ok": true,
       "error": null,
-      "cache_entries_before": 2242,
-      "cache_matched_before": 2067,
+      "cache_entries_before": 2317,
+      "cache_matched_before": 2135,
       "new_matched_keys": []
     },
     "pins": {
-      "category_pages": 1492,
-      "pages_with_map": 544,
+      "category_pages": 1516,
+      "pages_with_map": 568,
       "pages_facade_only": 0,
-      "total_pins": 1679,
+      "total_pins": 1745,
       "dnc_flagged_pinned": 8
     },
     "county": {
@@ -834,8 +834,8 @@
         "census_plurality": 143,
         "geonames_place": 576
       },
-      "category_pages_with_county": 1492,
-      "category_pages_total": 1492,
+      "category_pages_with_county": 1516,
+      "category_pages_total": 1516,
       "hubs_total": 319,
       "hubs_in_sitemap": 138,
       "hubs_noindex": 181
@@ -843,14 +843,14 @@
     "sitemap_segments": {
       "chunks": {
         "sitemap-listings.xml": 5000,
-        "sitemap-listings-2.xml": 1482,
-        "sitemap-categories.xml": 1492,
+        "sitemap-listings-2.xml": 1557,
+        "sitemap-categories.xml": 1516,
         "sitemap-hubs.xml": 695,
         "sitemap-misc.xml": 6
       },
       "by_template": {
-        "listings": 6482,
-        "categories": 1492,
+        "listings": 6557,
+        "categories": 1516,
         "hubs": 695,
         "misc": 6
       }
@@ -867,20 +867,20 @@
   "v38_checks": {
     "note": "v3.8: claims verification (slug always written via the resolver/picker, /verify-data.json, per-business methods: email match, website/DNS code, Facebook code, document route; codes shown on /claimed/ and /account/; approval only from the back-office sweep), featured tier mechanics from yourtownpros-featured.json (badge, Sponsored slot, booking block, featured match routing into match_requests + priority FormSubmit subject; instant alerts TO the shop activate when a sending channel exists, today the alert path is Robert's inbox plus the match_requests row), category two-pane layout (BEFORE: filters 236px, results, 340px rail holding the facade or pinned map plus the match form; AFTER: filters 232px, results with the match form below the list, sticky map panel minmax(340px, 42%) at calc(100vh - 96px), stacking map-first at 320px below 1024px), Leaflet on every category page (pins or city-centered zoom 12), pin popup mini-cards, listing pages on native Leaflet (facade retired) with a plain-text Get directions link, and exactly one location line per result card. SCHEMA: apply rankly-plan/yourtownpros-supabase-schema-v2.sql (verify_code, verify_method, approved_via on claims) BEFORE pushing v3.8; the claim insert retries without the verify fields if they are missing.",
     "claims_verification": {
-      "verify_data_entries": 6482,
-      "with_email": 245,
-      "with_website": 623,
-      "with_domain": 623,
+      "verify_data_entries": 6557,
+      "with_email": 288,
+      "with_website": 666,
+      "with_domain": 666,
       "with_facebook": 8,
       "join_stats": {
-        "with_email": 245,
-        "with_website": 621,
-        "with_domain": 621,
+        "with_email": 288,
+        "with_website": 664,
+        "with_domain": 664,
         "with_facebook": 8
       },
       "email_spot_trace_checked": 10,
       "email_spot_trace_untraced": [],
-      "claim_links_with_slug": 6480,
+      "claim_links_with_slug": 6555,
       "claim_links_missing_slug": []
     },
     "featured": {
@@ -897,18 +897,18 @@
       "grid_columns": "232px minmax(0,1fr) minmax(340px,42%)",
       "map_panel": "sticky, top 96px, height calc(100vh - 96px)",
       "stack_below": "1024px, map first at 320px",
-      "pages_with_pins": 544,
+      "pages_with_pins": 568,
       "pages_city_centered": 948,
       "pages_with_facade_markup": 0,
       "duplicate_location_line_pages": [],
       "popup_payload_missing": []
     },
     "listing_maps": {
-      "pin_mode": 2066,
-      "city_mode": 4416,
+      "pin_mode": 2134,
+      "city_mode": 4423,
       "no_map_no_city_coords": 0,
       "bad": [],
-      "get_directions_links": 4575
+      "get_directions_links": 4725
     },
     "facade_files_site_wide": [],
     "sweep_script_compiles": true,
@@ -939,7 +939,7 @@
       "dashboard_script_node_check": "pass"
     },
     "biz_data": {
-      "entries": 6482,
+      "entries": 6557,
       "fields": [
         "name",
         "trade",
@@ -949,8 +949,8 @@
         "address",
         "website"
       ],
-      "with_website": 623,
-      "with_address": 2292,
+      "with_website": 666,
+      "with_address": 2367,
       "website_matches_verify_data": true
     },
     "schema_migration_required": "rankly-plan/yourtownpros-supabase-schema-v3.sql",
@@ -998,13 +998,13 @@
     },
     "honeypots": {
       "field": "company_website",
-      "match_forms_with_honeypot": 7972,
+      "match_forms_with_honeypot": 8071,
       "claim_forms_with_honeypot": 2,
-      "suggest_forms_with_honeypot": 6482,
+      "suggest_forms_with_honeypot": 6557,
       "add_business_forms_with_honeypot": 1,
-      "honeypot_inputs_total": 14457,
+      "honeypot_inputs_total": 14631,
       "forms_missing_honeypot": [],
-      "guard_script_pages": 8946,
+      "guard_script_pages": 9045,
       "guard_script_missing": [
         "match-thanks/index.html"
       ],
@@ -1031,7 +1031,7 @@
         "featured_badge_present": true
       }
     },
-    "viewport_pages": 8947,
+    "viewport_pages": 9046,
     "viewport_missing": [],
     "breakpoint_blocks_in_families": {
       "homepage": true,
@@ -1045,7 +1045,7 @@
       "legal": true,
       "404": true
     },
-    "category_filters_toggle_pages": 1492,
+    "category_filters_toggle_pages": 1516,
     "category_phone_order_rules": true,
     "category_map_phone_flags": true,
     "pin_popup_max_width": 280,
@@ -1067,8 +1067,8 @@
   },
   "v44_checks": {
     "note": "v4.4: claim-state awareness (listings, category cards, header, /for-business/, /business/) plus the How Featured works explainer. Data source: the public claimed_listings view (schema v5, approved claim slugs only) for badges and the manage bar; window.YTP_FEAT baked from yourtownpros-featured.json for Featured state lines. Fallback: every swap sits behind a positive answer; on the listing page the error guard precedes the first swap in source order and the promise chain ends in an empty catch (fallback_no_swap_on_error).",
-    "claimed_listings_query_files": 7974,
-    "claimed_listings_query_pages_expected": 7974,
+    "claimed_listings_query_files": 8073,
+    "claimed_listings_query_pages_expected": 8073,
     "listing_badge_swap_code": true,
     "manage_bar_markup": true,
     "manage_bar_links": true,
@@ -1121,7 +1121,7 @@
     "dashboard_requests_pane_present": true,
     "san_juan_merge_unchanged": true,
     "single_trade_hub_noindex_unchanged": true,
-    "fort_collins_listing_pages": 73,
+    "fort_collins_listing_pages": 88,
     "colorado_springs_listing_pages": 70,
     "fort_collins_listings_present": true,
     "colorado_springs_listings_present": true
@@ -1233,15 +1233,15 @@
     "placements_recorded_match_tree": true,
     "placements": {
       "renaud-naturals": {
-        "listing_page": 1431,
-        "category_page": 281,
-        "city_hub": 218,
+        "listing_page": 1448,
+        "category_page": 287,
+        "city_hub": 219,
         "state_vertical_hub": 46,
         "state_hub": 15,
         "vertical_hub": 4
       }
     },
-    "placement_pages_total": 1995,
+    "placement_pages_total": 2019,
     "max_one_partner_card_per_page": true,
     "every_card_labeled_with_slug": true,
     "cards_display_only_no_form_no_phone": true,
@@ -1371,7 +1371,7 @@
     "schema_v9_index": true,
     "per_card_links_match_instrumentation": true,
     "per_card_targets_scoped": true,
-    "per_card_count": 33728,
+    "per_card_count": 34126,
     "flagged_never_card_target": true,
     "flagged_listings_unscoped": true,
     "match_script_pages_complete": true,
@@ -1497,7 +1497,7 @@
     "verify_data_domain_delta": true,
     "verify_data_domains_before_after": [
       0,
-      623
+      666
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
@@ -1571,7 +1571,7 @@
     "job4_verify_data_domain_delta": true,
     "job4_verify_data_domains_before_after": [
       0,
-      623
+      666
     ],
     "job4_hours_website_page_sets": true,
     "closed_removed_exactly_mcmahan": true,
@@ -1587,8 +1587,8 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 150,
-    "open_now_category_entries_count": 429,
+    "open_now_category_pages_count": 151,
+    "open_now_category_entries_count": 430,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
@@ -1885,8 +1885,8 @@
     "nonhtml_delta_brand_only": true,
     "zero_yelp_red": true,
     "standing_invariants_held": true,
-    "detail_mark_pages": 8943,
-    "detail_header_pages": 8943,
+    "detail_mark_pages": 9042,
+    "detail_header_pages": 9042,
     "detail_added_files": [],
     "detail_nonhtml_delta": []
   },
@@ -1920,8 +1920,8 @@
       "toolbar_zindex_1280": "40",
       "grid_winners_unchanged": true
     },
-    "detail_category_pages": 1492,
-    "detail_pill_pages": 150
+    "detail_category_pages": 1516,
+    "detail_pill_pages": 151
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -2009,6 +2009,22 @@
     "totals_city_hubs_339": true,
     "totals_html_8947": true,
     "totals_sitemap_8675": true,
+    "no_broken_internal_links": true,
+    "zero_yelp_red": true,
+    "standing_invariants_held": true
+  },
+  "v595_checks": {
+    "note": "v5.9.5: WAVE 49 FRONT RANGE DEPTH DATA MERGE (data-only). Source: the v5.9.4 source plus 75 wave 49 rows via merge-yourtownpros-w49-v595.py (7,194 rows; Plumbing Denver & Drain Clean Expert and ZenVita MedSpa held out as NO-MX holds). 75 new listings versus the v5.9.4 staging tree, 143 versus the v5.9.3 repo, 0 lost; every other difference is the refresh-delta arithmetic over those new listings and their aggregate pages.",
+    "source_csv_is_v594_plus_w49": true,
+    "new_listings_143_vs_repo": true,
+    "zero_listings_lost": true,
+    "wave49_spot_slugs_listed": true,
+    "no_mx_holds_absent": true,
+    "totals_listings_6557": true,
+    "totals_category_1516": true,
+    "totals_city_hubs_339": true,
+    "totals_html_9046": true,
+    "totals_sitemap_8774": true,
     "no_broken_internal_links": true,
     "zero_yelp_red": true,
     "standing_invariants_held": true
@@ -22049,6 +22065,244 @@
       "total": 62
     },
     {
+      "url": "/hair-salons/suite-twisted-beauty-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/appearances-hair-color-and-design-studio-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/rubi-nail-spa-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/european-nails-and-spa-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/med-spas/allied-medical-aesthetics-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/lather-lakewood/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "lakewood",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/union-salon-lakewood/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "lakewood",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/milano-9miles-aurora/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "aurora",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/top-ten-nails-and-spa-aurora/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "aurora",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/huong-pham-stylist-hp-hair-salon-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/salon-mysa-hair-studio-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/touch-nails-studio-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/vip-nails-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/med-spas/envy-injectables-and-skincare-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/med-spas/wellness-spa-rx-westminster/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "westminster",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/med-spas/atonemd-boulder/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "boulder",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
+      "url": "/med-spas/the-alpenglow-med-spa-boulder/",
+      "surface": "listing_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "boulder",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
       "url": "/hair-salons/arizona/glendale/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -22679,6 +22933,20 @@
       "total": 66
     },
     {
+      "url": "/hair-salons/colorado/lakewood/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "lakewood",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
       "url": "/hair-salons/colorado/lone-tree/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -22909,6 +23177,20 @@
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "hair-salons",
       "city_slug": "wellington",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/hair-salons/colorado/westminster/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
       "state": "CO",
       "tier": "buyer",
       "v": 40,
@@ -24009,6 +24291,20 @@
       "total": 66
     },
     {
+      "url": "/med-spas/colorado/boulder/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "boulder",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 16,
+      "total": 66
+    },
+    {
       "url": "/med-spas/colorado/broomfield/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -24183,6 +24479,20 @@
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "med-spas",
       "city_slug": "timnath",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/med-spas/colorado/westminster/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "med-spas",
+      "city_slug": "westminster",
       "state": "CO",
       "tier": "buyer",
       "v": 40,
@@ -24863,6 +25173,20 @@
       "total": 60
     },
     {
+      "url": "/nails/colorado/aurora/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "aurora",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
       "url": "/nails/colorado/boulder/",
       "surface": "category_page",
       "profile": "renaud-naturals",
@@ -25303,6 +25627,20 @@
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "nails",
       "city_slug": "thornton",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 10,
+      "g": 12,
+      "total": 62
+    },
+    {
+      "url": "/nails/colorado/westminster/",
+      "surface": "category_page",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "nails",
+      "city_slug": "westminster",
       "state": "CO",
       "tier": "buyer",
       "v": 40,
@@ -27459,6 +27797,20 @@
       "slug": "natural-skincare/renaud-naturals-loveland",
       "vertical": "hair-salons",
       "city_slug": "wellington",
+      "state": "CO",
+      "tier": "buyer",
+      "v": 40,
+      "a": 15,
+      "g": 12,
+      "total": 67
+    },
+    {
+      "url": "/colorado/westminster/",
+      "surface": "city_hub",
+      "profile": "renaud-naturals",
+      "slug": "natural-skincare/renaud-naturals-loveland",
+      "vertical": "hair-salons",
+      "city_slug": "westminster",
       "state": "CO",
       "tier": "buyer",
       "v": 40,
@@ -29946,9 +30298,9 @@
     }
   ],
   "search_target_check": {
-    "index_urls": 6482,
+    "index_urls": 6557,
     "index_broken": [],
-    "category_groups_checked": 1490,
+    "category_groups_checked": 1514,
     "category_broken": [],
     "city_hub_groups_checked": 339,
     "city_hub_broken": []
@@ -29978,15 +30330,15 @@
       "sitemap-misc.xml"
     ],
     "segments": {
-      "listings": 6482,
-      "categories": 1492,
+      "listings": 6557,
+      "categories": 1516,
       "hubs": 695,
       "misc": 6
     },
-    "url_count": 8675
+    "url_count": 8774
   },
   "link_check": {
-    "internal_hrefs_checked": 717543,
+    "internal_hrefs_checked": 725838,
     "broken": []
   },
   "phone_spot_check": {

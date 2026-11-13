@@ -1,5 +1,5 @@
 {
-  "version": "v5.9.25",
+  "version": "v5.9.26",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-b2b3-2026-11-12.csv",
   "total_csv_rows": 11083,
   "phone_duplicates_dropped": 2,

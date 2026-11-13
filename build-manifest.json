@@ -1,5 +1,5 @@
 {
-  "version": "v5.9.21",
+  "version": "v5.9.23",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-b2b3-2026-11-12.csv",
   "total_csv_rows": 11083,
   "phone_duplicates_dropped": 2,
@@ -225,45 +225,45 @@
         "business": "Auntie Jen's Pet Grooming",
         "url": "/pet-grooming/auntie-jens-pet-grooming-lakewood/",
         "field": "hours",
-        "value": "Mon: Closed; Tue: 9:30 AM–5:30 PM; Wed: 9:30 AM–5:30 PM; Thu: 9:30 AM–5:30 PM; Fri: 9:30 AM–5:30 PM; Sat: 9:30 AM–5:30 PM; Sun: Closed",
+        "value": "Mon: Closed; Tue: 9:30 AM\u20135:30 PM; Wed: 9:30 AM\u20135:30 PM; Thu: 9:30 AM\u20135:30 PM; Fri: 9:30 AM\u20135:30 PM; Sat: 9:30 AM\u20135:30 PM; Sun: Closed",
         "source_file": "hours-lane-batch1-rows-2026-11-12.json",
-        "evidence_matched": "Mon: Closed; Tue: 9:30 AM–5:30 PM; Wed: 9:30 AM–5:30 PM; Thu: 9:30 AM–5:30 PM; Fri: 9:30 AM–5:30 PM; Sat: 9:30 AM–5:30 PM; Sun: Closed",
+        "evidence_matched": "Mon: Closed; Tue: 9:30 AM\u20135:30 PM; Wed: 9:30 AM\u20135:30 PM; Thu: 9:30 AM\u20135:30 PM; Fri: 9:30 AM\u20135:30 PM; Sat: 9:30 AM\u20135:30 PM; Sun: Closed",
         "found_in_source": true
       },
       {
         "business": "Vogue Nails Spa",
         "url": "/nails/vogue-nails-spa-thornton/",
         "field": "hours",
-        "value": "Mon: 9 AM–7:30 PM; Tue: 9 AM–7:30 PM; Wed: 9 AM–7:30 PM; Thu: 9 AM–7:30 PM; Fri: 9 AM–7:30 PM; Sat: 9 AM–7:30 PM; Sun: 10 AM–5 PM",
+        "value": "Mon: 9 AM\u20137:30 PM; Tue: 9 AM\u20137:30 PM; Wed: 9 AM\u20137:30 PM; Thu: 9 AM\u20137:30 PM; Fri: 9 AM\u20137:30 PM; Sat: 9 AM\u20137:30 PM; Sun: 10 AM\u20135 PM",
         "source_file": "hours-lane-batch2-rows-2026-11-12.json",
-        "evidence_matched": "Mon: 9 AM–7:30 PM; Tue: 9 AM–7:30 PM; Wed: 9 AM–7:30 PM; Thu: 9 AM–7:30 PM; Fri: 9 AM–7:30 PM; Sat: 9 AM–7:30 PM; Sun: 10 AM–5 PM",
+        "evidence_matched": "Mon: 9 AM\u20137:30 PM; Tue: 9 AM\u20137:30 PM; Wed: 9 AM\u20137:30 PM; Thu: 9 AM\u20137:30 PM; Fri: 9 AM\u20137:30 PM; Sat: 9 AM\u20137:30 PM; Sun: 10 AM\u20135 PM",
         "found_in_source": true
       },
       {
         "business": "Time Concepts International",
         "url": "/jewelry/time-concepts-international-westminster/",
         "field": "hours",
-        "value": "Mon: 10 AM–5 PM; Tue: 10 AM–5 PM; Wed: 10 AM–5 PM; Thu: 10 AM–5 PM; Fri: 10 AM–5 PM; Sat: 10 AM–4 PM; Sun: Closed",
+        "value": "Mon: 10 AM\u20135 PM; Tue: 10 AM\u20135 PM; Wed: 10 AM\u20135 PM; Thu: 10 AM\u20135 PM; Fri: 10 AM\u20135 PM; Sat: 10 AM\u20134 PM; Sun: Closed",
         "source_file": "hours-lane-batch2-rows-2026-11-12.json",
-        "evidence_matched": "Mon: 10 AM–5 PM; Tue: 10 AM–5 PM; Wed: 10 AM–5 PM; Thu: 10 AM–5 PM; Fri: 10 AM–5 PM; Sat: 10 AM–4 PM; Sun: Closed",
+        "evidence_matched": "Mon: 10 AM\u20135 PM; Tue: 10 AM\u20135 PM; Wed: 10 AM\u20135 PM; Thu: 10 AM\u20135 PM; Fri: 10 AM\u20135 PM; Sat: 10 AM\u20134 PM; Sun: Closed",
         "found_in_source": true
       },
       {
         "business": "Coco Nails",
         "url": "/nails/coco-nails-broomfield/",
         "field": "hours",
-        "value": "Mon: 9:30 AM–7 PM; Tue: Closed; Wed: 9:30 AM–7 PM; Thu: 9:30 AM–7 PM; Fri: 9:30 AM–7 PM; Sat: 9:30 AM–6 PM; Sun: 11 AM–5 PM",
+        "value": "Mon: 9:30 AM\u20137 PM; Tue: Closed; Wed: 9:30 AM\u20137 PM; Thu: 9:30 AM\u20137 PM; Fri: 9:30 AM\u20137 PM; Sat: 9:30 AM\u20136 PM; Sun: 11 AM\u20135 PM",
         "source_file": "yourtownpros-job6-enrichment.json",
-        "evidence_matched": "Mon: 9:30 AM–7 PM; Tue: Closed; Wed: 9:30 AM–7 PM; Thu: 9:30 AM–7 PM; Fri: 9:30 AM–7 PM; Sat: 9:30 AM–6 PM; Sun: 11 AM–5 PM",
+        "evidence_matched": "Mon: 9:30 AM\u20137 PM; Tue: Closed; Wed: 9:30 AM\u20137 PM; Thu: 9:30 AM\u20137 PM; Fri: 9:30 AM\u20137 PM; Sat: 9:30 AM\u20136 PM; Sun: 11 AM\u20135 PM",
         "found_in_source": true
       },
       {
         "business": "Panaderia Cannan",
         "url": "/bakeries-and-cafes/panaderia-cannan-lakewood/",
         "field": "hours",
-        "value": "Mon: 8:30 AM–9 PM; Tue: 8:30 AM–9 PM; Wed: 8:30 AM–9 PM; Thu: 8:30 AM–9 PM; Fri: 8:30 AM–9 PM; Sat: 8:30 AM–9 PM; Sun: 8:30 AM–9 PM",
+        "value": "Mon: 8:30 AM\u20139 PM; Tue: 8:30 AM\u20139 PM; Wed: 8:30 AM\u20139 PM; Thu: 8:30 AM\u20139 PM; Fri: 8:30 AM\u20139 PM; Sat: 8:30 AM\u20139 PM; Sun: 8:30 AM\u20139 PM",
         "source_file": "hours-lane-batch1-rows-2026-11-12.json",
-        "evidence_matched": "Mon: 8:30 AM–9 PM; Tue: 8:30 AM–9 PM; Wed: 8:30 AM–9 PM; Thu: 8:30 AM–9 PM; Fri: 8:30 AM–9 PM; Sat: 8:30 AM–9 PM; Sun: 8:30 AM–9 PM",
+        "evidence_matched": "Mon: 8:30 AM\u20139 PM; Tue: 8:30 AM\u20139 PM; Wed: 8:30 AM\u20139 PM; Thu: 8:30 AM\u20139 PM; Fri: 8:30 AM\u20139 PM; Sat: 8:30 AM\u20139 PM; Sun: 8:30 AM\u20139 PM",
         "found_in_source": true
       },
       {
@@ -288,9 +288,9 @@
         "business": "Beaver Tree Service",
         "url": "/lawn-and-landscaping/beaver-tree-service-aurora/",
         "field": "hours",
-        "value": "Mon: 8 AM–7 PM; Tue: 8 AM–7 PM; Wed: 8 AM–7 PM; Thu: 8 AM–7 PM; Fri: 8 AM–7 PM; Sat: 8 AM–7 PM; Sun: Closed",
+        "value": "Mon: 8 AM\u20137 PM; Tue: 8 AM\u20137 PM; Wed: 8 AM\u20137 PM; Thu: 8 AM\u20137 PM; Fri: 8 AM\u20137 PM; Sat: 8 AM\u20137 PM; Sun: Closed",
         "source_file": "yourtownpros-job5-enrichment.json",
-        "evidence_matched": "Mon: 8 AM–7 PM; Tue: 8 AM–7 PM; Wed: 8 AM–7 PM; Thu: 8 AM–7 PM; Fri: 8 AM–7 PM; Sat: 8 AM–7 PM; Sun: Closed",
+        "evidence_matched": "Mon: 8 AM\u20137 PM; Tue: 8 AM\u20137 PM; Wed: 8 AM\u20137 PM; Thu: 8 AM\u20137 PM; Fri: 8 AM\u20137 PM; Sat: 8 AM\u20137 PM; Sun: Closed",
         "found_in_source": true
       }
     ],
@@ -1212,7 +1212,7 @@
     "colorado_springs_listings_present": true
   },
   "v47_checks": {
-    "note": "v4.7: Featured relevance engine. Partner cards (label: Sponsored · Featured partner) render only from the relevance config: score = vertical + audience + geography, threshold 60, V = 0 hard gate, scope gate, one card per page, holder first and never displaced. Static surfaces score at build time; owner surfaces (/business/, /for-business/, the /claimed/ confirmation) score at runtime from the same config baked in as window.YTP_REL. Data caveat: worked example (a)'s Loveland med-spas category page does not exist (zero Loveland med spas in the source data); its scoring reproduces exactly and the same-town placement is verified at the identical 70 on Loveland's buyer-vertical listing. The homepage takes no partner card: both profiles already hold holder cards in its Featured pros grid, and a partner card never duplicates a holder presence on the same page.",
+    "note": "v4.7: Featured relevance engine. Partner cards (label: Sponsored \u00b7 Featured partner) render only from the relevance config: score = vertical + audience + geography, threshold 60, V = 0 hard gate, scope gate, one card per page, holder first and never displaced. Static surfaces score at build time; owner surfaces (/business/, /for-business/, the /claimed/ confirmation) score at runtime from the same config baked in as window.YTP_REL. Data caveat: worked example (a)'s Loveland med-spas category page does not exist (zero Loveland med spas in the source data); its scoring reproduces exactly and the same-town placement is verified at the identical 70 on Loveland's buyer-vertical listing. The homepage takes no partner card: both profiles already hold holder cards in its Featured pros grid, and a partner card never duplicates a holder presence on the same page.",
     "config_loaded": true,
     "worked_examples": {
       "renaud-a": {
@@ -1683,7 +1683,7 @@
         "Closed Saturday &amp; Sunday",
         "Grooming: Mon - Thurs by appointment",
         "M-F 8 AM - 5 PM",
-        "M-F: 7am – 5pm",
+        "M-F: 7am \u2013 5pm",
         "M-Su: 8am-8pm",
         "Mon to Sat: 9:30 am - 7:30 pm",
         "Open 24 hours",

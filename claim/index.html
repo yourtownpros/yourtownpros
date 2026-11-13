@@ -668,9 +668,11 @@ var q=$("claim-pick-q"),list=$("claim-pick-list");if(!q||!list)return;
 q.addEventListener("input",function(){
 var term=q.value.trim().toLowerCase();list.innerHTML="";
 if(term.length<2||!searchIdx)return;
+var toks=term.split(/\s+/);function match(e){var hay=(e.name+" "+(e.city||"")+" "+(e.state||"")).toLowerCase();for(var t=0;t<toks.length;t++){if(toks[t]&&hay.indexOf(toks[t])<0)return false}return true}
 var hits=[];
-for(var i=0;i<searchIdx.length&&hits.length<8;i++){var e=searchIdx[i];
-if(e.name.toLowerCase().indexOf(term)>=0)hits.push(e)}
+for(var i=0;i<searchIdx.length&&hits.length<10;i++){var e=searchIdx[i];
+if(match(e))hits.push(e)}
+if(!hits.length){list.innerHTML="<p class='listed' style='margin:10px 0 0'>No listing matches that search yet. <a href='/add-business/'>Add your business</a> and we will build your free listing.</p>";return}
 list.innerHTML=hits.map(function(e){return "<button type='button' data-slug='"+esc(e.url.replace(/^\/+|\/+$/g,""))+"'>"+esc(e.name)+" <span class='listed'>"+esc(e.city||"")+(e.state?", "+esc(e.state):"")+"</span></button>"}).join("");
 var btns=list.querySelectorAll("button");
 for(var j=0;j<btns.length;j++){(function(b){b.addEventListener("click",function(){pickSlug(b.getAttribute("data-slug"));list.innerHTML=""})})(btns[j])}

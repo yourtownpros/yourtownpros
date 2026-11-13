@@ -1,0 +1,80 @@
+# YourTownPros
+
+> YourTownPros is a local business directory with 10529 business listings in 498 cities across 31 states and territories. Each listing names the business, its trade, and its city, with a phone number, address, and Google rating where the source data carries them.
+
+## States and territories
+
+- [Colorado](https://yourtownpros.com/colorado/): 3540 listings
+- [California](https://yourtownpros.com/california/): 1136 listings
+- [Texas](https://yourtownpros.com/texas/): 874 listings
+- [South Dakota](https://yourtownpros.com/south-dakota/): 598 listings
+- [Oklahoma](https://yourtownpros.com/oklahoma/): 446 listings
+- [Oregon](https://yourtownpros.com/oregon/): 338 listings
+- [Nebraska](https://yourtownpros.com/nebraska/): 336 listings
+- [Washington](https://yourtownpros.com/washington/): 321 listings
+- [Wyoming](https://yourtownpros.com/wyoming/): 309 listings
+- [Arizona](https://yourtownpros.com/arizona/): 282 listings
+- [Kansas](https://yourtownpros.com/kansas/): 258 listings
+- [Montana](https://yourtownpros.com/montana/): 258 listings
+- [Minnesota](https://yourtownpros.com/minnesota/): 152 listings
+- [Arkansas](https://yourtownpros.com/arkansas/): 148 listings
+- [Iowa](https://yourtownpros.com/iowa/): 145 listings
+- [Wisconsin](https://yourtownpros.com/wisconsin/): 143 listings
+- [North Dakota](https://yourtownpros.com/north-dakota/): 140 listings
+- [Puerto Rico](https://yourtownpros.com/puerto-rico/): 127 listings
+- [Nevada](https://yourtownpros.com/nevada/): 118 listings
+- [Mississippi](https://yourtownpros.com/mississippi/): 99 listings
+- [Missouri](https://yourtownpros.com/missouri/): 99 listings
+- [Idaho](https://yourtownpros.com/idaho/): 93 listings
+- [Louisiana](https://yourtownpros.com/louisiana/): 87 listings
+- [Utah](https://yourtownpros.com/utah/): 73 listings
+- [New Mexico](https://yourtownpros.com/new-mexico/): 69 listings
+- [Michigan](https://yourtownpros.com/michigan/): 67 listings
+- [Illinois](https://yourtownpros.com/illinois/): 66 listings
+- [Tennessee](https://yourtownpros.com/tennessee/): 63 listings
+- [Ohio](https://yourtownpros.com/ohio/): 58 listings
+- [Indiana](https://yourtownpros.com/indiana/): 51 listings
+- [Kentucky](https://yourtownpros.com/kentucky/): 35 listings
+
+## Categories
+
+- [Auto Repair](https://yourtownpros.com/auto-repair/): 1609 listings
+- [Hair Salons](https://yourtownpros.com/hair-salons/): 1096 listings
+- [Pet Grooming](https://yourtownpros.com/pet-grooming/): 721 listings
+- [Plumbers](https://yourtownpros.com/plumbers/): 710 listings
+- [Florists](https://yourtownpros.com/florists/): 671 listings
+- [Electricians](https://yourtownpros.com/electricians/): 660 listings
+- [Bakeries & Cafes](https://yourtownpros.com/bakeries-and-cafes/): 584 listings
+- [Nail Salons](https://yourtownpros.com/nails/): 584 listings
+- [Barbers](https://yourtownpros.com/barbers/): 580 listings
+- [Med Spas](https://yourtownpros.com/med-spas/): 509 listings
+- [Veterinary](https://yourtownpros.com/veterinary/): 506 listings
+- [Tattoo](https://yourtownpros.com/tattoo/): 433 listings
+- [Cleaners & Laundry](https://yourtownpros.com/cleaners/): 343 listings
+- [Lawn & Landscaping](https://yourtownpros.com/lawn-and-landscaping/): 273 listings
+- [HVAC](https://yourtownpros.com/hvac/): 256 listings
+- [Jewelry](https://yourtownpros.com/jewelry/): 202 listings
+- [Fitness](https://yourtownpros.com/fitness/): 156 listings
+- [Massage](https://yourtownpros.com/massage/): 124 listings
+- [Roofing](https://yourtownpros.com/roofing/): 118 listings
+- [Towing](https://yourtownpros.com/towing/): 101 listings
+- [Handyman](https://yourtownpros.com/handyman/): 60 listings
+- [Spas](https://yourtownpros.com/spas/): 56 listings
+- [Painters](https://yourtownpros.com/painting/): 45 listings
+- [Auto Glass](https://yourtownpros.com/auto-glass/): 31 listings
+- [Tanning Salons](https://yourtownpros.com/tanning/): 27 listings
+- [Locksmiths](https://yourtownpros.com/locksmiths/): 25 listings
+- [Pet Boarding & Daycare](https://yourtownpros.com/pet-boarding/): 24 listings
+- [Dance Studios](https://yourtownpros.com/dance-studios/): 22 listings
+- [Bookstores](https://yourtownpros.com/bookstores/): 1 listing
+- [Natural Skincare](https://yourtownpros.com/natural-skincare/): 1 listing
+- [Website Design](https://yourtownpros.com/website-design/): 1 listing
+
+## Key pages
+
+- [Home: search and browse the directory](https://yourtownpros.com/)
+- [For Business: listing and Featured options](https://yourtownpros.com/for-business/)
+- [Add a Business: submit a business for review](https://yourtownpros.com/add-business/)
+- [Claim Your Listing: business owner claim form](https://yourtownpros.com/claim/)
+- [Privacy Policy](https://yourtownpros.com/privacy/)
+- [Terms of Use](https://yourtownpros.com/terms/)

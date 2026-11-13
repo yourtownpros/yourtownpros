@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://yourtownpros.com/sitemap.xml
+Sitemap: https://yourtownpros.com/sitemap-priority.xml

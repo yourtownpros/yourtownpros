@@ -1058,6 +1058,7 @@ if(!a)return;
 var h=a.getAttribute("href")||"";
 if(h.indexOf("tel:")===0){fire("call");return}
 if(h.indexOf("google.com/maps/dir")!==-1){fire("directions");return}
+if(a.closest&&a.closest(".bizcard57")&&h.indexOf("http")===0){fire("website");return}
 if(a.textContent&&a.textContent.indexOf("Visit their website")===0)fire("website");
 });
 })();

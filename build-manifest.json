@@ -1,5 +1,5 @@
 {
-  "version": "v5.10",
+  "version": "v5.10.1",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-b2b3-2026-11-12.csv",
   "total_csv_rows": 11083,
   "phone_duplicates_dropped": 2,
@@ -3292,14 +3292,14 @@
     "note": "v3.4: facts joined at build time from the Rankly research files listed in load_enrichment's docstring. Coverage counts below are over unflagged listings only; flagged listings are excluded from every enrichment field (they can still show a map from their directory address, per the owner's flagged-treatment spec).",
     "sources": {
       "source_files": {
-        "research_notes": 181,
-        "call_block_briefs": 131,
-        "prospects_csvs": 476,
+        "research_notes": 182,
+        "call_block_briefs": 132,
+        "prospects_csvs": 479,
         "site_digests": 23
       },
-      "prospects_rows": 15238,
+      "prospects_rows": 15475,
       "digest_entries": 1480,
-      "pool_phones": 11700,
+      "pool_phones": 11769,
       "digest_linked_listings": 1440
     },
     "coverage_unflagged_listings": {
@@ -4479,7 +4479,7 @@
     "dashboard_ordering_controls": true,
     "dashboard_ordering_writes_sort_order_only": true,
     "repo_diff_skipped_scratch_out": false,
-    "repo_diff_files": 15,
+    "repo_diff_files": 14539,
     "structure_matches_v47_after_deltas": true,
     "fixture": {
       "present": true,
@@ -4699,7 +4699,7 @@
     ],
     "biz_data_reconciled": true,
     "changed_html_set_exact": true,
-    "changed_html_set_size": 15,
+    "changed_html_set_size": 14539,
     "changed_files_fully_explained": true,
     "file_set_unchanged": true,
     "nonhtml_changed_exact": true,
@@ -5142,15 +5142,7 @@
     "detail_mark_pages": 14539,
     "detail_header_pages": 14539,
     "detail_added_files": [],
-    "detail_nonhtml_delta": [
-      "sitemap-categories.xml",
-      "sitemap-hubs.xml",
-      "sitemap-listings-2.xml",
-      "sitemap-listings-3.xml",
-      "sitemap-listings.xml",
-      "sitemap-misc.xml",
-      "sitemap.xml"
-    ]
+    "detail_nonhtml_delta": []
   },
   "v59_checks": {
     "note": "v5.9: THE STICKY RESULTS TOOLBAR (single theme). Yelp keeps a toolbar above the results stream (count, sort, quick filters) visible while scrolling; here the count and sort sat in the category filterbar, which scrolled away, and the rail's Open now filter stacked away on mobile. The filterbar itself becomes the toolbar (one control set, no duplicates): it gains the toolbar59 class and sticks under the header via the appended V59_CSS block (top 112px at desktop widths; 162px at <=900px and 216px at <=480px, solved from the header's own wrap arithmetic; z-index 40, under the header's 60). The count line takes the toolbar form 'N pros in City, ST' ('1 pro' when one). The sort set gains the Rating button the category script has always handled (data-sort='rating'); Recommended, Most reviewed and the data-gated Distance button are byte-identical. On exactly the pages whose rail carries the Open Now filter (same hours gate), the toolbar gains an Open now pill that MIRRORS the rail's #openchk: passOpen keeps reading the rail checkbox as the single state, and TOOLBAR59_SCRIPT forwards the pill's change to the rail control and reflects the rail's back. No new data, no new claims; cards, map, pins, FAQ, related searches untouched. _norm59 strips exactly these deltas, applied before _norm58 (deeper innermost). The v5.8 checks' repo-relative clauses are revised for the moved baseline (the repo now holds v5.8).",
@@ -5787,6 +5779,7 @@
     "detail_removed_files": [
       "_headers",
       "build-manifest.json",
+      "llms.txt",
       "sitemap-priority.xml"
     ]
   },

@@ -153,6 +153,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .weblink{display:inline-block;margin-left:10px;font-weight:700}
 
 .stars{color:#7a5200}
+.gsrc{color:#5a6672;font-size:12px;font-weight:400}
 .result-card h2{margin:0 0 4px;font-size:19px}
 .result-card h2 a{color:#1c2430;text-decoration:none}
 .result-card h2 a:hover{color:#0e7a5f;text-decoration:underline}
@@ -607,7 +608,7 @@ footer{padding:0}
 <section class="faq57"><h2>Frequently asked questions</h2><h3>How many veterinarians are listed in Superior, WI?</h3><p>2 veterinarians are listed in Superior, WI on YourTownPros, each with a phone number and an address where available.</p><h3>How do I contact a veterinarian in Superior?</h3><p>Call the number on any listing on this page, or use the free match form and YourTownPros will connect you with a local pro.</p></section><p><a href="/wisconsin/counties/douglas/">All local pros in Douglas County</a></p><div class="railcard"><h2>Veterinary near Superior</h2><div class="nearlinks"><a href="/veterinary/wisconsin/waukesha/">Veterinary in Waukesha, WI</a><a href="/veterinary/wisconsin/cottage-grove/">Veterinary in Cottage Grove, WI</a><a href="/veterinary/wisconsin/la-crosse/">Veterinary in La Crosse, WI</a><a href="/veterinary/wisconsin/oak-creek/">Veterinary in Oak Creek, WI</a></div></div></div>
 <aside class="cat-map"><div class="mappanel"><div id="ytp-map" class="ytp-map"></div></div></aside></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "2 Veterinarians in Superior, WI", "numberOfItems": 2, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Happy Tails Animal Hospital", "url": "https://yourtownpros.com/veterinary/happy-tails-animal-hospital-superior/"}, {"@type": "ListItem", "position": 2, "name": "Superior Animal Hospital and Boarding Suites", "url": "https://yourtownpros.com/veterinary/superior-animal-hospital-and-boarding-suites-superior/"}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Veterinary", "item": "https://yourtownpros.com/veterinary/"}, {"@type": "ListItem", "position": 3, "name": "Wisconsin", "item": "https://yourtownpros.com/veterinary/wisconsin/"}, {"@type": "ListItem", "position": 4, "name": "2 Veterinarians in Superior, WI"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Veterinary", "item": "https://yourtownpros.com/veterinary/"}, {"@type": "ListItem", "position": 3, "name": "Wisconsin", "item": "https://yourtownpros.com/veterinary/wisconsin/"}, {"@type": "ListItem", "position": 4, "name": "2 Veterinarians in Superior, WI", "item": "https://yourtownpros.com/veterinary/wisconsin/superior/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many veterinarians are listed in Superior, WI?", "acceptedAnswer": {"@type": "Answer", "text": "2 veterinarians are listed in Superior, WI on YourTownPros, each with a phone number and an address where available."}}, {"@type": "Question", "name": "How do I contact a veterinarian in Superior?", "acceptedAnswer": {"@type": "Answer", "text": "Call the number on any listing on this page, or use the free match form and YourTownPros will connect you with a local pro."}}]}</script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "veterinary/happy-tails-animal-hospital-superior", "lat": 46.722785644495, "lng": -92.105540627173, "name": "Happy Tails Animal Hospital", "url": "/veterinary/happy-tails-animal-hospital-superior/", "img": "https://images.unsplash.com/photo-1592194996308-7b43878e84a6?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}, {"slug": "veterinary/superior-animal-hospital-and-boarding-suites-superior", "lat": 46.725633732616, "lng": -92.073651182437, "name": "Superior Animal Hospital and Boarding Suites", "url": "/veterinary/superior-animal-hospital-and-boarding-suites-superior/", "img": "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 46.72077, "lng": -92.10408, "city": "Superior", "state": "WI"}</script><script>
 (function(){
@@ -658,18 +659,27 @@ m.on("mouseover",function(){cd.classList.add("hl")});
 m.on("mouseout",function(){cd.classList.remove("hl")});
 })(card,mk);
 markers[slug]=mk;layer.addLayer(mk);pts.push([p.lat,p.lng])}
-if(pts.length&&!map._ytpFit){map.fitBounds(pts,{padding:[24,24]});map._ytpFit=true}}}
+if(pts.length&&!map._ytpFit){map.fitBounds(pts,{padding:[24,24],maxZoom:15});map._ytpFit=true}}}
 var mapEl=document.getElementById("ytp-map");
 var cityEl=document.getElementById("ytp-citymap");var cityD=null;
 if(cityEl){try{cityD=JSON.parse(cityEl.textContent)}catch(e){}}
 if(mapEl&&window.L){var phoneMap=window.matchMedia&&window.matchMedia("(max-width: 767px)").matches;
-map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:undefined);
+map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:{scrollWheelZoom:false});
 if(phoneMap){mapEl.addEventListener("click",function(){if(map.dragging&&!map.dragging.enabled())map.dragging.enable()})}
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+/* v5.10.1: wheel zoom is off until the map is clicked,
+on every screen size, so page scroll is never trapped;
+tiles are CARTO Voyager with OSM + CARTO attribution. */
+mapEl.addEventListener("click",function(){if(map.scrollWheelZoom&&!map.scrollWheelZoom.enabled())map.scrollWheelZoom.enable()});
+L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
 layer=L.layerGroup().addTo(map);
 var hasPins=false;for(var key in pins){hasPins=true;break}
 if(!hasPins&&cityD&&typeof cityD.lat==="number"){map.setView([cityD.lat,cityD.lng],12);
-L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state),{maxWidth:280})}}
+L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state),{maxWidth:280})}
+/* v5.10.1: on load the map fits every result pin, capped
+at zoom 15 so a lone result does not slam to street level,
+instead of opening on a fixed neighborhood view. */
+if(hasPins){var allPts=[];for(var pk in pins)allPts.push([pins[pk].lat,pins[pk].lng]);
+if(allPts.length){map.fitBounds(allPts,{padding:[24,24],maxZoom:15});map._ytpFit=true}}}
 for(var ci=0;ci<cards.length;ci++){(function(card){card.addEventListener("click",function(e){if(e.target.closest("a"))return;var m=markers[card.getAttribute("data-slug")];if(m&&map){map.panTo(m.getLatLng());m.openPopup()}}) })(cards[ci])}
 function setActive(sel,btn){var bs=document.querySelectorAll(sel);for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i]===btn)}
 var fT=0;
@@ -927,7 +937,20 @@ f1.addEventListener("focus",function(){loadD(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-try{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}catch(x){}
+/* v5.10.1: the where box shows the location of the page
+being viewed first (the category page's city block, else
+the listing's map data); a saved city is only a fallback,
+so a stale saved city never overrides the place on screen. */
+try{var own=null;
+var cm=document.getElementById("ytp-citymap");
+if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city)own=cj.city+", "+cj.state}catch(x){}}
+if(!own){var lm=document.getElementById("ytp-lmap-data");
+if(lm){try{var lj=JSON.parse(lm.textContent);
+if(lj&&lj.city)own=lj.city;
+else if(lj&&lj.addr){var sg=String(lj.addr).split(",");
+if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x){}}}
+if(own)f2.value=own;
+else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script>
 (function(){

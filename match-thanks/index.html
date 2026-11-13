@@ -229,7 +229,20 @@ f1.addEventListener("focus",function(){loadD(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-try{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}catch(x){}
+/* v5.10.1: the where box shows the location of the page
+being viewed first (the category page's city block, else
+the listing's map data); a saved city is only a fallback,
+so a stale saved city never overrides the place on screen. */
+try{var own=null;
+var cm=document.getElementById("ytp-citymap");
+if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city)own=cj.city+", "+cj.state}catch(x){}}
+if(!own){var lm=document.getElementById("ytp-lmap-data");
+if(lm){try{var lj=JSON.parse(lm.textContent);
+if(lj&&lj.city)own=lj.city;
+else if(lj&&lj.addr){var sg=String(lj.addr).split(",");
+if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x){}}}
+if(own)f2.value=own;
+else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script>
 (function(){

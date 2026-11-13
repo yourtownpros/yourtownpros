@@ -153,6 +153,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .weblink{display:inline-block;margin-left:10px;font-weight:700}
 
 .stars{color:#7a5200}
+.gsrc{color:#5a6672;font-size:12px;font-weight:400}
 .result-card h2{margin:0 0 4px;font-size:19px}
 .result-card h2 a{color:#1c2430;text-decoration:none}
 .result-card h2 a:hover{color:#0e7a5f;text-decoration:underline}
@@ -606,14 +607,18 @@ footer{padding:0}
 <label for="m-notes">Anything else?</label><textarea id="m-notes" name="notes" rows="2"></textarea>
 <button type="submit">Get matched</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro. We do not sell your number.</div></form></div><h2>About this listing</h2><p>COCO Massage is a massage business in Englewood, Colorado, listed in the YourTownPros directory with publicly available information. To book, call the number above.</p><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div></div><p><a href="https://www.google.com/maps/dir/?api=1&destination=5000%20S%20Federal%20Blvd%2C%20Englewood%2C%20CO">Get directions</a></p><script type="application/json" id="ytp-lmap-data">{"mode": "pin", "lat": 39.626822211432, "lng": -105.025322635306, "name": "COCO Massage", "addr": "5000 S Federal Blvd, Englewood, CO"}</script><div class="reviews" id="reviews"><h2>YourTownPros reviews</h2><div id="ytp-rev-tools" hidden><div id="ytp-rev-hist"></div><div class="revtools"><label for="ytp-rev-sort">Sort</label><select id="ytp-rev-sort"><option value="new">Newest</option><option value="high">Highest rated</option><option value="low">Lowest rated</option></select><label for="ytp-rev-search">Search</label><input type="search" id="ytp-rev-search" placeholder="Search reviews"></div></div><div id="ytp-reviews-list"><p class="listed">Loading reviews...</p></div><div id="ytp-review-prompt"><p>Sign in to write a review.</p><button type="button" class="claimbtn" id="ytp-review-signin">Sign in</button></div><form id="ytp-write-review" hidden><label for="ytp-rev-rating">Your rating</label><select id="ytp-rev-rating"><option value="5">5 stars</option><option value="4">4 stars</option><option value="3">3 stars</option><option value="2">2 stars</option><option value="1">1 star</option></select><label for="ytp-rev-body">Your review</label><textarea id="ytp-rev-body" rows="3" required></textarea><button type="submit">Post review</button></form></div><div class="qasec" id="community"><h2>Ask the Community</h2><p class="listed">Questions about this business, answered by customers and by the business itself. Questions and answers appear after a quick check.</p><div id="ytp-qa-list"><p class="listed">Loading questions...</p></div><div id="ytp-qa-pending"></div><div id="ytp-ask-prompt"><p>Sign in to ask a question.</p><button type="button" class="claimbtn" id="ytp-ask-signin">Sign in</button></div><form class="qaform" id="ytp-ask-form" hidden><label for="ytp-ask-body">Your question</label><textarea id="ytp-ask-body" rows="3" required></textarea><button type="submit">Post question</button></form></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "HealthAndBeautyBusiness", "@id": "https://yourtownpros.com/massage/coco-massage-englewood/#business", "name": "COCO Massage", "url": "https://yourtownpros.com/massage/coco-massage-englewood/", "telephone": "+13037946826", "address": {"@type": "PostalAddress", "addressLocality": "Englewood", "addressRegion": "CO", "addressCountry": "US", "streetAddress": "5000 S Federal Blvd"}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Massage", "item": "https://yourtownpros.com/massage/"}, {"@type": "ListItem", "position": 3, "name": "Colorado", "item": "https://yourtownpros.com/massage/colorado/"}, {"@type": "ListItem", "position": 4, "name": "Massage in Englewood", "item": "https://yourtownpros.com/massage/colorado/englewood/"}, {"@type": "ListItem", "position": 5, "name": "COCO Massage"}]}</script><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Massage", "item": "https://yourtownpros.com/massage/"}, {"@type": "ListItem", "position": 3, "name": "Colorado", "item": "https://yourtownpros.com/massage/colorado/"}, {"@type": "ListItem", "position": 4, "name": "Massage in Englewood", "item": "https://yourtownpros.com/massage/colorado/englewood/"}, {"@type": "ListItem", "position": 5, "name": "COCO Massage", "item": "https://yourtownpros.com/massage/coco-massage-englewood/"}]}</script><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 (function(){
 var el=document.getElementById("ytp-lmap");if(!el||!window.L)return;
 var dEl=document.getElementById("ytp-lmap-data");if(!dEl)return;
 var d=null;try{d=JSON.parse(dEl.textContent)}catch(e){return}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-var map=L.map(el);
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+/* v5.10.1: CARTO Voyager tiles, and wheel zoom stays
+off until the map is clicked (the category-map pattern),
+so page scroll is never trapped by the listing map. */
+var map=L.map(el,{scrollWheelZoom:false});
+L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
+el.addEventListener("click",function(){if(map.scrollWheelZoom&&!map.scrollWheelZoom.enabled())map.scrollWheelZoom.enable()});
 if(d.mode==="pin"){map.setView([d.lat,d.lng],15);
 L.marker([d.lat,d.lng]).addTo(map).bindPopup("<strong>"+esc(d.name)+"</strong><br>"+esc(d.addr));}
 else{map.setView([d.lat,d.lng],12);
@@ -1043,7 +1048,20 @@ f1.addEventListener("focus",function(){loadD(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-try{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}catch(x){}
+/* v5.10.1: the where box shows the location of the page
+being viewed first (the category page's city block, else
+the listing's map data); a saved city is only a fallback,
+so a stale saved city never overrides the place on screen. */
+try{var own=null;
+var cm=document.getElementById("ytp-citymap");
+if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city)own=cj.city+", "+cj.state}catch(x){}}
+if(!own){var lm=document.getElementById("ytp-lmap-data");
+if(lm){try{var lj=JSON.parse(lm.textContent);
+if(lj&&lj.city)own=lj.city;
+else if(lj&&lj.addr){var sg=String(lj.addr).split(",");
+if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x){}}}
+if(own)f2.value=own;
+else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script>
 (function(){

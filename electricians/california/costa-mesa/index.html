@@ -153,6 +153,7 @@ a.brand{color:inherit;text-decoration:none;cursor:pointer}
 .weblink{display:inline-block;margin-left:10px;font-weight:700}
 
 .stars{color:#7a5200}
+.gsrc{color:#5a6672;font-size:12px;font-weight:400}
 .result-card h2{margin:0 0 4px;font-size:19px}
 .result-card h2 a{color:#1c2430;text-decoration:none}
 .result-card h2 a:hover{color:#0e7a5f;text-decoration:underline}
@@ -607,7 +608,7 @@ footer{padding:0}
 <section class="faq57"><h2>Frequently asked questions</h2><h3>How many electricians are listed in Costa Mesa, CA?</h3><p>2 electricians are listed in Costa Mesa, CA on YourTownPros, each with a phone number and an address where available.</p><h3>How do I contact a electrician in Costa Mesa?</h3><p>Call the number on any listing on this page, or use the free match form and YourTownPros will connect you with a local pro.</p></section><div class="rel57"><h2>Related searches in Costa Mesa</h2><a href="/nails/california/costa-mesa/">Nail Salons in Costa Mesa, CA</a><a href="/plumbers/california/costa-mesa/">Plumbers in Costa Mesa, CA</a></div><p><a href="/california/costa-mesa/">More local pros in Costa Mesa, CA</a></p><p><a href="/california/counties/orange/">All local pros in Orange County</a></p><div class="railcard"><h2>Electrical near Costa Mesa</h2><div class="nearlinks"><a href="/electricians/california/yucaipa/">Electricians in Yucaipa, CA</a><a href="/electricians/california/san-bernardino/">Electricians in San Bernardino, CA</a><a href="/electricians/california/burbank/">Electricians in Burbank, CA</a><a href="/electricians/california/redding/">Electricians in Redding, CA</a><a href="/electricians/california/clovis/">Electricians in Clovis, CA</a><a href="/electricians/california/hawthorne/">Electricians in Hawthorne, CA</a></div></div></div>
 <aside class="cat-map"><div class="mappanel"><div id="ytp-map" class="ytp-map"></div></div></aside></div>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "2 Electricians in Costa Mesa, CA", "numberOfItems": 2, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "CM Electric", "url": "https://yourtownpros.com/electricians/cm-electric-costa-mesa/"}, {"@type": "ListItem", "position": 2, "name": "Rocket Sweep Electrician", "url": "https://yourtownpros.com/electricians/rocket-sweep-electrician-costa-mesa/"}]}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Electricians", "item": "https://yourtownpros.com/electricians/"}, {"@type": "ListItem", "position": 3, "name": "California", "item": "https://yourtownpros.com/electricians/california/"}, {"@type": "ListItem", "position": 4, "name": "2 Electricians in Costa Mesa, CA"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yourtownpros.com/"}, {"@type": "ListItem", "position": 2, "name": "Electricians", "item": "https://yourtownpros.com/electricians/"}, {"@type": "ListItem", "position": 3, "name": "California", "item": "https://yourtownpros.com/electricians/california/"}, {"@type": "ListItem", "position": 4, "name": "2 Electricians in Costa Mesa, CA", "item": "https://yourtownpros.com/electricians/california/costa-mesa/"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many electricians are listed in Costa Mesa, CA?", "acceptedAnswer": {"@type": "Answer", "text": "2 electricians are listed in Costa Mesa, CA on YourTownPros, each with a phone number and an address where available."}}, {"@type": "Question", "name": "How do I contact a electrician in Costa Mesa?", "acceptedAnswer": {"@type": "Answer", "text": "Call the number on any listing on this page, or use the free match form and YourTownPros will connect you with a local pro."}}]}</script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script type="application/json" id="ytp-pins">[{"slug": "electricians/rocket-sweep-electrician-costa-mesa", "lat": 33.636883123068, "lng": -117.931832290618, "name": "Rocket Sweep Electrician", "url": "/electricians/rocket-sweep-electrician-costa-mesa/", "img": "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=252&h=168&q=60", "stars": "", "feat": false}]</script><script type="application/json" id="ytp-citymap">{"lat": 33.64113, "lng": -117.91867, "city": "Costa Mesa", "state": "CA"}</script><script>
 (function(){
@@ -658,18 +659,27 @@ m.on("mouseover",function(){cd.classList.add("hl")});
 m.on("mouseout",function(){cd.classList.remove("hl")});
 })(card,mk);
 markers[slug]=mk;layer.addLayer(mk);pts.push([p.lat,p.lng])}
-if(pts.length&&!map._ytpFit){map.fitBounds(pts,{padding:[24,24]});map._ytpFit=true}}}
+if(pts.length&&!map._ytpFit){map.fitBounds(pts,{padding:[24,24],maxZoom:15});map._ytpFit=true}}}
 var mapEl=document.getElementById("ytp-map");
 var cityEl=document.getElementById("ytp-citymap");var cityD=null;
 if(cityEl){try{cityD=JSON.parse(cityEl.textContent)}catch(e){}}
 if(mapEl&&window.L){var phoneMap=window.matchMedia&&window.matchMedia("(max-width: 767px)").matches;
-map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:undefined);
+map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:{scrollWheelZoom:false});
 if(phoneMap){mapEl.addEventListener("click",function(){if(map.dragging&&!map.dragging.enabled())map.dragging.enable()})}
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
+/* v5.10.1: wheel zoom is off until the map is clicked,
+on every screen size, so page scroll is never trapped;
+tiles are CARTO Voyager with OSM + CARTO attribution. */
+mapEl.addEventListener("click",function(){if(map.scrollWheelZoom&&!map.scrollWheelZoom.enabled())map.scrollWheelZoom.enable()});
+L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
 layer=L.layerGroup().addTo(map);
 var hasPins=false;for(var key in pins){hasPins=true;break}
 if(!hasPins&&cityD&&typeof cityD.lat==="number"){map.setView([cityD.lat,cityD.lng],12);
-L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state),{maxWidth:280})}}
+L.marker([cityD.lat,cityD.lng]).addTo(map).bindPopup(esc(cityD.city)+", "+esc(cityD.state),{maxWidth:280})}
+/* v5.10.1: on load the map fits every result pin, capped
+at zoom 15 so a lone result does not slam to street level,
+instead of opening on a fixed neighborhood view. */
+if(hasPins){var allPts=[];for(var pk in pins)allPts.push([pins[pk].lat,pins[pk].lng]);
+if(allPts.length){map.fitBounds(allPts,{padding:[24,24],maxZoom:15});map._ytpFit=true}}}
 for(var ci=0;ci<cards.length;ci++){(function(card){card.addEventListener("click",function(e){if(e.target.closest("a"))return;var m=markers[card.getAttribute("data-slug")];if(m&&map){map.panTo(m.getLatLng());m.openPopup()}}) })(cards[ci])}
 function setActive(sel,btn){var bs=document.querySelectorAll(sel);for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i]===btn)}
 var fT=0;
@@ -927,7 +937,20 @@ f1.addEventListener("focus",function(){loadD(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-try{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}catch(x){}
+/* v5.10.1: the where box shows the location of the page
+being viewed first (the category page's city block, else
+the listing's map data); a saved city is only a fallback,
+so a stale saved city never overrides the place on screen. */
+try{var own=null;
+var cm=document.getElementById("ytp-citymap");
+if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city)own=cj.city+", "+cj.state}catch(x){}}
+if(!own){var lm=document.getElementById("ytp-lmap-data");
+if(lm){try{var lj=JSON.parse(lm.textContent);
+if(lj&&lj.city)own=lj.city;
+else if(lj&&lj.addr){var sg=String(lj.addr).split(",");
+if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x){}}}
+if(own)f2.value=own;
+else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
 })();
 </script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script>
 (function(){

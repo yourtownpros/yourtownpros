@@ -8,7 +8,7 @@ function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"
 off until the map is clicked (the category-map pattern),
 so page scroll is never trapped by the listing map. */
 var map=L.map(el,{scrollWheelZoom:false});
-L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
 el.addEventListener("click",function(){if(map.scrollWheelZoom&&!map.scrollWheelZoom.enabled())map.scrollWheelZoom.enable()});
 if(d.mode==="pin"){map.setView([d.lat,d.lng],15);
 L.marker([d.lat,d.lng]).addTo(map).bindPopup("<strong>"+esc(d.name)+"</strong><br>"+esc(d.addr));}

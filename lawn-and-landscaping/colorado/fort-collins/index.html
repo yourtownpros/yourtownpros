@@ -83,9 +83,9 @@ map=L.map(mapEl,phoneMap?{scrollWheelZoom:false,dragging:false}:{scrollWheelZoom
 if(phoneMap){mapEl.addEventListener("click",function(){if(map.dragging&&!map.dragging.enabled())map.dragging.enable()})}
 /* v5.10.1: wheel zoom is off until the map is clicked,
 on every screen size, so page scroll is never trapped;
-tiles are CARTO Voyager with OSM + CARTO attribution. */
+tiles are OpenStreetMap with OSM attribution. */
 mapEl.addEventListener("click",function(){if(map.scrollWheelZoom&&!map.scrollWheelZoom.enabled())map.scrollWheelZoom.enable()});
-L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors &copy; CARTO"}).addTo(map);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(map);
 layer=L.layerGroup().addTo(map);
 var hasPins=false;for(var key in pins){hasPins=true;break}
 if(!hasPins&&cityD&&typeof cityD.lat==="number"){map.setView([cityD.lat,cityD.lng],12);

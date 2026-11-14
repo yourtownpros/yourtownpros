@@ -276,6 +276,7 @@ function srchSummary(res, label, town, st) {
               effLng: (typeof r.lo === "number") ? r.lo : null,
               rating: (r.r == null) ? null : r.r,
               reviews: (r.v == null) ? null : r.v,
+              rsrc: (r.rs === "B") ? "Birdeye" : "Google",
               hours: !!r.h, claimed: !!r.cl });
           });
         });
@@ -302,8 +303,8 @@ function srchSummary(res, label, town, st) {
             (r.rating != null
               ? '<p class="rmeta57"><span class="stars">' +
                 r.rating + " \u00b7 " + r.reviews +
-                ' reviews</span> <span class="gsrc">Google ' +
-                "rating</span></p>" : "") +
+                ' reviews</span> <span class="gsrc">' +
+                r.rsrc + " rating</span></p>" : "") +
             (r.phone ? '<p class="rmeta57"><a href="tel:' +
               r.phone.replace(/[^0-9]/g, "") + '">' +
               esc(r.phone) + "</a></p>" : "") +

@@ -1,19 +1,19 @@
 # YourTownPros
 
-> YourTownPros is a local business directory with 10529 business listings in 498 cities across 31 states and territories. Each listing names the business, its trade, and its city, with a phone number, address, and Google rating where the source data carries them.
+> YourTownPros is a local business directory with 14123 business listings in 565 cities across 31 states and territories. Each listing names the business, its trade, and its city, with a phone number, address, and Google rating where the source data carries them.
 
 ## States and territories
 
-- [Colorado](https://yourtownpros.com/colorado/): 3540 listings
-- [California](https://yourtownpros.com/california/): 1136 listings
-- [Texas](https://yourtownpros.com/texas/): 874 listings
+- [Colorado](https://yourtownpros.com/colorado/): 3783 listings
+- [Texas](https://yourtownpros.com/texas/): 2317 listings
+- [California](https://yourtownpros.com/california/): 2124 listings
+- [Arizona](https://yourtownpros.com/arizona/): 816 listings
+- [Washington](https://yourtownpros.com/washington/): 707 listings
 - [South Dakota](https://yourtownpros.com/south-dakota/): 598 listings
 - [Oklahoma](https://yourtownpros.com/oklahoma/): 446 listings
 - [Oregon](https://yourtownpros.com/oregon/): 338 listings
 - [Nebraska](https://yourtownpros.com/nebraska/): 336 listings
-- [Washington](https://yourtownpros.com/washington/): 321 listings
 - [Wyoming](https://yourtownpros.com/wyoming/): 309 listings
-- [Arizona](https://yourtownpros.com/arizona/): 282 listings
 - [Kansas](https://yourtownpros.com/kansas/): 258 listings
 - [Montana](https://yourtownpros.com/montana/): 258 listings
 - [Minnesota](https://yourtownpros.com/minnesota/): 152 listings
@@ -38,33 +38,33 @@
 
 ## Categories
 
-- [Auto Repair](https://yourtownpros.com/auto-repair/): 1609 listings
-- [Hair Salons](https://yourtownpros.com/hair-salons/): 1096 listings
-- [Pet Grooming](https://yourtownpros.com/pet-grooming/): 721 listings
-- [Plumbers](https://yourtownpros.com/plumbers/): 710 listings
-- [Florists](https://yourtownpros.com/florists/): 671 listings
-- [Electricians](https://yourtownpros.com/electricians/): 660 listings
-- [Bakeries & Cafes](https://yourtownpros.com/bakeries-and-cafes/): 584 listings
-- [Nail Salons](https://yourtownpros.com/nails/): 584 listings
-- [Barbers](https://yourtownpros.com/barbers/): 580 listings
-- [Med Spas](https://yourtownpros.com/med-spas/): 509 listings
-- [Veterinary](https://yourtownpros.com/veterinary/): 506 listings
-- [Tattoo](https://yourtownpros.com/tattoo/): 433 listings
-- [Cleaners & Laundry](https://yourtownpros.com/cleaners/): 343 listings
-- [Lawn & Landscaping](https://yourtownpros.com/lawn-and-landscaping/): 273 listings
-- [HVAC](https://yourtownpros.com/hvac/): 256 listings
-- [Jewelry](https://yourtownpros.com/jewelry/): 202 listings
-- [Fitness](https://yourtownpros.com/fitness/): 156 listings
-- [Massage](https://yourtownpros.com/massage/): 124 listings
-- [Roofing](https://yourtownpros.com/roofing/): 118 listings
-- [Towing](https://yourtownpros.com/towing/): 101 listings
-- [Handyman](https://yourtownpros.com/handyman/): 60 listings
-- [Spas](https://yourtownpros.com/spas/): 56 listings
-- [Painters](https://yourtownpros.com/painting/): 45 listings
+- [Auto Repair](https://yourtownpros.com/auto-repair/): 2614 listings
+- [Hair Salons](https://yourtownpros.com/hair-salons/): 1438 listings
+- [Nail Salons](https://yourtownpros.com/nails/): 912 listings
+- [Pet Grooming](https://yourtownpros.com/pet-grooming/): 828 listings
+- [Plumbers](https://yourtownpros.com/plumbers/): 785 listings
+- [Florists](https://yourtownpros.com/florists/): 741 listings
+- [Electricians](https://yourtownpros.com/electricians/): 706 listings
+- [Barbers](https://yourtownpros.com/barbers/): 685 listings
+- [Med Spas](https://yourtownpros.com/med-spas/): 674 listings
+- [Bakeries & Cafes](https://yourtownpros.com/bakeries-and-cafes/): 656 listings
+- [Veterinary](https://yourtownpros.com/veterinary/): 581 listings
+- [Tattoo](https://yourtownpros.com/tattoo/): 515 listings
+- [Cleaners & Laundry](https://yourtownpros.com/cleaners/): 499 listings
+- [Lawn & Landscaping](https://yourtownpros.com/lawn-and-landscaping/): 393 listings
+- [HVAC](https://yourtownpros.com/hvac/): 390 listings
+- [Jewelry](https://yourtownpros.com/jewelry/): 329 listings
+- [Spas](https://yourtownpros.com/spas/): 291 listings
+- [Roofing](https://yourtownpros.com/roofing/): 231 listings
+- [Fitness](https://yourtownpros.com/fitness/): 183 listings
+- [Massage](https://yourtownpros.com/massage/): 170 listings
+- [Painters](https://yourtownpros.com/painting/): 125 listings
+- [Towing](https://yourtownpros.com/towing/): 106 listings
+- [Handyman](https://yourtownpros.com/handyman/): 91 listings
+- [Locksmiths](https://yourtownpros.com/locksmiths/): 54 listings
+- [Pet Boarding & Daycare](https://yourtownpros.com/pet-boarding/): 43 listings
 - [Auto Glass](https://yourtownpros.com/auto-glass/): 31 listings
 - [Tanning Salons](https://yourtownpros.com/tanning/): 27 listings
-- [Locksmiths](https://yourtownpros.com/locksmiths/): 25 listings
-- [Pet Boarding & Daycare](https://yourtownpros.com/pet-boarding/): 24 listings
 - [Dance Studios](https://yourtownpros.com/dance-studios/): 22 listings
 - [Bookstores](https://yourtownpros.com/bookstores/): 1 listing
 - [Natural Skincare](https://yourtownpros.com/natural-skincare/): 1 listing

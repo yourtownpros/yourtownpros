@@ -190,15 +190,16 @@ distance from the active location; the header never loads a
 listing shard and never fetches the whole index. Category +
 town resolutions route to the /search/ radius view (v5.12
 item 1); the static category and town pages stay live for
-SEO and direct links. The where prefill keeps the v5.10.1
-rule: the page's own location first, a saved city only as a
-fallback, so a stale saved city never overrides the place
-on screen. */
+SEO and direct links. v5.12.2 (owner ruling Nov 14): the
+where box is NEVER prefilled, not from the page, not from
+storage, not from a geo guess; it starts empty unless the
+user typed a location in this session. Name suggestions
+rank by distance from the town in the where box only. */
 (function(){
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
-var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null;
+var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};cb()})}
 function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
@@ -232,14 +233,11 @@ if((e.n+", "+e.s).toLowerCase()===low||e.n.toLowerCase()===low)return{lat:e.la,l
 if(CT)for(i=0;i<CT.length;i++){e=CT[i];
 if((e.city+", "+e.state).toLowerCase()===low||e.city.toLowerCase()===low)return{lat:e.lat,lng:e.lng,state:e.state}}
 return null}
-function activeLoc(){var loc=townLatLng(f2.value);
-if(loc)return loc;
-try{var sv=localStorage.getItem("ytp-city");if(sv){loc=townLatLng(sv);if(loc)return loc}}catch(x){}
-try{var cm=document.getElementById("ytp-citymap");
-if(cm){var cj=JSON.parse(cm.textContent);if(cj&&cj.city){loc=townLatLng(cj.city+", "+cj.state);if(loc)return loc}}
-var lm=document.getElementById("ytp-lmap-data");
-if(lm){var lj=JSON.parse(lm.textContent);if(lj&&lj.city){loc=townLatLng(lj.city);if(loc)return loc}}}catch(x){}
-return null}
+function activeLoc(){/* v5.12.2: the ranking center is the
+town in the where box, and nothing else: no saved city, no
+page location. An empty or unresolvable box means no
+distance ranking (name order stands). */
+return townLatLng(f2.value)}
 function nameStr(e,qn){var n=e.n.toLowerCase();
 if(n.indexOf(qn)===0)return 0;
 var ws=n.split(/[^a-z0-9]+/);
@@ -267,9 +265,9 @@ box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
 function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!TA){s1.style.display="none";return}
-var cats=catMatches(q).map(function(c){return{vslug:c.slug,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
+var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
 var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+e.s+"</span>"}});
-show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
+show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[];
@@ -288,13 +286,19 @@ for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===lo
 for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
 return null}
 function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase();
-if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
+/* v5.12.2: a category (clicked, or the top typed match)
+plus a resolved town ALWAYS lands on the radius view. The
+old category-index existence check is gone: the route no
+longer depends on a static category page existing in that
+town, and a stale or failed category-index load can no
+longer drop the user onto the static town page. */
+if(city&&pickCat&&pickV){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
 if(pickB){location.href=pickB;return}
-if(city&&CAT&&q){var key=city.sslug+"/"+city.cslug,cms=catMatches(q);
-for(var i=0;i<cms.length;i++){if(CAT[cms[i].slug]&&CAT[cms[i].slug][key]){location.href="/search/?v="+cms[i].slug+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}}}
-if(city&&q&&TA){var m=TA.names.filter(function(e){return e.c===city.city&&e.s===city.state&&e.n.toLowerCase().indexOf(normQ(q))>-1});
+if(city&&q){var cms=catMatches(q);
+if(cms.length){location.href="/search/?v="+cms[0].slug+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
+if(TA){var m=TA.names.filter(function(e){return e.c===city.city&&e.s===city.state&&e.n.toLowerCase().indexOf(normQ(q))>-1});
 if(m.length>=2){location.href="/search/?v="+m[0].vs+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
-if(m.length===1){location.href=m[0].u;return}}
+if(m.length===1){location.href=m[0].u;return}}}
 if(city){location.href=city.url;return}
 if(q){var b=nameMatches(q);
 if(b.length){location.href=b[0].u;return}
@@ -302,25 +306,18 @@ var c=catMatches(q);
 if(c.length){location.href="/"+c[0].slug+"/";return}}
 location.href="/"}
 form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
-f1.addEventListener("input",function(){pickB=null;pickV=null;loadTA(sugBiz)});
+f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadTA(sugBiz)});
 f1.addEventListener("focus",function(){loadTA(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-/* v5.10.1: the where box shows the location of the page
-being viewed first (the category page's city block, else
-the listing's map data); a saved city is only a fallback,
-so a stale saved city never overrides the place on screen. */
-try{var own=null;
-var cm=document.getElementById("ytp-citymap");
-if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city)own=cj.city+", "+cj.state}catch(x){}}
-if(!own){var lm=document.getElementById("ytp-lmap-data");
-if(lm){try{var lj=JSON.parse(lm.textContent);
-if(lj&&lj.city)own=lj.city;
-else if(lj&&lj.addr){var sg=String(lj.addr).split(",");
-if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x){}}}
-if(own)f2.value=own;
-else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
+/* v5.12.2 (owner ruling Nov 14): NO where-box prefill.
+The v5.10.1 block that filled the box from the page's own
+location, falling back to a saved city, is removed: the
+box starts empty on every page unless the user typed a
+location in this session (the /search/ view still sets it
+from the search URL the user just submitted). Nothing in
+this file reads or writes a saved city any more. */
 })();
 
 (function(){

@@ -31,10 +31,16 @@ var f1=document.getElementById("hs-q"),f2=document.getElementById("hs-city"),
 s1=document.getElementById("sug1"),s2=document.getElementById("sug2"),
 hint=document.getElementById("hs-loc-hint"),hintTimer=null;
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
-function fetchJ(u,cb){fetch(u).then(function(r){return r.json()}).then(function(d){cb(d)}).catch(function(){cb(null)})}
-function loadD(cb){if(D){cb();return}fetchJ("/search-index.json",function(d){D=d||[];cb()})}
-function loadCT(cb){if(CT){cb();return}fetchJ("/cities-index.json",function(d){CT=d||[];cb()})}
-function loadCAT(cb){if(CAT){cb();return}fetchJ("/category-index.json",function(d){CAT=d||{};cb()})}
+/* SHIP 1: the hero reads the same split files through
+the shared YTPLoad loader (spec 6, s14 dedupe); the
+fallback below is a fetch-once shim used only if the
+deferred shared script has not run yet. Business data
+comes from typeahead.json names, mapped to the row
+shape this script has always used. */
+function YL(){if(window.YTPLoad)return window.YTPLoad;if(!window._ytfb){var c={},p={};window._ytfb={json:function(u){if(c[u])return Promise.resolve(c[u]);if(p[u])return p[u];p[u]=fetch(u).then(function(r){return r.json()}).then(function(d){c[u]=d;delete p[u];return d}).catch(function(e){delete p[u];throw e});return p[u]},cb:function(u,f){this.json(u).then(function(d){f(d)},function(){f(null)})}}}return window._ytfb}
+function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){var ns=(d&&d.names)||[];D=ns.map(function(e){return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,attrs:[],services:[]}});cb()})}
+function loadCT(cb){if(CT){cb();return}YL().cb("/cities-index.json",function(d){CT=d||[];cb()})}
+function loadCAT(cb){if(CAT){cb();return}YL().cb("/category-index.json",function(d){CAT=d||{};cb()})}
 function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
 function uniq(arr){var seen={},out=[];for(var i=0;i<arr.length;i++){if(!seen[arr[i].k]){seen[arr[i].k]=1;out.push(arr[i])}}return out}
 /* v5.6: a business matches a query by name, by a canonical
@@ -92,21 +98,21 @@ for(i=0;i<CT.length;i++){e=CT[i];if(e.city.toLowerCase()===low)return e}
 return null}
 function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase(),i,e;
 if(city)storeCity(city);
-if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href=CAT[pickV][city.sslug+"/"+city.cslug];return}
+if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
 if(pickB){location.href=pickB;return}
 if(city&&CAT&&q){var key=city.sslug+"/"+city.cslug,seen={},vs=[];
 for(i=0;i<D.length;i++){e=D[i];if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;vs.push(e.vslug)}}
-for(i=0;i<vs.length;i++){if(CAT[vs[i]]&&CAT[vs[i]][key]){location.href=CAT[vs[i]][key];return}}}
+for(i=0;i<vs.length;i++){if(CAT[vs[i]]&&CAT[vs[i]][key]){location.href="/search/?v="+vs[i]+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}}}
 if(city&&q){var m=D.filter(function(e){return e.city===city.city&&e.state===city.state&&(e.vertical.toLowerCase().indexOf(q)>-1||bm56(e,q))});
-if(m.length>=2){location.href="/"+m[0].vslug+"/"+m[0].sslug+"/"+m[0].cslug+"/";return}
+if(m.length>=2){location.href="/search/?v="+m[0].vslug+"&city="+encodeURIComponent(m[0].city)+"&state="+m[0].state;return}
 if(m.length===1){location.href=m[0].url;return}}
 if(city){location.href=city.url;return}
 var tc=f2.value.trim().toLowerCase();
 if(tc){var t2=D.filter(function(e){return e.city.toLowerCase()===tc||(e.city+", "+e.state).toLowerCase()===tc});
 if(t2.length&&q){var m2=t2.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1||bm56(e,q)});
-if(m2.length>=2){location.href="/"+m2[0].vslug+"/"+m2[0].sslug+"/"+m2[0].cslug+"/";return}
+if(m2.length>=2){location.href="/search/?v="+m2[0].vslug+"&city="+encodeURIComponent(m2[0].city)+"&state="+m2[0].state;return}
 if(m2.length===1){location.href=m2[0].url;return}}
-if(t2.length){location.href=t2.length>=5?"/"+t2[0].sslug+"/"+t2[0].cslug+"/":"/"+t2[0].sslug+"/";return}}
+if(t2.length){var ce=null;if(CT){for(var j=0;j<CT.length;j++){if(CT[j].city.toLowerCase()===tc||(CT[j].city+", "+CT[j].state).toLowerCase()===tc){ce=CT[j];break}}}if(ce){location.href=t2.length>=5?ce.url:"/"+ce.sslug+"/";return}location.href="/";return}}
 var b=D.filter(function(e){return bm56(e,q)});
 if(b.length){location.href=b[0].url;return}
 var c=D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1});

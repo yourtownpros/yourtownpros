@@ -107,32 +107,168 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(nul
 })();
 
 
-/* v5.7: header two-field search. Same routing contract as
-the hero search (category + city through the category
-index, else best business/city target); the where field
-prefills from the saved city the hero search stores. */
+/* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader.
+   YTPLoad.json(url) returns a Promise; a URL is fetched at most
+   once per page, ever: concurrent callers share the pending
+   Promise and later callers get the cached value. typeahead,
+   cities and category indexes also persist in sessionStorage
+   under versioned keys (<build> below, the same stamp the
+   build writes into typeahead.json), so a later page in the
+   session makes zero network requests for them. Listing shards
+   stay in memory and are written to sessionStorage only while
+   their total decoded size stays under a 2.5 MB LRU cap.
+   YTPLoad.cb(url, fn) is the callback form the existing
+   consumers use; fn receives the data, or null on failure. */
+window.YTPLoad = (function () {
+  var BUILD = "v512-20261114-ship1";
+  var cache = {}, pending = {};
+  var SESS = { "/typeahead.json": "ytp-ta-",
+    "/cities-index.json": "ytp-ci-",
+    "/category-index.json": "ytp-cat-" };
+  var SHARD_CAP = 2500000;
+  function sessGet(key) {
+    try { var s = sessionStorage.getItem(key);
+      return s ? JSON.parse(s) : null; } catch (e) { return null; }
+  }
+  function sessSet(key, val) {
+    try { sessionStorage.setItem(key, JSON.stringify(val)); }
+    catch (e) {}
+  }
+  function shardKey(url) { return "ytp-sh-" + BUILD + "-" + url; }
+  function shardGet(url) { return sessGet(shardKey(url)); }
+  function shardPut(url, data) {
+    var raw; try { raw = JSON.stringify(data); } catch (e) { return; }
+    var idx = sessGet("ytp-shidx-" + BUILD) || {};
+    idx[url] = { b: raw.length, t: Date.now() };
+    var total = 0, k;
+    for (k in idx) total += idx[k].b;
+    var keys = Object.keys(idx).sort(function (a, b) {
+      return idx[a].t - idx[b].t; });
+    while (total > SHARD_CAP && keys.length) {
+      var drop = keys.shift();
+      total -= idx[drop].b; delete idx[drop];
+      try { sessionStorage.removeItem(shardKey(drop)); }
+      catch (e) {}
+    }
+    sessSet("ytp-shidx-" + BUILD, idx);
+    sessSet(shardKey(url), data);
+  }
+  function json(url) {
+    if (cache[url]) return Promise.resolve(cache[url]);
+    if (pending[url]) return pending[url];
+    var pre = SESS[url], hit = null;
+    if (pre) hit = sessGet(pre + BUILD);
+    else if (url.indexOf("/search-shards/") === 0)
+      hit = shardGet(url);
+    if (hit) { cache[url] = hit; return Promise.resolve(hit); }
+    pending[url] = fetch(url).then(function (r) {
+      return r.json();
+    }).then(function (d) {
+      cache[url] = d; delete pending[url];
+      if (pre) sessSet(pre + BUILD, d);
+      else if (url.indexOf("/search-shards/") === 0)
+        shardPut(url, d);
+      return d;
+    }).catch(function (e) {
+      delete pending[url]; throw e;
+    });
+    return pending[url];
+  }
+  function cb(url, fn) {
+    json(url).then(function (d) { fn(d); },
+      function () { fn(null); });
+  }
+  return { json: json, cb: cb, BUILD: BUILD };
+})();
+
+
+/* v5.12 SHIP 1: header two-field search on the shared
+YTPLoad loader and the split index (spec sections 2, 3.3, 6).
+Suggestions read typeahead.json only: categories first (with
+the spec 4.4 synonyms), then business names ranked by
+distance from the active location; the header never loads a
+listing shard and never fetches the whole index. Category +
+town resolutions route to the /search/ radius view (v5.12
+item 1); the static category and town pages stay live for
+SEO and direct links. The where prefill keeps the v5.10.1
+rule: the page's own location first, a saved city only as a
+fallback, so a stale saved city never overrides the place
+on screen. */
 (function(){
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
-var D=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null;
+var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
-function fetchJ(u,cb){fetch(u).then(function(r){return r.json()}).then(function(d){cb(d)}).catch(function(){cb(null)})}
-function loadD(cb){if(D){cb();return}fetchJ("/search-index.json",function(d){D=d||[];cb()})}
-function loadCT(cb){if(CT){cb();return}fetchJ("/cities-index.json",function(d){CT=d||[];cb()})}
-function loadCAT(cb){if(CAT){cb();return}fetchJ("/category-index.json",function(d){CAT=d||{};cb()})}
-function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
-function sm57(e,q){return e.name.toLowerCase().indexOf(q)>-1||(e.attrs||[]).join(" ").toLowerCase().indexOf(q)>-1||(e.services||[]).join(" ").toLowerCase().indexOf(q)>-1}
+function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};cb()})}
+function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
+function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json",function(d){CAT=d||{};cb()})}
+function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(cb)})})}
+function normQ(q){return q.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function havMi(aLa,aLo,bLa,bLo){var R=3959,p=Math.PI/180,dLa=(bLa-aLa)*p,dLo=(bLo-aLo)*p,h=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(aLa*p)*Math.cos(bLa*p)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(h))}
+function catMatches(q){if(!TA)return[];
+var qn=normQ(q);if(!qn)return[];
+var bySlug={},i,c;
+for(i=0;i<TA.cats.length;i++)bySlug[TA.cats[i].slug]=TA.cats[i];
+var scored=[];
+function push(slug,st){if(!bySlug[slug])return;
+for(var j=0;j<scored.length;j++)if(scored[j].slug===slug){if(st<scored[j].st)scored[j].st=st;return}
+scored.push({slug:slug,label:bySlug[slug].label,st:st})}
+for(i=0;i<TA.cats.length;i++){c=TA.cats[i];
+var lab=c.label.toLowerCase(),syns=c.syn||[];
+if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0);
+else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1);
+else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2)}
+var shared=TA.shared||{};
+for(var term in shared){var tl=term.toLowerCase();
+var st2=tl===qn?0:(tl.indexOf(qn)===0||qn.indexOf(tl)===0?1:(tl.indexOf(qn)>-1?2:-1));
+if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2)}
+scored.sort(function(a,b){return a.st-b.st||a.label.localeCompare(b.label)});
+return scored.slice(0,3)}
+function townLatLng(name){if(!name)return null;
+var low=String(name).trim().toLowerCase(),i,e;
+if(TA&&TA.towns)for(i=0;i<TA.towns.length;i++){e=TA.towns[i];
+if((e.n+", "+e.s).toLowerCase()===low||e.n.toLowerCase()===low)return{lat:e.la,lng:e.lo,state:e.s}}
+if(CT)for(i=0;i<CT.length;i++){e=CT[i];
+if((e.city+", "+e.state).toLowerCase()===low||e.city.toLowerCase()===low)return{lat:e.lat,lng:e.lng,state:e.state}}
+return null}
+function activeLoc(){var loc=townLatLng(f2.value);
+if(loc)return loc;
+try{var sv=localStorage.getItem("ytp-city");if(sv){loc=townLatLng(sv);if(loc)return loc}}catch(x){}
+try{var cm=document.getElementById("ytp-citymap");
+if(cm){var cj=JSON.parse(cm.textContent);if(cj&&cj.city){loc=townLatLng(cj.city+", "+cj.state);if(loc)return loc}}
+var lm=document.getElementById("ytp-lmap-data");
+if(lm){var lj=JSON.parse(lm.textContent);if(lj&&lj.city){loc=townLatLng(lj.city);if(loc)return loc}}}catch(x){}
+return null}
+function nameStr(e,qn){var n=e.n.toLowerCase();
+if(n.indexOf(qn)===0)return 0;
+var ws=n.split(/[^a-z0-9]+/);
+for(var i=0;i<ws.length;i++)if(ws[i]&&ws[i].indexOf(qn)===0)return 1;
+return 2}
+function nameMatches(q){if(!TA)return[];
+var qn=normQ(q);if(qn.length<2)return[];
+var ms=TA.names.filter(function(e){return e.n.toLowerCase().indexOf(qn)>-1});
+var loc=activeLoc();
+if(loc){var near=[],far=[];
+for(var i=0;i<ms.length;i++){var e=ms[i];
+if(typeof e.la==="number"){e._d=havMi(e.la,e.lo,loc.lat,loc.lng);
+if(e._d<=50)near.push(e);else if(e.s===loc.state)far.push(e)}
+else if(e.s===loc.state)far.push(e)}
+near.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||a._d-b._d||(b.v||0)-(a.v||0)});
+far.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||(b.v||0)-(a.v||0)});
+var out=near.slice(0,5);
+if(near.length<2)out=near.concat(far).slice(0,5);
+return out}
+ms.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||(b.v||0)-(a.v||0)});
+return ms.slice(0,5)}
 function show(box,items,fn){if(!items.length){box.style.display="none";box.innerHTML="";return}
 box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join("");
 box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
-function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!D){s1.style.display="none";return}
-var seen={},cats=[];
-for(var i=0;i<D.length&&cats.length<4;i++){var e=D[i];
-if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;cats.push({vslug:e.vslug,go:"/"+e.vslug+"/",html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>"})}}
-var biz=D.filter(function(e){return sm57(e,q)}).slice(0,6).map(function(e){return{go:e.url,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>"}});
+function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!TA){s1.style.display="none";return}
+var cats=catMatches(q).map(function(c){return{vslug:c.slug,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
+var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+e.s+"</span>"}});
 show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
@@ -152,23 +288,22 @@ for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===lo
 for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
 return null}
 function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase();
-if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href=CAT[pickV][city.sslug+"/"+city.cslug];return}
+if(city&&CAT&&pickV&&CAT[pickV]&&CAT[pickV][city.sslug+"/"+city.cslug]){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
 if(pickB){location.href=pickB;return}
-if(city&&CAT&&q){var key=city.sslug+"/"+city.cslug,seen={},vs=[];
-for(var i=0;i<D.length;i++){var e=D[i];if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;vs.push(e.vslug)}}
-for(var i=0;i<vs.length;i++){if(CAT[vs[i]]&&CAT[vs[i]][key]){location.href=CAT[vs[i]][key];return}}}
-if(city&&q){var m=D.filter(function(e){return e.city===city.city&&e.state===city.state&&(e.vertical.toLowerCase().indexOf(q)>-1||sm57(e,q))});
-if(m.length>=2&&CAT&&CAT[m[0].vslug]&&CAT[m[0].vslug][city.sslug+"/"+city.cslug]){location.href=CAT[m[0].vslug][city.sslug+"/"+city.cslug];return}
-if(m.length===1){location.href=m[0].url;return}}
+if(city&&CAT&&q){var key=city.sslug+"/"+city.cslug,cms=catMatches(q);
+for(var i=0;i<cms.length;i++){if(CAT[cms[i].slug]&&CAT[cms[i].slug][key]){location.href="/search/?v="+cms[i].slug+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}}}
+if(city&&q&&TA){var m=TA.names.filter(function(e){return e.c===city.city&&e.s===city.state&&e.n.toLowerCase().indexOf(normQ(q))>-1});
+if(m.length>=2){location.href="/search/?v="+m[0].vs+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
+if(m.length===1){location.href=m[0].u;return}}
 if(city){location.href=city.url;return}
-if(q){var b=D.filter(function(e){return sm57(e,q)});
-if(b.length){location.href=b[0].url;return}
-var c=D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1});
-if(c.length){location.href="/"+c[0].vslug+"/";return}}
+if(q){var b=nameMatches(q);
+if(b.length){location.href=b[0].u;return}
+var c=catMatches(q);
+if(c.length){location.href="/"+c[0].slug+"/";return}}
 location.href="/"}
 form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
-f1.addEventListener("input",function(){pickB=null;pickV=null;loadD(sugBiz)});
-f1.addEventListener("focus",function(){loadD(sugBiz)});
+f1.addEventListener("input",function(){pickB=null;pickV=null;loadTA(sugBiz)});
+f1.addEventListener("focus",function(){loadTA(sugBiz)});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
@@ -187,7 +322,6 @@ if(sg.length>=2)own=sg[sg.length-2].trim()+", "+sg[sg.length-1].trim()}}catch(x)
 if(own)f2.value=own;
 else{var saved=localStorage.getItem("ytp-city");if(saved&&!f2.value)f2.value=saved}}catch(x){}
 })();
-
 
 (function(){
 var A={sb:null,user:null,session:null,_resolved:false,_q:window.YTPQ||[]};

@@ -495,7 +495,10 @@ header.hdr57 .catnav{background:transparent;border-bottom:0;max-width:1400px;mar
 .navic57{display:inline-flex;width:26px;height:26px;border-radius:6px;background:#e8f3ee;color:#0e7a5f;align-items:center;justify-content:center;font-size:14px;flex:none}
 .cnav-item.open .cnav-btn{color:#0e7a5f;box-shadow:inset 0 -3px 0 #0e7a5f}
 .catnav-home .cnav-item.open .cnav-btn{color:#fff;box-shadow:inset 0 -3px 0 #fff}
-@media(max-width:900px){header.hdr57 .htop{flex-wrap:wrap;height:auto;padding:10px 16px;row-gap:10px}.hsearch57{order:3;flex-basis:100%;max-width:none}}
+/* v5.15.1 (roadmap 16b): the header search wrap breakpoint moves 900px to
+950px; in the 901-950 band the single-row header squeezed the search form
+until filled values truncated (measured 67px inputs at 951px viewport). */
+@media(max-width:950px){header.hdr57 .htop{flex-wrap:wrap;height:auto;padding:10px 16px;row-gap:10px}.hsearch57{order:3;flex-basis:100%;max-width:none}}
 /* v5.7 results split: full viewport, filters 240px fixed,
 results stream capped at 680px, map takes the rest. */
 .wrap:has(>.cat-layout){max-width:none;padding-left:24px;padding-right:24px}
@@ -581,5 +584,5 @@ footer{padding:0}
 .openpill59 .openchk59{position:absolute;opacity:0;width:1px;height:1px;margin:0}
 .openpill59:has(.openchk59:checked){background:#0e7a5f;border-color:#0e7a5f;color:#fff}
 .openpill59:has(.openchk59:focus-visible){outline:2px solid #0e7a5f;outline-offset:2px}
-@media(max-width:900px){.filterbar{top:162px}}
+@media(max-width:950px){.filterbar{top:162px}}
 @media(max-width:480px){.filterbar{top:216px}}

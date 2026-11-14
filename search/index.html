@@ -251,6 +251,15 @@ function srchSummary(res, label, town, st) {
       if (!label) { label = v.replace(/-/g, " ")
         .replace(/\b\w/g, function (c) {
           return c.toUpperCase(); }); }
+      /* v5.15 (roadmap 16a): keep the searched category in
+         the service box, the way the where box above keeps
+         the searched town, so refining the search is one
+         edit. The value is the typeahead display name
+         resolved just above (or its title-case fallback). */
+      try {
+        var f1 = document.getElementById("ytp-q57");
+        if (f1) f1.value = label;
+      } catch (x) {}
       var jobs = crow.sh.map(function (f) {
         return window.YTPLoad.json("/search-shards/" + f)
           .catch(function () { return []; });

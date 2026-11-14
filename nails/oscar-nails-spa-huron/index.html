@@ -15,7 +15,7 @@
 
 <div id="ytp-highlights" data-slug="nails/oscar-nails-spa-huron"></div>
 <h2>Location and hours</h2>
-<div class="lochrs57"><div><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 44.36332, "lng": -98.21426, "city": "Huron, SD"}</script></div><div><p>Huron, SD</p><p class="hoursnone"><strong>Hours not listed yet</strong></p><p class="listed">Is this your business? <a href="/claim/?business=nails/oscar-nails-spa-huron&name=Oscar%20Nails%20Spa">Claim this free listing</a> to add your hours.</p></div></div>
+<div class="lochrs57"><div><div class="lmapwrap"><div id="ytp-lmap" class="lmap"></div><p class="mapcap">Business pins appear here as addresses are verified.</p></div><script type="application/json" id="ytp-lmap-data">{"mode": "city", "lat": 44.36332, "lng": -98.21426, "city": "Huron, SD"}</script></div><div><p>Huron, SD</p><p class="opennow" id="ytp-opennow" data-tz="America/Chicago" hidden></p><ul class="hourslist"><li>Mon: 9 AM–7 PM</li><li>Tue: 9 AM–7 PM</li><li>Wed: 9 AM–7 PM</li><li>Thu: 9 AM–7 PM</li><li>Fri: 9 AM–7 PM</li><li>Sat: 9 AM–7 PM</li><li>Sun: 10 AM–6 PM</li></ul></div></div>
 <div class="feat"><div class="k">Sponsored · Featured spot open</div><h2>One nail salon business in Huron gets this spot</h2><p style="margin:0">The featured business in Huron appears first here, and gets an online booking button on its listing so customers can book without calling. This placement is exclusive to one business per town.</p></div>
 <div class="match" id="match"><h2>Get matched with a Huron nail salon pro</h2><p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we contact Oscar Nails Spa about it, and if they cannot take the job, we match you with another Huron nail salon pro instead. Free for customers, and no obligation.</p>
 <form action="https://formsubmit.co/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="nails/oscar-nails-spa-huron" data-match-source="listing">
@@ -339,6 +339,42 @@ try{A.sb.from("match_requests").insert(row).select("id").then(function(r){if(r&&
 setTimeout(once,1500);
 });
 });
+</script><script>
+/* v5.4-open-now */
+
+function ytpParseTime54(s){var m=/^(\d{1,2})(?::(\d{2}))?\s*([aApP][mM])?$/.exec(s);if(!m)return null;var h=parseInt(m[1],10);if(h<1||h>12)return null;var mn=m[2]?parseInt(m[2],10):0;if(mn>59)return null;return{h:h,min:mn,mer:(m[3]||"").toUpperCase()}}
+function ytpMinutes54(t,mer){var h=t.h%12;if(mer==="PM")h+=12;return h*60+t.min}
+function ytpParseRange54(s){var m=/^(.+?)\s*(?:\u2013|\u2014|-|\bto\b)\s*(.+)$/.exec(s);if(!m)return null;var a=ytpParseTime54(m[1].trim()),b=ytpParseTime54(m[2].trim());if(!a||!b||!b.mer)return null;var close=ytpMinutes54(b,b.mer),open;
+if(a.mer){open=ytpMinutes54(a,a.mer)}
+else{open=ytpMinutes54(a,b.mer);if(open>close){var f=ytpMinutes54(a,b.mer==="AM"?"PM":"AM");if(f<close)open=f}if(open>close)return null;if(open===close)return[[open,open+1440]]}
+if(close<=open)close+=1440;return[[open,close]]}
+var YTP_DAYS54={monday:0,mon:0,mo:0,tuesday:1,tue:1,wednesday:2,wed:2,thursday:3,thu:3,friday:4,fri:4,fr:4,saturday:5,sat:5,sunday:6,sun:6};
+function ytpParseDay54(s){if(typeof s!=="string")return null;var t=s.trim();if(!t)return null;var low=t.toLowerCase();
+if(/^(emergency:\s*)?24\/7$/.test(low)||/^24 hours daily, \d+ days$/.test(low))return{all24:true};
+if(low.indexOf("office hours:")===0){t=t.slice(t.indexOf(":")+1).trim();low=t.toLowerCase()}
+t=t.replace(/\(weekend not stated\)\s*$/,"").trim();low=t.toLowerCase();
+var m=/^([a-z]+)\s*(?:[-\u2013]\s*([a-z]+))?\s*[,:]?\s*(.+)$/.exec(low);if(!m)return null;
+var d1=YTP_DAYS54[m[1]];if(d1===undefined)return null;var days=[d1];
+if(m[2]){var d2=YTP_DAYS54[m[2]];if(d2===undefined||d2<d1)return null;days=[];for(var d=d1;d<=d2;d++)days.push(d)}
+var rest=m[3].trim(),ranges;
+if(rest==="closed")ranges=[];
+else if(rest==="open 24 hours")ranges=[[0,1440]];
+else{ranges=[];var parts=rest.split(",");for(var i=0;i<parts.length;i++){var r=ytpParseRange54(parts[i].trim());if(!r)return null;for(var j=0;j<r.length;j++)ranges.push(r[j])}}
+return{days:days,ranges:ranges}}
+function ytpParseWeek54(list){if(!list||!list.length)return null;var byDay={},sawDay=false,i,j;
+for(i=0;i<list.length;i++){var p=ytpParseDay54(list[i]);if(!p)return null;if(p.all24)continue;sawDay=true;for(j=0;j<p.days.length;j++){if(byDay[p.days[j]])return null;byDay[p.days[j]]=p.ranges}}
+if(!sawDay){var o={};for(i=0;i<7;i++)o[i]=[[0,1440]];return o}
+for(i=0;i<7;i++)if(!byDay[i])return null;return byDay}
+function ytpFmtMin54(m){m=((m%1440)+1440)%1440;var h=Math.floor(m/60),mm=m%60,h12=h%12;if(h12===0)h12=12;return h12+(mm?":"+("0"+mm).slice(-2):"")+(h>=12?" PM":" AM")}
+function ytpOpenNow54(list,tz){var wk=ytpParseWeek54(list);if(!wk)return null;var now;
+try{var parts=new Intl.DateTimeFormat("en-US",{timeZone:tz,weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());var o={};for(var i=0;i<parts.length;i++)o[parts[i].type]=parts[i].value;var dm={Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6};if(dm[o.weekday]===undefined)return null;now={day:dm[o.weekday],min:(parseInt(o.hour,10)%24)*60+parseInt(o.minute,10)}}catch(e){return null}
+var open=false,r,i,today=wk[now.day];
+for(i=0;i<today.length;i++){r=today[i];if(now.min>=r[0]&&now.min<r[1])open=true}
+if(!open){var y=wk[(now.day+6)%7];for(i=0;i<y.length;i++){r=y[i];if(r[1]>1440&&now.min<r[1]-1440)open=true}}
+var txt;if(!today.length)txt="Closed today";else if(today.length===1&&today[0][0]===0&&today[0][1]===1440)txt="Open 24 hours";else txt="Today: "+today.map(function(r){return ytpFmtMin54(r[0])+" \u2013 "+ytpFmtMin54(r[1])}).join(", ");
+return{open:open,label:open?"Open now":"Closed",today:txt}}
+(function(){var el=document.getElementById("ytp-opennow");if(!el)return;var items=document.querySelectorAll(".hourslist li");var list=[];for(var i=0;i<items.length;i++)list.push(items[i].textContent);var st=ytpOpenNow54(list,el.getAttribute("data-tz"));if(!st)return;el.innerHTML='<span class="'+(st.open?"on-open":"on-closed")+'">'+st.label+'</span> <span class="on-today">'+st.today+"</span>";el.hidden=false})();
+
 </script><script>
 /* v5.5: GoatCounter action events. */
 (function(){

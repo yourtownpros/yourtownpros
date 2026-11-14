@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.3",
+  "version": "v5.10.4",
   "source_csv": "rankly-call-list-v47-job10-w5253-w49-w50-w51-w54-w55-w56-w57-gap-w64-w65-b2b3-2026-11-12.csv",
   "total_csv_rows": 11083,
   "phone_duplicates_dropped": 2,
@@ -3292,21 +3292,21 @@
     "note": "v3.4: facts joined at build time from the Rankly research files listed in load_enrichment's docstring. Coverage counts below are over unflagged listings only; flagged listings are excluded from every enrichment field (they can still show a map from their directory address, per the owner's flagged-treatment spec).",
     "sources": {
       "source_files": {
-        "research_notes": 198,
-        "call_block_briefs": 160,
-        "prospects_csvs": 576,
+        "research_notes": 201,
+        "call_block_briefs": 165,
+        "prospects_csvs": 596,
         "site_digests": 23
       },
-      "prospects_rows": 18957,
+      "prospects_rows": 19951,
       "digest_entries": 1480,
-      "pool_phones": 13750,
+      "pool_phones": 14302,
       "digest_linked_listings": 1440
     },
     "coverage_unflagged_listings": {
       "map_embed": 6607,
       "attribute_chips": 1670,
       "about": 668,
-      "hours": 3773,
+      "hours": 4477,
       "since_year": 1463,
       "website_button": 3717,
       "services": 72,
@@ -4785,12 +4785,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 1002,
-    "open_now_category_entries_count": 3312,
+    "open_now_category_pages_count": 1206,
+    "open_now_category_entries_count": 3838,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 2598,
+      "parsed": 2957,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -4851,7 +4851,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 3730,
+    "open_now_determined_listings": 4434,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -4917,8 +4917,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 3773,
-    "open_now_determined_listings_v55": 3730,
+    "hours_listings_total": 4477,
+    "open_now_determined_listings_v55": 4434,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/automotive-concepts-inc-alamosa",
@@ -5176,7 +5176,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 2326,
-    "detail_pill_pages": 1002
+    "detail_pill_pages": 1206
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -5796,6 +5796,25 @@
     "hours_pages_3773": true,
     "fragment_count_6744": true,
     "biz_data_delta_empty_vs_v5102_repo": true
+  },
+  "v5104_checks": {
+    "note": "v5.10.4: TEXAS HOURS MERGE (Nov 13 ship version, data-only). The hours lane Texas batch (hours-lane-texas-rows-2026-11-13.json, sourced 2026-11-13 from each business's own website or Google profile, all 704 OPERATIONAL on fresh closure checks) merges hours only, after the California batch, under the standing guards. Hours pages 3,773 to 4,477; the hours-honesty fragment set 6,744 to 6,040; Texas listings with hours 6 to 710. No listing, total or sitemap URL moves (14,543 HTML, 14,000 sitemap URLs); the Open Now parser pins are unchanged (all 1,010 distinct Texas day strings parse, no new all-24 form, no unparseable string, every merged week determines, fixture-proven before the build).",
+    "hours11_stats": {
+      "keys_loaded": 704,
+      "rows_keyed": 704,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [],
+      "hours_applied": 704,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours11_stats_exact": true,
+    "hours11_changed_set_exact": true,
+    "hours11_changed_subset_of_hours_pages": true,
+    "hours_pages_4477": true,
+    "fragment_count_6040": true,
+    "biz_data_delta_empty_vs_v5103_repo": true
   },
   "partner_placements_detail": [
     {
@@ -49423,7 +49442,7 @@
     "url_count": 14000
   },
   "link_check": {
-    "internal_hrefs_checked": 1169830,
+    "internal_hrefs_checked": 1169126,
     "broken": []
   },
   "phone_spot_check": {

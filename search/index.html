@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Search | YourTownPros</title><meta name="description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><link rel="canonical" href="https://yourtownpros.com/search/"><meta name="robots" content="noindex"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="YourTownPros"><meta property="og:title" content="Search"><meta property="og:description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><meta property="og:url" content="https://yourtownpros.com/search/"><meta property="og:image" content="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&h=630&q=70"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="../assets/ytp.css"><script src="../assets/ytp.js" defer></script><style>#ytp-srch-note{background:#fdf6e0;border:1px solid #e4d9a8;border-radius:8px;padding:10px 14px;margin:10px 0}</style>
+</head><body>
+<script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
+<header class="hdr57"><div class="htop"><a class="brand" href="/"><svg class="bmark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M256 36c-82 0-148 66-148 148 0 104 148 292 148 292s148-188 148-292c0-82-66-148-148-148z" fill="#0e7a5f"/><circle cx="256" cy="184" r="84" fill="#ffffff"/><path d="M196 184 L238 228 L322 134" fill="none" stroke="#0e7a5f" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/></svg>YourTown<span>Pros</span></a><form class="hsearch57" id="ytp-hform57" role="search" action="/" method="get"><div class="fld57"><input id="ytp-q57" type="text" placeholder="Plumbers, hair salons, auto repair..." autocomplete="off" aria-label="What are you looking for"><div class="sug" id="sug-q57"></div></div><div class="fld57"><input id="ytp-w57" type="text" placeholder="City" autocomplete="off" aria-label="Where"><div class="sug" id="sug-w57"></div></div><button type="submit" class="hgo57" aria-label="Search">&#9906;</button></form><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><a class="hwrite" href="/">Write a Review</a><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div><div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Restaurants <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/bakeries-and-cafes/"><span class="navic57">&#9749;</span>Bakeries &amp; Cafes</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Home &amp; Garden <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/plumbers/"><span class="navic57">&#9874;</span>Plumbers</a><a href="/electricians/"><span class="navic57">&#9889;</span>Electricians</a><a href="/hvac/"><span class="navic57">&#10052;</span>HVAC</a><a href="/roofing/"><span class="navic57">&#9650;</span>Roofing</a><a href="/painting/"><span class="navic57">&#9632;</span>Painters</a><a href="/lawn-and-landscaping/"><span class="navic57">&#10048;</span>Lawn &amp; Landscaping</a><a href="/handyman/"><span class="navic57">&#9874;</span>Handyman</a><a href="/locksmiths/"><span class="navic57">&#9919;</span>Locksmiths</a><a href="/cleaners/"><span class="navic57">&#10024;</span>Cleaners &amp; Laundry</a><a href="/florists/"><span class="navic57">&#9880;</span>Florists</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Services <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/auto-repair/"><span class="navic57">&#9881;</span>Auto Repair</a><a href="/towing/"><span class="navic57">&#10148;</span>Towing</a><a href="/auto-glass/"><span class="navic57">&#9635;</span>Auto Glass</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Health &amp; Beauty <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/hair-salons/"><span class="navic57">&#9986;</span>Hair Salons</a><a href="/barbers/"><span class="navic57">&#9776;</span>Barbers</a><a href="/nails/"><span class="navic57">&#10023;</span>Nail Salons</a><a href="/med-spas/"><span class="navic57">&#10038;</span>Med Spas</a><a href="/spas/"><span class="navic57">&#10047;</span>Spas</a><a href="/massage/"><span class="navic57">&#10049;</span>Massage</a><a href="/tanning/"><span class="navic57">&#9728;</span>Tanning Salons</a><a href="/fitness/"><span class="navic57">&#10025;</span>Fitness</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Travel &amp; Activities <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/dance-studios/"><span class="navic57">&#9835;</span>Dance Studios</a><a href="/bookstores/"><span class="navic57">&#10087;</span>Bookstores</a><a href="/jewelry/"><span class="navic57">&#9733;</span>Jewelry</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/pet-grooming/"><span class="navic57">&#128062;</span>Pet Grooming</a><a href="/pet-boarding/"><span class="navic57">&#8962;</span>Pet Boarding &amp; Daycare</a><a href="/veterinary/"><span class="navic57">&#10010;</span>Veterinary</a><a href="/tattoo/"><span class="navic57">&#10022;</span>Tattoo</a></div></div></div></header>
+
+<main class="wrap"><h1 id="ytp-srch-h">Search YourTownPros</h1><p class="sub" id="ytp-srch-sub"></p><p id="ytp-srch-note" hidden></p><div class="lmapwrap" id="ytp-smap-wrap"><div id="ytp-smap" class="lmap"></div></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Businesses in the town you searched come first, then nearest to farthest. When distances are equal, higher Google ratings and more reviews come first. One result may appear as a labeled Sponsored · Featured partner spot. That labeled spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
+/* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader.
+   YTPLoad.json(url) returns a Promise; a URL is fetched at most
+   once per page, ever: concurrent callers share the pending
+   Promise and later callers get the cached value. typeahead,
+   cities and category indexes also persist in sessionStorage
+   under versioned keys (<build> below, the same stamp the
+   build writes into typeahead.json), so a later page in the
+   session makes zero network requests for them. Listing shards
+   stay in memory and are written to sessionStorage only while
+   their total decoded size stays under a 2.5 MB LRU cap.
+   YTPLoad.cb(url, fn) is the callback form the existing
+   consumers use; fn receives the data, or null on failure. */
+window.YTPLoad = (function () {
+  var BUILD = "v512-20261114-ship1";
+  var cache = {}, pending = {};
+  var SESS = { "/typeahead.json": "ytp-ta-",
+    "/cities-index.json": "ytp-ci-",
+    "/category-index.json": "ytp-cat-" };
+  var SHARD_CAP = 2500000;
+  function sessGet(key) {
+    try { var s = sessionStorage.getItem(key);
+      return s ? JSON.parse(s) : null; } catch (e) { return null; }
+  }
+  function sessSet(key, val) {
+    try { sessionStorage.setItem(key, JSON.stringify(val)); }
+    catch (e) {}
+  }
+  function shardKey(url) { return "ytp-sh-" + BUILD + "-" + url; }
+  function shardGet(url) { return sessGet(shardKey(url)); }
+  function shardPut(url, data) {
+    var raw; try { raw = JSON.stringify(data); } catch (e) { return; }
+    var idx = sessGet("ytp-shidx-" + BUILD) || {};
+    idx[url] = { b: raw.length, t: Date.now() };
+    var total = 0, k;
+    for (k in idx) total += idx[k].b;
+    var keys = Object.keys(idx).sort(function (a, b) {
+      return idx[a].t - idx[b].t; });
+    while (total > SHARD_CAP && keys.length) {
+      var drop = keys.shift();
+      total -= idx[drop].b; delete idx[drop];
+      try { sessionStorage.removeItem(shardKey(drop)); }
+      catch (e) {}
+    }
+    sessSet("ytp-shidx-" + BUILD, idx);
+    sessSet(shardKey(url), data);
+  }
+  function json(url) {
+    if (cache[url]) return Promise.resolve(cache[url]);
+    if (pending[url]) return pending[url];
+    var pre = SESS[url], hit = null;
+    if (pre) hit = sessGet(pre + BUILD);
+    else if (url.indexOf("/search-shards/") === 0)
+      hit = shardGet(url);
+    if (hit) { cache[url] = hit; return Promise.resolve(hit); }
+    pending[url] = fetch(url).then(function (r) {
+      return r.json();
+    }).then(function (d) {
+      cache[url] = d; delete pending[url];
+      if (pre) sessSet(pre + BUILD, d);
+      else if (url.indexOf("/search-shards/") === 0)
+        shardPut(url, d);
+      return d;
+    }).catch(function (e) {
+      delete pending[url]; throw e;
+    });
+    return pending[url];
+  }
+  function cb(url, fn) {
+    json(url).then(function (d) { fn(d); },
+      function () { fn(null); });
+  }
+  return { json: json, cb: cb, BUILD: BUILD };
+})();
+</script>
+<script>
+/* v5.12 SEARCH 1 core engine (staging prototype).
+   Pure functions, no DOM: the same file runs in Node for the
+   verification tests and in the browser for the /search/ results
+   view. Rules encoded from Robert's Nov 12 directives (14:40,
+   as amended 15:09):
+   - radius, not city limits: listings within the radius of the
+     searched town's center, in-town listings first, then by
+     distance;
+   - every listing carries effective coordinates (effLat/effLng):
+     its verified street pin when it has one (pin: true),
+     otherwise its own town's center, used for distance only
+     (pin: false). A town-center listing gets NO map pin and its
+     card reads "Serves [Town] area"; it never presents as
+     located at a point. Coordinates are never guessed: a row
+     with no effective coordinates cannot enter a radius result;
+   - sort order is exactly what the "How results are ranked"
+     note states: in-town first, then nearest to farthest;
+     distance ties break by Google rating, then review count;
+   - never near-empty: under 10 results, widen 10 -> 15 -> 25
+     miles and SAY SO in the returned notice. */
+
+var RADII = [10, 15, 25];
+var MIN_RESULTS = 10;
+
+function haversineMi(aLat, aLng, bLat, bLng) {
+  var R = 3959, p = Math.PI / 180;
+  var dLa = (bLat - aLat) * p, dLo = (bLng - aLng) * p;
+  var h = Math.sin(dLa / 2) * Math.sin(dLa / 2) +
+    Math.cos(aLat * p) * Math.cos(bLat * p) *
+    Math.sin(dLo / 2) * Math.sin(dLo / 2);
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+/* rows: enriched index rows (see build_search_index_v512.py).
+   center: {lat, lng} of the searched town (cities-index).
+   Returns {results, radiusUsed, widened, notice, inTown,
+   nearby, pinned}. Each result is {row, dist, inTown, pinned};
+   dist for a pin:false result is the town-center distance,
+   internal only (never printed on its card). */
+function radiusSearch(rows, trade, townCity, townState, center) {
+  var placed = [];
+  for (var i = 0; i < rows.length; i++) {
+    var r = rows[i];
+    if ((r.vertical || r.trade) !== trade) continue;
+    var la = (r.effLat != null) ? r.effLat : r.lat;
+    var ln = (r.effLng != null) ? r.effLng : r.lng;
+    if (typeof la !== "number" || typeof ln !== "number") continue;
+    var d = haversineMi(center.lat, center.lng, la, ln);
+    placed.push({ row: r, dist: d,
+      pinned: (r.pin !== undefined) ? !!r.pin : (r.lat != null),
+      inTown: r.city === townCity && r.state === townState });
+  }
+  var chosen = null, radiusUsed = RADII[RADII.length - 1];
+  for (var j = 0; j < RADII.length; j++) {
+    var cand = placed.filter(function (p) { return p.dist <= RADII[j]; });
+    if (cand.length >= MIN_RESULTS || j === RADII.length - 1) {
+      chosen = cand; radiusUsed = RADII[j]; break;
+    }
+  }
+  chosen.sort(function (a, b) {
+    if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
+    if (Math.abs(a.dist - b.dist) > 1e-9) return a.dist - b.dist;
+    var ra = (a.row.rating == null) ? -1 : parseFloat(a.row.rating),
+        rb = (b.row.rating == null) ? -1 : parseFloat(b.row.rating);
+    if (rb !== ra) return rb - ra;
+    var ca = parseInt(a.row.reviews, 10) || 0,
+        cb = parseInt(b.row.reviews, 10) || 0;
+    if (cb !== ca) return cb - ca;
+    return String(a.row.name).localeCompare(String(b.row.name));
+  });
+  var inTown = chosen.filter(function (p) { return p.inTown; }).length;
+  var pinnedN = chosen.filter(function (p) { return p.pinned; }).length;
+  var widened = radiusUsed > RADII[0];
+  var notice = null;
+  if (widened) {
+    var atDefault = placed.filter(function (p) {
+      return p.dist <= RADII[0];
+    }).length;
+    notice = "Only " + atDefault + " " + trade.toLowerCase() +
+      " within " + RADII[0] + " miles, so we widened to " +
+      radiusUsed + " miles: " + chosen.length + " results";
+  }
+  return { results: chosen, radiusUsed: radiusUsed, widened: widened,
+    notice: notice, inTown: inTown, nearby: chosen.length - inTown,
+    pinned: pinnedN };
+}
+/* The view: parse ?v&city&state, set the where field to the
+searched town (item 2: the box shows the searched location),
+resolve the town through the cities index (canonical name,
+center, and its "sh" shard list), load exactly those shards
+through YTPLoad (spec 3.3: never a whole-directory index),
+run the engine, render. Summary text is computed by
+srchSummary, a pure function the Node end-to-end test
+extracts and exercises. */
+function srchSummary(res, label, town, st) {
+  var sub;
+  if (!res.results.length) {
+    sub = "No " + label.toLowerCase() + " found within " +
+      res.radiusUsed + " miles of " + town + ", " + st + ".";
+  } else {
+    var parts = [];
+    if (res.inTown) parts.push(res.inTown + " in " + town);
+    if (res.nearby) parts.push(res.nearby + " more within " +
+      res.radiusUsed + " miles");
+    if (typeof res.pinned === "number" &&
+        res.pinned < res.results.length)
+      parts.push(res.pinned + " on the map with verified " +
+        "addresses");
+    if (!res.inTown) parts = [res.results.length + " within " +
+      res.radiusUsed + " miles of " + town];
+    sub = parts.join(" \u00b7 ");
+  }
+  return { heading: label + " near " + town + ", " + st,
+    sub: sub, notice: res.notice ? res.notice + "." : null };
+}
+(function () {
+  var P = new URLSearchParams(location.search);
+  var v = (P.get("v") || "").trim(),
+      townQ = (P.get("city") || "").trim(),
+      stQ = (P.get("state") || "").trim();
+  var hEl = document.getElementById("ytp-srch-h"),
+      subEl = document.getElementById("ytp-srch-sub"),
+      noteEl = document.getElementById("ytp-srch-note"),
+      listEl = document.getElementById("results-list"),
+      mapWrap = document.getElementById("ytp-smap-wrap");
+  function esc(s) { return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;"); }
+  if (!v || !townQ) {
+    subEl.textContent = "Choose a category and a town in the " +
+      "search above to see pros near you.";
+    if (mapWrap) mapWrap.style.display = "none";
+    return;
+  }
+  try {
+    var f2 = document.getElementById("ytp-w57");
+    if (f2) f2.value = townQ + (stQ ? ", " + stQ : "");
+    localStorage.setItem("ytp-city", townQ + ", " + stQ);
+  } catch (x) {}
+  window.YTPLoad.cb("/cities-index.json", function (CT) {
+    if (!CT) { subEl.textContent =
+      "Search is unavailable right now."; return; }
+    var crow = null, i, e;
+    for (i = 0; i < CT.length; i++) { e = CT[i];
+      if (e.city.toLowerCase() === townQ.toLowerCase() &&
+          (!stQ || e.state.toLowerCase() ===
+            stQ.toLowerCase())) { crow = e; break; } }
+    if (!crow) { for (i = 0; i < CT.length; i++) { e = CT[i];
+      if (e.city.toLowerCase() === townQ.toLowerCase()) {
+        crow = e; break; } } }
+    if (!crow || typeof crow.lat !== "number" ||
+        !crow.sh || !crow.sh.length) {
+      hEl.textContent = "Search";
+      subEl.textContent = "We could not find the town \u201c" +
+        townQ + "\u201d. Try the town search above.";
+      if (mapWrap) mapWrap.style.display = "none";
+      return;
+    }
+    var town = crow.city, st = crow.state;
+    window.YTPLoad.cb("/typeahead.json", function (TA) {
+      var label = null;
+      if (TA && TA.cats) for (i = 0; i < TA.cats.length; i++) {
+        if (TA.cats[i].slug === v) {
+          label = TA.cats[i].label; break; } }
+      if (!label) { label = v.replace(/-/g, " ")
+        .replace(/\b\w/g, function (c) {
+          return c.toUpperCase(); }); }
+      var jobs = crow.sh.map(function (f) {
+        return window.YTPLoad.json("/search-shards/" + f)
+          .catch(function () { return []; });
+      });
+      Promise.all(jobs).then(function (shards) {
+        var D = [];
+        shards.forEach(function (rows) {
+          (rows || []).forEach(function (r) {
+            D.push({ name: r.n, vertical: r.t, city: r.c,
+              state: r.s, url: r.u, phone: r.ph || "",
+              lat: r.p ? r.la : null, lng: r.p ? r.lo : null,
+              pin: !!r.p,
+              effLat: (typeof r.la === "number") ? r.la : null,
+              effLng: (typeof r.lo === "number") ? r.lo : null,
+              rating: (r.r == null) ? null : r.r,
+              reviews: (r.v == null) ? null : r.v,
+              hours: !!r.h, claimed: !!r.cl });
+          });
+        });
+        var res = radiusSearch(D, label, town, st,
+          { lat: crow.lat, lng: crow.lng });
+        var sum = srchSummary(res, label, town, st);
+        hEl.textContent = sum.heading;
+        document.title = sum.heading + " | YourTownPros";
+        subEl.textContent = sum.sub;
+        if (sum.notice) { noteEl.textContent = sum.notice;
+          noteEl.hidden = false; }
+        listEl.innerHTML = res.results.map(function (p) {
+          var r = p.row;
+          return '<article class="result-card" data-slug="' +
+            esc(r.url.replace(/^\//, "").replace(/\/$/, "")) +
+            '"><div class="pbody"><h3><a href="' + r.url +
+            '">' + esc(r.name) + '</a></h3>' +
+            (p.pinned
+              ? '<p class="rmeta57">' + esc(r.city) + ", " +
+                r.state + " \u00b7 " + p.dist.toFixed(1) +
+                " mi</p>"
+              : '<p class="rmeta57">Serves ' + esc(r.city) +
+                " area</p>") +
+            (r.rating != null
+              ? '<p class="rmeta57"><span class="stars">' +
+                r.rating + " \u00b7 " + r.reviews +
+                ' reviews</span> <span class="gsrc">Google ' +
+                "rating</span></p>" : "") +
+            (r.phone ? '<p class="rmeta57"><a href="tel:' +
+              r.phone.replace(/[^0-9]/g, "") + '">' +
+              esc(r.phone) + "</a></p>" : "") +
+            "</div></article>";
+        }).join("");
+        if (window.L && res.results.length) {
+          var map = L.map("ytp-smap");
+          L.tileLayer("https://basemaps.cartocdn.com/rastertiles" +
+            "/voyager/{z}/{x}/{y}{r}.png", { maxZoom: 19,
+            attribution: "&copy; <a href=\"https://www." +
+            "openstreetmap.org/copyright\">OpenStreetMap</a> " +
+            "contributors &copy; <a href=\"https://carto.com/" +
+            "attributions\">CARTO</a>" }).addTo(map);
+          var pts = [], pinIx = 0;
+          res.results.forEach(function (p) {
+            if (!p.pinned) return;
+            pinIx++;
+            var mk = L.marker([p.row.lat, p.row.lng],
+              { icon: L.divIcon({ className: "ytp-pinwrap",
+                html: '<div class="ytp-pin">' + pinIx +
+                  "</div>", iconSize: [26, 26],
+                iconAnchor: [13, 13] }) });
+            mk.bindPopup('<p class="pname"><a href="' +
+              p.row.url + '">' + esc(p.row.name) + "</a></p>",
+              { maxWidth: 280 });
+            mk.addTo(map);
+            pts.push([p.row.lat, p.row.lng]);
+          });
+          if (pts.length) {
+            map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
+          } else { map.setView([crow.lat, crow.lng], 11); }
+        } else if (mapWrap) { mapWrap.style.display = "none"; }
+      });
+    });
+  });
+})();
+</script></main>
+<footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

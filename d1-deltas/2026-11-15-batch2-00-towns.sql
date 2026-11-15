@@ -1,0 +1,9 @@
+-- Batch 2 indexable-only delta (staged 2026-11-14, co-CEO ruling Nov 14 night): towns rows for the new towns the
+-- 240 published listings sit in. Centers are the centroid of the town's
+-- own Census-matched address pins from this batch. listing_count counts
+-- only the listings this set publishes in the town (the unpublished
+-- noindex share is not counted; promotion deltas raise it later).
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('FL', 'pensacola-fl', 'Pensacola, FL', 'florida', 30.434237, -87.224864, NULL, 13) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('NC', 'high-point-nc', 'High Point, NC', 'north-carolina', 35.959244, -80.005311, NULL, 6) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('NY', 'albany-ny', 'Albany, NY', 'new-york', 42.661204, -73.774742, NULL, 8) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('PA', 'harrisburg-pa', 'Harrisburg, PA', 'pennsylvania', 40.27222, -76.871851, NULL, 12) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;

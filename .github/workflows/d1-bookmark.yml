@@ -1,0 +1,104 @@
+name: D1 Time Travel bookmark read
+
+# Read-only bookkeeping (Charles's ruling, Nov 15 2026): read the CURRENT
+# Time Travel bookmark of the production D1 database yourtownpros-listings
+# and commit it to d1-bookmarks.log on this branch, so the value is
+# readable from the repo (the GitHub connector cannot read Actions run
+# logs). Triggered by a push that touches this workflow file on the
+# bookmark-read branch; workflow_dispatch works once this file reaches
+# the default branch. This workflow never writes to D1: the bookmark
+# read and the listings count are both reads.
+
+on:
+  push:
+    branches:
+      - bookmark-read
+    paths:
+      - ".github/workflows/d1-bookmark.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ytp-d1-bookmark
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  D1_DATABASE: yourtownpros-listings
+  D1_DATABASE_ID: 845f5cc7-19ad-4d75-b720-a1289ff48fd1
+
+jobs:
+  bookmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the bookmark-read branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install wrangler (major version 4, pinned)
+        run: npm install --global wrangler@4
+
+      - name: Read the current Time Travel bookmark (read-only)
+        run: |
+          set -uo pipefail
+          mkdir -p bookmark-out
+          # Route 1: wrangler time-travel info, JSON first, then text.
+          wrangler d1 time-travel info "$D1_DATABASE" --json \
+            > bookmark-out/wrangler-info.json \
+            2> bookmark-out/wrangler-info.err || true
+          wrangler d1 time-travel info "$D1_DATABASE" \
+            > bookmark-out/wrangler-info.txt \
+            2>> bookmark-out/wrangler-info.err || true
+          # Route 2: the Cloudflare API time-travel info endpoint directly.
+          curl -sS -X GET \
+            "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/d1/database/${D1_DATABASE_ID}/time_travel/info" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            > bookmark-out/api-info.json || true
+          ls -la bookmark-out
+          echo "--- wrangler json ---"
+          cat bookmark-out/wrangler-info.json || true
+          echo "--- wrangler text ---"
+          cat bookmark-out/wrangler-info.txt || true
+          echo "--- api json ---"
+          cat bookmark-out/api-info.json || true
+
+      - name: Paired read-only count check (listings)
+        run: |
+          set -uo pipefail
+          wrangler d1 execute "$D1_DATABASE" --remote --json \
+            --command "SELECT COUNT(*) AS n FROM listings" \
+            > bookmark-out/listings-count.json \
+            2> bookmark-out/listings-count.err || true
+          cat bookmark-out/listings-count.json || true
+
+      - name: Append the bookmark to d1-bookmarks.log and commit it back
+        run: |
+          set -euo pipefail
+          stamp_utc="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          bookmark="$(grep -rhoE '[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{16}' bookmark-out/ | head -n 1 || true)"
+          count="$(jq -r '.[0].results[0].n // empty' bookmark-out/listings-count.json 2>/dev/null || true)"
+          {
+            echo "----"
+            echo "read_at_utc: $stamp_utc"
+            echo "database: $D1_DATABASE ($D1_DATABASE_ID)"
+            echo "bookmark: ${bookmark:-NOT-EXTRACTED}"
+            echo "listings_count_at_read: ${count:-unknown}"
+            echo "route: GitHub Actions d1-bookmark.yml (wrangler d1 time-travel info + Cloudflare API time_travel/info), read-only"
+            echo "raw_wrangler_json: $(tr -d '\n' < bookmark-out/wrangler-info.json 2>/dev/null | head -c 2000)"
+            echo "raw_wrangler_text: $(tr -d '\n' < bookmark-out/wrangler-info.txt 2>/dev/null | head -c 2000)"
+            echo "raw_api_json: $(tr -d '\n' < bookmark-out/api-info.json 2>/dev/null | head -c 4000)"
+            echo "raw_wrangler_err: $(tr -d '\n' < bookmark-out/wrangler-info.err 2>/dev/null | head -c 1000)"
+          } >> d1-bookmarks.log
+          git config user.name "Muse"
+          git config user.email "leads@muse.ai"
+          git add d1-bookmarks.log
+          git commit -m "Record D1 Time Travel bookmark read ($stamp_utc)"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

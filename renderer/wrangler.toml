@@ -11,3 +11,16 @@ workers_dev = true
 binding = "DB"
 database_name = "yourtownpros-listings"
 database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
+
+# Cap CPU per invocation at 50 ms (Workers Paid standard is 30 ms;
+# 50 ms is headroom, and the renderer design target is p95 <= 7 ms).
+[limits]
+cpu_ms = 50
+
+# Workers Logs on, sampled at 10 percent of invocations. No Logpush.
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 0.1

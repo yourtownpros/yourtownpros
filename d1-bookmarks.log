@@ -5,3 +5,13 @@
 # stable-2026-11-15 at head 5d465a23f3; the Nov 14 import bookmark
 # 00000006-00000000-00005124-0b135187a07ee84c40ac14041bf3fa12 predates
 # the batch 1+2 loads and is superseded by the first entry below.
+----
+read_at_utc: 2026-11-15T15:17:42Z
+database: yourtownpros-listings (845f5cc7-19ad-4d75-b720-a1289ff48fd1)
+bookmark: 0000002d-00000000-00005124-e3e8ebe5f09c8ed8
+listings_count_at_read: 16225
+route: GitHub Actions d1-bookmark.yml (wrangler d1 time-travel info + Cloudflare API time_travel/info), read-only
+raw_wrangler_json: {  "bookmark": "0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112"}
+raw_wrangler_text:  ⛅️ wrangler 4.162.0────────────────────Resource location: remote 🚧 Time Traveling...⚠️ The current bookmark is '0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112'⚡️ To restore to this specific bookmark, run: `wrangler d1 time-travel restore yourtownpros-listings --bookmark=0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112`      
+raw_api_json: {"success":false,"errors":["Route not found"]}
+raw_wrangler_err: 

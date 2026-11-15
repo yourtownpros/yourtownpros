@@ -1,0 +1,14 @@
+# YourTownPros Pages project config. Source of truth for Pages bindings:
+# the dashboard must never be the only place this lives (Nov 15 incident:
+# a dashboard save wiped the DB binding and every D1-rendered listing 404'd).
+name = "yourtownpros"
+pages_build_output_dir = "."
+compatibility_date = "2026-11-14"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yourtownpros-listings"
+database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
+
+[placement]
+mode = "smart"

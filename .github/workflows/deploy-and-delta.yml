@@ -1,0 +1,114 @@
+name: Deploy Worker and apply D1 deltas
+
+# GitHub is the only Cloudflare control plane for YourTownPros (Nov 14, 2026).
+# This workflow does two things, in order:
+#   1. Deploys the renderer Worker from renderer/ (workers.dev only).
+#   2. Applies any not-yet-applied SQL files to the D1 database
+#      yourtownpros-listings: the numbered baseline under d1-import/ only when
+#      a manual dispatch asks for it, then the per-ship deltas under
+#      d1-deltas/. A ledger table in D1 (_applied_deltas) records every file
+#      this workflow has applied, so re-runs skip applied files and the whole
+#      workflow is safe to run again at any time.
+# Site pages are not deployed here: Cloudflare Pages builds the static site
+# from this repo on its own. This workflow runs only when the Worker, the
+# deltas, or this file change.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "renderer/**"
+      - "d1-deltas/**"
+      - ".github/workflows/deploy-and-delta.yml"
+  workflow_dispatch:
+    inputs:
+      apply_baseline:
+        description: "Also apply the numbered baseline files under d1-import/ (one time, ledger-guarded)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# One control-plane run at a time, so two runs can never race the ledger.
+concurrency:
+  group: ytp-d1-control-plane
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  D1_DATABASE: yourtownpros-listings
+
+jobs:
+  deploy-and-delta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install wrangler (major version 4, pinned)
+        run: npm install --global wrangler@4
+
+      - name: Deploy the renderer Worker (workers.dev only)
+        run: wrangler deploy --config renderer/wrangler.toml
+
+      - name: Ensure the delta ledger table exists
+        run: >-
+          wrangler d1 execute "$D1_DATABASE" --remote --command
+          "CREATE TABLE IF NOT EXISTS _applied_deltas
+          (filename TEXT PRIMARY KEY,
+          applied_at TEXT NOT NULL DEFAULT (datetime('now')))"
+
+      - name: Apply baseline (if requested) and deltas, ledger-guarded
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Read the ledger once. wrangler --json prints a JSON array whose
+          # first element carries the result rows.
+          applied="$(wrangler d1 execute "$D1_DATABASE" --remote --json \
+            --command "SELECT filename FROM _applied_deltas ORDER BY filename" \
+            | jq -r '.[0].results[]?.filename' | sort || true)"
+
+          is_applied() {
+            printf '%s\n' "$applied" | grep -Fxq "$1"
+          }
+
+          apply_one() {
+            local rel="$1"
+            if is_applied "$rel"; then
+              echo "SKIP (already in ledger): $rel"
+              return 0
+            fi
+            echo "APPLY: $rel"
+            # Any SQL error makes wrangler exit nonzero, and set -e fails
+            # the job loudly before the file is recorded.
+            wrangler d1 execute "$D1_DATABASE" --remote --file "$rel"
+            wrangler d1 execute "$D1_DATABASE" --remote --command \
+              "INSERT INTO _applied_deltas (filename) VALUES ('$rel')"
+            applied="$(printf '%s\n%s\n' "$applied" "$rel" | sort)"
+            echo "APPLIED AND RECORDED: $rel"
+          }
+
+          shopt -s nullglob
+
+          if [ "${{ inputs.apply_baseline }}" = "true" ]; then
+            echo "Baseline requested: applying d1-import/ in name order."
+            for f in d1-import/*.sql; do
+              apply_one "$f"
+            done
+          else
+            echo "Baseline not requested: skipping d1-import/."
+          fi
+
+          for f in d1-deltas/*.sql; do
+            apply_one "$f"
+          done
+
+          echo "Deploy and delta pass complete."

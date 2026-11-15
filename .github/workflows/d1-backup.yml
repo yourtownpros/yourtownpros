@@ -1,0 +1,55 @@
+name: D1 nightly export
+
+# Nightly export of the D1 database yourtownpros-listings, kept as a GitHub
+# Actions artifact for 30 days. This replaces the old dashboard-side backup
+# jobs: after Nov 14, 2026, GitHub is the only Cloudflare control plane.
+# The weekly restore test lives in d1-restore-test.yml and consumes the
+# newest artifact produced here.
+
+on:
+  schedule:
+    # 09:30 UTC daily, about 02:30 in Denver.
+    - cron: "30 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ytp-d1-control-plane
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  D1_DATABASE: yourtownpros-listings
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install wrangler (major version 4, pinned)
+        run: npm install --global wrangler@4
+
+      - name: Export the database to a SQL file
+        run: |
+          set -euo pipefail
+          stamp="$(date -u +%Y-%m-%d)"
+          mkdir -p d1-export
+          wrangler d1 export "$D1_DATABASE" --remote \
+            --output "d1-export/ytp-d1-${stamp}.sql"
+          ls -la d1-export
+          echo "EXPORT_STAMP=${stamp}" >> "$GITHUB_ENV"
+
+      - name: Upload the export as an artifact (30 day retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ytp-d1-export-${{ env.EXPORT_STAMP }}
+          path: d1-export/*.sql
+          retention-days: 30
+          if-no-files-found: error

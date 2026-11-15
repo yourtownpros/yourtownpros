@@ -1,0 +1,13 @@
+# YourTownPros listing renderer Worker.
+# Deployed by .github/workflows/deploy-and-delta.yml on push to main.
+# workers.dev only: no routes and no custom domain are defined here on purpose.
+# The yourtownpros.com zone is never routed to this Worker from this file.
+name = "yourtownpros-listings"
+main = "worker.mjs"
+compatibility_date = "2026-11-14"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "yourtownpros-listings"
+database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"

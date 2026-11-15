@@ -27,3 +27,13 @@ note: the direct API route in that run returned success:false "Route not
 found"; the wrangler time-travel info route is the working one. The
 extraction regex is fixed in the workflow; the next entry is a
 confirmation re-read under the fixed regex.
+----
+read_at_utc: 2026-11-15T15:20:33Z
+database: yourtownpros-listings (845f5cc7-19ad-4d75-b720-a1289ff48fd1)
+bookmark: 0000002e-00000000-00005124-4bef4ca6e9c59d9905cbd41f2b9914c6
+listings_count_at_read: 16225
+route: GitHub Actions d1-bookmark.yml (wrangler d1 time-travel info + Cloudflare API time_travel/info), read-only
+raw_wrangler_json: {  "bookmark": "0000002e-00000000-00005124-4bef4ca6e9c59d9905cbd41f2b9914c6"}
+raw_wrangler_text:  ⛅️ wrangler 4.162.0────────────────────Resource location: remote 🚧 Time Traveling...⚠️ The current bookmark is '0000002e-00000000-00005124-4bef4ca6e9c59d9905cbd41f2b9914c6'⚡️ To restore to this specific bookmark, run: `wrangler d1 time-travel restore yourtownpros-listings --bookmark=0000002e-00000000-00005124-4bef4ca6e9c59d9905cbd41f2b9914c6`      
+raw_api_json: {"success":false,"errors":["Route not found"]}
+raw_wrangler_err: 

@@ -1,5 +1,5 @@
 {
-  "version": "v5.17",
+  "version": "v5.10.16",
   "source_csv": "rankly-call-list-v48-batch1-2026-11-14.csv",
   "total_csv_rows": 14674,
   "phone_duplicates_dropped": 2,
@@ -4724,7 +4724,7 @@
       "map_embed": 10195,
       "attribute_chips": 1679,
       "about": 668,
-      "hours": 7411,
+      "hours": 7535,
       "since_year": 1471,
       "website_button": 3718,
       "services": 72,
@@ -6189,12 +6189,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 2040,
-    "open_now_category_entries_count": 6409,
+    "open_now_category_pages_count": 2078,
+    "open_now_category_entries_count": 6497,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3430,
+      "parsed": 3443,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -6255,7 +6255,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7368,
+    "open_now_determined_listings": 7492,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -6321,8 +6321,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7411,
-    "open_now_determined_listings_v55": 7368,
+    "hours_listings_total": 7535,
+    "open_now_determined_listings_v55": 7492,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/automotive-concepts-inc-alamosa",
@@ -6580,7 +6580,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 2992,
-    "detail_pill_pages": 2040
+    "detail_pill_pages": 2078
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -7444,23 +7444,24 @@
     "fragment_count_3106": true,
     "biz_data_delta_empty_vs_v51014_repo": true
   },
-  "v517_checks": {
-    "note": "v5.17: BATCH 1 INTAKE MERGE (Nov 14 ship version). The first 100k-series intake batch (11,423 rows in; dedupe NEW 0 / OVERLAP 9,132 / CONFLICT 2,234 / INTERNAL DUP 57 against the Call List and the directory) merges under the standing merge rule (blanks only, never over verified data): 3,591 publish-set listings join the directory, 3 Payson rows already in the master CSV become includable through its category repairs, and 10 existing listings gain blank website/address fills. Held back: 5,537 rows for the 19,000-file hosting ceiling, 28 on phone screens, 2,250 staged-fail at the publish gate. Ratings display under their true Birdeye source label; no hours ship from this batch, so the hours-honesty fragment set grows by exactly the new listings. Totals: listings 10,529 to 14,123, category pages 2,326 to 2,992, city hubs 498 to 565, county hubs 607 to 614, state-vertical hubs 505 to 538, HTML 14,543 to 18,910, sitemap 14,000 to 18,408.",
-    "source_csv_is_v48_batch1": true,
-    "biz_data_delta_exact_vs_v51015_repo": true,
-    "new_listings_3594": true,
-    "totals_listings_14123": true,
-    "totals_category_2992": true,
-    "totals_city_hubs_565": true,
-    "totals_county_hubs_614": true,
-    "totals_state_vertical_hubs_538": true,
-    "totals_html_18910": true,
-    "totals_sitemap_18408": true,
-    "hours_pages_7411": true,
-    "fragment_count_6700": true,
-    "hours21_stats_still_exact": true,
-    "hours22_stats_still_exact": true,
-    "partner_placements_grown": true
+  "v51016_checks": {
+    "note": "v5.10.16: IOWA HOURS MERGE (Nov 14 ship version, data-only). The hours lane Iowa batch (hours-lane-iowa-rows-2026-11-14.json, sourced 2026-11-14 from each business's own website or Google profile, all 124 OPERATIONAL on the closure checks run during sourcing; the batch has no HELD rows and no EXCLUDED rows) merges hours only, after the Arkansas batch, under the standing guards. No batch row already carried recorded hours, no batch row is do-not-call flagged and no staged row is held back, so all 124 rows apply. Hours pages 7,411 to 7,535; the hours-honesty fragment set 6,700 to 6,576; Iowa listings with hours 0 to 124. No listing, total or sitemap URL moves (18,910 HTML, 18,408 sitemap URLs); the Open Now parser pins are unchanged (all 311 distinct Iowa day strings use forms already present in the recorded corpus, no unparseable string, every staged week determines).",
+    "hours23_stats": {
+      "keys_loaded": 124,
+      "rows_keyed": 124,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [],
+      "hours_applied": 124,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours23_stats_exact": true,
+    "hours23_changed_set_exact": true,
+    "hours23_changed_subset_of_hours_pages": true,
+    "hours_pages_7535": true,
+    "fragment_count_6576": true,
+    "biz_data_delta_empty_vs_v51015_repo": true
   },
   "hub_checks": {
     "note": "Hub upgrade (s18_hub_facts, spec hub-upgrade-spec-2026-11-12): town-hub facts blocks (trade counts, after-hours from recorded hours only, nearest-town links by center distance, top-rated under the 10+ review floor, ledger Last updated) plus hub BreadcrumbList JSON-LD, and category facts strips with the near rail re-sorted by distance. The C1 radius clause renders from the enriched index (radius_additional in s18, the radius engine's own semantics and earth-radius constant); radius_counts recounts sampled category pages independently of s18.",
@@ -70954,7 +70955,7 @@
     "url_count": 18408
   },
   "link_check": {
-    "internal_hrefs_checked": 1550194,
+    "internal_hrefs_checked": 1550073,
     "broken": []
   },
   "phone_spot_check": {

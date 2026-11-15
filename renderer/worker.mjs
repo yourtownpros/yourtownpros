@@ -267,7 +267,12 @@ function head(l, t, st) {
     }
   }
   const url = `https://yourtownpros.com/${l.path}/`;
-  return `<title>${title}</title><meta name="description" content="${desc}">` +
+  // Batch publish gate (2026-11-14): a listing whose indexable flag is 0
+  // serves with a noindex robots meta; 1 or absent (every pre-gate row,
+  // and any database the schema delta has not reached) prints nothing
+  // extra, byte-identical to the pre-gate head.
+  const robots = l.indexable === 0 ? `<meta name="robots" content="noindex">` : ``;
+  return `<title>${title}</title><meta name="description" content="${desc}">` + robots +
     `<link rel="canonical" href="${url}">` +
     `<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32">` +
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png">` +

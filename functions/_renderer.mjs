@@ -1,12 +1,14 @@
 // GENERATED FILE - DO NOT EDIT.
 //
-// Copy of the deployed renderer bundle: renderer/worker.mjs in this repo at
-// commit e00669b50e (refreshed template + Cache API; the same bundle live on
-// workers.dev as the yourtownpros-listings Worker). Regenerate whenever the
-// Worker bundle changes: copy renderer/worker.mjs over this file and
-// re-apply this header. The adapter in functions/[[path]].js imports this
-// module's default export and calls its fetch handler with the same env.DB
-// binding. (Renderer rollout plan 2026-11-15, sections 1.1 and 3.1 item 4.)
+// Copy of the renderer bundle: renderer/worker.mjs in this repo at the
+// batch-1 renderer patch commit (indexable flag: a listing with
+// indexable = 0 serves with a noindex robots meta; 1 or absent renders
+// byte-identical to before). Regenerate whenever the Worker bundle
+// changes: copy renderer/worker.mjs over this file and re-apply this
+// header. The adapter in functions/[[path]].js imports this module's
+// default export and calls its fetch handler with the same env.DB
+// binding. (Renderer rollout plan 2026-11-15, sections 1.1 and 3.1
+// item 4; batch 1 quality gate, Nov 14, 2026.)
 
 // YourTownPros listing renderer, single-file bundle for the Cloudflare
 // dashboard editor. Built mechanically from renderer/worker.mjs,
@@ -277,7 +279,12 @@ function head(l, t, st) {
     }
   }
   const url = `https://yourtownpros.com/${l.path}/`;
-  return `<title>${title}</title><meta name="description" content="${desc}">` +
+  // Batch publish gate (2026-11-14): a listing whose indexable flag is 0
+  // serves with a noindex robots meta; 1 or absent (every pre-gate row,
+  // and any database the schema delta has not reached) prints nothing
+  // extra, byte-identical to the pre-gate head.
+  const robots = l.indexable === 0 ? `<meta name="robots" content="noindex">` : ``;
+  return `<title>${title}</title><meta name="description" content="${desc}">` + robots +
     `<link rel="canonical" href="${url}">` +
     `<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32">` +
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png">` +

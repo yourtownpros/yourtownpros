@@ -55,6 +55,274 @@ jobs:
       - name: Install wrangler (major version 4, pinned)
         run: npm install --global wrangler@4
 
+      - name: Account usage meter (GraphQL, pre-write guard)
+        shell: bash
+        run: |
+          set -uo pipefail
+          QUOTA_DB="$D1_DATABASE"
+          # ===== BEGIN shared D1 write-quota guard snippet =====
+          # This block is IDENTICAL in deploy-and-delta.yml and
+          # d1-restore-test.yml (and in every step that uses it) so the two
+          # workflows cannot drift in method. Keep the copies in sync.
+          # The one deliberate difference between the workflows is QUOTA_DB,
+          # set just above this block in each step: it names the database
+          # holding the _quota_ledger meter table. The meter lives in the
+          # PRODUCTION database because the quota itself is account-level.
+          #
+          # Workers Paid includes 50,000,000 D1 rows written per month at the
+          # account level (all databases). Cloudflare's spend limits do NOT
+          # cover D1, so this guard is the only hard protection against write
+          # overage. Owner's rule: nothing beyond the included quota, ever.
+          #
+          # Estimate method: estimated writes = INSERT statements x 2. The
+          # x2 covers index writes: the Nov 14, 2026 baseline import proved
+          # that 59,994 rows cost more than 100,000 writes (a multiplier of
+          # at least 1.67); 2 is the conservative round number.
+          #
+          # Sign-off line (Charles): a run that would take the month past
+          # 25,000,000 estimated writes (50% of the monthly quota) FAILS
+          # before applying anything and needs his sign-off to proceed.
+          QUOTA_MONTHLY=50000000
+          QUOTA_SIGNOFF_LINE=25000000
+          quota_month="$(date -u +%Y-%m)"
+
+          quota_ensure_table() {
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "CREATE TABLE IF NOT EXISTS _quota_ledger (month TEXT PRIMARY KEY, writes_estimated INTEGER NOT NULL DEFAULT 0)"
+          }
+
+          quota_mtd() {
+            wrangler d1 execute "$QUOTA_DB" --remote --json \
+              --command "SELECT COALESCE((SELECT writes_estimated FROM _quota_ledger WHERE month = '$quota_month'), 0) AS n" \
+              | jq -r '.[0].results[0].n'
+          }
+
+          quota_estimate_files() {
+            local total=0 f n
+            for f in "$@"; do
+              n="$(grep -ciE 'INSERT[[:space:]]+INTO' "$f" || true)"
+              total=$(( total + n * 2 ))
+            done
+            echo "$total"
+          }
+
+          quota_preflight() {
+            local est="$1" mtd total
+            quota_ensure_table
+            mtd="$(quota_mtd)"
+            total=$(( mtd + est ))
+            echo "D1 write quota guard: month (UTC) $quota_month; month-to-date estimate $mtd; this run's estimate $est; projected total $total of $QUOTA_MONTHLY; sign-off line $QUOTA_SIGNOFF_LINE."
+            if [ "$total" -gt "$QUOTA_SIGNOFF_LINE" ]; then
+              echo "::error::D1 WRITE QUOTA GUARD STOP: month-to-date estimated writes $mtd + this run's estimate $est = $total, crossing the 25,000,000 sign-off line (50% of the 50,000,000 monthly included D1 rows written, account level). NOTHING WAS APPLIED. This job needs Charles's sign-off before it may run."
+              exit 1
+            fi
+            echo "D1 write quota guard: pre-flight passed."
+          }
+
+          quota_record() {
+            local est="$1" mtd pct
+            quota_ensure_table
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "INSERT INTO _quota_ledger (month, writes_estimated) VALUES ('$quota_month', $est) ON CONFLICT(month) DO UPDATE SET writes_estimated = writes_estimated + excluded.writes_estimated"
+            mtd="$(quota_mtd)"
+            pct="$(awk -v m="$mtd" -v q="$QUOTA_MONTHLY" 'BEGIN { printf "%.2f", (q > 0 ? m * 100 / q : 0) }')"
+            echo "D1 write quota meter: month (UTC) $quota_month is now at $mtd estimated writes ($pct% of $QUOTA_MONTHLY monthly included)."
+            {
+              echo "## D1 write quota meter"
+              echo ""
+              echo "Month (UTC): $quota_month"
+              echo "This run's estimated writes: $est"
+              echo "Month-to-date estimated writes: $mtd of $QUOTA_MONTHLY ($pct%)"
+              echo "Sign-off line: $QUOTA_SIGNOFF_LINE (50%); a run that would cross it fails before applying anything."
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+          # ===== END shared D1 write-quota guard snippet =====
+          # --- Account usage meter (GraphQL Analytics API) ---
+          # This step runs BEFORE any write in this job (the Worker deploy
+          # and every D1 apply come after it). It attempts to read account
+          # usage for the current period and print each meter against its
+          # included monthly quota; if any READABLE gated meter is past 50
+          # percent of included, the job fails here, before any write.
+          #
+          # Honesty rules, deliberate:
+          # - The token in this repo carries D1 Edit, Workers Scripts Edit
+          #   and Account Settings Read. Cloudflare's GraphQL Analytics API
+          #   requires the Account Analytics Read permission, which this
+          #   token does NOT have, so the GraphQL reads are expected to fail
+          #   authorization until the token is re-scoped. Re-scoping the
+          #   token is an owner/Charles dashboard action; no workflow can
+          #   grant itself scopes.
+          # - On an authorization failure the step prints that plainly and
+          #   falls back to the _quota_ledger estimate for the D1 WRITES
+          #   meter only (the guard's own meter, via the shared snippet
+          #   above). Every other unreadable meter is printed as NOT
+          #   READABLE. A meter is never reported as zero when it was not
+          #   actually read.
+          # - The one write this step can make is creating the guard's own
+          #   _quota_ledger table if it is missing (inside the fallback).
+          # - Period: the current UTC calendar month. Included usage
+          #   actually resets on the subscription renewal date; the
+          #   calendar month is the conservative approximation tracked in
+          #   ytp-renderer-work/d1-quota-meter.md.
+          # - GraphQL returns usage counts, not billed figures; the step
+          #   treats them as guard estimates, exactly like the ledger.
+          REQ_QUOTA=10000000
+          WRITES_QUOTA=50000000
+          READS_QUOTA=25000000000
+          STORAGE_QUOTA_BYTES=5000000000
+          GQL_URL="https://api.cloudflare.com/client/v4/graphql"
+          period_start="$(date -u +%Y-%m-01T00:00:00Z)"
+          now_iso="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          AUTH_FAIL=0
+          AUTH_DETAIL=""
+          BREACHES=()
+
+          gql_call() {
+            # $1 = query, $2 = output file; prints the HTTP status code.
+            curl -sS -o "$2" -w '%{http_code}' -X POST "$GQL_URL" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -n --arg q "$1" '{query: $q}')" 2>/dev/null || echo "000"
+          }
+
+          first_error() {
+            jq -r '.errors[]?.message // empty' "$1" 2>/dev/null | head -n 1
+          }
+
+          note_unreadable() {
+            # $1 = response file, $2 = http code
+            local detail
+            detail="$(first_error "$1")"
+            if [ "$2" = "403" ] || printf '%s' "$detail" | grep -qiE 'auth|permission|not authorized|access denied'; then
+              AUTH_FAIL=1
+              if [ -n "$detail" ] && [ -z "$AUTH_DETAIL" ]; then
+                AUTH_DETAIL="$detail"
+              fi
+            fi
+          }
+
+          is_int() { printf '%s' "$1" | grep -qE '^[0-9]+$'; }
+
+          {
+            echo "## Cloudflare account usage meter (pre-write)"
+            echo ""
+            echo "Period: $period_start to $now_iso (UTC calendar month; renewal-date reset tracked in ytp-renderer-work/d1-quota-meter.md)"
+            echo ""
+            echo "| Meter | Reading | Included | % used | Source |"
+            echo "|---|---:|---:|---:|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          report_meter() {
+            # $1 label, $2 value (empty = not readable), $3 quota,
+            # $4 unit label, $5 source
+            local label="$1" val="$2" quota="$3" unit="$4" src="$5" pct
+            if ! is_int "$val"; then
+              echo "$label: NOT READABLE (attempted source: $src)"
+              echo "| $label | not readable | $quota $unit | n/a | $src |" >> "$GITHUB_STEP_SUMMARY"
+              return 0
+            fi
+            pct="$(awk -v v="$val" -v q="$quota" 'BEGIN { printf "%.2f", (q > 0 ? v * 100 / q : 0) }')"
+            echo "$label: $val of $quota $unit ($pct%) [source: $src]"
+            echo "| $label | $val | $quota $unit | $pct% | $src |" >> "$GITHUB_STEP_SUMMARY"
+            if [ "$val" -gt $(( quota / 2 )) ]; then
+              BREACHES+=("$label at $val of $quota $unit ($pct%, source: $src)")
+            fi
+          }
+
+          # Workers requests (+ CPU quantiles, informational).
+          workers_q="query { viewer { accounts(filter: {accountTag: \"$CLOUDFLARE_ACCOUNT_ID\"}) { workersInvocationsAdaptive(limit: 1000, filter: {datetime_geq: \"$period_start\", datetime_leq: \"$now_iso\"}) { sum { requests } quantiles { cpuTimeP99 } } } } }"
+          code="$(gql_call "$workers_q" /tmp/meter-workers.json)"
+          req_val=""
+          cpu_p99=""
+          if [ "$code" = "200" ] && ! jq -e '.errors' /tmp/meter-workers.json > /dev/null 2>&1; then
+            req_val="$(jq '[.data.viewer.accounts[0].workersInvocationsAdaptive[]?.sum.requests // 0] | add // 0' /tmp/meter-workers.json 2>/dev/null || true)"
+            cpu_p99="$(jq '[.data.viewer.accounts[0].workersInvocationsAdaptive[]?.quantiles.cpuTimeP99 // 0] | max // 0' /tmp/meter-workers.json 2>/dev/null || true)"
+          fi
+          if ! is_int "$req_val"; then
+            req_val=""
+            note_unreadable /tmp/meter-workers.json "$code"
+          fi
+          report_meter "Workers requests" "$req_val" "$REQ_QUOTA" "requests/mo" "GraphQL workersInvocationsAdaptive"
+          if is_int "$cpu_p99"; then
+            echo "Workers CPU time: per-invocation P99 in period $cpu_p99 microseconds (max across buckets) [source: GraphQL workersInvocationsAdaptive]. Informational only: this dataset exposes quantiles, not a monthly CPU-ms total, so no total is invented."
+          else
+            echo "Workers CPU time: NOT READABLE (same source as Workers requests)."
+          fi
+
+          # D1 rows read and written.
+          d1_q="query { viewer { accounts(filter: {accountTag: \"$CLOUDFLARE_ACCOUNT_ID\"}) { d1AnalyticsAdaptiveGroups(limit: 1000, filter: {datetime_geq: \"$period_start\", datetime_leq: \"$now_iso\"}) { sum { rowsRead rowsWritten } } } } }"
+          code="$(gql_call "$d1_q" /tmp/meter-d1.json)"
+          reads_val=""
+          writes_val=""
+          writes_src="GraphQL d1AnalyticsAdaptiveGroups"
+          if [ "$code" = "200" ] && ! jq -e '.errors' /tmp/meter-d1.json > /dev/null 2>&1; then
+            reads_val="$(jq '[.data.viewer.accounts[0].d1AnalyticsAdaptiveGroups[]?.sum.rowsRead // 0] | add // 0' /tmp/meter-d1.json 2>/dev/null || true)"
+            writes_val="$(jq '[.data.viewer.accounts[0].d1AnalyticsAdaptiveGroups[]?.sum.rowsWritten // 0] | add // 0' /tmp/meter-d1.json 2>/dev/null || true)"
+          fi
+          if ! is_int "$reads_val"; then
+            reads_val=""
+            note_unreadable /tmp/meter-d1.json "$code"
+          fi
+          if ! is_int "$writes_val"; then
+            writes_val=""
+            note_unreadable /tmp/meter-d1.json "$code"
+            # Fallback for the writes meter ONLY: the guard's own ledger.
+            quota_ensure_table
+            writes_val="$(quota_mtd)"
+            writes_src="_quota_ledger estimate (GraphQL not readable)"
+            echo "D1 rows written: GraphQL not readable; falling back to the _quota_ledger estimate for this meter only."
+          fi
+          report_meter "D1 rows read" "$reads_val" "$READS_QUOTA" "rows/mo" "GraphQL d1AnalyticsAdaptiveGroups"
+          report_meter "D1 rows written" "$writes_val" "$WRITES_QUOTA" "rows/mo" "$writes_src"
+
+          # D1 storage: GraphQL first, REST database list as second source.
+          storage_q="query { viewer { accounts(filter: {accountTag: \"$CLOUDFLARE_ACCOUNT_ID\"}) { d1StorageAdaptiveGroups(limit: 100, filter: {datetime_geq: \"$period_start\", datetime_leq: \"$now_iso\"}) { max { databaseSizeBytes } dimensions { databaseId } } } } }"
+          code="$(gql_call "$storage_q" /tmp/meter-storage.json)"
+          storage_val=""
+          storage_src="GraphQL d1StorageAdaptiveGroups"
+          if [ "$code" = "200" ] && ! jq -e '.errors' /tmp/meter-storage.json > /dev/null 2>&1; then
+            storage_val="$(jq '[.data.viewer.accounts[0].d1StorageAdaptiveGroups[]?.max.databaseSizeBytes // 0] | add // 0' /tmp/meter-storage.json 2>/dev/null || true)"
+          fi
+          if ! is_int "$storage_val"; then
+            storage_val=""
+            note_unreadable /tmp/meter-storage.json "$code"
+            rest_code="$(curl -sS -o /tmp/meter-dbs.json -w '%{http_code}' \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/d1/database" \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" 2>/dev/null || echo "000")"
+            if [ "$rest_code" = "200" ] && [ "$(jq -r '.success // false' /tmp/meter-dbs.json 2>/dev/null || true)" = "true" ]; then
+              storage_val="$(jq '[.result[]?.file_size // 0] | add // 0' /tmp/meter-dbs.json 2>/dev/null || true)"
+              storage_src="REST D1 database list (file_size sum)"
+            fi
+            if ! is_int "$storage_val"; then
+              storage_val=""
+              note_unreadable /tmp/meter-dbs.json "$rest_code"
+            fi
+          fi
+          report_meter "D1 storage" "$storage_val" "$STORAGE_QUOTA_BYTES" "bytes (5 GB)" "$storage_src"
+
+          # Workers Logs events: no account-level GraphQL dataset exposes
+          # log-event volume (checked against Cloudflare's GraphQL dataset
+          # docs, Nov 14, 2026), so this meter is reported as not readable
+          # rather than guessed at. It is never reported as zero.
+          echo "Workers Logs events: NOT READABLE (no account-level GraphQL dataset exposes log-event volume; visible in the dashboard only). Not reported as zero."
+          echo "| Workers Logs events | not readable | n/a | n/a | no GraphQL dataset; dashboard only |" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$AUTH_FAIL" -eq 1 ]; then
+            auth_msg="ACCOUNT USAGE NOT READABLE WITH THE CURRENT TOKEN SCOPES: the repo's Cloudflare token (D1 Edit, Workers Scripts Edit, Account Settings Read) does not include Account Analytics Read, which the GraphQL Analytics API requires (API said: ${AUTH_DETAIL:-no detail}). The D1 writes meter above falls back to the _quota_ledger estimate; every other unreadable meter is reported as NOT READABLE, never as zero. Fix: add Account Analytics Read to the token, an owner/Charles action in the Cloudflare dashboard."
+            echo "$auth_msg"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "> $auth_msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          if [ "${#BREACHES[@]}" -gt 0 ]; then
+            for b in "${BREACHES[@]}"; do
+              echo "::error::USAGE METER PAST 50% OF INCLUDED: $b"
+            done
+            echo "::error::ACCOUNT USAGE GUARD STOP: a readable meter is past 50% of its included monthly quota (listed above). Failing BEFORE any write in this job. This job needs Charles's sign-off before it may run."
+            exit 1
+          fi
+          echo "Account usage meter: no readable gated meter is past 50% of its included quota."
+
       - name: Deploy the renderer Worker (workers.dev only)
         run: wrangler deploy --config renderer/wrangler.toml
 
@@ -64,6 +332,114 @@ jobs:
           "CREATE TABLE IF NOT EXISTS _applied_deltas
           (filename TEXT PRIMARY KEY,
           applied_at TEXT NOT NULL DEFAULT (datetime('now')))"
+
+      - name: Quota guard pre-flight (D1 monthly write meter)
+        shell: bash
+        run: |
+          set -euo pipefail
+          QUOTA_DB="$D1_DATABASE"
+          # ===== BEGIN shared D1 write-quota guard snippet =====
+          # This block is IDENTICAL in deploy-and-delta.yml and
+          # d1-restore-test.yml (and in every step that uses it) so the two
+          # workflows cannot drift in method. Keep the copies in sync.
+          # The one deliberate difference between the workflows is QUOTA_DB,
+          # set just above this block in each step: it names the database
+          # holding the _quota_ledger meter table. The meter lives in the
+          # PRODUCTION database because the quota itself is account-level.
+          #
+          # Workers Paid includes 50,000,000 D1 rows written per month at the
+          # account level (all databases). Cloudflare's spend limits do NOT
+          # cover D1, so this guard is the only hard protection against write
+          # overage. Owner's rule: nothing beyond the included quota, ever.
+          #
+          # Estimate method: estimated writes = INSERT statements x 2. The
+          # x2 covers index writes: the Nov 14, 2026 baseline import proved
+          # that 59,994 rows cost more than 100,000 writes (a multiplier of
+          # at least 1.67); 2 is the conservative round number.
+          #
+          # Sign-off line (Charles): a run that would take the month past
+          # 25,000,000 estimated writes (50% of the monthly quota) FAILS
+          # before applying anything and needs his sign-off to proceed.
+          QUOTA_MONTHLY=50000000
+          QUOTA_SIGNOFF_LINE=25000000
+          quota_month="$(date -u +%Y-%m)"
+
+          quota_ensure_table() {
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "CREATE TABLE IF NOT EXISTS _quota_ledger (month TEXT PRIMARY KEY, writes_estimated INTEGER NOT NULL DEFAULT 0)"
+          }
+
+          quota_mtd() {
+            wrangler d1 execute "$QUOTA_DB" --remote --json \
+              --command "SELECT COALESCE((SELECT writes_estimated FROM _quota_ledger WHERE month = '$quota_month'), 0) AS n" \
+              | jq -r '.[0].results[0].n'
+          }
+
+          quota_estimate_files() {
+            local total=0 f n
+            for f in "$@"; do
+              n="$(grep -ciE 'INSERT[[:space:]]+INTO' "$f" || true)"
+              total=$(( total + n * 2 ))
+            done
+            echo "$total"
+          }
+
+          quota_preflight() {
+            local est="$1" mtd total
+            quota_ensure_table
+            mtd="$(quota_mtd)"
+            total=$(( mtd + est ))
+            echo "D1 write quota guard: month (UTC) $quota_month; month-to-date estimate $mtd; this run's estimate $est; projected total $total of $QUOTA_MONTHLY; sign-off line $QUOTA_SIGNOFF_LINE."
+            if [ "$total" -gt "$QUOTA_SIGNOFF_LINE" ]; then
+              echo "::error::D1 WRITE QUOTA GUARD STOP: month-to-date estimated writes $mtd + this run's estimate $est = $total, crossing the 25,000,000 sign-off line (50% of the 50,000,000 monthly included D1 rows written, account level). NOTHING WAS APPLIED. This job needs Charles's sign-off before it may run."
+              exit 1
+            fi
+            echo "D1 write quota guard: pre-flight passed."
+          }
+
+          quota_record() {
+            local est="$1" mtd pct
+            quota_ensure_table
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "INSERT INTO _quota_ledger (month, writes_estimated) VALUES ('$quota_month', $est) ON CONFLICT(month) DO UPDATE SET writes_estimated = writes_estimated + excluded.writes_estimated"
+            mtd="$(quota_mtd)"
+            pct="$(awk -v m="$mtd" -v q="$QUOTA_MONTHLY" 'BEGIN { printf "%.2f", (q > 0 ? m * 100 / q : 0) }')"
+            echo "D1 write quota meter: month (UTC) $quota_month is now at $mtd estimated writes ($pct% of $QUOTA_MONTHLY monthly included)."
+            {
+              echo "## D1 write quota meter"
+              echo ""
+              echo "Month (UTC): $quota_month"
+              echo "This run's estimated writes: $est"
+              echo "Month-to-date estimated writes: $mtd of $QUOTA_MONTHLY ($pct%)"
+              echo "Sign-off line: $QUOTA_SIGNOFF_LINE (50%); a run that would cross it fails before applying anything."
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+          # ===== END shared D1 write-quota guard snippet =====
+          # Derive exactly the files the apply step below will apply:
+          # baseline files only when apply_baseline is true, delta files
+          # always, and in both cases skipping anything already in the
+          # _applied_deltas ledger. This mirrors the apply step's own
+          # selection, so files that will be skipped are never counted.
+          applied="$(wrangler d1 execute "$D1_DATABASE" --remote --json \
+            --command "SELECT filename FROM _applied_deltas ORDER BY filename" \
+            | jq -r '.[0].results[]?.filename' | sort || true)"
+          is_applied() {
+            printf '%s\n' "$applied" | grep -Fxq "$1"
+          }
+          shopt -s nullglob
+          to_apply=()
+          if [ "${{ inputs.apply_baseline }}" = "true" ]; then
+            for f in d1-import/*.sql; do
+              is_applied "$f" || to_apply+=("$f")
+            done
+          fi
+          for f in d1-deltas/*.sql; do
+            is_applied "$f" || to_apply+=("$f")
+          done
+          est="$(quota_estimate_files "${to_apply[@]}")"
+          echo "Files this run will apply: ${#to_apply[@]}; estimated writes: $est"
+          quota_preflight "$est"
+          echo "RUN_WRITE_ESTIMATE=$est" >> "$GITHUB_ENV"
 
       - name: Apply baseline (if requested) and deltas, ledger-guarded
         shell: bash
@@ -112,3 +488,90 @@ jobs:
           done
 
           echo "Deploy and delta pass complete."
+
+      - name: Quota guard record (D1 monthly write meter)
+        shell: bash
+        run: |
+          set -euo pipefail
+          QUOTA_DB="$D1_DATABASE"
+          # ===== BEGIN shared D1 write-quota guard snippet =====
+          # This block is IDENTICAL in deploy-and-delta.yml and
+          # d1-restore-test.yml (and in every step that uses it) so the two
+          # workflows cannot drift in method. Keep the copies in sync.
+          # The one deliberate difference between the workflows is QUOTA_DB,
+          # set just above this block in each step: it names the database
+          # holding the _quota_ledger meter table. The meter lives in the
+          # PRODUCTION database because the quota itself is account-level.
+          #
+          # Workers Paid includes 50,000,000 D1 rows written per month at the
+          # account level (all databases). Cloudflare's spend limits do NOT
+          # cover D1, so this guard is the only hard protection against write
+          # overage. Owner's rule: nothing beyond the included quota, ever.
+          #
+          # Estimate method: estimated writes = INSERT statements x 2. The
+          # x2 covers index writes: the Nov 14, 2026 baseline import proved
+          # that 59,994 rows cost more than 100,000 writes (a multiplier of
+          # at least 1.67); 2 is the conservative round number.
+          #
+          # Sign-off line (Charles): a run that would take the month past
+          # 25,000,000 estimated writes (50% of the monthly quota) FAILS
+          # before applying anything and needs his sign-off to proceed.
+          QUOTA_MONTHLY=50000000
+          QUOTA_SIGNOFF_LINE=25000000
+          quota_month="$(date -u +%Y-%m)"
+
+          quota_ensure_table() {
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "CREATE TABLE IF NOT EXISTS _quota_ledger (month TEXT PRIMARY KEY, writes_estimated INTEGER NOT NULL DEFAULT 0)"
+          }
+
+          quota_mtd() {
+            wrangler d1 execute "$QUOTA_DB" --remote --json \
+              --command "SELECT COALESCE((SELECT writes_estimated FROM _quota_ledger WHERE month = '$quota_month'), 0) AS n" \
+              | jq -r '.[0].results[0].n'
+          }
+
+          quota_estimate_files() {
+            local total=0 f n
+            for f in "$@"; do
+              n="$(grep -ciE 'INSERT[[:space:]]+INTO' "$f" || true)"
+              total=$(( total + n * 2 ))
+            done
+            echo "$total"
+          }
+
+          quota_preflight() {
+            local est="$1" mtd total
+            quota_ensure_table
+            mtd="$(quota_mtd)"
+            total=$(( mtd + est ))
+            echo "D1 write quota guard: month (UTC) $quota_month; month-to-date estimate $mtd; this run's estimate $est; projected total $total of $QUOTA_MONTHLY; sign-off line $QUOTA_SIGNOFF_LINE."
+            if [ "$total" -gt "$QUOTA_SIGNOFF_LINE" ]; then
+              echo "::error::D1 WRITE QUOTA GUARD STOP: month-to-date estimated writes $mtd + this run's estimate $est = $total, crossing the 25,000,000 sign-off line (50% of the 50,000,000 monthly included D1 rows written, account level). NOTHING WAS APPLIED. This job needs Charles's sign-off before it may run."
+              exit 1
+            fi
+            echo "D1 write quota guard: pre-flight passed."
+          }
+
+          quota_record() {
+            local est="$1" mtd pct
+            quota_ensure_table
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "INSERT INTO _quota_ledger (month, writes_estimated) VALUES ('$quota_month', $est) ON CONFLICT(month) DO UPDATE SET writes_estimated = writes_estimated + excluded.writes_estimated"
+            mtd="$(quota_mtd)"
+            pct="$(awk -v m="$mtd" -v q="$QUOTA_MONTHLY" 'BEGIN { printf "%.2f", (q > 0 ? m * 100 / q : 0) }')"
+            echo "D1 write quota meter: month (UTC) $quota_month is now at $mtd estimated writes ($pct% of $QUOTA_MONTHLY monthly included)."
+            {
+              echo "## D1 write quota meter"
+              echo ""
+              echo "Month (UTC): $quota_month"
+              echo "This run's estimated writes: $est"
+              echo "Month-to-date estimated writes: $mtd of $QUOTA_MONTHLY ($pct%)"
+              echo "Sign-off line: $QUOTA_SIGNOFF_LINE (50%); a run that would cross it fails before applying anything."
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+          # ===== END shared D1 write-quota guard snippet =====
+          # This step runs only when every earlier step succeeded
+          # (the default step condition), so the meter is charged
+          # only for applies that actually completed.
+          quota_record "${RUN_WRITE_ESTIMATE:-0}"

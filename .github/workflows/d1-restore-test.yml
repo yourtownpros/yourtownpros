@@ -5,8 +5,10 @@ name: D1 weekly restore test
 # and compare per-table row counts between the scratch copy and
 # production. The comparison table is printed into the job summary and
 # the job fails if any count differs. The scratch database is scratch:
-# its tables are dropped and rebuilt on every run, and nothing in
-# production is ever written by this workflow.
+# its tables are dropped and rebuilt on every run. The restore itself
+# never writes production data; the one production write this workflow
+# makes is the D1 write-quota guard's meter table (_quota_ledger),
+# which lives in production because the write quota is account-level.
 
 on:
   schedule:
@@ -57,6 +59,109 @@ jobs:
           gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
             --pattern "ytp-d1-export-*" --dir restore
           find restore -name "*.sql" -type f
+
+      - name: Quota guard pre-flight (D1 monthly write meter)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The restore applies into $SCRATCH_DB, but the meter is
+          # read from the PRODUCTION database: D1 rows written are
+          # counted at the account level, so production's
+          # _quota_ledger is the meter that counts. This QUOTA_DB
+          # choice is the one deliberate difference from
+          # deploy-and-delta.yml, where the apply target and the
+          # meter database are the same database.
+          QUOTA_DB="$PROD_DB"
+          # ===== BEGIN shared D1 write-quota guard snippet =====
+          # This block is IDENTICAL in deploy-and-delta.yml and
+          # d1-restore-test.yml (and in every step that uses it) so the two
+          # workflows cannot drift in method. Keep the copies in sync.
+          # The one deliberate difference between the workflows is QUOTA_DB,
+          # set just above this block in each step: it names the database
+          # holding the _quota_ledger meter table. The meter lives in the
+          # PRODUCTION database because the quota itself is account-level.
+          #
+          # Workers Paid includes 50,000,000 D1 rows written per month at the
+          # account level (all databases). Cloudflare's spend limits do NOT
+          # cover D1, so this guard is the only hard protection against write
+          # overage. Owner's rule: nothing beyond the included quota, ever.
+          #
+          # Estimate method: estimated writes = INSERT statements x 2. The
+          # x2 covers index writes: the Nov 14, 2026 baseline import proved
+          # that 59,994 rows cost more than 100,000 writes (a multiplier of
+          # at least 1.67); 2 is the conservative round number.
+          #
+          # Sign-off line (Charles): a run that would take the month past
+          # 25,000,000 estimated writes (50% of the monthly quota) FAILS
+          # before applying anything and needs his sign-off to proceed.
+          QUOTA_MONTHLY=50000000
+          QUOTA_SIGNOFF_LINE=25000000
+          quota_month="$(date -u +%Y-%m)"
+
+          quota_ensure_table() {
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "CREATE TABLE IF NOT EXISTS _quota_ledger (month TEXT PRIMARY KEY, writes_estimated INTEGER NOT NULL DEFAULT 0)"
+          }
+
+          quota_mtd() {
+            wrangler d1 execute "$QUOTA_DB" --remote --json \
+              --command "SELECT COALESCE((SELECT writes_estimated FROM _quota_ledger WHERE month = '$quota_month'), 0) AS n" \
+              | jq -r '.[0].results[0].n'
+          }
+
+          quota_estimate_files() {
+            local total=0 f n
+            for f in "$@"; do
+              n="$(grep -ciE 'INSERT[[:space:]]+INTO' "$f" || true)"
+              total=$(( total + n * 2 ))
+            done
+            echo "$total"
+          }
+
+          quota_preflight() {
+            local est="$1" mtd total
+            quota_ensure_table
+            mtd="$(quota_mtd)"
+            total=$(( mtd + est ))
+            echo "D1 write quota guard: month (UTC) $quota_month; month-to-date estimate $mtd; this run's estimate $est; projected total $total of $QUOTA_MONTHLY; sign-off line $QUOTA_SIGNOFF_LINE."
+            if [ "$total" -gt "$QUOTA_SIGNOFF_LINE" ]; then
+              echo "::error::D1 WRITE QUOTA GUARD STOP: month-to-date estimated writes $mtd + this run's estimate $est = $total, crossing the 25,000,000 sign-off line (50% of the 50,000,000 monthly included D1 rows written, account level). NOTHING WAS APPLIED. This job needs Charles's sign-off before it may run."
+              exit 1
+            fi
+            echo "D1 write quota guard: pre-flight passed."
+          }
+
+          quota_record() {
+            local est="$1" mtd pct
+            quota_ensure_table
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "INSERT INTO _quota_ledger (month, writes_estimated) VALUES ('$quota_month', $est) ON CONFLICT(month) DO UPDATE SET writes_estimated = writes_estimated + excluded.writes_estimated"
+            mtd="$(quota_mtd)"
+            pct="$(awk -v m="$mtd" -v q="$QUOTA_MONTHLY" 'BEGIN { printf "%.2f", (q > 0 ? m * 100 / q : 0) }')"
+            echo "D1 write quota meter: month (UTC) $quota_month is now at $mtd estimated writes ($pct% of $QUOTA_MONTHLY monthly included)."
+            {
+              echo "## D1 write quota meter"
+              echo ""
+              echo "Month (UTC): $quota_month"
+              echo "This run's estimated writes: $est"
+              echo "Month-to-date estimated writes: $mtd of $QUOTA_MONTHLY ($pct%)"
+              echo "Sign-off line: $QUOTA_SIGNOFF_LINE (50%); a run that would cross it fails before applying anything."
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+          # ===== END shared D1 write-quota guard snippet =====
+          sql_file="$(find restore -name '*.sql' -type f | sort | head -n 1)"
+          if [ -z "$sql_file" ]; then
+            echo "No SQL file found in the downloaded artifact."
+            exit 1
+          fi
+          # The restore step applies a PRAGMA-stripped copy of this
+          # file; stripping PRAGMA lines does not change its INSERT
+          # count, so estimating from the export itself is exact
+          # under the guard's method.
+          est="$(quota_estimate_files "$sql_file")"
+          echo "Restore file: $sql_file; estimated writes: $est"
+          quota_preflight "$est"
+          echo "RUN_WRITE_ESTIMATE=$est" >> "$GITHUB_ENV"
 
       - name: Ensure the scratch database exists
         run: |
@@ -132,3 +237,93 @@ jobs:
           fi
           echo "All nine table counts match production." >> "$GITHUB_STEP_SUMMARY"
           echo "Restore test passed: all nine table counts match."
+
+      - name: Quota guard record (D1 monthly write meter)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Charge the meter in PRODUCTION (see the pre-flight
+          # step): the restore's writes landed in scratch, but
+          # D1 rows written are counted at the account level.
+          QUOTA_DB="$PROD_DB"
+          # ===== BEGIN shared D1 write-quota guard snippet =====
+          # This block is IDENTICAL in deploy-and-delta.yml and
+          # d1-restore-test.yml (and in every step that uses it) so the two
+          # workflows cannot drift in method. Keep the copies in sync.
+          # The one deliberate difference between the workflows is QUOTA_DB,
+          # set just above this block in each step: it names the database
+          # holding the _quota_ledger meter table. The meter lives in the
+          # PRODUCTION database because the quota itself is account-level.
+          #
+          # Workers Paid includes 50,000,000 D1 rows written per month at the
+          # account level (all databases). Cloudflare's spend limits do NOT
+          # cover D1, so this guard is the only hard protection against write
+          # overage. Owner's rule: nothing beyond the included quota, ever.
+          #
+          # Estimate method: estimated writes = INSERT statements x 2. The
+          # x2 covers index writes: the Nov 14, 2026 baseline import proved
+          # that 59,994 rows cost more than 100,000 writes (a multiplier of
+          # at least 1.67); 2 is the conservative round number.
+          #
+          # Sign-off line (Charles): a run that would take the month past
+          # 25,000,000 estimated writes (50% of the monthly quota) FAILS
+          # before applying anything and needs his sign-off to proceed.
+          QUOTA_MONTHLY=50000000
+          QUOTA_SIGNOFF_LINE=25000000
+          quota_month="$(date -u +%Y-%m)"
+
+          quota_ensure_table() {
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "CREATE TABLE IF NOT EXISTS _quota_ledger (month TEXT PRIMARY KEY, writes_estimated INTEGER NOT NULL DEFAULT 0)"
+          }
+
+          quota_mtd() {
+            wrangler d1 execute "$QUOTA_DB" --remote --json \
+              --command "SELECT COALESCE((SELECT writes_estimated FROM _quota_ledger WHERE month = '$quota_month'), 0) AS n" \
+              | jq -r '.[0].results[0].n'
+          }
+
+          quota_estimate_files() {
+            local total=0 f n
+            for f in "$@"; do
+              n="$(grep -ciE 'INSERT[[:space:]]+INTO' "$f" || true)"
+              total=$(( total + n * 2 ))
+            done
+            echo "$total"
+          }
+
+          quota_preflight() {
+            local est="$1" mtd total
+            quota_ensure_table
+            mtd="$(quota_mtd)"
+            total=$(( mtd + est ))
+            echo "D1 write quota guard: month (UTC) $quota_month; month-to-date estimate $mtd; this run's estimate $est; projected total $total of $QUOTA_MONTHLY; sign-off line $QUOTA_SIGNOFF_LINE."
+            if [ "$total" -gt "$QUOTA_SIGNOFF_LINE" ]; then
+              echo "::error::D1 WRITE QUOTA GUARD STOP: month-to-date estimated writes $mtd + this run's estimate $est = $total, crossing the 25,000,000 sign-off line (50% of the 50,000,000 monthly included D1 rows written, account level). NOTHING WAS APPLIED. This job needs Charles's sign-off before it may run."
+              exit 1
+            fi
+            echo "D1 write quota guard: pre-flight passed."
+          }
+
+          quota_record() {
+            local est="$1" mtd pct
+            quota_ensure_table
+            wrangler d1 execute "$QUOTA_DB" --remote --command \
+              "INSERT INTO _quota_ledger (month, writes_estimated) VALUES ('$quota_month', $est) ON CONFLICT(month) DO UPDATE SET writes_estimated = writes_estimated + excluded.writes_estimated"
+            mtd="$(quota_mtd)"
+            pct="$(awk -v m="$mtd" -v q="$QUOTA_MONTHLY" 'BEGIN { printf "%.2f", (q > 0 ? m * 100 / q : 0) }')"
+            echo "D1 write quota meter: month (UTC) $quota_month is now at $mtd estimated writes ($pct% of $QUOTA_MONTHLY monthly included)."
+            {
+              echo "## D1 write quota meter"
+              echo ""
+              echo "Month (UTC): $quota_month"
+              echo "This run's estimated writes: $est"
+              echo "Month-to-date estimated writes: $mtd of $QUOTA_MONTHLY ($pct%)"
+              echo "Sign-off line: $QUOTA_SIGNOFF_LINE (50%); a run that would cross it fails before applying anything."
+            } >> "$GITHUB_STEP_SUMMARY"
+          }
+          # ===== END shared D1 write-quota guard snippet =====
+          # Runs only when the restore and the count comparison
+          # succeeded (the default step condition), so failed
+          # restores never charge the meter.
+          quota_record "${RUN_WRITE_ESTIMATE:-0}"

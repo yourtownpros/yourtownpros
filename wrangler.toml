@@ -1,9 +1,0 @@
-# Cloudflare Pages configuration for the yourtownpros.com site.
-# The site tree is the repo root; Pages builds from here.
-# Placement: Smart Placement (config try, Nov 15 2026; dashboard attempts
-# on Nov 14 errored, this repo-config try is the last one per Charles).
-name = "yourtownpros"
-pages_build_output_dir = "."
-
-[placement]
-mode = "smart"

@@ -15,3 +15,15 @@ raw_wrangler_json: {  "bookmark": "0000002d-00000000-00005124-e3e8ebe5f09c8ed828
 raw_wrangler_text:  ⛅️ wrangler 4.162.0────────────────────Resource location: remote 🚧 Time Traveling...⚠️ The current bookmark is '0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112'⚡️ To restore to this specific bookmark, run: `wrangler d1 time-travel restore yourtownpros-listings --bookmark=0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112`      
 raw_api_json: {"success":false,"errors":["Route not found"]}
 raw_wrangler_err: 
+----
+correction (appended by Muse, 2026-11-15): the entry above's "bookmark:"
+field was truncated by the workflow's extraction regex (it matched 16 of
+the final segment's 32 hex chars). The FULL bookmark, identical in both
+raw wrangler outputs in that same entry, is:
+bookmark_full: 0000002d-00000000-00005124-e3e8ebe5f09c8ed82844fc20b8f1b112
+read_at_utc: 2026-11-15T15:17:42Z (08:17 MT)
+listings_count_at_read: 16225 (paired read-only SELECT COUNT in the same run)
+note: the direct API route in that run returned success:false "Route not
+found"; the wrangler time-travel info route is the working one. The
+extraction regex is fixed in the workflow; the next entry is a
+confirmation re-read under the fixed regex.

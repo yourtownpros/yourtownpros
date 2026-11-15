@@ -83,7 +83,7 @@ jobs:
         run: |
           set -euo pipefail
           stamp_utc="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          bookmark="$(grep -rhoE '[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{16}' bookmark-out/ | head -n 1 || true)"
+          bookmark="$(grep -rhoE '[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{8}-[0-9a-f]{16,32}' bookmark-out/ | head -n 1 || true)"
           count="$(jq -r '.[0].results[0].n // empty' bookmark-out/listings-count.json 2>/dev/null || true)"
           {
             echo "----"

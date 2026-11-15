@@ -1,0 +1,11 @@
+-- Payload refresh delta (2026-11-14): meta dataset_version. Applies LAST on
+-- purpose: the cache-aware Worker versions every cache key with this value,
+-- so the version must flip only after all data deltas above have applied,
+-- never before (a render in the gap would cache a pre-refresh page under
+-- the new version for the full cache TTL). The deployed payload has no
+-- dataset_version row (the Worker falls back to "0"); this upsert creates
+-- it. Value format matches the loader's own stamp (%Y%m%dT%H%M%SZ, UTC);
+-- minted at delta generation time because the on-disk ytp-current.db was
+-- built minutes before load.py gained the dataset_version write, so no
+-- loader stamp exists to carry. Any later loader run overwrites it.
+INSERT INTO meta (key, value) VALUES ('dataset_version', '20261115T031000Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

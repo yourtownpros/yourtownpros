@@ -31,6 +31,30 @@ ytpOnReady(function(A){
 var form=document.querySelector(".sgform");
 if(!form)return;
 var slug=form.getAttribute("data-slug");
+/* Nov 16, 2026: the row list replaces the dropdown.
+Tapping a row selects the suggestion type into the same
+hidden sg_field the submit below already reads, expands
+the details area, and swaps in the prompt written for
+that type. The Report inappropriate content link selects
+the Other row. */
+var sgRows=form.querySelectorAll(".sgx-row");
+var sgField=form.querySelector('[name="sg_field"]');
+var sgDetail=form.querySelector(".sgx-detail");
+var sgTa=form.querySelector('[name="sg_details"]');
+function sgSelect(row){
+for(var i=0;i<sgRows.length;i++)sgRows[i].setAttribute("aria-checked",sgRows[i]===row?"true":"false");
+if(sgField)sgField.value=row.getAttribute("data-type")||"";
+if(sgTa&&row.getAttribute("data-ph"))sgTa.placeholder=row.getAttribute("data-ph");
+if(sgDetail)sgDetail.hidden=false;
+if(sgTa)sgTa.focus();
+}
+for(var si=0;si<sgRows.length;si++){(function(r){r.addEventListener("click",function(){sgSelect(r);});})(sgRows[si]);}
+var sgRep=document.getElementById("sgx-report");
+if(sgRep)sgRep.addEventListener("click",function(ev){
+ev.preventDefault();
+var o=form.querySelector('.sgx-row[data-type="other"]');
+if(o){sgSelect(o);o.scrollIntoView({behavior:"smooth",block:"center"});}
+});
 form.addEventListener("submit",function(ev){
 ev.preventDefault();
 var msg=form.querySelector(".sgmsg");
@@ -38,6 +62,7 @@ function fail(){if(msg)msg.textContent="Could not send. Please try again later."
 var hp=form.querySelector("input[name='company_website']");
 if(hp&&hp.value)return;
 function val(n){var el=form.querySelector('[name="'+n+'"]');return el?el.value.trim():"";}
+if(sgField&&!sgField.value){if(msg)msg.textContent="Please tap the thing that should change first.";return;}
 var name=val("sg_name"),details=val("sg_details");
 if(!name||!details){if(msg)msg.textContent="Please add your name and a few details about what should change.";return;}
 if(!A||!A.sb){fail();return;}
@@ -46,12 +71,12 @@ if(A.user)row.user_id=A.user.id;
 A.sb.from("edit_suggestions").insert(row).then(function(r){
 if(r.error){fail();return;}
 form.reset();
+for(var i=0;i<sgRows.length;i++)sgRows[i].setAttribute("aria-checked","false");
+if(sgDetail)sgDetail.hidden=true;
 if(msg)msg.textContent="Thanks. We check every suggestion before anything on this page changes.";
 }).catch(fail);
 });
 });
-
-
 /* v5.1: owner highlights on the listing. Approved rows from
 owner_highlights (schema v10) render as chips in the mount,
 labeled as owner-provided and separate from the researched

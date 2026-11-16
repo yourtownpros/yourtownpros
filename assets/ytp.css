@@ -588,3 +588,32 @@ footer{padding:0}
 .openpill59:has(.openchk59:focus-visible){outline:2px solid #0e7a5f;outline-offset:2px}
 @media(max-width:1100px){.filterbar{top:162px}}
 @media(max-width:480px){.filterbar{top:216px}}
+
+.sgx-list{list-style:none;margin:14px 0 0;padding:0;border:1px solid #e4e0d5;border-radius:12px;overflow:hidden}
+.sgx-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:0;border-top:1px solid #eee9dd;padding:13px 14px;cursor:pointer;font:inherit;color:#1c2430;min-height:52px}
+.sgx-row:first-child{border-top:0}
+.sgx-row:hover{background:#e8f3ee}
+.sgx-row[aria-checked="true"]{background:#e8f3ee;box-shadow:inset 3px 0 0 #0e7a5f}
+.sgx-ic{flex:none;width:22px;height:22px;color:#0e7a5f}
+.sgx-ic svg{width:22px;height:22px;display:block}
+.sgx-tx{flex:1;min-width:0}
+.sgx-lb{display:block;font-weight:600;font-size:15px}
+.sgx-vl{display:block;color:#5a6672;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sgx-ch{flex:none;color:#5a6672;font-size:18px;line-height:1}
+.sgx-detail{margin-top:14px}
+.sgx-detail[hidden]{display:none}
+.sgx-foot{margin-top:14px;border-top:1px solid #eee9dd;padding-top:12px;font-size:14px}
+.sgx-foot p{margin:4px 0}
+html{scroll-padding-top:120px}
+.ytp-collapse-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d8d4c8;color:#12212e;font-weight:700;font-size:15px;padding:11px 18px;border-radius:8px;min-height:48px;cursor:pointer;list-style:none}
+.ytp-collapse-btn::-webkit-details-marker{display:none}
+.ytp-collapse-btn.matchbtn{display:flex;align-items:center;background:#0e7a5f;color:#fff;font-weight:700;font-size:15px;padding:11px 18px;border-radius:8px;min-height:48px;cursor:pointer;list-style:none}
+.ytp-collapse-btn.matchbtn::-webkit-details-marker{display:none}
+.sgform label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
+.sgform input,.sgform textarea{width:100%;padding:10px 12px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
+.btn{display:inline-block;border:0;border-radius:8px;padding:11px 18px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;min-height:44px}
+.btn-brand{background:#0e7a5f;color:#fff}
+.tickbtn{height:auto;padding:10px 0;background-clip:content-box;min-height:24px}
+.helpbtn{min-height:44px;padding:10px 14px}
+.pillbtn{display:inline-flex;align-items:center;min-height:44px}
+.foot57 a{padding:9px 0}

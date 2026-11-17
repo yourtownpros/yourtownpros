@@ -10,14 +10,5 @@ binding = "DB"
 database_name = "yourtownpros-listings"
 database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
 
-# Cap unlock (2026-11-17): the Pages limits doc raises the per-site
-# file cap from 20,000 (Free) to 100,000 on paid plans when the
-# project env var PAGES_WRANGLER_MAJOR_VERSION is "4". The dashboard
-# reports this project's variables are managed through this file, so
-# the var is set here in the primary documented form: top-level
-# [vars], which the per-environment configs inherit.
-[vars]
-PAGES_WRANGLER_MAJOR_VERSION = "4"
-
 [placement]
 mode = "smart"

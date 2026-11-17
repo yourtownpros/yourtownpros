@@ -14,15 +14,9 @@ database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
 # file cap from 20,000 (Free) to 100,000 on paid plans when the
 # project env var PAGES_WRANGLER_MAJOR_VERSION is "4". The dashboard
 # reports this project's variables are managed through this file, so
-# the var is set here: top level plus explicit production and
-# preview overrides, so both deployment configs carry it.
+# the var is set here in the primary documented form: top-level
+# [vars], which the per-environment configs inherit.
 [vars]
-PAGES_WRANGLER_MAJOR_VERSION = "4"
-
-[env.production.vars]
-PAGES_WRANGLER_MAJOR_VERSION = "4"
-
-[env.preview.vars]
 PAGES_WRANGLER_MAJOR_VERSION = "4"
 
 [placement]

@@ -1,0 +1,150 @@
+
+ ⛅️ wrangler 4.164.0
+────────────────────
+🌀 Building list of assets...
+✨ Read 40030 files from the assets directory /home/runner/work/yourtownpros/yourtownpros
+🌀 Starting asset upload...
+🌀 Found 19992 new or modified static assets to upload. Proceeding with upload...
++ /CNAME
++ /favicon.svg
++ /sitemap.xml
++ /puerto-rico/san-juan-metro/index.html
++ /bakeries-and-cafes/puerto-rico/san-juan-metro/index.html
++ /wrangler.web-staging.toml
++ /llms.txt
++ /website-design/colorado/index.html
++ /nevada/counties/nye/index.html
++ /alabama/counties/lee/index.html
++ /jewelry/ohio/index.html
++ /florida/counties/lee/index.html
++ /illinois/counties/lee/index.html
++ /puerto-rico/counties/ciales/index.html
++ /texas/counties/brown/index.html
++ /georgia/counties/cobb/index.html
++ /delaware/counties/kent/index.html
++ /handyman/idaho/index.html
++ /puerto-rico/counties/morovis/index.html
++ /texas/counties/howard/index.html
++ /new-mexico/counties/lea/index.html
++ /arkansas/counties/pope/index.html
++ /texas/counties/kendall/index.html
++ /nebraska/counties/otoe/index.html
++ /arkansas/counties/white/index.html
++ /minnesota/counties/clay/index.html
++ /idaho/counties/bannock/index.html
++ /texas/counties/hockley/index.html
++ /fitness/wyoming/index.html
++ /jewelry/wyoming/index.html
++ /minnesota/counties/winona/index.html
++ /new-jersey/counties/union/index.html
++ /california/counties/marin/index.html
++ /mississippi/counties/adams/index.html
++ /washington/counties/grant/index.html
++ /michigan/counties/midland/index.html
++ /oregon/counties/malheur/index.html
++ /kentucky/counties/madison/index.html
++ /tennessee/counties/putnam/index.html
++ /movers/oregon/index.html
++ /illinois/counties/fulton/index.html
++ /illinois/counties/peoria/index.html
++ /texas/counties/caldwell/index.html
++ /illinois/counties/dewitt/index.html
++ /kentucky/counties/mercer/index.html
++ /new-mexico/counties/chaves/index.html
++ /illinois/counties/dekalb/index.html
++ /new-york/counties/ulster/index.html
++ /illinois/counties/tazewell/index.html
++ /alabama/counties/calhoun/index.html
++ /indiana/counties/madison/index.html
++ /montana/counties/glacier/index.html
++ /florida/counties/brevard/index.html
++ /pennsylvania/counties/berks/index.html
++ /alabama/counties/madison/index.html
++ /idaho/counties/twin-falls/index.html
++ /michigan/counties/manistee/index.html
++ /missouri/counties/butler/index.html
++ /idaho/counties/bonneville/index.html
++ /oregon/counties/umatilla/index.html
++ /alaska/counties/juneau-city-and-borough/index.html
++ /montana/counties/ravalli/index.html
++ /washington/counties/whitman/index.html
++ /west-virginia/counties/cabell/index.html
++ /new-jersey/counties/middlesex/index.html
++ /mississippi/counties/lowndes/index.html
++ /massachusetts/counties/suffolk/index.html
++ /michigan/counties/cheboygan/index.html
++ /new-mexico/counties/mckinley/index.html
++ /minnesota/counties/nicollet/index.html
++ /tattoo/puerto-rico/index.html
++ /west-virginia/counties/kanawha/index.html
++ /massachusetts/counties/hampden/index.html
++ /puerto-rico/counties/juana-d-az/index.html
++ /illinois/counties/williamson/index.html
++ /minnesota/counties/otter-tail/index.html
++ /arkansas/counties/mississippi/index.html
++ /north-carolina/counties/catawba/index.html
++ /indiana/counties/saint-joseph/index.html
++ /wisconsin/counties/jefferson/index.html
++ /massachusetts/counties/plymouth/index.html
++ /north-carolina/counties/iredell/index.html
++ /electricians/idaho/index.html
++ /texas/counties/orange/index.html
++ /pennsylvania/counties/lancaster/index.html
++ /south-carolina/counties/beaufort/index.html
++ /bars/oklahoma/index.html
++ /fitness/puerto-rico/index.html
++ /florida/counties/collier/index.html
++ /louisiana/counties/ascension-parish/index.html
++ /flooring/nebraska/index.html
++ /maryland/counties/city-of-baltimore/index.html
++ /handyman/pennsylvania/index.html
++ /south-carolina/counties/spartanburg/index.html
++ /flooring/maryland/index.html
++ /virginia/counties/prince-william/index.html
++ /illinois/counties/kankakee/index.html
++ /new-jersey/counties/passaic/index.html
++ /louisiana/counties/saint-tammany-parish/index.html
++ /mississippi/counties/lafayette/index.html
+   (truncating changed assets log, set `WRANGLER_LOG=debug` environment variable to see full diff)
+Uploaded 1000 of 19992 assets
+Uploaded 2000 of 19992 assets
+Uploaded 3000 of 19992 assets
+Uploaded 3811 of 19992 assets
+Uploaded 4690 of 19992 assets
+Uploaded 5479 of 19992 assets
+Uploaded 6258 of 19992 assets
+Uploaded 7204 of 19992 assets
+Uploaded 7978 of 19992 assets
+Uploaded 8750 of 19992 assets
+Uploaded 9520 of 19992 assets
+Uploaded 10287 of 19992 assets
+Uploaded 11041 of 19992 assets
+Uploaded 11776 of 19992 assets
+Uploaded 12505 of 19992 assets
+Uploaded 13226 of 19992 assets
+Uploaded 13949 of 19992 assets
+Uploaded 14668 of 19992 assets
+Uploaded 15393 of 19992 assets
+Uploaded 16109 of 19992 assets
+Uploaded 16821 of 19992 assets
+Uploaded 17515 of 19992 assets
+Uploaded 18217 of 19992 assets
+Uploaded 18881 of 19992 assets
+Uploaded 18882 of 19992 assets
+Uploaded 19539 of 19992 assets
+Uploaded 19992 of 19992 assets
+✨ Success! Uploaded 19992 files (1 already uploaded) (86.14 sec)
+
+Total Upload: 83.60 KiB / gzip: 24.70 KiB
+Worker Startup Time: 2 ms
+Your Worker has access to the following bindings:
+Binding                                 Resource         
+env.DB (yourtownpros-listings)          D1 Database      
+env.ASSETS                              Assets           
+
+Uploaded yourtownpros-web-staging (104.53 sec)
+Deployed yourtownpros-web-staging triggers (0.90 sec)
+  https://yourtownpros-web-staging.robertserranomailbox.workers.dev
+Current Version ID: cc40cb6a-9378-4d10-8f0b-93e232513d25
+
+Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md

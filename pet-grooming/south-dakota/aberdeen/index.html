@@ -274,8 +274,8 @@ var rw={business_slug:slug,
 name:row.name,phone:row.phone,vertical:row.vertical,city:row.city,need:row.need,preferred_time:row.preferred_time,
 notes:(fullNotes?fullNotes+" ":"")+"[ytp-src:"+src+"]",
 status:"new"};
-try{A.sb.from("match_requests").insert(rw).select("id").then(function(r){thread55(r&&r.data&&r.data[0]?r.data[0].id:null);once()}).catch(once)}catch(e){once()}}
-try{A.sb.from("match_requests").insert(row).select("id").then(function(r){if(r&&r.error)fb();else{thread55(r.data&&r.data[0]?r.data[0].id:null);once()}}).catch(function(){fb()})}catch(e){fb()}
+try{A.sb.from("match_requests").insert(rw).then(function(r){thread55(null);once()}).catch(once)}catch(e){once()}}
+try{A.sb.from("match_requests").insert(row).then(function(r){if(r&&r.error)fb();else{thread55(null);once()}}).catch(function(){fb()})}catch(e){fb()}
 setTimeout(once,1500);
 });
 });

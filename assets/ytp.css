@@ -609,6 +609,7 @@ html{scroll-padding-top:120px}
 .ytp-collapse-btn::-webkit-details-marker{display:none}
 .ytp-collapse-btn.matchbtn{display:flex;align-items:center;background:#0e7a5f;color:#fff;font-weight:700;font-size:15px;padding:11px 18px;border-radius:8px;min-height:48px;cursor:pointer;list-style:none}
 .ytp-collapse-btn.matchbtn::-webkit-details-marker{display:none}
+.bizcard57 a.act57[href="#match"]{background:#0e7a5f;border-color:#0e7a5f;color:#fff;min-height:48px;display:flex;align-items:center;justify-content:center}
 .sgform label{display:block;font-weight:600;margin:10px 0 4px;font-size:14px}
 .sgform input,.sgform textarea{width:100%;padding:10px 12px;border:1px solid #d8d4c8;border-radius:8px;font-family:inherit;font-size:15px;color:#1c2430}
 .btn{display:inline-block;border:0;border-radius:8px;padding:11px 18px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit;min-height:44px}

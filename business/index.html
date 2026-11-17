@@ -29,18 +29,20 @@
 <h2>Overview</h2>
 <div id="biz-cards"><p class="listed">Loading...</p></div>
 <div id="biz-partner"></div>
+<div class="card" id="biz-perf">
+<h3>Performance</h3>
+<p>Visitor and lead counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>
+<p class="listed">Counting started November 10, 2026. Counts are recorded by our visitor counter, never estimates.</p>
+</div>
 <h2 style="margin-top:22px">Reminders</h2>
 <div id="biz-checklist"><p class="listed">Loading...</p></div>
+<h2 style="margin-top:22px">Profile completeness</h2>
+<div id="biz-complete"><p class="listed">Loading...</p></div>
 <div class="card" id="biz-feat-card">
 <h3>Get more from your listing</h3>
 <p>Featured businesses get the Sponsored top spot in their town and trade, a booking block on their listing, and first claim on matched customers. Featured starts with a free taste week.</p>
 <p style="margin:8px 0 2px"><a class="claimbtn" href="/for-business/#featured">See how Featured works</a></p>
 </div>
-<div class="card" id="biz-numbers">
-<h3>Your numbers</h3>
-<p>Visitor and lead counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>
-</div>
-<div id="biz-actions55"></div>
 </section>
 <section class="bizsec" id="sec-bizinfo" hidden>
 <h2>Business information</h2>
@@ -199,7 +201,7 @@ if(out)out.hidden=true;
 var bizData={},bizList=[],cur=null,myCRs=[],myReviews=[];
 var myPhotos=[],photosTable=null,photosOrd=false,myRequests=[],myQuestions=[];
 var myHighlights=[];
-var gcData=null,numbersNote=null;
+var gcData=null,perfWin="28d";
 function ytpLeadSource(r){
 r=r||{};var s=String(r.source||"");
 if(!s){var m=/\[ytp-src:(listing|card|featured|category)\]/.exec(String(r.notes||""));if(m)s=m[1]}
@@ -212,6 +214,30 @@ var g={listing:0,card:0,featured:0,other:0,total:0};
 rows=rows||[];
 for(var i=0;i<rows.length;i++){g[ytpLeadSource(rows[i])]++;g.total++}
 return g}
+function ytpPerfFigures(snap,slug,win){
+var out={ok:false,lv:0,cv:null,call:0,website:0,directions:0};
+if(!snap||!snap.meta||snap.meta.complete!==true||!snap.listings)return out;
+var L=snap.listings[slug];
+out.ok=true;
+if(!L)return out;
+var w=L[win]||{};
+out.lv=w.lv||0;
+var res=("cv" in (L["7d"]||{}))||("cv" in (L["28d"]||{}))||("cv" in (L["total"]||{}));
+out.cv=res?(w.cv||0):null;
+out.call=w.call||0;out.website=w.website||0;out.directions=w.directions||0;
+return out}
+function ytpPerfWindowStart(snap,win){
+if(snap&&snap.meta&&snap.meta.windows&&snap.meta.windows[win]&&snap.meta.windows[win].start)return snap.meta.windows[win].start;
+var cs=(snap&&snap.meta&&snap.meta.counting_start)||"2026-11-10";
+if(win==="total")return cs;
+var d=new Date();var back=win==="7d"?6:27;
+d.setUTCDate(d.getUTCDate()-back);
+var s=d.toISOString().slice(0,10);
+return s<cs?cs:s}
+function ytpPerfRequests(rows,start){
+var f=[];rows=rows||[];
+for(var i=0;i<rows.length;i++){var d=String(rows[i].created_at||"").slice(0,10);if(!start||d>=start)f.push(rows[i])}
+return ytpLeadGroups(f)}
 var HL_VOCAB=["Family run", "Women led", "Locally owned", "Free estimates", "Licensed and insured", "Se habla español", "Walk-ins welcome", "Appointments required", "Open weekends", "Emergency service"];
 function urlFor(slug){return "/"+slug+"/"}
 function facts(slug){return bizData[slug]||null}
@@ -246,27 +272,72 @@ var appr=b.decided?"Claim approved "+fmtDate(b.decided)+".":"Claim approved.";
 return '<div class="card"><h3><a href="'+urlFor(b.slug)+'">'+esc(bizName(b))+'</a></h3>'+(where?'<div class="meta">'+where+'</div>':"")+'<div class="meta">'+appr+' <a href="'+urlFor(b.slug)+'">View your listing</a></div></div>'}).join("");
 renderChecklist()}
 function fmtDay(s){var p=String(s||"").split("-");if(p.length!==3)return String(s||"");var M=["January","February","March","April","May","June","July","August","September","October","November","December"];var m=Number(p[1]);return (M[m-1]||p[1])+" "+Number(p[2])+", "+p[0]}
-function renderNumbers(){
-var card=$("biz-numbers");if(!card)return;
-if(numbersNote===null)numbersNote=card.innerHTML;
-var g=(gcData&&cur)?gcData[cur]:null;
-var hasG=!!(g&&typeof g.listing_views==="number");
-/* v5.0: the leads-by-action counts join the card. They are
-the business's real recorded match requests, grouped by
-how each one arrived (ytpLeadGroups, fixture-tested at
-build time); they show whenever requests exist, with or
-without a GoatCounter snapshot. With neither, the honest
-static placeholder stays, exactly as v4.0 left it. */
-var grp=ytpLeadGroups(myRequests);
-if(!hasG&&!grp.total){if(card.innerHTML!==numbersNote)card.innerHTML=numbersNote;return}
-var h='<h3>Your numbers</h3>';
-if(hasG){h+='<p>Counting since '+esc(fmtDay(g.since))+', in the last '+g.window_days+' days: <strong>'+g.listing_views+'</strong> views of your listing page';
-if(typeof g.category_views==="number")h+=' and <strong>'+g.category_views+'</strong> views of your category page';
-h+='. These are your real GoatCounter counts, never estimates.</p>'}
-if(grp.total){h+='<p>Match requests recorded for this business: <strong>'+grp.total+'</strong> in total: '+grp.listing+' from your listing page, '+grp.card+' from a results card and '+grp.featured+' Featured priority.';
-if(grp.other)h+=' Plus '+grp.other+' that arrived another way.';
-h+=' These counts come from the requests themselves, never estimates.</p>'}
-card.innerHTML=h}
+function perfWinLabel(w){return w==="7d"?"Last 7 days":(w==="28d"?"Last 28 days":"Since "+fmtDay("2026-11-10"))}
+function wirePerfSwitch(card){
+var bs=card.querySelectorAll("[data-perfwin]");
+for(var i=0;i<bs.length;i++){(function(b){b.addEventListener("click",function(){perfWin=b.getAttribute("data-perfwin");renderPerformance()})})(bs[i])}}
+/* Dashboard Performance build (Nov 17, 2026): the unified
+Performance section replaces the v4.0 Your numbers card
+and the v5.5 actions block. Figures come from
+the refreshed GoatCounter snapshot through ytpPerfFigures
+(PERF_JS, fixture-tested at build time): they render only
+when the snapshot is complete, and then a business with
+no activity sees its real zeros. Match requests are the
+business's real recorded rows, windowed by created date
+and grouped by how each one arrived (ytpPerfRequests);
+they show whenever requests exist in the window, with or
+without a snapshot. With neither, the honest v4.0
+placeholder stays. Every state carries the counting note. */
+function renderPerformance(){
+var card=$("biz-perf");if(!card||!cur)return;
+var note='<p class="listed">Counting started November 10, 2026. Counts are recorded by our visitor counter, never estimates.</p>';
+var fig=ytpPerfFigures(gcData,cur,perfWin);
+var grp=ytpPerfRequests(myRequests,ytpPerfWindowStart(gcData,perfWin));
+if(!fig.ok&&!grp.total){
+card.innerHTML='<h3>Performance</h3><p>Visitor and lead counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>'+note;
+return}
+var h='<h3>Performance</h3>';
+h+='<div class="perfwins" role="group" aria-label="Time window">'+["7d","28d","total"].map(function(w){return '<button type="button" data-perfwin="'+w+'"'+(w===perfWin?' style="font-weight:700;text-decoration:underline"':"")+">"+perfWinLabel(w)+"</button>"}).join("")+"</div>";
+h+='<p class="listed" style="margin:6px 0 8px">'+perfWinLabel(perfWin)+"</p>";
+if(fig.ok){
+var rows=[["Listing page views",fig.lv]];
+if(fig.cv!==null)rows.push(["Category page views",fig.cv]);
+rows.push(["People who tapped your phone number",fig.call]);
+rows.push(["Taps on your website link",fig.website]);
+rows.push(["Taps on the directions link",fig.directions]);
+h+='<dl class="factlist">'+rows.map(function(r){return "<div><dt>"+r[0]+"</dt><dd><strong>"+r[1]+"</strong></dd></div>"}).join("")+"</dl>";
+if(fig.cv!==null)h+='<p class="listed">Category page views are views of the category page your listing appears on, shared with every business on that page.</p>';
+if(!fig.lv&&!fig.call&&!fig.website&&!fig.directions&&!(fig.cv||0)&&!grp.total)h+="<p>No recorded activity in this window yet.</p>";
+}else{
+h+='<p>Visitor counts arrive with the next update. Your listing is collecting data now, and the counts we show you will be your real ones, never estimates.</p>';
+}
+if(grp.total){
+h+='<p>Match requests in this window: <strong>'+grp.total+"</strong>: "+grp.listing+" from your listing page, "+grp.card+" from a results card, "+grp.featured+" from Featured priority routing";
+if(grp.other)h+=", "+grp.other+" another way";
+h+=". Counted from the requests themselves, never estimates.</p>";
+}
+h+=note;
+card.innerHTML=h;
+wirePerfSwitch(card)}
+/* Dashboard Performance build (Nov 17, 2026): the profile
+completeness checklist. Presence only, computed from the
+fields the listing itself carries (the biz-data.json
+presence flags ride the same facts as the Business
+Information tab); each missing item names what is missing
+and where to send it. No score: the owner can reproduce
+every line from their own listing. */
+function renderComplete(){
+var box=$("biz-complete");if(!box||!cur)return;
+var f=facts(cur);if(!f){box.innerHTML="";return}
+function yn(ok,yes,no){return {done:!!ok,text:ok?yes:no}}
+var items=[
+yn(f.desc,"Description: your listing tells visitors what your business does.","Description: add a few sentences about your business. Send them as a change request in the Business information tab."),
+yn(f.hours,"Hours: your opening hours are on your listing.","Hours: add your opening hours. Send them as a change request in the Business information tab."),
+yn(f.phone&&String(f.phone).trim(),"Phone: your phone number is on your listing.","Phone: add a phone number. Send it as a change request in the Business information tab."),
+yn(f.website,"Website: your listing links to your website.","Website: add your website address. Send it as a change request in the Business information tab."),
+yn(f.photos,"Photos: your listing shows photos of your business.","Photos: add photos of your business from the Photos tab. We review each one before it appears."),
+yn(f.services,"Services: your listing names the services you offer.","Services: add the services you offer. Send them as a change request in the Business information tab.")];
+box.innerHTML='<ul class="checklist">'+items.map(function(it){return '<li><span class="'+(it.done?"ck":"todo")+'">'+(it.done?"Done: ":"To do: ")+"</span>"+esc(it.text)+"</li>"}).join("")+"</ul>"}
 function featWords(e){
 if(!e)return "";
 if(e.state==="house")return "Featured is on for this listing as a house listing, and stays on.";
@@ -502,7 +573,7 @@ if(!newest)newest=new Date().toISOString();
 try{var m=reqSeenMap50();m[cur]=newest;localStorage.setItem(reqSeenKey50(),JSON.stringify(m))}catch(e){}
 renderReqBadge();renderChecklist()}
 function afterRequests50(){
-renderRequests();renderReqBadge();renderChecklist();renderNumbers();
+renderRequests();renderReqBadge();renderChecklist();renderPerformance();
 var sec=$("sec-requests");
 if(sec&&!sec.hidden)markReqSeen()}
 function loadRequests(slug,plain){
@@ -514,7 +585,7 @@ A.sb.from("match_requests").select(sel).eq("business_slug",slug).order("created_
 if(r&&r.error){if(!plain){loadRequests(slug,true)}else{myRequests=[];afterRequests50()}return}
 myRequests=(r&&r.data)||[];afterRequests50()}).catch(function(){if(!plain){loadRequests(slug,true)}else{myRequests=[];afterRequests50()}})}
 function loadBiz(slug){
-renderFacts();renderNumbers();renderFeat();renderPartner();
+renderFacts();renderPerformance();renderComplete();renderFeat();renderPartner();
 A.sb.from("change_requests").select("field,current_value,requested_value,status,created_at").eq("user_id",A.user.id).eq("business_slug",slug).order("created_at",{ascending:false}).then(function(r){myCRs=(r&&r.data)||[];renderCRs();renderChecklist()}).catch(function(){myCRs=[];renderCRs();renderChecklist()});
 loadHighlights(slug);loadReviews(slug,true);loadPhotos(slug,true);loadRequests(slug);loadQuestions(slug)}
 var phForm=$("biz-photo-form");
@@ -591,7 +662,7 @@ A.sb.from("owner_highlights").insert(rows).then(function(r){
 if(r&&r.error){if(msg)msg.textContent="Could not send. Please try again later.";return}
 if(msg)msg.textContent="Picks received. Each one appears on your listing after we check it.";
 loadHighlights(cur)}).catch(function(){if(msg)msg.textContent="Could not send. Please try again later."})});
-fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcData=d||null;renderNumbers()}).catch(function(){});
+fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcData=d||null;renderPerformance()}).catch(function(){});
 A.sb.from("claims").select("business_slug,business_name,status,created_at,decided_at").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
 var claims=(r&&r.data)||[];
 var approved=[];
@@ -607,7 +678,7 @@ fetch("/biz-data.json").then(function(r2){return r2.json()}).then(function(d){bi
 selectSection(startSection());renderOverview();loadBiz(cur)})}).catch(function(){showNoOwner([])});
 });
 </script><script>
-/* v5.5: business Messages pane + What visitors did. */
+/* v5.5: business Messages pane. */
 function ytpThreadKey55(businessSlug,customerId){
 if(!businessSlug||!customerId)return null;
 return businessSlug+"|"+customerId}
@@ -625,23 +696,6 @@ var b=String(body==null?"":body).trim();
 return b.length>=1&&b.length<=2000?b:null}
 ytpOnReady(function(A){
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
-var actBox=document.getElementById("biz-actions55");
-var gcEv=null;
-function currentSlug(){var sel=document.getElementById("biz-pick");return sel?sel.value:""}
-function renderActions(){
-if(!actBox)return;
-var slug=currentSlug();
-var ev=(gcEv&&slug)?gcEv[slug]:null;
-if(!ev||!(ev.call||ev.website||ev.directions)){actBox.innerHTML="";return}
-actBox.innerHTML='<div class="card"><h3>What visitors did</h3><p>Called from your listing: <strong>'+(ev.call||0)+'</strong><br>Visited your website: <strong>'+(ev.website||0)+'</strong><br>Asked for directions: <strong>'+(ev.directions||0)+'</strong></p><p class="listed">Counts come from YourTownPros analytics, never estimates.</p></div>';
-}
-if(actBox){
-fetch("/gc-snapshot.json").then(function(r){return r.json()}).then(function(d){gcEv=(d&&d.listing_events)?d.listing_events:null;renderActions()}).catch(function(){});
-var pick=document.getElementById("biz-pick");
-if(pick)pick.addEventListener("change",renderActions);
-document.querySelectorAll(".biznav button").forEach(function(b){b.addEventListener("click",function(){setTimeout(renderActions,60)})});
-setTimeout(renderActions,1200);
-}
 var msgBox=document.getElementById("biz-messages");
 if(!msgBox)return;
 if(!A.sb){msgBox.innerHTML='<p class="listed">Messages are unavailable right now.</p>';return}

@@ -38,9 +38,33 @@ var gate=document.getElementById("ytp-claim-gate"),wrap=document.getElementById(
 var p=new URLSearchParams(location.search);
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
-var searchIdx=null,verifyData=null,chosen=null,code="";
+var searchIdx=null,verifyData=null,chosen=null,code="",gcSnap=null;
 function newCode(){var h="";var a=new Uint32Array(3);if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a);h=(a[0].toString(16)+a[1].toString(16)+a[2].toString(16)).toUpperCase()}else{h=Math.random().toString(16).slice(2,14).toUpperCase()}return "YTP-"+h.slice(0,6)}
 code=newCode();
+function ytpPerfFigures(snap,slug,win){
+var out={ok:false,lv:0,cv:null,call:0,website:0,directions:0};
+if(!snap||!snap.meta||snap.meta.complete!==true||!snap.listings)return out;
+var L=snap.listings[slug];
+out.ok=true;
+if(!L)return out;
+var w=L[win]||{};
+out.lv=w.lv||0;
+var res=("cv" in (L["7d"]||{}))||("cv" in (L["28d"]||{}))||("cv" in (L["total"]||{}));
+out.cv=res?(w.cv||0):null;
+out.call=w.call||0;out.website=w.website||0;out.directions=w.directions||0;
+return out}
+function ytpPerfWindowStart(snap,win){
+if(snap&&snap.meta&&snap.meta.windows&&snap.meta.windows[win]&&snap.meta.windows[win].start)return snap.meta.windows[win].start;
+var cs=(snap&&snap.meta&&snap.meta.counting_start)||"2026-11-10";
+if(win==="total")return cs;
+var d=new Date();var back=win==="7d"?6:27;
+d.setUTCDate(d.getUTCDate()-back);
+var s=d.toISOString().slice(0,10);
+return s<cs?cs:s}
+function ytpPerfRequests(rows,start){
+var f=[];rows=rows||[];
+for(var i=0;i<rows.length;i++){var d=String(rows[i].created_at||"").slice(0,10);if(!start||d>=start)f.push(rows[i])}
+return ytpLeadGroups(f)}
 function domainOf(u){if(!u)return "";var s=String(u).split("://").pop().split("/")[0].toLowerCase();return s.indexOf("www.")===0?s.slice(4):s}
 function acctDomain(){return (A.user&&A.user.email?String(A.user.email).split("@").pop().toLowerCase():"")}
 function resolve(){
@@ -49,6 +73,15 @@ var nameEl=$("claim-business"),cityEl=$("claim-city"),slugEl=$("claim-slug");
 if(nameEl)nameEl.value=chosen.name;if(cityEl)cityEl.value=chosen.city;if(slugEl)slugEl.value=chosen.slug;
 var card=$("ytp-bizcard");
 if(card){card.hidden=false;card.innerHTML="<h3>"+esc(chosen.name)+"</h3><p class='listed' style='margin:0'>"+esc(chosen.where)+"</p>"}
+/* Roadmap item 31 (Dashboard Performance build, Nov 17,
+2026): the lookup card shows the listing's real total
+view figure from the same snapshot file and the same
+total window the owner dashboard reads, so the number
+seen while claiming is the number the dashboard later
+shows. It renders only when the snapshot is complete;
+an absent slug in a complete snapshot is a real zero. */
+var fig=ytpPerfFigures(gcSnap,chosen.slug,"total");
+if(card&&fig.ok){card.innerHTML+="<p class='listed' style='margin:6px 0 0'>This listing page has been viewed <strong>"+fig.lv+"</strong> "+(fig.lv===1?"time":"times")+" since counting started on November 10, 2026.</p>"}
 renderMethods();
 var sub=$("ytp-claim-submit");if(sub)sub.disabled=false;
 }
@@ -96,6 +129,7 @@ for(var j=0;j<btns.length;j++){(function(b){b.addEventListener("click",function(
 }
 function fail(){var e=$("ytp-claim-error");if(e)e.textContent="Something went wrong sending your claim. Please try again."}
 var gb=$("ytp-claim-signin");if(gb)gb.addEventListener("click",function(){A.signIn()});
+fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcSnap=d||null;if(chosen)resolve()}).catch(function(){});
 if(!(A.user&&A.sb)){if(gate)gate.hidden=false;if(wrap)wrap.hidden=true;return}
 if(gate)gate.hidden=true;if(wrap)wrap.hidden=false;
 var emailEl=$("claim-email");if(emailEl)emailEl.value=A.user.email||"";

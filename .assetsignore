@@ -7,3 +7,4 @@
 # assets does not affect the bundle.
 functions/
 web-staging/
+.git/

@@ -17,14 +17,20 @@ on:
     branches: [migration/workers-assets-2026-11-17]
     paths:
       - "web-staging/**"
+      - "!web-staging/deploy-output.log"
       - "wrangler.web-staging.toml"
       - ".assetsignore"
       - "functions/_renderer.mjs"
       - ".github/workflows/deploy-web-staging.yml"
   workflow_dispatch:
 
+# contents: write is used by exactly one step: committing the wrangler
+# deploy output back to this migration branch, because Actions logs are
+# not readable from the automation environment and the deploy log (asset
+# count, staging URL, any error) is the verification record for the
+# staging build. Token pushes do not retrigger workflows.
 permissions:
-  contents: read
+  contents: write
 
 # One staging deploy at a time.
 concurrency:
@@ -51,4 +57,25 @@ jobs:
         run: npm install --global wrangler@4
 
       - name: Deploy the staging Worker (workers.dev only, assets plus renderer)
-        run: wrangler deploy --config wrangler.web-staging.toml
+        shell: bash
+        run: |
+          set -o pipefail
+          wrangler deploy --config wrangler.web-staging.toml 2>&1 | tee web-staging/deploy-output.log
+
+      - name: Commit the deploy output to the branch (verification record)
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -s web-staging/deploy-output.log ]; then
+            echo "No deploy output captured; nothing to commit."
+            exit 0
+          fi
+          git config user.name "Muse"
+          git config user.email "leads@muse.ai"
+          git add web-staging/deploy-output.log
+          if git diff --cached --quiet; then
+            echo "Deploy output unchanged; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Staging deploy output (asset count and result) [skip ci]"
+          git push origin HEAD:migration/workers-assets-2026-11-17

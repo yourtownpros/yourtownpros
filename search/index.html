@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Search | YourTownPros</title><meta name="description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><link rel="canonical" href="https://yourtownpros.com/search/"><meta name="robots" content="noindex"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="YourTownPros"><meta property="og:title" content="Search"><meta property="og:description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><meta property="og:url" content="https://yourtownpros.com/search/"><meta property="og:image" content="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&h=630&q=70"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<link rel="stylesheet" href="../assets/ytp.css"><script src="../assets/ytp.js?v=20261114p2" defer></script><style>#ytp-srch-note{background:#fdf6e0;border:1px solid #e4d9a8;border-radius:8px;padding:10px 14px;margin:10px 0}</style>
+<link rel="stylesheet" href="../assets/ytp.css"><script src="../assets/ytp.js?v=20261114p2" defer></script><style>#ytp-srch-note{background:#fdf6e0;border:1px solid #e4d9a8;border-radius:8px;padding:10px 14px;margin:10px 0}
+#ytp-smap-wrap{position:relative}
+.smap-load{position:absolute;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:linear-gradient(100deg,#eceee7 40%,#f7f8f3 50%,#eceee7 60%);background-size:200% 100%;animation:smapsk 1.2s linear infinite;color:#5a6672;font-size:14px;font-weight:600}
+.smap-load[hidden]{display:none}
+@keyframes smapsk{from{background-position:180% 0}to{background-position:-20% 0}}
+.sempty{background:#fff;border:1px solid #e4e0d5;border-radius:12px;padding:16px 20px;margin:14px 0}
+.sempty p{margin:6px 0}
+.stownlist{columns:2;column-gap:32px;margin:12px 0}
+.stownlist a{display:block;padding:4px 0;break-inside:avoid}
+@media(max-width:640px){.stownlist{columns:1}}</style>
 </head><body>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header class="hdr57"><div class="htop"><a class="brand" href="/"><svg class="bmark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M256 36c-82 0-148 66-148 148 0 104 148 292 148 292s148-188 148-292c0-82-66-148-148-148z" fill="#0e7a5f"/><circle cx="256" cy="184" r="84" fill="#ffffff"/><path d="M196 184 L238 228 L322 134" fill="none" stroke="#0e7a5f" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/></svg>YourTown<span>Pros</span></a><form class="hsearch57" id="ytp-hform57" role="search" action="/" method="get"><div class="fld57"><input id="ytp-q57" type="text" placeholder="Plumbers, hair salons, auto repair..." autocomplete="off" aria-label="What are you looking for"><div class="sug" id="sug-q57"></div></div><div class="fld57"><input id="ytp-w57" type="text" placeholder="City" autocomplete="off" aria-label="Where"><div class="sug" id="sug-w57"></div></div><button type="submit" class="hgo57" aria-label="Search">&#9906;</button></form><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><a class="hwrite" href="/">Write a Review</a><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div><div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Restaurants <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/bakeries-and-cafes/"><span class="navic57">&#9749;</span>Bakeries &amp; Cafes</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Home &amp; Garden <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/plumbers/"><span class="navic57">&#9874;</span>Plumbers</a><a href="/electricians/"><span class="navic57">&#9889;</span>Electricians</a><a href="/hvac/"><span class="navic57">&#10052;</span>HVAC</a><a href="/roofing/"><span class="navic57">&#9650;</span>Roofing</a><a href="/painting/"><span class="navic57">&#9632;</span>Painters</a><a href="/lawn-and-landscaping/"><span class="navic57">&#10048;</span>Lawn &amp; Landscaping</a><a href="/handyman/"><span class="navic57">&#9874;</span>Handyman</a><a href="/locksmiths/"><span class="navic57">&#9919;</span>Locksmiths</a><a href="/cleaners/"><span class="navic57">&#10024;</span>Cleaners &amp; Laundry</a><a href="/florists/"><span class="navic57">&#9880;</span>Florists</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Services <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/auto-repair/"><span class="navic57">&#9881;</span>Auto Repair</a><a href="/towing/"><span class="navic57">&#10148;</span>Towing</a><a href="/auto-glass/"><span class="navic57">&#9635;</span>Auto Glass</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Health &amp; Beauty <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/hair-salons/"><span class="navic57">&#9986;</span>Hair Salons</a><a href="/barbers/"><span class="navic57">&#9776;</span>Barbers</a><a href="/nails/"><span class="navic57">&#10023;</span>Nail Salons</a><a href="/med-spas/"><span class="navic57">&#10038;</span>Med Spas</a><a href="/spas/"><span class="navic57">&#10047;</span>Spas</a><a href="/massage/"><span class="navic57">&#10049;</span>Massage</a><a href="/tanning/"><span class="navic57">&#9728;</span>Tanning Salons</a><a href="/fitness/"><span class="navic57">&#10025;</span>Fitness</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Travel &amp; Activities <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/dance-studios/"><span class="navic57">&#9835;</span>Dance Studios</a><a href="/bookstores/"><span class="navic57">&#10087;</span>Bookstores</a><a href="/jewelry/"><span class="navic57">&#9733;</span>Jewelry</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/pet-grooming/"><span class="navic57">&#128062;</span>Pet Grooming</a><a href="/pet-boarding/"><span class="navic57">&#8962;</span>Pet Boarding &amp; Daycare</a><a href="/veterinary/"><span class="navic57">&#10010;</span>Veterinary</a><a href="/tattoo/"><span class="navic57">&#10022;</span>Tattoo</a></div></div></div></header>
 
-<main class="wrap"><h1 id="ytp-srch-h">Search YourTownPros</h1><p class="sub" id="ytp-srch-sub"></p><p id="ytp-srch-note" hidden></p><div class="lmapwrap" id="ytp-smap-wrap"><div id="ytp-smap" class="lmap"></div></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Businesses in the town you searched come first, then nearest to farthest. When distances are equal, higher Google ratings and more reviews come first. One result may appear as a labeled Sponsored · Featured partner spot. That labeled spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
+<main class="wrap"><h1 id="ytp-srch-h">Search YourTownPros</h1><p class="sub" id="ytp-srch-sub"></p><p id="ytp-srch-note" hidden></p><div class="lmapwrap" id="ytp-smap-wrap"><div id="ytp-smap" class="lmap"></div><div id="ytp-smap-load" class="smap-load" hidden>Loading map</div></div><div class="filterbar" id="ytp-sfilter" hidden><span class="rcount" id="ytp-scount"></span><span>Rating: <button type="button" class="fbtn sf-rate active" data-r="0">Any rating</button> <button type="button" class="fbtn sf-rate" data-r="4">4.0+</button> <button type="button" class="fbtn sf-rate" data-r="4.5">4.5+</button></span><span><button type="button" class="fbtn sf-tog" id="sf-rev" aria-pressed="false">Has reviews</button> <button type="button" class="fbtn sf-tog" id="sf-claim" aria-pressed="false">Claimed / Verified</button></span></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Businesses in the town you searched come first, then nearest to farthest. When distances are equal, higher Google ratings and more reviews come first. One result may appear as a labeled Sponsored · Featured partner spot. That labeled spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p><script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 /* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader.
    YTPLoad.json(url) returns a Promise; a URL is fetched at most
    once per page, ever: concurrent callers share the pending
@@ -200,146 +209,464 @@ function srchSummary(res, label, town, st) {
 (function () {
   var P = new URLSearchParams(location.search);
   var v = (P.get("v") || "").trim(),
+      qRaw = (P.get("q") || "").trim(),
       townQ = (P.get("city") || "").trim(),
       stQ = (P.get("state") || "").trim();
   var hEl = document.getElementById("ytp-srch-h"),
       subEl = document.getElementById("ytp-srch-sub"),
       noteEl = document.getElementById("ytp-srch-note"),
       listEl = document.getElementById("results-list"),
-      mapWrap = document.getElementById("ytp-smap-wrap");
+      mapWrap = document.getElementById("ytp-smap-wrap"),
+      filtEl = document.getElementById("ytp-sfilter"),
+      countEl = document.getElementById("ytp-scount"),
+      mapLoadEl = document.getElementById("ytp-smap-load");
   function esc(s) { return String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;"); }
-  if (!v || !townQ) {
-    subEl.textContent = "Choose a category and a town in the " +
-      "search above to see pros near you.";
-    if (mapWrap) mapWrap.style.display = "none";
-    return;
-  }
-  try {
-    var f2 = document.getElementById("ytp-w57");
-    if (f2) f2.value = townQ + (stQ ? ", " + stQ : "");
-    /* v5.12.2: no saved-city write. The box shows the town
-       from this search's own URL, and nothing persists it
-       for later prefills (owner ruling Nov 14). */
-  } catch (x) {}
-  window.YTPLoad.cb("/cities-index.json", function (CT) {
-    if (!CT) { subEl.textContent =
-      "Search is unavailable right now."; return; }
+  function escA(s) { return esc(s).replace(/"/g, "&quot;"); }
+  /* v5.17 search group (QA item 3): the query contract the
+     header and hero resolvers speak. normQ, nearMe57, lev57
+     and sing57 mirror assets/ytp.js, and catResolveList
+     runs the same staged matcher (exact, synonym, prefix,
+     substring, then fuzzy; a fuzzy tie resolves to
+     nothing), so a query resolves the same way on every
+     surface. ?q= is honored here for the first time: it
+     resolves to the radius view, a town picker, business
+     name matches, or a helpful empty state, never to a
+     single listing and never to a dead end. */
+  function normQ(q) { return q.toLowerCase()
+    .replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ")
+    .trim(); }
+  function nearMe57(q) { var near = false, place = "";
+    var m = /^(.*?)\s+near\s+(.+)$/.exec(q);
+    if (m) { near = true; q = m[1].trim();
+      var p = m[2].trim(); if (p !== "me") place = p; }
+    else if (q.indexOf("near me ") === 0) {
+      near = true; q = q.slice(8).trim(); }
+    else if (q === "near me") { near = true; q = ""; }
+    return { q: q, near: near, place: place }; }
+  function lev57(a, b) { if (a === b) return 0;
+    var la = a.length, lb = b.length;
+    if (Math.abs(la - lb) > 2) return 99;
+    var prev = [], cur = [], i, j;
+    for (j = 0; j <= lb; j++) prev[j] = j;
+    for (i = 1; i <= la; i++) { cur[0] = i;
+      for (j = 1; j <= lb; j++) {
+        var cost = a.charAt(i - 1) === b.charAt(j - 1)
+          ? 0 : 1;
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1,
+          prev[j - 1] + cost); }
+      var tmp = prev; prev = cur; cur = tmp; }
+    return prev[lb]; }
+  function sing57(w) { return w.length > 3 &&
+    w.charAt(w.length - 1) === "s" ? w.slice(0, -1) : w; }
+  function catResolveList(TA, q) {
+    if (!TA || !TA.cats) return [];
+    var qn = normQ(q); if (!qn) return [];
+    var bySlug = {}, i, c;
+    for (i = 0; i < TA.cats.length; i++)
+      bySlug[TA.cats[i].slug] = TA.cats[i];
+    var scored = [];
+    function push(slug, st) { if (!bySlug[slug]) return;
+      for (var j = 0; j < scored.length; j++)
+        if (scored[j].slug === slug) {
+          if (st < scored[j].st) scored[j].st = st;
+          return; }
+      scored.push({ slug: slug,
+        label: bySlug[slug].label, st: st }); }
+    for (i = 0; i < TA.cats.length; i++) { c = TA.cats[i];
+      var lab = c.label.toLowerCase(), syns = c.syn || [];
+      if (lab === qn || syns.indexOf(qn) > -1)
+        push(c.slug, 0);
+      else if (lab.indexOf(qn) === 0 || syns.some(
+        function (s) { return s.indexOf(qn) === 0 ||
+          qn.indexOf(s) === 0; })) push(c.slug, 1);
+      else if (lab.indexOf(qn) > -1 || syns.some(
+        function (s) { return s.indexOf(qn) > -1; }))
+        push(c.slug, 2); }
+    var shared = TA.shared || {};
+    for (var term in shared) { var tl = term.toLowerCase();
+      var st2 = tl === qn ? 0 : (tl.indexOf(qn) === 0 ||
+        qn.indexOf(tl) === 0 ? 1 :
+        (tl.indexOf(qn) > -1 ? 2 : -1));
+      if (st2 > -1)
+        for (i = 0; i < shared[term].length; i++)
+          push(shared[term][i], st2); }
+    if (!scored.length && qn.length >= 4) {
+      var fbest = null, fbd = 99, ftie = false;
+      for (i = 0; i < TA.cats.length; i++) { c = TA.cats[i];
+        var cands = [c.label.toLowerCase()]
+              .concat(c.syn || []), d = 99;
+        for (var j2 = 0; j2 < cands.length; j2++) {
+          var dd = lev57(sing57(qn), sing57(cands[j2]));
+          if (dd < d) d = dd;
+          var ws = cands[j2].split(" ");
+          for (var k = 0; k < ws.length; k++) {
+            var dw = lev57(sing57(qn), sing57(ws[k]));
+            if (dw < d) d = dw; } }
+        var th = qn.length <= 5 ? 1 : 2;
+        if (d <= th) { if (d < fbd) { fbd = d;
+          fbest = c.slug; ftie = false; }
+          else if (d === fbd) ftie = true; } }
+      if (fbest && !ftie) push(fbest, 3); }
+    scored.sort(function (a, b) { return a.st - b.st ||
+      a.label.localeCompare(b.label); });
+    return scored.slice(0, 3); }
+  function findTown(CT, name, st) {
     var crow = null, i, e;
     for (i = 0; i < CT.length; i++) { e = CT[i];
-      if (e.city.toLowerCase() === townQ.toLowerCase() &&
-          (!stQ || e.state.toLowerCase() ===
-            stQ.toLowerCase())) { crow = e; break; } }
+      if (e.city.toLowerCase() === name.toLowerCase() &&
+          (!st || e.state.toLowerCase() ===
+            st.toLowerCase())) { crow = e; break; } }
     if (!crow) { for (i = 0; i < CT.length; i++) { e = CT[i];
-      if (e.city.toLowerCase() === townQ.toLowerCase()) {
+      if (e.city.toLowerCase() === name.toLowerCase()) {
         crow = e; break; } } }
-    if (!crow || typeof crow.lat !== "number" ||
-        !crow.sh || !crow.sh.length) {
-      hEl.textContent = "Search";
-      subEl.textContent = "We could not find the town \u201c" +
-        townQ + "\u201d. Try the town search above.";
-      if (mapWrap) mapWrap.style.display = "none";
-      return;
-    }
+    return crow; }
+  function showSkel(on) {
+    if (mapLoadEl) mapLoadEl.hidden = !on; }
+  function hideMap() {
+    if (mapWrap) mapWrap.style.display = "none";
+    showSkel(false); }
+  /* Filters (QA item 3, item 9 on this surface): the
+     header count is recomputed from the cards actually
+     rendered on every change, so it cannot drift from
+     the result count. */
+  var F = { rate: 0, rev: false, claim: false };
+  var ALL = null, CURCROW = null;
+  function syncFilterUI() {
+    if (!filtEl) return;
+    var rb = filtEl.querySelectorAll(".sf-rate"), i;
+    for (i = 0; i < rb.length; i++)
+      rb[i].classList.toggle("active",
+        parseFloat(rb[i].getAttribute("data-r")) === F.rate);
+    var rv = document.getElementById("sf-rev"),
+        cl = document.getElementById("sf-claim");
+    if (rv) { rv.classList.toggle("active", F.rev);
+      rv.setAttribute("aria-pressed",
+        F.rev ? "true" : "false"); }
+    if (cl) { cl.classList.toggle("active", F.claim);
+      cl.setAttribute("aria-pressed",
+        F.claim ? "true" : "false"); } }
+  function passF(p) { var r = p.row;
+    if (F.rate && !(r.rating != null && r.rating >= F.rate))
+      return false;
+    if (F.rev && !((r.reviews || 0) > 0)) return false;
+    if (F.claim && !r.claimed) return false;
+    return true; }
+  /* Card (QA item 3, item 7): metadata is built from
+     segments and joined, so a missing value never leaves
+     a dangling separator or a "null reviews" line; the
+     Request action matches the listing cards ("Request
+     this pro", class rtel, ?src=card#match); tel: links
+     carry digits only, no +1 prefix. */
+  function cardHTML(p) {
+    var r = p.row;
+    var rate = "";
+    if (r.rating != null) {
+      var rp = ["\u2605 " + Number(r.rating).toFixed(1)];
+      if (r.reviews != null) rp.push(r.reviews + " reviews");
+      rate = '<p class="rmeta57"><span class="stars">' +
+        rp.join(" \u00b7 ") + '</span> <span class="gsrc">' +
+        r.rsrc + " rating</span></p>"; }
+    else if (r.reviews) {
+      rate = '<p class="rmeta57">' + r.reviews +
+        " reviews</p>"; }
+    return '<article class="result-card" data-slug="' +
+      esc(r.url.replace(/^\//, "").replace(/\/$/, "")) +
+      '"><div class="pbody"><h3><a href="' + r.url +
+      '">' + esc(r.name) + "</a>" +
+      (r.claimed ? ' <span class="cbadge">\u2713 ' +
+        "Claimed</span>" : "") + "</h3>" +
+      (p.pinned
+        ? '<p class="rmeta57">' + esc(r.city) + ", " +
+          r.state + " \u00b7 " + p.dist.toFixed(1) + " mi</p>"
+        : '<p class="rmeta57">Serves ' + esc(r.city) +
+          " area</p>") +
+      rate +
+      '<p class="rmeta57">' +
+      (r.phone ? '<a class="rtel" href="tel:' +
+        r.phone.replace(/[^0-9]/g, "") + '">' +
+        esc(r.phone) + "</a> " : "") +
+      '<a class="rtel" href="' + r.url +
+      '?src=card#match" aria-label="Request this pro: ' +
+      escA(r.name) + '">Request this pro</a></p>' +
+      "</div></article>"; }
+  var map = null, layer = null;
+  function renderMap(shown) {
+    if (!window.L || !CURCROW) { hideMap(); return; }
+    if (mapWrap) mapWrap.style.display = "";
+    if (!map) {
+      /* Wheel zoom stays off until the map is clicked,
+         the site pattern, so page scroll is never
+         trapped; the skeleton overlay covers the load. */
+      map = L.map("ytp-smap", { scrollWheelZoom: false });
+      var smapEl = document.getElementById("ytp-smap");
+      if (smapEl) smapEl.addEventListener("click",
+        function () { if (map.scrollWheelZoom &&
+          !map.scrollWheelZoom.enabled())
+          map.scrollWheelZoom.enable(); });
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}" +
+        ".png", { maxZoom: 19,
+        attribution: "&copy; <a href=\"https://www." +
+        "openstreetmap.org/copyright\">OpenStreetMap</a> " +
+        "contributors" }).addTo(map);
+      layer = L.layerGroup().addTo(map); }
+    layer.clearLayers();
+    var pts = [], pinIx = 0;
+    shown.forEach(function (p) {
+      if (!p.pinned) return;
+      pinIx++;
+      var mk = L.marker([p.row.lat, p.row.lng],
+        { icon: L.divIcon({ className: "ytp-pinwrap",
+          html: '<div class="ytp-pin">' + pinIx + "</div>",
+          iconSize: [26, 26], iconAnchor: [13, 13] }) });
+      mk.bindPopup('<p class="pname"><a href="' +
+        p.row.url + '">' + esc(p.row.name) + "</a></p>",
+        { maxWidth: 280 });
+      mk.addTo(layer);
+      pts.push([p.row.lat, p.row.lng]); });
+    /* Fit bounds to the results actually shown, on the
+       first render and after every filter change. */
+    if (pts.length) {
+      map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
+    } else { map.setView([CURCROW.lat, CURCROW.lng], 11); }
+    showSkel(false); }
+  function renderResults() {
+    if (!ALL) return;
+    var shown = ALL.results.filter(passF);
+    if (countEl) countEl.textContent = "Showing " +
+      shown.length + " of " + ALL.results.length + " pros";
+    listEl.innerHTML = shown.length
+      ? shown.map(cardHTML).join("")
+      : '<div class="sempty"><p>No pros match those ' +
+        'filters. <button type="button" class="fbtn" ' +
+        'id="sf-clear">Clear filters</button></p></div>';
+    var cb = document.getElementById("sf-clear");
+    if (cb) cb.addEventListener("click", function () {
+      F.rate = 0; F.rev = false; F.claim = false;
+      syncFilterUI(); renderResults(); });
+    renderMap(shown); }
+  if (filtEl) {
+    var rb2 = filtEl.querySelectorAll(".sf-rate"), bi;
+    for (bi = 0; bi < rb2.length; bi++) (function (b) {
+      b.addEventListener("click", function () {
+        F.rate = parseFloat(b.getAttribute("data-r")) || 0;
+        syncFilterUI(); renderResults(); });
+    })(rb2[bi]);
+    var rvB = document.getElementById("sf-rev"),
+        clB = document.getElementById("sf-claim");
+    if (rvB) rvB.addEventListener("click", function () {
+      F.rev = !F.rev; syncFilterUI(); renderResults(); });
+    if (clB) clB.addEventListener("click", function () {
+      F.claim = !F.claim; syncFilterUI(); renderResults(); }); }
+  function emptyRadiusHTML(label, slug, crow) {
+    return '<div class="sempty"><p>No ' +
+      esc(label.toLowerCase()) + ' are listed within 25 ' +
+      'miles of ' + esc(crow.city) + ", " + crow.state +
+      ' yet. The directory grows town by town, and a ' +
+      'listing here may simply not be added yet.</p>' +
+      '<p><a href="/' + slug + '/">See ' + esc(label) +
+      ' in other towns</a> \u00b7 <a href="' + crow.url +
+      '">Browse ' + esc(crow.city) + ", " + crow.state +
+      '</a> \u00b7 <a href="/add-business/">Add a business' +
+      "</a></p></div>"; }
+  function townNotFound(name) {
+    hEl.textContent = "Search";
+    subEl.textContent = "We could not find the town \u201c" +
+      name + "\u201d. Try the town search above.";
+    hideMap();
+    listEl.innerHTML = '<div class="sempty"><p>Towns join ' +
+      'the directory as listings are added, so yours may ' +
+      'not be covered yet. You can still <a href=' +
+      '"/add-business/">add a business</a>, or browse ' +
+      'pros by category from the menu above.</p></div>'; }
+  function townPicker(label, slug, CI, CT) {
+    var towns = CI[slug] || {};
+    var byKey = {}, i;
+    for (i = 0; i < CT.length; i++)
+      byKey[CT[i].sslug + "/" + CT[i].cslug] = CT[i];
+    var items = Object.keys(towns).map(function (k) {
+      return byKey[k] || null; }).filter(Boolean);
+    items.sort(function (a, b) {
+      return (b.count || 0) - (a.count || 0); });
+    if (!items.length) { emptyQueryState(label); return; }
+    hEl.textContent = label + ": pick your town";
+    document.title = label + " | YourTownPros";
+    subEl.textContent = "Pick a town to see " +
+      label.toLowerCase() + " near you, nearest first.";
+    try { var f1 = document.getElementById("ytp-q57");
+      if (f1) f1.value = label; } catch (x) {}
+    hideMap();
+    listEl.innerHTML = '<div class="stownlist">' +
+      items.map(function (e) {
+        return '<a href="/search/?v=' + slug + "&city=" +
+          encodeURIComponent(e.city) + "&state=" + e.state +
+          '">' + esc(e.city) + ", " + e.state + "</a>"; })
+        .join("") + '</div><p class="listed">Or see the ' +
+      '<a href="/' + slug + '/">' + esc(label) +
+      " directory by state</a>.</p>"; }
+  function emptyQueryState(q) {
+    try { var f1 = document.getElementById("ytp-q57");
+      if (f1) f1.value = q; } catch (x) {}
+    hEl.textContent = "No matches for \u201c" + q + "\u201d";
+    document.title = "Search | YourTownPros";
+    subEl.textContent = "We could not find a category or " +
+      "a business by that name.";
+    hideMap();
+    listEl.innerHTML = '<div class="sempty"><p>' +
+      'YourTownPros lists local pros by trade and town. ' +
+      'Check the spelling, try the trade you need (for ' +
+      'example plumbers or hair salons), or browse a ' +
+      'category:</p><p><a href="/plumbers/">Plumbers</a> ' +
+      '\u00b7 <a href="/electricians/">Electricians</a> ' +
+      '\u00b7 <a href="/hvac/">HVAC</a> \u00b7 ' +
+      '<a href="/auto-repair/">Auto Repair</a> \u00b7 ' +
+      '<a href="/hair-salons/">Hair Salons</a> \u00b7 ' +
+      '<a href="/pet-grooming/">Pet Grooming</a></p>' +
+      '<p>Own a business that should be here? ' +
+      '<a href="/add-business/">Add a business</a> \u00b7 ' +
+      '<a href="/claim/">Claim your business</a></p></div>'; }
+  function renderNameState(q, TA) {
+    try { var f1 = document.getElementById("ytp-q57");
+      if (f1) f1.value = q; } catch (x) {}
+    var qn = normQ(q), ms = [];
+    if (TA && TA.names && qn) ms = TA.names.filter(
+      function (e) {
+        return e.n.toLowerCase().indexOf(qn) > -1; })
+      .slice(0, 12);
+    if (!ms.length) { emptyQueryState(q); return; }
+    hEl.textContent = "Businesses matching \u201c" + q +
+      "\u201d";
+    document.title = "Search | YourTownPros";
+    subEl.textContent = "Tap a business to open its page. " +
+      "Looking for a trade instead? Type the trade and a " +
+      "town in the search above.";
+    hideMap();
+    listEl.innerHTML = ms.map(function (e) {
+      return '<article class="result-card"><div ' +
+        'class="pbody"><h3><a href="' + e.u + '">' +
+        esc(e.n) + '</a></h3><p class="rmeta57">' +
+        esc(e.t) + " \u00b7 " + esc(e.c) + ", " + e.s +
+        "</p></div></article>"; }).join(""); }
+  function runRadius(label, slug, crow) {
+    CURCROW = crow;
     var town = crow.city, st = crow.state;
+    try {
+      var f2 = document.getElementById("ytp-w57");
+      if (f2) f2.value = town + ", " + st;
+      /* v5.15 (roadmap 16a): keep the searched category in
+         the service box, the way the where box keeps the
+         searched town, so refining the search is one edit. */
+      var f1 = document.getElementById("ytp-q57");
+      if (f1) f1.value = label;
+    } catch (x) {}
+    showSkel(true);
+    var jobs = crow.sh.map(function (f) {
+      return window.YTPLoad.json("/search-shards/" + f)
+        .catch(function () { return []; });
+    });
+    Promise.all(jobs).then(function (shards) {
+      var D = [];
+      shards.forEach(function (rows) {
+        (rows || []).forEach(function (r) {
+          D.push({ name: r.n, vertical: r.t, city: r.c,
+            state: r.s, url: r.u, phone: r.ph || "",
+            lat: r.p ? r.la : null, lng: r.p ? r.lo : null,
+            pin: !!r.p,
+            effLat: (typeof r.la === "number") ? r.la : null,
+            effLng: (typeof r.lo === "number") ? r.lo : null,
+            rating: (r.r == null) ? null : r.r,
+            reviews: (r.v == null) ? null : r.v,
+            rsrc: (r.rs === "B") ? "Birdeye" : "Google",
+            hours: !!r.h, claimed: !!r.cl }); });
+      });
+      var res = radiusSearch(D, label, town, st,
+        { lat: crow.lat, lng: crow.lng });
+      var sum = srchSummary(res, label, town, st);
+      hEl.textContent = sum.heading;
+      document.title = sum.heading + " | YourTownPros";
+      subEl.textContent = sum.sub;
+      if (sum.notice) { noteEl.textContent = sum.notice;
+        noteEl.hidden = false; }
+      ALL = res;
+      if (res.results.length) {
+        if (filtEl) filtEl.hidden = false;
+        F.rate = 0; F.rev = false; F.claim = false;
+        syncFilterUI();
+        renderResults();
+      } else {
+        if (filtEl) filtEl.hidden = true;
+        hideMap();
+        listEl.innerHTML = emptyRadiusHTML(label, slug,
+          crow);
+      } });
+  }
+  var nm = nearMe57(normQ(qRaw));
+  if (!v && !qRaw) {
+    subEl.textContent = "Choose a category and a town in " +
+      "the search above to see pros near you.";
+    hideMap();
+    listEl.innerHTML = '<div class="sempty"><p>Popular ' +
+      'categories: <a href="/plumbers/">Plumbers</a> ' +
+      '\u00b7 <a href="/electricians/">Electricians</a> ' +
+      '\u00b7 <a href="/hvac/">HVAC</a> \u00b7 ' +
+      '<a href="/hair-salons/">Hair Salons</a> \u00b7 ' +
+      '<a href="/pet-grooming/">Pet Grooming</a> \u00b7 ' +
+      '<a href="/auto-repair/">Auto Repair</a></p>' +
+      '<p>Own a business? <a href="/add-business/">Add a ' +
+      'business</a> \u00b7 <a href="/claim/">Claim your ' +
+      'business</a></p></div>';
+    return;
+  }
+  showSkel(true);
+  window.YTPLoad.cb("/cities-index.json", function (CT) {
+    if (!CT) { subEl.textContent =
+      "Search is unavailable right now."; hideMap(); return; }
+    var crow = null;
+    if (townQ) crow = findTown(CT, townQ, stQ);
+    if (!crow && nm.place) crow = findTown(CT, nm.place, "");
+    if (!crow && nm.near && !townQ) {
+      /* Roadmap item 28's saved-city leg, read-only: the
+         legacy ytp-city key resolves an explicit "near me"
+         query. Nothing is written back. */
+      var sv = null;
+      try { sv = localStorage.getItem("ytp-city"); }
+      catch (x) {}
+      if (sv) { var sp = sv.split(",");
+        crow = findTown(CT, (sp[0] || "").trim(),
+          (sp[1] || "").trim()); } }
+    if (crow && (typeof crow.lat !== "number" ||
+        !crow.sh || !crow.sh.length)) crow = null;
     window.YTPLoad.cb("/typeahead.json", function (TA) {
-      var label = null;
-      if (TA && TA.cats) for (i = 0; i < TA.cats.length; i++) {
-        if (TA.cats[i].slug === v) {
-          label = TA.cats[i].label; break; } }
-      if (!label) { label = v.replace(/-/g, " ")
+      var label = null, slug = v || null, i;
+      if (slug && TA && TA.cats) {
+        for (i = 0; i < TA.cats.length; i++) {
+          if (TA.cats[i].slug === slug) {
+            label = TA.cats[i].label; break; } } }
+      if (!label && slug) { label = slug.replace(/-/g, " ")
         .replace(/\b\w/g, function (c) {
           return c.toUpperCase(); }); }
-      /* v5.15 (roadmap 16a): keep the searched category in
-         the service box, the way the where box above keeps
-         the searched town, so refining the search is one
-         edit. The value is the typeahead display name
-         resolved just above (or its title-case fallback). */
-      try {
-        var f1 = document.getElementById("ytp-q57");
-        if (f1) f1.value = label;
-      } catch (x) {}
-      var jobs = crow.sh.map(function (f) {
-        return window.YTPLoad.json("/search-shards/" + f)
-          .catch(function () { return []; });
-      });
-      Promise.all(jobs).then(function (shards) {
-        var D = [];
-        shards.forEach(function (rows) {
-          (rows || []).forEach(function (r) {
-            D.push({ name: r.n, vertical: r.t, city: r.c,
-              state: r.s, url: r.u, phone: r.ph || "",
-              lat: r.p ? r.la : null, lng: r.p ? r.lo : null,
-              pin: !!r.p,
-              effLat: (typeof r.la === "number") ? r.la : null,
-              effLng: (typeof r.lo === "number") ? r.lo : null,
-              rating: (r.r == null) ? null : r.r,
-              reviews: (r.v == null) ? null : r.v,
-              rsrc: (r.rs === "B") ? "Birdeye" : "Google",
-              hours: !!r.h, claimed: !!r.cl });
-          });
-        });
-        var res = radiusSearch(D, label, town, st,
-          { lat: crow.lat, lng: crow.lng });
-        var sum = srchSummary(res, label, town, st);
-        hEl.textContent = sum.heading;
-        document.title = sum.heading + " | YourTownPros";
-        subEl.textContent = sum.sub;
-        if (sum.notice) { noteEl.textContent = sum.notice;
-          noteEl.hidden = false; }
-        listEl.innerHTML = res.results.map(function (p) {
-          var r = p.row;
-          return '<article class="result-card" data-slug="' +
-            esc(r.url.replace(/^\//, "").replace(/\/$/, "")) +
-            '"><div class="pbody"><h3><a href="' + r.url +
-            '">' + esc(r.name) + '</a></h3>' +
-            (p.pinned
-              ? '<p class="rmeta57">' + esc(r.city) + ", " +
-                r.state + " \u00b7 " + p.dist.toFixed(1) +
-                " mi</p>"
-              : '<p class="rmeta57">Serves ' + esc(r.city) +
-                " area</p>") +
-            (r.rating != null
-              ? '<p class="rmeta57"><span class="stars">' +
-                r.rating + " \u00b7 " + r.reviews +
-                ' reviews</span> <span class="gsrc">' +
-                r.rsrc + " rating</span></p>" : "") +
-            (r.phone ? '<p class="rmeta57"><a href="tel:' +
-              r.phone.replace(/[^0-9]/g, "") + '">' +
-              esc(r.phone) + "</a></p>" : "") +
-            "</div></article>";
-        }).join("");
-        if (window.L && res.results.length) {
-          var map = L.map("ytp-smap");
-          L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}" +
-            ".png", { maxZoom: 19,
-            attribution: "&copy; <a href=\"https://www." +
-            "openstreetmap.org/copyright\">OpenStreetMap</a> " +
-            "contributors" }).addTo(map);
-          var pts = [], pinIx = 0;
-          res.results.forEach(function (p) {
-            if (!p.pinned) return;
-            pinIx++;
-            var mk = L.marker([p.row.lat, p.row.lng],
-              { icon: L.divIcon({ className: "ytp-pinwrap",
-                html: '<div class="ytp-pin">' + pinIx +
-                  "</div>", iconSize: [26, 26],
-                iconAnchor: [13, 13] }) });
-            mk.bindPopup('<p class="pname"><a href="' +
-              p.row.url + '">' + esc(p.row.name) + "</a></p>",
-              { maxWidth: 280 });
-            mk.addTo(map);
-            pts.push([p.row.lat, p.row.lng]);
-          });
-          if (pts.length) {
-            map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
-          } else { map.setView([crow.lat, crow.lng], 11); }
-        } else if (mapWrap) { mapWrap.style.display = "none"; }
-      });
+      if (!v && nm.q) {
+        var cms = catResolveList(TA, nm.q);
+        if (cms.length) { slug = cms[0].slug;
+          label = cms[0].label; } }
+      if (slug && crow) { runRadius(label, slug, crow);
+        return; }
+      if (slug) {
+        if (townQ || nm.place) {
+          townNotFound(townQ || nm.place); return; }
+        window.YTPLoad.cb("/category-index.json",
+          function (CI) {
+            townPicker(label, slug, CI || {}, CT); });
+        return; }
+      if (qRaw) { renderNameState(qRaw, TA); return; }
+      subEl.textContent = "Choose a category and a town " +
+        "in the search above to see pros near you.";
+      hideMap();
     });
   });
 })();
+
 </script></main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

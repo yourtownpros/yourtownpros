@@ -38,7 +38,8 @@ deferred shared script has not run yet. Business data
 comes from typeahead.json names, mapped to the row
 shape this script has always used. */
 function YL(){if(window.YTPLoad)return window.YTPLoad;if(!window._ytfb){var c={},p={};window._ytfb={json:function(u){if(c[u])return Promise.resolve(c[u]);if(p[u])return p[u];p[u]=fetch(u).then(function(r){return r.json()}).then(function(d){c[u]=d;delete p[u];return d}).catch(function(e){delete p[u];throw e});return p[u]},cb:function(u,f){this.json(u).then(function(d){f(d)},function(){f(null)})}}}return window._ytfb}
-function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){var ns=(d&&d.names)||[];D=ns.map(function(e){return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,la:e.la,lo:e.lo,attrs:[],services:[]}});cb()})}
+var TAC=null,TAS=null;
+function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){TAC=(d&&d.cats)||[];TAS=(d&&d.shared)||{};var ns=(d&&d.names)||[];D=ns.map(function(e){return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,la:e.la,lo:e.lo,attrs:[],services:[]}});cb()})}
 function loadCT(cb){if(CT){cb();return}YL().cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}YL().cb("/category-index.json",function(d){CAT=d||{};cb()})}
 function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
@@ -56,8 +57,9 @@ box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
 function pickTerm(it){pickB=it.go;pickV=it.vslug||null;pickCat=it.k.charAt(0)==="c";f1.value=it.label;s1.style.display="none";N1.act=-1;ensure(go)}
-function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!D){s1.style.display="none";N1.items=[];return}
-var cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
+function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<2||!D){s1.style.display="none";N1.items=[];return}
+var cats=catMatches57(q).map(function(c){return{k:"c"+c.slug,label:c.label,vslug:c.slug,html:"<strong>"+esc(c.label)+"</strong><span>Category</span>",go:"/"+c.slug+"/"}});
+if(!cats.length&&!(TAC&&TAC.length))cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
 var biz=D.filter(function(e){return bm56(e,q)});
 var hc=resolveCity();
 if(hc&&typeof hc.lat==="number"){biz=biz.map(function(e){return{w:e,d:(typeof e.la==="number")?havKm(e.la,e.lo,hc.lat,hc.lng):1e18}}).sort(function(a,b){return a.d-b.d}).map(function(x){return x.w})}
@@ -82,6 +84,73 @@ function showHint(){if(!hint)return;hint.style.display="block";if(hintTimer)clea
 function hideHint(){if(hint)hint.style.display="none"}
 function locFallback(){suppressCity=true;setTimeout(function(){suppressCity=false},400);showHint();f2.focus()}
 function havKm(a,b,c,d){var R=6371,t=Math.PI/180,x=(c-a)*t,y=(d-b)*t,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*t)*Math.cos(c*t)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h))}
+/* v5.17 search group helpers: the same query contract as
+the header resolver (assets/ytp.js). nearMe57 splits a
+trailing "near <place>" or "near me" off the what text;
+lev57 and sing57 back the fuzzy category stage. */
+function normQ(q){return q.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function nearMe57(q){var near=false,place="";
+var m=/^(.*?)\s+near\s+(.+)$/.exec(q);
+if(m){near=true;q=m[1].trim();var p=m[2].trim();if(p!=="me")place=p}
+else if(q.indexOf("near me ")===0){near=true;q=q.slice(8).trim()}
+else if(q==="near me"){near=true;q=""}
+return{q:q,near:near,place:place}}
+function lev57(a,b){if(a===b)return 0;
+var la=a.length,lb=b.length;
+if(Math.abs(la-lb)>2)return 99;
+var prev=[],cur=[],i,j;
+for(j=0;j<=lb;j++)prev[j]=j;
+for(i=1;i<=la;i++){cur[0]=i;
+for(j=1;j<=lb;j++){var cost=a.charAt(i-1)===b.charAt(j-1)?0:1;
+cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+cost)}
+var tmp=prev;prev=cur;cur=tmp}
+return prev[lb]}
+function sing57(w){return w.length>3&&w.charAt(w.length-1)==="s"?w.slice(0,-1):w}
+function resolveCityText(tx){if(!CT)return null;
+var low=String(tx||"").trim().toLowerCase();if(!low)return null;
+for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===low)return CT[i]}
+for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
+return null}
+function savedCity57(){/* Roadmap item 28's saved-city leg,
+read-only: the legacy ytp-city key resolves an explicit
+"near me" query when the where box is empty. It never
+prefills the box; the v5.12.2 ruling stands. */
+var v=null;try{v=localStorage.getItem("ytp-city")}catch(e){}
+if(!v)return null;
+return resolveCityText(v)}
+function searchURL57(raw,city,cityText){var u="/search/?q="+encodeURIComponent(raw);
+if(city)u+="&city="+encodeURIComponent(city.city)+"&state="+city.state;
+else if(cityText)u+="&city="+encodeURIComponent(cityText);
+return u}
+function catMatches57(q){if(!TAC)return[];
+var qn=normQ(q);if(!qn)return[];
+var bySlug={},i,c;
+for(i=0;i<TAC.length;i++)bySlug[TAC[i].slug]=TAC[i];
+var scored=[];
+function push(slug,st){if(!bySlug[slug])return;
+for(var j=0;j<scored.length;j++)if(scored[j].slug===slug){if(st<scored[j].st)scored[j].st=st;return}
+scored.push({slug:slug,label:bySlug[slug].label,st:st})}
+for(i=0;i<TAC.length;i++){c=TAC[i];
+var lab=c.label.toLowerCase(),syns=c.syn||[];
+if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0);
+else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1);
+else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2)}
+var shared=TAS||{};
+for(var term in shared){var tl=term.toLowerCase();
+var st2=tl===qn?0:(tl.indexOf(qn)===0||qn.indexOf(tl)===0?1:(tl.indexOf(qn)>-1?2:-1));
+if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2)}
+if(!scored.length&&qn.length>=4){
+var fbest=null,fbd=99,ftie=false;
+for(i=0;i<TAC.length;i++){c=TAC[i];
+var cands=[c.label.toLowerCase()].concat(c.syn||[]),d=99;
+for(var j=0;j<cands.length;j++){var dd=lev57(sing57(qn),sing57(cands[j]));if(dd<d)d=dd;
+var ws=cands[j].split(" ");
+for(var k=0;k<ws.length;k++){var dw=lev57(sing57(qn),sing57(ws[k]));if(dw<d)d=dw}}
+var th=qn.length<=5?1:2;
+if(d<=th){if(d<fbd){fbd=d;fbest=c.slug;ftie=false}else if(d===fbd)ftie=true}}
+if(fbest&&!ftie)push(fbest,3)}
+scored.sort(function(a,b){return a.st-b.st||a.label.localeCompare(b.label)});
+return scored.slice(0,3)}
 function nearestCity(la,lo){var wc=CT?CT.filter(function(e){return typeof e.lat==="number"&&typeof e.lng==="number"}):[];
 if(!wc.length)return null;
 var best=null,bd=1e18,i,e,d;
@@ -93,35 +162,32 @@ navigator.geolocation.getCurrentPosition(function(pos){
 loadCT(function(){var best=nearestCity(pos.coords.latitude,pos.coords.longitude);
 if(best)applyCity(best);else locFallback()})},function(){locFallback()},{timeout:8000})}
 function resolveCity(){if(pickC)return pickC;
-var t=f2.value.trim();if(!t||!CT)return null;
-var low=t.toLowerCase(),i,e;
-for(i=0;i<CT.length;i++){e=CT[i];if((e.city+", "+e.state).toLowerCase()===low)return e}
-for(i=0;i<CT.length;i++){e=CT[i];if(e.city.toLowerCase()===low)return e}
-return null}
-function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase(),i,e;
-/* v5.12.2: same rule as the header: a category (clicked,
-or the top typed vertical match) plus a resolved town
-ALWAYS lands on the radius view; no category-index
-existence check, no static town page detour. */
+if(!CT)return null;
+return resolveCityText(f2.value)}
+function go(){var raw=f1.value.trim();
+var nm=nearMe57(normQ(raw));
+var city=resolveCity();
+if(!city&&nm.place)city=resolveCityText(nm.place);
+if(!city&&nm.near)city=savedCity57();
+var q=nm.q;
+/* v5.17 search group (QA item 3): the same routing
+contract as the header. Typed text never lands on a
+single listing (the old first-name-match jumps are gone:
+with an empty or generic query they sent the visitor to
+the alphabetically first business in the index) and never
+ends in a silent no-op. The only direct listing route is
+an explicit suggestion click (pickB). Everything else
+resolves to the radius view or to /search/?q=, and an
+empty search with no town goes to the /search/ picker
+state, not to a listing and not home. */
+if(pickB&&!nm.near){location.href=pickB;return}
 if(city&&pickCat&&pickV){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
-if(pickB){location.href=pickB;return}
-if(city&&q){var seen={},vs=[];
-for(i=0;i<D.length;i++){e=D[i];if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;vs.push(e.vslug)}}
-if(vs.length){location.href="/search/?v="+vs[0]+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}}
-if(city&&q){var m=D.filter(function(e){return e.city===city.city&&e.state===city.state&&(e.vertical.toLowerCase().indexOf(q)>-1||bm56(e,q))});
-if(m.length>=2){location.href="/search/?v="+m[0].vslug+"&city="+encodeURIComponent(m[0].city)+"&state="+m[0].state;return}
-if(m.length===1){location.href=m[0].url;return}}
+if(city&&q){var cms=catMatches57(q);
+if(cms.length){location.href="/search/?v="+cms[0].slug+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
+location.href=searchURL57(raw,city);return}
 if(city){location.href=city.url;return}
-var tc=f2.value.trim().toLowerCase();
-if(tc){var t2=D.filter(function(e){return e.city.toLowerCase()===tc||(e.city+", "+e.state).toLowerCase()===tc});
-if(t2.length&&q){var m2=t2.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1||bm56(e,q)});
-if(m2.length>=2){location.href="/search/?v="+m2[0].vslug+"&city="+encodeURIComponent(m2[0].city)+"&state="+m2[0].state;return}
-if(m2.length===1){location.href=m2[0].url;return}}
-if(t2.length){var ce=null;if(CT){for(var j=0;j<CT.length;j++){if(CT[j].city.toLowerCase()===tc||(CT[j].city+", "+CT[j].state).toLowerCase()===tc){ce=CT[j];break}}}if(ce){location.href=t2.length>=5?ce.url:"/"+ce.sslug+"/";return}location.href="/";return}}
-var b=D.filter(function(e){return bm56(e,q)});
-if(b.length){location.href=b[0].url;return}
-var c=D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1});
-if(c.length){location.href="/"+c[0].vslug+"/"}}
+if(q||nm.near){location.href=searchURL57(raw,null,f2.value.trim()||null);return}
+location.href="/search/"}
 function keyNav(box,st,fn){return function(e){
 if(e.key==="ArrowDown"||e.key==="ArrowUp"){if(box.style.display==="block"&&st.items.length){e.preventDefault();st.act=(st.act+(e.key==="ArrowDown"?1:-1)+st.items.length)%st.items.length;paint(box,st)}return}
 if(e.key==="Enter"){if(box.style.display==="block"&&st.act>=0&&st.items[st.act]){e.preventDefault();fn(st.items[st.act])}else ensure(go);return}
@@ -139,7 +205,11 @@ The saved-city read, the geolocation fill and the ipapi.co
 IP guess that used to run here are removed: the box starts
 empty unless the user typed a location in this session.
 Picking a town suggestion or the Current Location row is
-a user action and still fills it (applyCity). */
+a user action and still fills it (applyCity). v5.17 adds
+one narrow read back: an explicit "near me" query resolves
+through the legacy ytp-city key when the box is empty
+(roadmap item 28's saved-city leg). The box is still never
+prefilled and the key is never written here. */
 var slides=[],caps=[],ticks=[];
 function setSlide(n){if(!slides.length)return;cur=((n%slides.length)+slides.length)%slides.length;for(var i=0;i<slides.length;i++){slides[i].className="hslide"+(i===cur?" on":"");if(caps[i])caps[i].className="slidecap"+(i===cur?" on":"");if(ticks[i])ticks[i].className="tick tickbtn"+(i===cur?" on":"")}}
 function auto(){clearInterval(timer);if(slides.length>1){timer=setInterval(function(){setSlide((cur+1)%slides.length)},6000)}}

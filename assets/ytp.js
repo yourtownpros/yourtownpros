@@ -237,6 +237,44 @@ function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json
 function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(cb)})})}
 function normQ(q){return q.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
 function havMi(aLa,aLo,bLa,bLo){var R=3959,p=Math.PI/180,dLa=(bLa-aLa)*p,dLo=(bLo-aLo)*p,h=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(aLa*p)*Math.cos(bLa*p)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(h))}
+/* v5.17 search group helpers. nearMe57 splits a trailing
+"near <place>" or "near me" off the what text; lev57 is a
+bounded edit distance and sing57 a light singularizer, the
+pair behind the fuzzy category stage in catMatches. */
+function nearMe57(q){var near=false,place="";
+var m=/^(.*?)\s+near\s+(.+)$/.exec(q);
+if(m){near=true;q=m[1].trim();var p=m[2].trim();if(p!=="me")place=p}
+else if(q.indexOf("near me ")===0){near=true;q=q.slice(8).trim()}
+else if(q==="near me"){near=true;q=""}
+return{q:q,near:near,place:place}}
+function lev57(a,b){if(a===b)return 0;
+var la=a.length,lb=b.length;
+if(Math.abs(la-lb)>2)return 99;
+var prev=[],cur=[],i,j;
+for(j=0;j<=lb;j++)prev[j]=j;
+for(i=1;i<=la;i++){cur[0]=i;
+for(j=1;j<=lb;j++){var cost=a.charAt(i-1)===b.charAt(j-1)?0:1;
+cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+cost)}
+var tmp=prev;prev=cur;cur=tmp}
+return prev[lb]}
+function sing57(w){return w.length>3&&w.charAt(w.length-1)==="s"?w.slice(0,-1):w}
+function resolveCityText(tx){if(!CT)return null;
+var low=String(tx||"").trim().toLowerCase();if(!low)return null;
+for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===low)return CT[i]}
+for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
+return null}
+function savedCity57(){/* Roadmap item 28's saved-city leg,
+read-only: the legacy ytp-city key (still read by the match
+thanks page) resolves an explicit "near me" query when the
+where box is empty. It never prefills the box and never
+ranks suggestions; the v5.12.2 ruling stands. */
+var v=null;try{v=localStorage.getItem("ytp-city")}catch(e){}
+if(!v)return null;
+return resolveCityText(v)}
+function searchURL57(raw,city,cityText){var u="/search/?q="+encodeURIComponent(raw);
+if(city)u+="&city="+encodeURIComponent(city.city)+"&state="+city.state;
+else if(cityText)u+="&city="+encodeURIComponent(cityText);
+return u}
 function catMatches(q){if(!TA)return[];
 var qn=normQ(q);if(!qn)return[];
 var bySlug={},i,c;
@@ -254,6 +292,18 @@ var shared=TA.shared||{};
 for(var term in shared){var tl=term.toLowerCase();
 var st2=tl===qn?0:(tl.indexOf(qn)===0||qn.indexOf(tl)===0?1:(tl.indexOf(qn)>-1?2:-1));
 if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2)}
+/* Fuzzy stage: only when nothing matched above. A tie
+between two categories resolves to nothing, never a guess. */
+if(!scored.length&&qn.length>=4){
+var fbest=null,fbd=99,ftie=false;
+for(i=0;i<TA.cats.length;i++){c=TA.cats[i];
+var cands=[c.label.toLowerCase()].concat(c.syn||[]),d=99;
+for(var j=0;j<cands.length;j++){var dd=lev57(sing57(qn),sing57(cands[j]));if(dd<d)d=dd;
+var ws=cands[j].split(" ");
+for(var k=0;k<ws.length;k++){var dw=lev57(sing57(qn),sing57(ws[k]));if(dw<d)d=dw}}
+var th=qn.length<=5?1:2;
+if(d<=th){if(d<fbd){fbd=d;fbest=c.slug;ftie=false}else if(d===fbd)ftie=true}}
+if(fbest&&!ftie)push(fbest,3)}
 scored.sort(function(a,b){return a.st-b.st||a.label.localeCompare(b.label)});
 return scored.slice(0,3)}
 function townLatLng(name){if(!name)return null;
@@ -294,7 +344,7 @@ box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join
 box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
-function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!TA){s1.style.display="none";return}
+function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<2||!TA){s1.style.display="none";return}
 var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
 var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
 show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
@@ -310,31 +360,34 @@ var q=f2.value.trim().toLowerCase();
 var ms=cityMatches(q).slice(0,7);
 show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+e.count+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
 function resolveCity(){if(pickC)return pickC;
-var t=f2.value.trim();if(!t||!CT)return null;
-var low=t.toLowerCase();
-for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===low)return CT[i]}
-for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
-return null}
-function go(){var city=resolveCity(),q=f1.value.trim().toLowerCase();
-/* v5.12.2: a category (clicked, or the top typed match)
-plus a resolved town ALWAYS lands on the radius view. The
-old category-index existence check is gone: the route no
-longer depends on a static category page existing in that
-town, and a stale or failed category-index load can no
-longer drop the user onto the static town page. */
+if(!CT)return null;
+return resolveCityText(f2.value)}
+function go(){var raw=f1.value.trim();
+var nm=nearMe57(normQ(raw));
+var city=resolveCity();
+if(!city&&nm.place)city=resolveCityText(nm.place);
+if(!city&&nm.near)city=savedCity57();
+var q=nm.q;
+/* v5.17 search group (QA item 3), on the v5.12.2 contract
+(a category plus a resolved town lands on the radius
+view): typed text NEVER lands on a single listing and
+NEVER falls back to the home page. The old first-name-match
+jumps (a bare "plumber" with no town went straight to one
+plumber's listing) and the silent "/" fallback are gone.
+The only direct listing route left is an explicit
+suggestion click (pickB): the visitor's own choice.
+Everything else resolves to the radius view or to
+/search/?q=, where the query is resolved in the open:
+category results, a town picker, business name matches,
+or a helpful empty state. */
+if(pickB&&!nm.near){location.href=pickB;return}
 if(city&&pickCat&&pickV){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
-if(pickB){location.href=pickB;return}
 if(city&&q){var cms=catMatches(q);
 if(cms.length){location.href="/search/?v="+cms[0].slug+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
-if(TA){var m=TA.names.filter(function(e){return e.c===city.city&&e.s===city.state&&e.n.toLowerCase().indexOf(normQ(q))>-1});
-if(m.length>=2){location.href="/search/?v="+m[0].vs+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
-if(m.length===1){location.href=m[0].u;return}}}
+location.href=searchURL57(raw,city);return}
 if(city){location.href=city.url;return}
-if(q){var b=nameMatches(q);
-if(b.length){location.href=b[0].u;return}
-var c=catMatches(q);
-if(c.length){location.href="/"+c[0].slug+"/";return}}
-location.href="/"}
+if(q||nm.near){location.href=searchURL57(raw,null,f2.value.trim()||null);return}
+location.href="/search/"}
 form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
 f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadTA(sugBiz)});
 f1.addEventListener("focus",function(){loadTA(sugBiz)});
@@ -346,8 +399,11 @@ The v5.10.1 block that filled the box from the page's own
 location, falling back to a saved city, is removed: the
 box starts empty on every page unless the user typed a
 location in this session (the /search/ view still sets it
-from the search URL the user just submitted). Nothing in
-this file reads or writes a saved city any more. */
+from the search URL the user just submitted). v5.17 adds
+one narrow read back: savedCity57 reads the legacy
+ytp-city key only to resolve an explicit "near me" query
+(roadmap item 28's saved-city leg). The box is still
+never prefilled and the key is never written here. */
 })();
 
 (function(){

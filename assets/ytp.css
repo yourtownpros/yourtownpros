@@ -626,3 +626,26 @@ html{scroll-padding-top:120px}
 .citypill28 button:hover{text-decoration:underline}
 .citypill28 .cp-clear{color:#5a6672;font-size:16px;font-weight:400}
 .header-home .citypill28{background:rgba(255,255,255,.94)}
+
+/* v5.18 search unification (roadmap items 41, 42, 47, 45 and
+the item 29 Open Now filter, Nov 17, 2026): /search/ rides the
+city-category layout. Card anatomy follows the audit design
+rules: one solid button per card (the Request action); the
+phone renders as a quiet outline button; the action group is
+right-aligned with a real gap and never shares a line with
+metadata. New classes only; no existing rule changes. */
+.sicon57{width:160px;height:160px;flex:none;background:#e8f3ee;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:62px;color:#0e7a5f;line-height:1}
+.result-card[data-feat="1"] .sicon57{width:200px;height:200px}
+.featchip{display:inline-block;background:#fdf6e0;color:#7a5200;border:1px solid #b07a00;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
+.srch-act{justify-content:flex-end}
+.telbtn57{display:inline-block;background:#fff;color:#0b5c46;border:1px solid #b9cdc4;padding:8px 13px;border-radius:8px;text-decoration:none;font-weight:700;min-height:44px;line-height:26px}
+.telbtn57:hover{border-color:#0e7a5f;color:#0e7a5f}
+.matchbox{margin:0 0 18px;padding:16px 18px}
+.matchbox h2{margin:0 0 6px;font-size:20px}
+.srch-solo{grid-template-columns:minmax(0,1fr)!important}
+.srch-solo .cat-side,.srch-solo .cat-map{display:none}
+#ytp-smap-wrap .mappanel{position:relative}
+#ytp-smap-wrap .smap-load{border-radius:12px}
+@media(max-width:560px){.sicon57{width:104px;height:96px;font-size:42px}.result-card[data-feat="1"] .sicon57{width:104px;height:96px}}
+@container (max-width:480px){.sicon57{width:104px;height:96px}}
+@container (max-width:380px){.sicon57{width:100%;height:120px}}

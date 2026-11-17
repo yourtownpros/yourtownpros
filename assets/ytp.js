@@ -229,7 +229,7 @@ rank by distance from the town in the where box only. */
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
-var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false;
+var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};cb()})}
 function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
@@ -288,6 +288,11 @@ var qn=normQ(q);if(!qn)return[];
 var bySlug={},i,c;
 for(i=0;i<TA.cats.length;i++)bySlug[TA.cats[i].slug]=TA.cats[i];
 var scored=[];
+if(qn.length===1){var one=[];
+for(i=0;i<TA.cats.length;i++){c=TA.cats[i];
+if(c.label.toLowerCase().indexOf(qn)===0)one.push({slug:c.slug,label:c.label,st:1})}
+one.sort(function(a,b){return a.label.localeCompare(b.label)});
+return one.slice(0,5)}
 function push(slug,st){if(!bySlug[slug])return;
 for(var j=0;j<scored.length;j++)if(scored[j].slug===slug){if(st<scored[j].st)scored[j].st=st;return}
 scored.push({slug:slug,label:bySlug[slug].label,st:st})}
@@ -351,11 +356,12 @@ function show(box,items,fn){if(!items.length){box.style.display="none";box.inner
 box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join("");
 box.style.display="block";
 var links=box.querySelectorAll("a");
-for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
-function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<2||!TA){s1.style.display="none";return}
-var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
-var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
-show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
+for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}
+if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}}
+function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){s1.style.display="none";return}
+var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
+var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
+show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");s1.style.display="none";ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[];
@@ -400,6 +406,15 @@ location.href="/search/"}
 form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
 f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadTA(sugBiz)});
 f1.addEventListener("focus",function(){loadTA(sugBiz)});
+/* v5.18 (item 45): the header dropdown gains the hero
+search keyboard navigation, and trades offer from the
+first keystroke (sugBiz gate above). A category pick
+fills the box with the clean trade label. */
+function paint57(){var ls=s1.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hi57)}
+f1.addEventListener("keydown",function(ev){if(s1.style.display!=="block"||!s1Items||!s1Items.length)return;
+if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hi57=ev.key==="ArrowDown"?(hi57+1)%s1Items.length:(hi57-1+s1Items.length)%s1Items.length;paint57()}
+else if(ev.key==="Enter"&&hi57>=0){ev.preventDefault();var it=s1Items[hi57];if(it&&s1Fn)s1Fn(it)}
+else if(ev.key==="Escape"){s1.style.display="none"}});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});

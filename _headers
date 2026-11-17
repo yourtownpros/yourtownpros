@@ -6,6 +6,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://gc.zgo.at https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://images.unsplash.com https://tile.openstreetmap.org; connect-src 'self' https://klbgkidcdrlqsvrgfafv.supabase.co https://*.goatcounter.com https://gc.zgo.at https://challenges.cloudflare.com; form-action 'self' https://formsubmit.co; frame-src https://challenges.cloudflare.com; frame-ancestors 'none'; base-uri 'self'
   Cache-Control: public, max-age=0, must-revalidate
 
 /assets/*

@@ -173,7 +173,7 @@ var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
 var D=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null;
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function fetchJ(u,cb){fetch(u).then(function(r){return r.json()}).then(function(d){cb(d)}).catch(function(){cb(null)})}
 function loadD(cb){if(D){cb();return}fetchJ("/search-index.json",function(d){D=d||[];cb()})}
 function loadCT(cb){if(CT){cb();return}fetchJ("/cities-index.json",function(d){CT=d||[];cb()})}
@@ -189,7 +189,7 @@ function sugBiz(){var q=f1.value.trim().toLowerCase();if(q.length<2||!D){s1.styl
 var seen={},cats=[];
 for(var i=0;i<D.length&&cats.length<4;i++){var e=D[i];
 if(e.vertical.toLowerCase().indexOf(q)>-1&&!seen[e.vslug]){seen[e.vslug]=1;cats.push({vslug:e.vslug,go:"/"+e.vslug+"/",html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>"})}}
-var biz=D.filter(function(e){return sm57(e,q)}).slice(0,6).map(function(e){return{go:e.url,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>"}});
+var biz=D.filter(function(e){return sm57(e,q)}).slice(0,6).map(function(e){return{go:e.url,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+esc(e.state)+"</span>"}});
 show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;f1.value=it.html.replace(/<[^>]+>/g,"");s1.style.display="none";ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
@@ -201,7 +201,7 @@ return pre.concat(sub)}
 function sugCity(){if(!CT)return;
 var q=f2.value.trim().toLowerCase();
 var ms=cityMatches(q).slice(0,7);
-show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+e.state+"</strong><span>"+e.count+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
+show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+e.count+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
 function resolveCity(){if(pickC)return pickC;
 var t=f2.value.trim();if(!t||!CT)return null;
 var low=t.toLowerCase();

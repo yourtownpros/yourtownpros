@@ -19,7 +19,7 @@ window.ytpPartnerCard=function(vertical,citySlug,state,surface,subjectSlug){
 var R=window.YTP_REL;if(!R||!R.profiles||!vertical)return "";
 var S=R.scoring||{},VP=S.vertical_fit_points||{},AP=S.audience_fit_points||{},GP=S.geography_fit_points||{},RG=S.regions||{},PR=(S.tier_resolution||{}).prospect||{};
 var F=window.YTP_FEAT||{by_slug:{}};
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function inScope(p){
 var sc=p.scope||{};if(!sc.type||sc.type==="national")return true;
 if(sc.type==="state")return state===p.home.state;
@@ -60,7 +60,7 @@ var raw=null;try{raw=sessionStorage.getItem("ytpClaim")}catch(e){}
 if(!raw)return;
 var d=null;try{d=JSON.parse(raw)}catch(e){}
 if(!d||!d.method)return;
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 /* v4.7: the claim confirmation is the claim flow's partner
 surface. The just-claimed business is scored as an owner
 surface; a qualifying Featured partner card renders below the
@@ -89,4 +89,4 @@ box.innerHTML="<p>To finish: email a photo of a business license or a utility bi
 })();
 </script><p><a href="/">Back to YourTownPros</a></p></main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

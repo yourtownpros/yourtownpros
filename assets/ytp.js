@@ -483,11 +483,12 @@ if(m){as[i].setAttribute("data-loc28",h);as[i].setAttribute("href","/search/?v="
 if(!saved)return;
 var htop=document.querySelector(".htop");if(!htop)return;
 var pill=document.createElement("span");pill.className="citypill28";pill.id="ytp-citypill";
+pill.title="Saved on this device only, from the city you searched for. Change picks a different city, and the × makes the site forget it.";
 var nm=document.createElement("span");nm.className="cp-name";nm.textContent="📍 "+saved;pill.appendChild(nm);
 var chg=document.createElement("button");chg.type="button";chg.className="cp-change";chg.textContent="Change";pill.appendChild(chg);
 var clr=document.createElement("button");clr.type="button";clr.className="cp-clear";clr.setAttribute("aria-label","Clear saved city");clr.textContent="×";pill.appendChild(clr);
 var hr=htop.querySelector(".hright");if(hr)htop.insertBefore(pill,hr);else htop.appendChild(pill);
-chg.addEventListener("click",function(){var w=document.getElementById("ytp-w57")||document.getElementById("hs-city");if(!w)return;w.value=saved;w.scrollIntoView({block:"center"});w.focus();if(w.select)w.select()});
+chg.addEventListener("click",function(ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var w=document.getElementById("ytp-w57")||document.getElementById("hs-city");if(!w)return;w.value=saved;w.scrollIntoView({block:"center"});w.focus();if(w.select)w.select();try{w.dispatchEvent(new Event("input",{bubbles:true}))}catch(e){}});
 clr.addEventListener("click",function(){setSaved("");
 for(var j=0;j<navLinks.length;j++){var o=navLinks[j].getAttribute("data-loc28");if(o)navLinks[j].setAttribute("href",o);navLinks[j].removeAttribute("data-loc28")}
 if(pill.parentNode)pill.parentNode.removeChild(pill);

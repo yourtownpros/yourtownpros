@@ -82,7 +82,7 @@ for(i=0;i<ms.length;i++){(function(e){items.push({city:e,html:"<strong>"+esc(e.c
 show(s2,items,pickCity,N2)}
 function savedLoc28(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
 function showHint(){if(!hint)return;var sv=savedLoc28();
-if(sv){hint.textContent="Showing pros near "+sv;hint.setAttribute("data-loc28","1");hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);return}
+if(sv){hint.textContent="Your city is set to "+sv;hint.setAttribute("data-loc28","1");hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);return}
 hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);hintTimer=setTimeout(hideHint,5000)}
 function hideHint(){if(hint)hint.style.display="none"}
 function locFallback(){suppressCity=true;setTimeout(function(){suppressCity=false},400);showHint();f2.focus()}

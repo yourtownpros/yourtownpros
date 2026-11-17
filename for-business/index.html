@@ -44,7 +44,7 @@
 <label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
 <label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
 <label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
-<button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
 </div>
 <div id="fb-claim-pending" hidden></div>
 <div id="fb-claim-approved" hidden></div>
@@ -53,7 +53,7 @@ ytpOnReady(function(A){
 var gate=document.getElementById("ytp-claim-gate"),wrap=document.getElementById("ytp-claimwrap"),form=document.getElementById("ytp-claim-form");
 var p=new URLSearchParams(location.search);
 function $(id){return document.getElementById(id)}
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 var searchIdx=null,verifyData=null,chosen=null,code="";
 function newCode(){var h="";var a=new Uint32Array(3);if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a);h=(a[0].toString(16)+a[1].toString(16)+a[2].toString(16)).toUpperCase()}else{h=Math.random().toString(16).slice(2,14).toUpperCase()}return "YTP-"+h.slice(0,6)}
 code=newCode();
@@ -151,6 +151,7 @@ relationship:($("claim-role").value||"Owner").trim()||"Owner",
 status:"pending",
 verify_method:method,
 verify_code:(method==="website"||method==="facebook")?code:""};
+var tsT=(form.querySelector("input[name='cf-turnstile-response']")||{}).value||"";if(tsT)row.turnstile_token=tsT;
 var sub=$("ytp-claim-submit");if(sub)sub.disabled=true;
 var docState="";
 function doneClaim(){try{sessionStorage.setItem("ytpClaim",JSON.stringify({method:method,code:row.verify_code,business:chosen.name,slug:chosen.slug,doc:docState}))}catch(e){}
@@ -191,7 +192,7 @@ window.ytpPartnerCard=function(vertical,citySlug,state,surface,subjectSlug){
 var R=window.YTP_REL;if(!R||!R.profiles||!vertical)return "";
 var S=R.scoring||{},VP=S.vertical_fit_points||{},AP=S.audience_fit_points||{},GP=S.geography_fit_points||{},RG=S.regions||{},PR=(S.tier_resolution||{}).prospect||{};
 var F=window.YTP_FEAT||{by_slug:{}};
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function inScope(p){
 var sc=p.scope||{};if(!sc.type||sc.type==="national")return true;
 if(sc.type==="state")return state===p.home.state;
@@ -235,7 +236,7 @@ the Featured map baked into this page (window.YTP_FEAT) plus
 /biz-data.json facts. Every failure leaves the page as built. */
 ytpOnReady(function(A){
 if(!A.user||!A.sb)return;
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function featLine(slug,f){
 var F=window.YTP_FEAT||{by_slug:{},by_cat:{}};
 var box=document.getElementById("fb-feat-state");if(!box)return;
@@ -275,4 +276,4 @@ if(boxP){boxP.hidden=false;boxP.innerHTML='<h2>Your claim is in review</h2><p>Yo
 });
 </script></main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

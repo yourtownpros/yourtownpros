@@ -152,7 +152,7 @@ window.ytpPartnerCard=function(vertical,citySlug,state,surface,subjectSlug){
 var R=window.YTP_REL;if(!R||!R.profiles||!vertical)return "";
 var S=R.scoring||{},VP=S.vertical_fit_points||{},AP=S.audience_fit_points||{},GP=S.geography_fit_points||{},RG=S.regions||{},PR=(S.tier_resolution||{}).prospect||{};
 var F=window.YTP_FEAT||{by_slug:{}};
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function inScope(p){
 var sc=p.scope||{};if(!sc.type||sc.type==="national")return true;
 if(sc.type==="state")return state===p.home.state;
@@ -188,7 +188,7 @@ if(!best)return "";
 return '<article class="partnercard" data-profile="'+esc(best.p.id)+'" data-slug="'+esc(best.p.business_slug)+'"><p class="sponline">'+esc(best.pat.kicker)+'</p><h3>'+esc(best.pat.name_line)+'</h3><p>'+esc(best.pat.body)+'</p><p><a href="'+esc(best.pat.link)+'">'+esc(best.pat.cta)+'</a></p></article>'};
 </script><script>
 ytpOnReady(function(A){
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function stars(r){var f=Math.max(0,Math.min(5,Math.round(Number(r)||0))),out="";for(var i=0;i<f;i++)out+="\u2605";for(var j=f;j<5;j++)out+="\u2606";return out}
 function $(id){return document.getElementById(id)}
 function fmtDate(s){if(!s)return "";var d=new Date(s);if(isNaN(d.getTime()))return "";return d.toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"})}
@@ -331,7 +331,7 @@ var b=null;for(var i=0;i<bizList.length;i++){if(bizList[i].slug===cur)b=bizList[
 var f=facts(cur);
 if(!f){box.innerHTML='<div class="card"><h3>'+esc(b?bizName(b):"Your business")+'</h3><p class="listed">See the current details on your <a href="'+urlFor(cur)+'">public listing</a>.</p></div>';return}
 function row(k,v){return v?'<div><dt>'+k+'</dt><dd>'+v+'</dd></div>':""}
-var web=f.website?'<a href="'+esc(f.website)+'" rel="noopener" target="_blank">'+esc(f.website.replace(/^https?:\/\//,""))+"</a>":"";
+var web=f.website?'<a href="'+esc(f.website)+'" rel="ugc nofollow noopener noreferrer" target="_blank">'+esc(f.website.replace(/^https?:\/\//,""))+"</a>":"";
 box.innerHTML='<div class="card"><h3>'+esc(f.name)+'</h3><dl class="factlist">'+row("Trade",esc(f.trade))+row("City",esc(f.city)+", "+esc(f.state))+row("Phone",esc(f.phone))+row("Address",esc(f.address))+row("Website",web)+'</dl><p class="listed" style="margin-top:10px">This is what your <a href="'+urlFor(cur)+'">public listing</a> shows today.</p></div>'}
 function renderCRs(){
 var box=$("biz-crs");if(!box)return;
@@ -624,7 +624,7 @@ function ytpValidMessage55(body){
 var b=String(body==null?"":body).trim();
 return b.length>=1&&b.length<=2000?b:null}
 ytpOnReady(function(A){
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 var actBox=document.getElementById("biz-actions55");
 var gcEv=null;
 function currentSlug(){var sel=document.getElementById("biz-pick");return sel?sel.value:""}
@@ -699,7 +699,7 @@ opens-soon state, the standing degrade-by-design. */
 function ytpValidLicense56(s){var v=String(s==null?"":s).trim().replace(/\s+/g," ");if(v.length<3||v.length>40)return "";if(!/^[A-Za-z0-9][A-Za-z0-9 .#\/-]*$/.test(v))return "";return v}
 
 ytpOnReady(function(A){
-function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 var box=document.getElementById("biz-licenses56");
 if(!box)return;
 function currentSlug(){var sel=document.getElementById("biz-pick");return sel?sel.value:""}
@@ -738,4 +738,4 @@ setTimeout(render,1200);
 });
 </script></main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

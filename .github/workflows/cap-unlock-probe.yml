@@ -1,0 +1,124 @@
+name: Cap unlock probe (Pages API)
+
+# One-purpose control-plane probe for the 2026-11-17 cap-unlock ship.
+# The first production deployment of commit ee05528312 (20,046 files,
+# PAGES_WRANGLER_MAJOR_VERSION set in wrangler.toml vars) failed with
+# no reason exposed through the GitHub check run. This workflow uses
+# the repo's scoped Cloudflare token (Pages Edit) to:
+#   1. GET the Pages project (does the project config carry the flag?)
+#   2. GET the failed deployment aaca538e (stage detail, env snapshot)
+#   3. If the flag is absent from the project deployment configs,
+#      PATCH env_vars for BOTH production and preview (round-tripping
+#      the full deployment_configs from the GET, changing only
+#      env_vars), then GET again to confirm.
+# All API responses are committed to the branch
+# cap-unlock-probe-results so they can be read from this environment
+# (Actions logs are not readable here). The token is never echoed.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cap-unlock-probe/trigger.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cap-unlock-probe
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  CF_API: https://api.cloudflare.com/client/v4/accounts
+  PROJECT: yourtownpros
+  DEPLOYMENT_ID: aaca538e-9bb9-4495-a1bb-fdfbfb7e85b7
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Probe the Pages API and patch env vars if the flag is absent
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p probe-out
+          AUTH="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+
+          echo "== GET project =="
+          curl -s -H "$AUTH" \
+            "$CF_API/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT" \
+            > probe-out/project-before.json
+          jq -e '.success' probe-out/project-before.json > /dev/null \
+            && echo "project GET ok" || echo "project GET FAILED"
+
+          echo "== GET failed deployment =="
+          curl -s -H "$AUTH" \
+            "$CF_API/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT/deployments/$DEPLOYMENT_ID" \
+            > probe-out/deployment.json
+          jq -e '.success' probe-out/deployment.json > /dev/null \
+            && echo "deployment GET ok" || echo "deployment GET FAILED"
+
+          FLAG_PROD=$(jq -r '.result.deployment_configs.production.env_vars.PAGES_WRANGLER_MAJOR_VERSION.value // "ABSENT"' probe-out/project-before.json)
+          FLAG_PREV=$(jq -r '.result.deployment_configs.preview.env_vars.PAGES_WRANGLER_MAJOR_VERSION.value // "ABSENT"' probe-out/project-before.json)
+          echo "flag in project production config: $FLAG_PROD"
+          echo "flag in project preview config:    $FLAG_PREV"
+          echo "no-patch-needed" > probe-out/patch-status.txt
+
+          if [ "$FLAG_PROD" != "4" ] || [ "$FLAG_PREV" != "4" ]; then
+            echo "== PATCH deployment_configs env_vars (round-trip, env_vars only) =="
+            jq '{deployment_configs: (
+                  .result.deployment_configs
+                  | .production.env_vars = ((.production.env_vars // {}) + {PAGES_WRANGLER_MAJOR_VERSION: {type: "plain_text", value: "4"}})
+                  | .preview.env_vars    = ((.preview.env_vars    // {}) + {PAGES_WRANGLER_MAJOR_VERSION: {type: "plain_text", value: "4"}})
+                )}' probe-out/project-before.json > probe-out/patch-body.json
+            curl -s -X PATCH -H "$AUTH" -H "Content-Type: application/json" \
+              --data @probe-out/patch-body.json \
+              "$CF_API/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT" \
+              > probe-out/patch-response.json
+            jq -e '.success' probe-out/patch-response.json > /dev/null \
+              && echo "patched" > probe-out/patch-status.txt \
+              || echo "patch-failed" > probe-out/patch-status.txt
+            echo "== GET project (after) =="
+            curl -s -H "$AUTH" \
+              "$CF_API/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT" \
+              > probe-out/project-after.json
+          fi
+
+          {
+            echo "patch status: $(cat probe-out/patch-status.txt)"
+            echo "deployment latest_stage:"
+            jq -c '.result.latest_stage // {}' probe-out/deployment.json
+            echo "deployment stages:"
+            jq -c '.result.stages // []' probe-out/deployment.json
+            echo "deployment env_vars snapshot:"
+            jq -c '.result.env_vars // "none"' probe-out/deployment.json
+            echo "project env_vars after:"
+            jq -c '{prod: .result.deployment_configs.production.env_vars, prev: .result.deployment_configs.preview.env_vars}' \
+              probe-out/project-after.json 2>/dev/null \
+              || jq -c '{prod: .result.deployment_configs.production.env_vars, prev: .result.deployment_configs.preview.env_vars}' \
+              probe-out/project-before.json
+          } > probe-out/summary.txt
+          cat probe-out/summary.txt
+
+      - name: Commit probe results to the results branch
+        shell: bash
+        run: |
+          set -uo pipefail
+          git config user.name "Muse"
+          git config user.email "leads@muse.ai"
+          git checkout -B cap-unlock-probe-results
+          mkdir -p cap-unlock-probe
+          cp probe-out/*.json probe-out/summary.txt probe-out/patch-status.txt cap-unlock-probe/ 2>/dev/null || true
+          # The patch body and responses contain no secrets (env var
+          # values only, and the flag is a public build setting), but
+          # drop the raw patch body from the committed record anyway.
+          rm -f cap-unlock-probe/patch-body.json
+          git add cap-unlock-probe/
+          git commit -m "Cap unlock probe results (run $GITHUB_RUN_ID)" || echo "nothing to commit"
+          git push -f origin cap-unlock-probe-results

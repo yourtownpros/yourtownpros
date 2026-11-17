@@ -24,3 +24,5 @@ enabled = true
 [observability.logs]
 enabled = true
 head_sampling_rate = 0.1
+
+# matchfix deploy retrigger 2026-11-16 (no config change)

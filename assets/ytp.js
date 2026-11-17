@@ -271,6 +271,14 @@ ranks suggestions; the v5.12.2 ruling stands. */
 var v=null;try{v=localStorage.getItem("ytp-city")}catch(e){}
 if(!v)return null;
 return resolveCityText(v)}
+function storeCity28(c){/* Item 28 Part A writer (Nov 17,
+2026): a submitted search records the city it resolved,
+in the legacy key's "City, ST" form every reader parses.
+Only a resolved city object reaches here: typed in the
+box, picked from suggestions, or named after "near".
+Nothing guesses a city, and the write never prefills
+a box; the v5.12.2 ruling stands. */
+try{localStorage.setItem("ytp-city",c.city+", "+c.state)}catch(e){}}
 function searchURL57(raw,city,cityText){var u="/search/?q="+encodeURIComponent(raw);
 if(city)u+="&city="+encodeURIComponent(city.city)+"&state="+city.state;
 else if(cityText)u+="&city="+encodeURIComponent(cityText);
@@ -367,6 +375,7 @@ var nm=nearMe57(normQ(raw));
 var city=resolveCity();
 if(!city&&nm.place)city=resolveCityText(nm.place);
 if(!city&&nm.near)city=savedCity57();
+if(city&&city.city&&city.state)storeCity28(city);
 var q=nm.q;
 /* v5.17 search group (QA item 3), on the v5.12.2 contract
 (a category plus a resolved town lands on the radius
@@ -443,4 +452,45 @@ var f=ev.target;if(!f||!f.querySelector)return;
 var hp=f.querySelector("input[name='company_website']");
 if(hp&&hp.value){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation()}
 },true);
+})();
+
+/* Item 28 Part A (Nov 17, 2026): saved-city routing and
+the change-city pill. The legacy ytp-city key holds one
+"City, ST" string, the form every existing reader parses
+(savedCity57 in this file, the match thanks page). Writers
+in this build: a city category page records its city (the
+ytp-citymap block exists only on those pages, so opening
+one is the visitor's own choice of city), and the header
+and hero searches record the city a submitted search
+resolved (storeCity28, beside savedCity57). Nothing here
+guesses a city: no geolocation, no IP lookup, and no box
+is ever prefilled; the v5.12.2 no-prefill ruling stands.
+Readers in this build: when a city is saved, top-nav trade
+links route straight to /search/?v=<trade>&city=<city>&
+state=<state>, and a compact pill in the header names the
+saved city with Change and Clear actions. With nothing
+saved, this module changes nothing. */
+(function(){
+function getSaved(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
+function setSaved(v){try{if(v)localStorage.setItem("ytp-city",v);else localStorage.removeItem("ytp-city")}catch(e){}}
+function parseSaved(v){var i=v.lastIndexOf(",");if(i<1)return null;var c=v.slice(0,i).trim(),s=v.slice(i+1).trim();return (c&&s)?{city:c,state:s}:null}
+var cm=document.getElementById("ytp-citymap");
+if(cm){try{var cj=JSON.parse(cm.textContent);if(cj&&cj.city&&cj.state)setSaved(String(cj.city)+", "+String(cj.state))}catch(e){}}
+var saved=getSaved(),parsed=parseSaved(saved),navLinks=[];
+if(parsed){var as=document.querySelectorAll(".catnav a[href]");
+for(var i=0;i<as.length;i++){var h=as[i].getAttribute("href")||"";var m=/^\/([a-z0-9-]+)\/$/.exec(h);
+if(m){as[i].setAttribute("data-loc28",h);as[i].setAttribute("href","/search/?v="+m[1]+"&city="+encodeURIComponent(parsed.city)+"&state="+encodeURIComponent(parsed.state));navLinks.push(as[i])}}}
+if(!saved)return;
+var htop=document.querySelector(".htop");if(!htop)return;
+var pill=document.createElement("span");pill.className="citypill28";pill.id="ytp-citypill";
+var nm=document.createElement("span");nm.className="cp-name";nm.textContent="📍 "+saved;pill.appendChild(nm);
+var chg=document.createElement("button");chg.type="button";chg.className="cp-change";chg.textContent="Change";pill.appendChild(chg);
+var clr=document.createElement("button");clr.type="button";clr.className="cp-clear";clr.setAttribute("aria-label","Clear saved city");clr.textContent="×";pill.appendChild(clr);
+var hr=htop.querySelector(".hright");if(hr)htop.insertBefore(pill,hr);else htop.appendChild(pill);
+chg.addEventListener("click",function(){var w=document.getElementById("ytp-w57")||document.getElementById("hs-city");if(!w)return;w.value=saved;w.scrollIntoView({block:"center"});w.focus();if(w.select)w.select()});
+clr.addEventListener("click",function(){setSaved("");
+for(var j=0;j<navLinks.length;j++){var o=navLinks[j].getAttribute("data-loc28");if(o)navLinks[j].setAttribute("href",o);navLinks[j].removeAttribute("data-loc28")}
+if(pill.parentNode)pill.parentNode.removeChild(pill);
+var hint=document.getElementById("hs-loc-hint");
+if(hint&&hint.getAttribute("data-loc28")){hint.removeAttribute("data-loc28");hint.textContent="Location unavailable, type your city instead";hint.style.display="none"}});
 })();

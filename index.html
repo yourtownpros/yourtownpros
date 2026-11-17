@@ -80,7 +80,10 @@ var q=f2.value.trim().toLowerCase();
 var ms=cityMatches(q).slice(0,7),items=[{loc:true,cls:"locrow",html:"<strong>\u25ce Current Location</strong>"}],i;
 for(i=0;i<ms.length;i++){(function(e){items.push({city:e,html:"<strong>"+esc(e.city)+", "+e.state+"</strong><span>"+e.count+" businesses</span>"})})(ms[i])}
 show(s2,items,pickCity,N2)}
-function showHint(){if(!hint)return;hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);hintTimer=setTimeout(hideHint,5000)}
+function savedLoc28(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
+function showHint(){if(!hint)return;var sv=savedLoc28();
+if(sv){hint.textContent="Showing pros near "+sv;hint.setAttribute("data-loc28","1");hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);return}
+hint.style.display="block";if(hintTimer)clearTimeout(hintTimer);hintTimer=setTimeout(hideHint,5000)}
 function hideHint(){if(hint)hint.style.display="none"}
 function locFallback(){suppressCity=true;setTimeout(function(){suppressCity=false},400);showHint();f2.focus()}
 function havKm(a,b,c,d){var R=6371,t=Math.PI/180,x=(c-a)*t,y=(d-b)*t,h=Math.sin(x/2)*Math.sin(x/2)+Math.cos(a*t)*Math.cos(c*t)*Math.sin(y/2)*Math.sin(y/2);return 2*R*Math.asin(Math.sqrt(h))}
@@ -118,6 +121,14 @@ prefills the box; the v5.12.2 ruling stands. */
 var v=null;try{v=localStorage.getItem("ytp-city")}catch(e){}
 if(!v)return null;
 return resolveCityText(v)}
+function storeCity28(c){/* Item 28 Part A writer (Nov 17,
+2026): a submitted search records the city it resolved,
+in the legacy key's "City, ST" form every reader parses.
+Only a resolved city object reaches here: typed in the
+box, picked from suggestions, or named after "near".
+Nothing guesses a city, and the write never prefills
+a box; the v5.12.2 ruling stands. */
+try{localStorage.setItem("ytp-city",c.city+", "+c.state)}catch(e){}}
 function searchURL57(raw,city,cityText){var u="/search/?q="+encodeURIComponent(raw);
 if(city)u+="&city="+encodeURIComponent(city.city)+"&state="+city.state;
 else if(cityText)u+="&city="+encodeURIComponent(cityText);
@@ -169,6 +180,7 @@ var nm=nearMe57(normQ(raw));
 var city=resolveCity();
 if(!city&&nm.place)city=resolveCityText(nm.place);
 if(!city&&nm.near)city=savedCity57();
+if(city&&city.city&&city.state)storeCity28(city);
 var q=nm.q;
 /* v5.17 search group (QA item 3): the same routing
 contract as the header. Typed text never lands on a
@@ -209,7 +221,12 @@ a user action and still fills it (applyCity). v5.17 adds
 one narrow read back: an explicit "near me" query resolves
 through the legacy ytp-city key when the box is empty
 (roadmap item 28's saved-city leg). The box is still never
-prefilled and the key is never written here. */
+prefilled. Item 28 Part A (Nov 17, 2026) adds
+the writer back on the submit path only (storeCity28
+in go, recording the city a submitted search resolved)
+and the saved location line below; no read here
+changed, and the box is still never prefilled. */
+if(savedLoc28())showHint();
 var slides=[],caps=[],ticks=[];
 function setSlide(n){if(!slides.length)return;cur=((n%slides.length)+slides.length)%slides.length;for(var i=0;i<slides.length;i++){slides[i].className="hslide"+(i===cur?" on":"");if(caps[i])caps[i].className="slidecap"+(i===cur?" on":"");if(ticks[i])ticks[i].className="tick tickbtn"+(i===cur?" on":"")}}
 function auto(){clearInterval(timer);if(slides.length>1){timer=setInterval(function(){setSlide((cur+1)%slides.length)},6000)}}

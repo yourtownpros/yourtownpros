@@ -618,3 +618,11 @@ html{scroll-padding-top:120px}
 .helpbtn{min-height:44px;padding:10px 14px}
 .pillbtn{display:inline-flex;align-items:center;min-height:44px}
 .foot57 a{padding:9px 0}
+
+/* Item 28 Part A: the change-city pill in the header. */
+.citypill28{display:inline-flex;align-items:center;gap:6px;background:#eef6f2;border:1px solid #bcd8cc;color:#12212e;border-radius:999px;padding:4px 8px 4px 12px;font-size:13px;line-height:1.2;white-space:nowrap}
+.citypill28 .cp-name{font-weight:600}
+.citypill28 button{border:0;background:transparent;color:#0e7a5f;font:inherit;font-weight:600;cursor:pointer;padding:2px 3px}
+.citypill28 button:hover{text-decoration:underline}
+.citypill28 .cp-clear{color:#5a6672;font-size:16px;font-weight:400}
+.header-home .citypill28{background:rgba(255,255,255,.94)}

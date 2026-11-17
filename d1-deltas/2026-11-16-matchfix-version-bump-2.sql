@@ -1,2 +1,0 @@
--- Matchfix ship (2026-11-16): second dataset_version bump. The first bump landed minutes before the Pages Function renderer copy synced, so a few main-domain renders were cached under the new key with the old template; this bump re-keys the whole rendered set onto the fixed template. No listing data changes.
-INSERT INTO meta (key, value) VALUES ('dataset_version', '20261117T011421Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

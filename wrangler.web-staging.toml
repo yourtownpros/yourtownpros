@@ -1,0 +1,89 @@
+# YourTownPros web staging Worker: the whole site as Workers Static Assets
+# plus the D1 listing renderer, under the Workers Paid plan (100,000 static
+# asset files per Worker version, against the Pages Free 20,000-file cap
+# that production has reached).
+#
+# STAGING ONLY. Deployed by .github/workflows/deploy-web-staging.yml on the
+# migration branch. workers.dev only: no routes and no custom domain are
+# defined here on purpose. The yourtownpros.com zone is never routed to
+# this Worker from this file, and the production Pages project config in
+# wrangler.toml is untouched.
+name = "yourtownpros-web-staging"
+main = "web-staging/worker.mjs"
+compatibility_date = "2026-11-14"
+workers_dev = true
+
+# The whole repo tree is the asset root, exactly as the Pages project's
+# pages_build_output_dir "." serves it today. _headers and _redirects in
+# the asset root are applied by Workers Static Assets the same way Pages
+# applies them. run_worker_first mirrors _routes.json: only the vertical
+# prefixes invoke the Worker first; everything else is served straight
+# from assets without a Worker invocation.
+[assets]
+directory = "."
+binding = "ASSETS"
+not_found_handling = "404-page"
+run_worker_first = [
+  "/auto-glass/*",
+  "/auto-repair/*",
+  "/bakeries-and-cafes/*",
+  "/barbers/*",
+  "/bars/*",
+  "/bookstores/*",
+  "/chiropractors/*",
+  "/cleaners/*",
+  "/dance-studios/*",
+  "/dentists/*",
+  "/electricians/*",
+  "/fitness/*",
+  "/flooring/*",
+  "/florists/*",
+  "/hair-salons/*",
+  "/handyman/*",
+  "/hvac/*",
+  "/jewelry/*",
+  "/lawn-and-landscaping/*",
+  "/locksmiths/*",
+  "/massage/*",
+  "/med-spas/*",
+  "/movers/*",
+  "/nails/*",
+  "/natural-skincare/*",
+  "/optometrists/*",
+  "/painting/*",
+  "/pawn-shops/*",
+  "/pest-control/*",
+  "/pet-boarding/*",
+  "/pet-grooming/*",
+  "/photographers/*",
+  "/plumbers/*",
+  "/roofing/*",
+  "/spas/*",
+  "/tanning/*",
+  "/tattoo/*",
+  "/towing/*",
+  "/tree-service/*",
+  "/veterinary/*",
+  "/website-design/*",
+]
+
+# Same production database as the Pages project and the renderer Worker.
+# The staging Worker only reads it, to render listings. It never writes:
+# no deltas are applied from the staging workflow and dataset_version is
+# never bumped by staging work.
+[[d1_databases]]
+binding = "DB"
+database_name = "yourtownpros-listings"
+database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
+
+# Same CPU cap as the production renderer Worker.
+[limits]
+cpu_ms = 50
+
+# Workers Logs on, sampled at 10 percent of invocations. No Logpush.
+[observability]
+enabled = true
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 0.1

@@ -1,0 +1,9 @@
+# Workers Static Assets exclusions for the staging web Worker
+# (wrangler.web-staging.toml). Production Pages never serves the
+# functions/ directory as static files (it is the Functions source), and
+# web-staging/ is this Worker's own source, so both are excluded from the
+# asset upload to match production behavior. The Worker bundle imports
+# functions/_renderer.mjs at build time; excluding the directory from
+# assets does not affect the bundle.
+functions/
+web-staging/

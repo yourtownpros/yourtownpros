@@ -1,0 +1,54 @@
+name: Deploy web staging Worker (migration branch)
+
+# Staging migration of the full YourTownPros site from Cloudflare Pages to
+# a Worker with Static Assets, under the owner's Workers Paid plan
+# (100,000 static asset files per Worker version, against the Pages Free
+# 20,000-file cap production has reached).
+#
+# This workflow deploys ONLY the staging Worker yourtownpros-web-staging
+# (workers.dev). It never touches the Pages project, the production
+# renderer Worker (yourtownpros-listings), D1 data (the staging Worker
+# only reads D1 to render; this workflow applies no deltas and bumps no
+# dataset_version), DNS, or the yourtownpros.com domain. It runs only on
+# the migration branch.
+
+on:
+  push:
+    branches: [migration/workers-assets-2026-11-17]
+    paths:
+      - "web-staging/**"
+      - "wrangler.web-staging.toml"
+      - ".assetsignore"
+      - "functions/_renderer.mjs"
+      - ".github/workflows/deploy-web-staging.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One staging deploy at a time.
+concurrency:
+  group: ytp-web-staging-deploy
+  cancel-in-progress: false
+
+env:
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+jobs:
+  deploy-web-staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install wrangler (major version 4, pinned)
+        run: npm install --global wrangler@4
+
+      - name: Deploy the staging Worker (workers.dev only, assets plus renderer)
+        run: wrangler deploy --config wrangler.web-staging.toml

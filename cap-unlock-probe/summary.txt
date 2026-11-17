@@ -1,0 +1,9 @@
+patch status: patch-failed
+deployment latest_stage:
+{}
+deployment stages:
+[]
+deployment env_vars snapshot:
+"none"
+project env_vars after:
+{"prod":null,"prev":null}

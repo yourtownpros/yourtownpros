@@ -315,7 +315,7 @@ if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}}
 function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){s1.style.display="none";return}
 var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
 var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
-show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");s1.style.display="none";ensure(go)})}
+show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.cat?null:it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");s1.style.display="none";ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[];
@@ -335,7 +335,7 @@ var nm=nearMe57(normQ(raw));
 var city=resolveCity();
 if(!city&&nm.place)city=resolveCityText(nm.place);
 if(!city&&nm.near)city=savedCity57();
-if(city&&city.city&&city.state)storeCity28(city);
+if(city&&city.city&&city.state)storeCity28(city);else if(!city&&f2&&!f2.value.trim()){try{localStorage.removeItem("ytp-city")}catch(e){}}
 var q=nm.q;
 /* v5.17 search group (QA item 3): typed text never lands on a single listing or the home page; only an explicit suggestion click routes to a listing. */
 if(pickB&&!nm.near){location.href=pickB;return}
@@ -426,19 +426,8 @@ if(parsed){var as=document.querySelectorAll(".catnav a[href]");
 for(var i=0;i<as.length;i++){var h=as[i].getAttribute("href")||"";var m=/^\/([a-z0-9-]+)\/$/.exec(h);
 if(m){as[i].setAttribute("data-loc28",h);as[i].setAttribute("href","/search/?v="+m[1]+"&city="+encodeURIComponent(parsed.city)+"&state="+encodeURIComponent(parsed.state));navLinks.push(as[i])}}}
 if(!saved)return;
-var htop=document.querySelector(".htop");if(!htop)return;
-var pill=document.createElement("span");pill.className="citypill28";pill.id="ytp-citypill";
-pill.title="Saved on this device only, from the city you searched for. Change picks a different city, and the × makes the site forget it.";
-var nm=document.createElement("span");nm.className="cp-name";nm.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>';nm.appendChild(document.createTextNode(saved));pill.appendChild(nm);
-var chg=document.createElement("button");chg.type="button";chg.className="cp-change";chg.textContent="Change";pill.appendChild(chg);
-var clr=document.createElement("button");clr.type="button";clr.className="cp-clear";clr.setAttribute("aria-label","Clear saved city");clr.textContent="×";pill.appendChild(clr);
-var hr=htop.querySelector(".hright");if(hr)htop.insertBefore(pill,hr);else htop.appendChild(pill);
-chg.addEventListener("click",function(ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var w=document.getElementById("ytp-w57")||document.getElementById("hs-city");if(!w)return;w.value=saved;w.scrollIntoView({block:"center"});w.focus();if(w.select)w.select();try{w.dispatchEvent(new Event("input",{bubbles:true}))}catch(e){}});
-clr.addEventListener("click",function(){setSaved("");var wb=document.getElementById("ytp-w57");if(wb)wb.value="";var hb=document.getElementById("hs-city");if(hb)hb.value="";
-for(var j=0;j<navLinks.length;j++){var o=navLinks[j].getAttribute("data-loc28");if(o)navLinks[j].setAttribute("href",o);navLinks[j].removeAttribute("data-loc28")}
-if(pill.parentNode)pill.parentNode.removeChild(pill);
-var hint=document.getElementById("hs-loc-hint");
-if(hint&&hint.getAttribute("data-loc28")){hint.removeAttribute("data-loc28");hint.textContent="Location unavailable, type your city instead";hint.style.display="none"}});
+/* Saved-city pill removed Nov 18, 2026: the city now lives in the search box itself (owner: one spot). */
+
 })();
 
 /* Item 29: ytpCloses54 mirrors the v5.4 engine's range logic; the open judgment stays the engine's. */

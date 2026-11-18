@@ -26,18 +26,7 @@
 <div class="fine">Free for customers, and no obligation. We do not sell your number.</div>
 <button type="submit">Send request</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro.</div><p class="fine mmsg" role="status"></p></form></div></aside><div class="cat-main"><div class="filterbar" id="ytp-sbar" hidden><span class="rcount" id="ytp-scount"></span><a class="mlink" href="#match">Request a pro</a></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Featured partners come first and are labeled Sponsored · Featured. After them, pros with reviews come before pros without reviews: among reviewed pros, a higher rating counts for more, and so do more reviews. Pros without reviews follow, nearest first. The Sort control in the filters can reorder the list by rating, review count, or distance instead. The labeled Featured spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p></div><aside class="cat-map" id="ytp-smap-wrap"><div class="mappanel"><div id="ytp-smap" class="ytp-map"></div><div id="ytp-smap-load" class="smap-load" hidden>Loading map</div></div></aside></div>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
-/* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader.
-   YTPLoad.json(url) returns a Promise; a URL is fetched at most
-   once per page, ever: concurrent callers share the pending
-   Promise and later callers get the cached value. typeahead,
-   cities and category indexes also persist in sessionStorage
-   under versioned keys (<build> below, the same stamp the
-   build writes into typeahead.json), so a later page in the
-   session makes zero network requests for them. Listing shards
-   stay in memory and are written to sessionStorage only while
-   their total decoded size stays under a 2.5 MB LRU cap.
-   YTPLoad.cb(url, fn) is the callback form the existing
-   consumers use; fn receives the data, or null on failure. */
+
 window.YTPLoad = (function () {
   var BUILD = "v512-20261114-ship1";
   var cache = {}, pending = {};
@@ -101,12 +90,7 @@ window.YTPLoad = (function () {
 })();
 </script>
 <script>
-/* v5.18 (item 29 amendment): the v5.4 verified-hours
-engine, copied verbatim from the category and detail
-pages, so /search/ judges Open Now by the same
-computation. Payloads load per state from
-/search-hours/<state>.json, extracted from the
-tree's own ytp-hours blocks. */
+
 function ytpParseTime54(s){var m=/^(\d{1,2})(?::(\d{2}))?\s*([aApP][mM])?$/.exec(s);if(!m)return null;var h=parseInt(m[1],10);if(h<1||h>12)return null;var mn=m[2]?parseInt(m[2],10):0;if(mn>59)return null;return{h:h,min:mn,mer:(m[3]||"").toUpperCase()}}
 function ytpMinutes54(t,mer){var h=t.h%12;if(mer==="PM")h+=12;return h*60+t.min}
 function ytpParseRange54(s){var m=/^(.+?)\s*(?:\u2013|\u2014|-|\bto\b)\s*(.+)$/.exec(s);if(!m)return null;var a=ytpParseTime54(m[1].trim()),b=ytpParseTime54(m[2].trim());if(!a||!b||!b.mer)return null;var close=ytpMinutes54(b,b.mer),open;
@@ -140,26 +124,7 @@ var txt;if(!today.length)txt="Closed today";else if(today.length===1&&today[0][0
 return{open:open,label:open?"Open now":"Closed",today:txt}}
 </script>
 <script>
-/* v5.12 SEARCH 1 core engine (staging prototype).
-   Pure functions, no DOM: the same file runs in Node for the
-   verification tests and in the browser for the /search/ results
-   view. Rules encoded from Robert's Nov 12 directives (14:40,
-   as amended 15:09):
-   - radius, not city limits: listings within the radius of the
-     searched town's center, in-town listings first, then by
-     distance;
-   - every listing carries effective coordinates (effLat/effLng):
-     its verified street pin when it has one (pin: true),
-     otherwise its own town's center, used for distance only
-     (pin: false). A town-center listing gets NO map pin and its
-     card reads "Serves [Town] area"; it never presents as
-     located at a point. Coordinates are never guessed: a row
-     with no effective coordinates cannot enter a radius result;
-   - sort order is exactly what the "How results are ranked"
-     note states: in-town first, then nearest to farthest;
-     distance ties break by Google rating, then review count;
-   - never near-empty: under 10 results, widen 10 -> 15 -> 25
-     miles and SAY SO in the returned notice. */
+
 
 var RADII = [10, 15, 25];
 var MIN_RESULTS = 10;
@@ -173,12 +138,7 @@ function haversineMi(aLat, aLng, bLat, bLng) {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-/* rows: enriched index rows (see build_search_index_v512.py).
-   center: {lat, lng} of the searched town (cities-index).
-   Returns {results, radiusUsed, widened, notice, inTown,
-   nearby, pinned}. Each result is {row, dist, inTown, pinned};
-   dist for a pin:false result is the town-center distance,
-   internal only (never printed on its card). */
+
 function radiusSearch(rows, trade, townCity, townState, center) {
   var placed = [];
   for (var i = 0; i < rows.length; i++) {
@@ -226,14 +186,7 @@ function radiusSearch(rows, trade, townCity, townState, center) {
     notice: notice, inTown: inTown, nearby: chosen.length - inTown,
     pinned: pinnedN };
 }
-/* The view: parse ?v&city&state, set the where field to the
-searched town (item 2: the box shows the searched location),
-resolve the town through the cities index (canonical name,
-center, and its "sh" shard list), load exactly those shards
-through YTPLoad (spec 3.3: never a whole-directory index),
-run the engine, render. Summary text is computed by
-srchSummary, a pure function the Node end-to-end test
-extracts and exercises. */
+
 function srchSummary(res, label, town, st) {
   var sub;
   if (!res.results.length) {
@@ -283,16 +236,7 @@ function srchSummary(res, label, town, st) {
     .replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;"); }
   function escA(s) { return esc(s).replace(/"/g, "&quot;"); }
-  /* v5.17 search group (QA item 3): the query contract the
-     header and hero resolvers speak. normQ, nearMe57, lev57
-     and sing57 mirror assets/ytp.js, and catResolveList
-     runs the same staged matcher (exact, synonym, prefix,
-     substring, then fuzzy; a fuzzy tie resolves to
-     nothing), so a query resolves the same way on every
-     surface. ?q= is honored here for the first time: it
-     resolves to the radius view, a town picker, business
-     name matches, or a helpful empty state, never to a
-     single listing and never to a dead end. */
+  
   function normQ(q) { return q.toLowerCase()
     .replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ")
     .trim(); }
@@ -394,33 +338,21 @@ function srchSummary(res, label, town, st) {
   function hideMap() {
     if (mapWrap) mapWrap.style.display = "none";
     showSkel(false); }
-  /* v5.18 (items 41 and 47): the radius view rides the
-     city-category layout. Solo states (town picker, name
-     matches, empty states) collapse it to one column. */
+  
   function setSolo(solo) {
     if (!layoutEl) return;
     if (solo) { layoutEl.classList.add("srch-solo");
       if (sideEl) sideEl.hidden = true;
       if (barEl) barEl.hidden = true; }
     else layoutEl.classList.remove("srch-solo"); }
-  /* v5.18 (item 42): the featured set is the site featured
-     config, named here because the search shards carry no
-     featured flag. One labeled Sponsored · Featured
-     placement, sorted first by the default order and
-     marked on the card and the map popup. */
+  
   var FEAT57 = { "natural-skincare/renaud-naturals-loveland": 1,
     "website-design/rankly-design-westminster": 1 };
   var GLYPH57 = {"bakeries-and-cafes": "☕", "plumbers": "⚒", "electricians": "⚡", "hvac": "❄", "roofing": "▲", "painting": "■", "lawn-and-landscaping": "❀", "handyman": "⚒", "locksmiths": "⚿", "cleaners": "✨", "florists": "⚘", "auto-repair": "⚙", "towing": "➤", "auto-glass": "▣", "hair-salons": "✂", "barbers": "☰", "nails": "✧", "med-spas": "✶", "spas": "✿", "massage": "❁", "tanning": "☀", "fitness": "✩", "dance-studios": "♫", "bookstores": "❧", "jewelry": "★", "pet-grooming": "🐾", "pet-boarding": "⌂", "veterinary": "✚", "tattoo": "✦"};
   function slugOf(r) { return String(r.url || "")
     .replace(/^\//, "").replace(/\/$/, ""); }
   function isFeat(p) { return !!FEAT57[slugOf(p.row)]; }
-  /* Sorting (item 42). The engine still returns its
-     radius order; the view owns display order. Default
-     "rec": Featured first, then reviewed pros weighted
-     by rating and review count, then unreviewed pros,
-     nearest first. Explicit sorts override. "distance"
-     is the engine's standing order (in-town, nearest,
-     rating, reviews). */
+  
   function legacyCmp(a, b) {
     if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
     if (Math.abs(a.dist - b.dist) > 1e-9) return a.dist - b.dist;
@@ -469,14 +401,7 @@ function srchSummary(res, label, town, st) {
       return String(a.row.name)
         .localeCompare(String(b.row.name)); });
     return arr; }
-  /* Filters: the sidebar counts are recomputed from the
-     full result set on every change, so a count cannot
-     drift from what its filter would show. The Open Now
-     filter (item 29 amendment) matches only listings
-     whose verified hours payload computes open now, by
-     the same v5.4 engine the detail pages use; a listing
-     with no payload never matches. Its count stays blank
-     until the state hours file has loaded. */
+  
   var F = { rate: 0, rev: false, claim: false, open: false,
     dist: 0 };
   var SORT = "rec";
@@ -528,15 +453,7 @@ function srchSummary(res, label, town, st) {
       out += '<span class="rbox57"><i style="width:' + f +
         '%"></i></span>'; }
     return out; }
-  /* Card (item 41, binding design rules): icon tile,
-     name, rating and review count on their own line,
-     muted city / distance meta, then the action group,
-     right-aligned with a real gap. ONE solid button per
-     card: Request this pro. The phone is a quiet outline
-     button, and metadata never shares a line with the
-     buttons (the old card put the phone and the rating
-     on one line and they collided). tel: links carry
-     digits only, no +1 prefix. */
+  
   function cardHTML(p, n) {
     var r = p.row, feat = isFeat(p);
     var rate = "";
@@ -600,9 +517,7 @@ function srchSummary(res, label, town, st) {
     if (!window.L || !CURCROW) { hideMap(); return; }
     if (mapWrap) mapWrap.style.display = "";
     if (!map) {
-      /* Wheel zoom stays off until the map is clicked,
-         the site pattern, so page scroll is never
-         trapped; the skeleton overlay covers the load. */
+      
       map = L.map("ytp-smap", { scrollWheelZoom: false });
       var smapEl = document.getElementById("ytp-smap");
       if (smapEl) smapEl.addEventListener("click",
@@ -630,8 +545,7 @@ function srchSummary(res, label, town, st) {
           " reviews</p>" : "") +
         (isFeat(p) ? '<p class="pfeat">Sponsored · ' +
           "Featured</p>" : ""), { maxWidth: 280 });
-      /* Card and pin highlight each other, the category
-         page pattern. */
+      
       mk.on("mouseover", function () {
         mk.setIcon(iconFor(n, true));
         var c = listEl.querySelector(
@@ -653,8 +567,7 @@ function srchSummary(res, label, town, st) {
       mk.addTo(layer);
       markers[slug] = mk;
       pts.push([p.row.lat, p.row.lng]); });
-    /* Fit bounds to the results actually shown, on the
-       first render and after every filter change. */
+    
     if (pts.length) {
       map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
     } else { map.setView([CURCROW.lat, CURCROW.lng], 11); }
@@ -825,9 +738,7 @@ function srchSummary(res, label, town, st) {
     try {
       var f2 = document.getElementById("ytp-w57");
       if (f2) f2.value = town + ", " + st;
-      /* v5.15 (roadmap 16a): keep the searched category in
-         the service box, the way the where box keeps the
-         searched town, so refining the search is one edit. */
+      
       var f1 = document.getElementById("ytp-q57");
       if (f1) f1.value = label;
     } catch (x) {}
@@ -875,9 +786,7 @@ function srchSummary(res, label, town, st) {
             HOURS = hd || {}; HOURS_READY = true;
             syncCounts(); fillOpenStates();
             if (F.open) renderResults(); })
-          .catch(function () { /* hours stay unknown: the
-            Open Now count stays blank and the filter
-            matches nothing */ });
+          .catch(function () {  });
       } else {
         if (frailEl) frailEl.hidden = true;
         if (barEl) barEl.hidden = true;
@@ -914,9 +823,7 @@ function srchSummary(res, label, town, st) {
     if (townQ) crow = findTown(CT, townQ, stQ);
     if (!crow && nm.place) crow = findTown(CT, nm.place, "");
     if (!crow && nm.near && !townQ) {
-      /* Roadmap item 28's saved-city leg, read-only: the
-         legacy ytp-city key resolves an explicit "near me"
-         query. Nothing is written back. */
+      
       var sv = null;
       try { sv = localStorage.getItem("ytp-city"); }
       catch (x) {}

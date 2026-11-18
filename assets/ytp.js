@@ -17,26 +17,12 @@ L.marker([d.lat,d.lng]).addTo(map).bindPopup(esc(d.city));}
 })();
 
 
-/* v5.1: Suggest an edit. The form inserts one row into
-edit_suggestions (schema v10) as pending; nothing renders
-publicly from it, and the listing changes only after a
-person checks the suggestion against a source (a later
-build bakes approved corrections into the data). Until
-schema v10 is applied the insert errors and the form says
-so plainly; it never shows a success it did not get. No
-account is needed: the form asks for a name and an optional
-email, and a signed-in user's id rides along when there is
-one. */
+/* v5.1: Suggest an edit inserts one pending row into edit_suggestions (schema v10); nothing renders publicly from it, and the form never shows a success it did not get. */
 ytpOnReady(function(A){
 var form=document.querySelector(".sgform");
 if(!form)return;
 var slug=form.getAttribute("data-slug");
-/* Nov 16, 2026: the row list replaces the dropdown.
-Tapping a row selects the suggestion type into the same
-hidden sg_field the submit below already reads, expands
-the details area, and swaps in the prompt written for
-that type. The Report inappropriate content link selects
-the Other row. */
+/* Nov 16, 2026: tapping a suggest row selects its type into the hidden sg_field, expands the details area, and swaps in that type's prompt. */
 var sgRows=form.querySelectorAll(".sgx-row");
 var sgField=form.querySelector('[name="sg_field"]');
 var sgDetail=form.querySelector(".sgx-detail");
@@ -82,12 +68,7 @@ sgOk();
 }).catch(fail);
 });
 });
-/* v5.1: owner highlights on the listing. Approved rows from
-owner_highlights (schema v10) render as chips in the mount,
-labeled as owner-provided and separate from the researched
-attribute chips and from reviews. Any error (including the
-table not existing yet) leaves the mount empty and the page
-exactly as built. */
+/* v5.1: owner highlights render approved owner_highlights rows (schema v10) as chips in the mount; any error leaves the mount empty. */
 ytpOnReady(function(A){
 var mount=document.getElementById("ytp-highlights");
 if(!mount||!A||!A.sb)return;
@@ -118,6 +99,14 @@ mount.appendChild(card);
 
 (function(){var b=document.querySelector(".share57");if(!b||!navigator.clipboard)return;b.addEventListener("click",function(){navigator.clipboard.writeText(location.href).then(function(){b.textContent="Link copied"},function(){})})})();
 
+/* Item 20 (Nov 18, 2026): shared dropdown keyboard navigation: arrows open and move, Home and End jump, Escape closes and refocuses the button. */
+function ytpKbNav(box,btn,getItems,open,close){box.addEventListener("keydown",function(e){var items=getItems();if(!items||!items.length)return;var idx=-1;for(var i=0;i<items.length;i++)if(items[i]===document.activeElement)idx=i;
+if(e.key==="ArrowDown"){e.preventDefault();if(idx<0){open();items[0].focus()}else items[(idx+1)%items.length].focus()}
+else if(e.key==="ArrowUp"){e.preventDefault();if(idx<0){open();items[items.length-1].focus()}else items[(idx-1+items.length)%items.length].focus()}
+else if(e.key==="Home"){e.preventDefault();items[0].focus()}
+else if(e.key==="End"){e.preventDefault();items[items.length-1].focus()}
+else if(e.key==="Escape"){close();btn.focus()}})}
+
 (function(){
 var menus=document.querySelectorAll(".fbmenu,.cnav-item");
 function setBtn(m,open){var b=m.querySelector("button");if(b)b.setAttribute("aria-expanded",open?"true":"false")}
@@ -129,6 +118,7 @@ dropdown is position:fixed (V42_CSS), so pin its top just under the
 nav row; the scroll container cannot clip a fixed panel. */
 if(m.classList.contains("cnav-item")&&window.innerWidth<1200){var d=m.querySelector(".cnav-drop");if(d){var nv=m.closest?m.closest(".catnav"):null;var nb=nv?nv.getBoundingClientRect().bottom:b.getBoundingClientRect().bottom;d.style.top=(nb+8)+"px"}}}});
 m.addEventListener("focusout",function(e){if(!m.contains(e.relatedTarget)){m.classList.remove("open");setBtn(m,false)}});
+ytpKbNav(m,b,function(){var d=m.querySelector(".fbdrop,.cnav-drop");return d?d.querySelectorAll("a,button"):[]},function(){closeAll(m);m.classList.add("open");setBtn(m,true);if(m.classList.contains("cnav-item")&&window.innerWidth<1200){var d=m.querySelector(".cnav-drop");if(d){var nv=m.closest?m.closest(".catnav"):null;var nb=nv?nv.getBoundingClientRect().bottom:b.getBoundingClientRect().bottom;d.style.top=(nb+8)+"px"}}},function(){m.classList.remove("open");setBtn(m,false)});
 })(menus[j])}
 var navs=document.querySelectorAll(".catnav");
 for(var n=0;n<navs.length;n++){navs[n].addEventListener("scroll",function(){closeAll(null)})}
@@ -137,18 +127,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(nul
 })();
 
 
-/* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader.
-   YTPLoad.json(url) returns a Promise; a URL is fetched at most
-   once per page, ever: concurrent callers share the pending
-   Promise and later callers get the cached value. typeahead,
-   cities and category indexes also persist in sessionStorage
-   under versioned keys (<build> below, the same stamp the
-   build writes into typeahead.json), so a later page in the
-   session makes zero network requests for them. Listing shards
-   stay in memory and are written to sessionStorage only while
-   their total decoded size stays under a 2.5 MB LRU cap.
-   YTPLoad.cb(url, fn) is the callback form the existing
-   consumers use; fn receives the data, or null on failure. */
+/* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader: a URL is fetched at most once per page; some indexes persist in sessionStorage under versioned keys. */
 window.YTPLoad = (function () {
   var BUILD = "v512-20261114-ship1";
   var cache = {}, pending = {};
@@ -212,19 +191,7 @@ window.YTPLoad = (function () {
 })();
 
 
-/* v5.12 SHIP 1: header two-field search on the shared
-YTPLoad loader and the split index (spec sections 2, 3.3, 6).
-Suggestions read typeahead.json only: categories first (with
-the spec 4.4 synonyms), then business names ranked by
-distance from the active location; the header never loads a
-listing shard and never fetches the whole index. Category +
-town resolutions route to the /search/ radius view (v5.12
-item 1); the static category and town pages stay live for
-SEO and direct links. v5.12.2 (owner ruling Nov 14): the
-where box is NEVER prefilled, not from the page, not from
-storage, not from a geo guess; it starts empty unless the
-user typed a location in this session. Name suggestions
-rank by distance from the town in the where box only. */
+/* v5.12 SHIP 1: header two-field search on YTPLoad; suggestions read typeahead.json only. v5.12.2: the where box is NEVER prefilled. */
 (function(){
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
@@ -237,10 +204,7 @@ function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json
 function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(cb)})})}
 function normQ(q){return q.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
 function havMi(aLa,aLo,bLa,bLo){var R=3959,p=Math.PI/180,dLa=(bLa-aLa)*p,dLo=(bLo-aLo)*p,h=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(aLa*p)*Math.cos(bLa*p)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(h))}
-/* v5.17 search group helpers. nearMe57 splits a trailing
-"near <place>" or "near me" off the what text; lev57 is a
-bounded edit distance and sing57 a light singularizer, the
-pair behind the fuzzy category stage in catMatches. */
+/* v5.17 search group helpers. */
 function nearMe57(q){var near=false,place="";
 var m=/^(.*?)\s+near\s+(.+)$/.exec(q);
 if(m){near=true;q=m[1].trim();var p=m[2].trim();if(p!=="me")place=p}
@@ -263,21 +227,11 @@ var low=String(tx||"").trim().toLowerCase();if(!low)return null;
 for(var i=0;i<CT.length;i++){if((CT[i].city+", "+CT[i].state).toLowerCase()===low)return CT[i]}
 for(var i=0;i<CT.length;i++){if(CT[i].city.toLowerCase()===low)return CT[i]}
 return null}
-function savedCity57(){/* Roadmap item 28's saved-city leg,
-read-only: the legacy ytp-city key (still read by the match
-thanks page) resolves an explicit "near me" query when the
-where box is empty. It never prefills the box and never
-ranks suggestions; the v5.12.2 ruling stands. */
+function savedCity57(){/* Item 28 saved-city leg, read-only: the legacy ytp-city key. */
 var v=null;try{v=localStorage.getItem("ytp-city")}catch(e){}
 if(!v)return null;
 return resolveCityText(v)}
-function storeCity28(c){/* Item 28 Part A writer (Nov 17,
-2026): a submitted search records the city it resolved,
-in the legacy key's "City, ST" form every reader parses.
-Only a resolved city object reaches here: typed in the
-box, picked from suggestions, or named after "near".
-Nothing guesses a city, and the write never prefills
-a box; the v5.12.2 ruling stands. */
+function storeCity28(c){/* Item 28 Part A writer (Nov 17, 2026): a submitted search records its resolved city in the legacy ytp-city key as "City, ST". Nothing guesses a city, and the write never prefills a box. */
 try{localStorage.setItem("ytp-city",c.city+", "+c.state)}catch(e){}}
 function searchURL57(raw,city,cityText){var u="/search/?q="+encodeURIComponent(raw);
 if(city)u+="&city="+encodeURIComponent(city.city)+"&state="+city.state;
@@ -383,18 +337,7 @@ if(!city&&nm.place)city=resolveCityText(nm.place);
 if(!city&&nm.near)city=savedCity57();
 if(city&&city.city&&city.state)storeCity28(city);
 var q=nm.q;
-/* v5.17 search group (QA item 3), on the v5.12.2 contract
-(a category plus a resolved town lands on the radius
-view): typed text NEVER lands on a single listing and
-NEVER falls back to the home page. The old first-name-match
-jumps (a bare "plumber" with no town went straight to one
-plumber's listing) and the silent "/" fallback are gone.
-The only direct listing route left is an explicit
-suggestion click (pickB): the visitor's own choice.
-Everything else resolves to the radius view or to
-/search/?q=, where the query is resolved in the open:
-category results, a town picker, business name matches,
-or a helpful empty state. */
+/* v5.17 search group (QA item 3): typed text never lands on a single listing or the home page; only an explicit suggestion click routes to a listing. */
 if(pickB&&!nm.near){location.href=pickB;return}
 if(city&&pickCat&&pickV){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
 if(city&&q){var cms=catMatches(q);
@@ -418,16 +361,7 @@ else if(ev.key==="Escape"){s1.style.display="none"}});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-/* v5.12.2 (owner ruling Nov 14): NO where-box prefill.
-The v5.10.1 block that filled the box from the page's own
-location, falling back to a saved city, is removed: the
-box starts empty on every page unless the user typed a
-location in this session (the /search/ view still sets it
-from the search URL the user just submitted). v5.17 adds
-one narrow read back: savedCity57 reads the legacy
-ytp-city key only to resolve an explicit "near me" query
-(roadmap item 28's saved-city leg). The box is still
-never prefilled and the key is never written here. */
+/* v5.12.2 (owner ruling Nov 14): NO where-box prefill, ever. v5.17: savedCity57 reads the legacy ytp-city key only to resolve an explicit "near me" query; the box is still never prefilled and the key is never written here. */
 })();
 
 (function(){
@@ -445,12 +379,15 @@ function probeOwner(){var link=document.getElementById("ytp-biz-link");if(!link)
 if(!A.user||!A.sb){link.hidden=true;ownerProbed=false;return}
 if(ownerProbed)return;ownerProbed=true;
 try{A.sb.from("profiles").select("is_owner").eq("id",A.user.id).then(function(r){var row=r&&r.data&&r.data[0];if(row&&row.is_owner===true){link.hidden=false;var hc=document.querySelector("a.hclaim");if(hc){hc.textContent="Business dashboard";hc.setAttribute("href","/business/")}}}).catch(function(){})}catch(e){}}
-function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub)ub.textContent=A.firstName()||"Account"}else{si.hidden=false;um.hidden=true}probeOwner()}
+function render(){var si=document.getElementById("ytp-signin"),um=document.getElementById("ytp-umenu"),ub=document.getElementById("ytp-ubtn");if(!si||!um)return;if(A.user){si.hidden=true;um.hidden=false;if(ub){/* Item 27: signed-in state shows a circular initials badge with a chevron. */
+var nm=fullName(),ini;if(nm){var pp=nm.split(/\s+/);ini=(pp[0].charAt(0)+(pp.length>1?pp[pp.length-1].charAt(0):"")).toUpperCase()}else{ini=((A.user.email||"A").charAt(0)).toUpperCase()}
+ub.innerHTML="";var sp=document.createElement("span");sp.className="uinit";sp.setAttribute("aria-hidden","true");sp.textContent=ini;ub.appendChild(sp);var cv=document.createElement("span");cv.className="uchev";cv.setAttribute("aria-hidden","true");cv.innerHTML='<svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';ub.appendChild(cv);ub.classList.add("hasbadge");ub.setAttribute("aria-label","Account menu for "+(nm||A.user.email||"your account"))}}else{si.hidden=false;um.hidden=true}probeOwner()}
 function wire(){var si=document.getElementById("ytp-signin");if(si)si.addEventListener("click",function(){A.signIn()});
 var ub=document.getElementById("ytp-ubtn"),um=document.getElementById("ytp-umenu");
 if(ub&&um){ub.addEventListener("click",function(e){e.stopPropagation();var open=um.classList.toggle("open");ub.setAttribute("aria-expanded",open?"true":"false")});
 document.addEventListener("click",function(e){if(!um.contains(e.target)){um.classList.remove("open");ub.setAttribute("aria-expanded","false")}});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){um.classList.remove("open");ub.setAttribute("aria-expanded","false")}})}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){um.classList.remove("open");ub.setAttribute("aria-expanded","false")}});
+ytpKbNav(um,ub,function(){return um.querySelectorAll(".udrop a,.udrop button")},function(){um.classList.add("open");ub.setAttribute("aria-expanded","true")},function(){um.classList.remove("open");ub.setAttribute("aria-expanded","false")})}
 var so=document.getElementById("ytp-signout");if(so)so.addEventListener("click",function(){A.signOut()})}
 try{if(window.supabase&&window.supabase.createClient){A.sb=window.supabase.createClient("https://klbgkidcdrlqsvrgfafv.supabase.co","sb_publishable_Z4jRZ_-LdpstUH6b_Gcs-Q_Jeok7Emb")}}catch(e){A.sb=null}
 wire();render();
@@ -469,22 +406,7 @@ if(hp&&hp.value){ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropag
 },true);
 })();
 
-/* Item 28 Part A (Nov 17, 2026): saved-city routing and
-the change-city pill. The legacy ytp-city key holds one
-"City, ST" string, the form every existing reader parses
-(savedCity57 in this file, the match thanks page). Writers
-in this build: a city category page records its city (the
-ytp-citymap block exists only on those pages, so opening
-one is the visitor's own choice of city), and the header
-and hero searches record the city a submitted search
-resolved (storeCity28, beside savedCity57). Nothing here
-guesses a city: no geolocation, no IP lookup, and no box
-is ever prefilled; the v5.12.2 no-prefill ruling stands.
-Readers in this build: when a city is saved, top-nav trade
-links route straight to /search/?v=<trade>&city=<city>&
-state=<state>, and a compact pill in the header names the
-saved city with Change and Clear actions. With nothing
-saved, this module changes nothing. */
+/* Item 28 Part A (Nov 17, 2026): saved-city routing and the change-city pill; writers record only a chosen or search-resolved city. */
 (function(){
 function getSaved(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
 function setSaved(v){try{if(v)localStorage.setItem("ytp-city",v);else localStorage.removeItem("ytp-city")}catch(e){}}
@@ -510,3 +432,13 @@ if(pill.parentNode)pill.parentNode.removeChild(pill);
 var hint=document.getElementById("hs-loc-hint");
 if(hint&&hint.getAttribute("data-loc28")){hint.removeAttribute("data-loc28");hint.textContent="Location unavailable, type your city instead";hint.style.display="none"}});
 })();
+
+/* Item 29: ytpCloses54 mirrors the v5.4 engine's range logic; the open judgment stays the engine's. */
+function ytpCloses54(list,tz){if(typeof ytpParseWeek54!=="function"||typeof ytpFmtMin54!=="function")return null;var wk=ytpParseWeek54(list);if(!wk)return null;var o={},ps;try{ps=new Intl.DateTimeFormat("en-US",{timeZone:tz,weekday:"short",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());for(var i=0;i<ps.length;i++)o[ps[i].type]=ps[i].value}catch(e){return null}
+var day="MonTueWedThuFriSatSun".indexOf(o.weekday)/3;if(day<0)return null;var min=(parseInt(o.hour,10)%24)*60+parseInt(o.minute,10),t=wk[day],i,r;
+for(i=0;i<t.length;i++){r=t[i];if(min>=r[0]&&min<r[1])return(r[0]===0&&r[1]===1440)?null:ytpFmtMin54(r[1])}
+var y=wk[(day+6)%7];for(i=0;i<y.length;i++){r=y[i];if(r[1]>1440&&min<r[1]-1440)return ytpFmtMin54(r[1])}
+return null}
+window.ytpCloses54=ytpCloses54;
+(function(){function up(){if(typeof ytpOpenNow54!=="function"||typeof hoursBySlug54==="undefined")return;var ss=document.querySelectorAll("[data-open57]");for(var i=0;i<ss.length;i++){var s=ss[i];if(s.hidden)continue;var c=s.closest?s.closest("[data-slug]"):null;var e=c?hoursBySlug54[c.getAttribute("data-slug")]:null;if(!e)continue;var st=ytpOpenNow54(e.h,e.tz);if(!st)continue;if(st.open){var ct=ytpCloses54(e.h,e.tz);s.textContent=ct?("Open now · Closes "+ct):"Open now"}else s.textContent="Closed now"}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",up);else up()})();

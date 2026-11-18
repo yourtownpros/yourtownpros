@@ -12,14 +12,16 @@
 <h2>What claiming does not include</h2>
 <p>Featured placement at the top of your town, the online booking button, and first access to matched customers are separate paid options. Claiming your listing is free and always will be.</p>
 <h2>How verification works</h2>
-<p>To keep listings in the right hands, every claim includes one quick proof that the business is yours. When you pick your business below, the form shows the proofs that work for it: an automatic match when your account email is the email we already have for the business (or shares its website domain), a short code you put on your website, in your DNS, or on the business Facebook page, or a photo of a business license or utility bill emailed to us. Approval is automatic once our check finds your proof. Only when none of those work do we call the phone number on the listing as a last step.</p>
+<p>To keep listings in the right hands, every claim includes one quick proof that the business is yours. When you pick your business below, the form shows the proofs that work for it: an automatic match when your account email is the email we already have for the business (or shares its website domain), a short code you put on your website, in your DNS, or on the business Facebook page, or a photo of a business license or utility bill emailed to us. Approval is automatic once our check finds your proof, except for a document, which a person reviews by hand. Only when none of those work do we call the phone number on the listing as a last step.</p>
 <h2>Request your claim</h2>
-<p>Sign in with Google to send your claim. Your account is how you manage the listing once it is approved, and signing in helps us check the claim really comes from the business.</p>
-<div id="ytp-claim-gate"><p>Sign in to claim your business.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
-<div id="ytp-claimwrap" hidden><form id="ytp-claim-form" class="match" style="margin:0">
+<p>Find your business below and check it is the right one. You only sign in at the end, when you send the claim: your account is how you manage the listing once it is approved, and signing in helps us check the claim really comes from the business.</p>
+<div id="ytp-claimwrap"><form id="ytp-claim-form" class="match" style="margin:0">
 <label for="claim-pick-q">Find your business</label><input type="text" id="claim-pick-q" placeholder="Start typing your business name" autocomplete="off">
 <div class="picklist" id="claim-pick-list"></div>
 <div class="bizcard" id="ytp-bizcard" hidden></div>
+<div class="hlchips" id="ytp-chips" hidden></div>
+<div class="bizcard" id="ytp-claimed-note" hidden></div>
+<div id="ytp-claim-fields">
 <label for="claim-business">Business name</label><input type="text" name="business" id="claim-business" readonly required>
 <label for="claim-city">City</label><input type="text" name="city" id="claim-city" readonly required>
 <input type="hidden" name="business_slug" id="claim-slug">
@@ -31,7 +33,8 @@
 <label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
 <label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
 <label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
-<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
+<div id="ytp-claim-gate" hidden><p>One last step: sign in with Google to send your claim. Your account is how you manage the listing once it is approved.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></div></form></div>
 <script>
 ytpOnReady(function(A){
 var gate=document.getElementById("ytp-claim-gate"),wrap=document.getElementById("ytp-claimwrap"),form=document.getElementById("ytp-claim-form");
@@ -39,6 +42,7 @@ var p=new URLSearchParams(location.search);
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 var searchIdx=null,verifyData=null,chosen=null,code="",gcSnap=null;
+var bizData=null,signedIn=!!(A&&A.user&&A.sb);
 function newCode(){var h="";var a=new Uint32Array(3);if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a);h=(a[0].toString(16)+a[1].toString(16)+a[2].toString(16)).toUpperCase()}else{h=Math.random().toString(16).slice(2,14).toUpperCase()}return "YTP-"+h.slice(0,6)}
 code=newCode();
 function ytpPerfFigures(snap,slug,win){
@@ -67,26 +71,70 @@ for(var i=0;i<rows.length;i++){var d=String(rows[i].created_at||"").slice(0,10);
 return ytpLeadGroups(f)}
 function domainOf(u){if(!u)return "";var s=String(u).split("://").pop().split("/")[0].toLowerCase();return s.indexOf("www.")===0?s.slice(4):s}
 function acctDomain(){return (A.user&&A.user.email?String(A.user.email).split("@").pop().toLowerCase():"")}
+function renderChips(){
+var box=$("ytp-chips");if(!box)return;
+if(!chosen||chosen.claimed||!bizData){box.hidden=true;box.innerHTML="";return}
+var f=bizData[chosen.slug];if(!f){box.hidden=true;box.innerHTML="";return}
+/* Roadmap item 48 (claim build, Nov 17, 2026): the
+missing-fields chips use the same presence checks as
+the business dashboard profile completeness checklist
+(business/index.html renderComplete, reading the same
+biz-data.json fields), so a chip appears only for a
+field the listing actually lacks. */
+var chips=[];
+if(!f.desc)chips.push("No description");
+if(!f.hours)chips.push("Missing hours");
+if(!(f.phone&&String(f.phone).trim()))chips.push("No phone number");
+if(!f.website)chips.push("No website");
+if(!f.photos)chips.push("No photos");
+if(!f.services)chips.push("No services listed");
+chips.push("Not claimed yet");
+box.innerHTML="<span class='listed' style='width:100%'>What this listing is missing:</span>"+chips.map(function(c){return "<span class='hlchip'>"+esc(c)+"</span>"}).join("");
+box.hidden=false;
+}
 function resolve(){
 if(!chosen){return}
 var nameEl=$("claim-business"),cityEl=$("claim-city"),slugEl=$("claim-slug");
 if(nameEl)nameEl.value=chosen.name;if(cityEl)cityEl.value=chosen.city;if(slugEl)slugEl.value=chosen.slug;
+try{sessionStorage.setItem("ytpClaimPick",chosen.slug)}catch(e){}
 var card=$("ytp-bizcard");
 if(card){card.hidden=false;card.innerHTML="<h3>"+esc(chosen.name)+"</h3><p class='listed' style='margin:0'>"+esc(chosen.where)+"</p>"}
 /* Roadmap item 31 (Dashboard Performance build, Nov 17,
+2026; zero rule corrected in the claim build, Nov 17,
 2026): the lookup card shows the listing's real total
 view figure from the same snapshot file and the same
 total window the owner dashboard reads, so the number
 seen while claiming is the number the dashboard later
-shows. It renders only when the snapshot is complete;
-an absent slug in a complete snapshot is a real zero. */
+shows. It renders only when the snapshot is complete
+and the figure is above zero; a listing with no
+recorded views shows no count at all, never a zero and
+never an estimate. The window is labeled with the
+counting start, November 10, 2026. */
 var fig=ytpPerfFigures(gcSnap,chosen.slug,"total");
-if(card&&fig.ok){card.innerHTML+="<p class='listed' style='margin:6px 0 0'>This listing page has been viewed <strong>"+fig.lv+"</strong> "+(fig.lv===1?"time":"times")+" since counting started on November 10, 2026.</p>"}
+if(card&&fig.ok&&fig.lv>0){card.innerHTML+="<p class='listed' style='margin:6px 0 0'>This listing page has been viewed <strong>"+fig.lv+"</strong> "+(fig.lv===1?"time":"times")+" since counting started on November 10, 2026.</p>"}
+var note=$("ytp-claimed-note"),fields=$("ytp-claim-fields"),chipsBox=$("ytp-chips");
+if(chosen.claimed){
+/* Claim build (Nov 17, 2026): an already-claimed
+listing says so plainly and offers no fresh claim
+submission: the form fields hide and the submit stays
+disabled. */
+if(note){note.hidden=false;note.innerHTML="<h3 style='margin:0 0 2px'>This listing has already been claimed</h3><p class='listed' style='margin:0'>Its owner manages it from the <a href='/business/'>business dashboard</a>. If you own this business and need access, sign in with the account that claimed it, or write to yourtownpros@gmail.com and we will sort it out.</p>"}
+if(fields)fields.hidden=true;
+if(chipsBox){chipsBox.hidden=true;chipsBox.innerHTML=""}
+var vb=$("claim-verify");if(vb)vb.innerHTML="";
+var db2=$("claim-doc-block");if(db2)db2.hidden=true;
+var sub2=$("ytp-claim-submit");if(sub2)sub2.disabled=true;
+return}
+if(note)note.hidden=true;
+if(fields)fields.hidden=false;
+renderChips();
 renderMethods();
 var sub=$("ytp-claim-submit");if(sub)sub.disabled=false;
 }
 function renderMethods(){
 var box=$("claim-verify");if(!box||!chosen)return;
+if(chosen.claimed){box.innerHTML="";return}
+if(!signedIn){box.innerHTML="<p class='listed' style='margin:0'>When you send this claim, we ask you to sign in first. Then the ways to prove this business is yours appear here: an email match, a short code for your website, DNS or Facebook page, or a document you upload.</p>";var dbx=$("claim-doc-block");if(dbx)dbx.hidden=true;return}
 var vd=(verifyData&&verifyData[chosen.slug])||{email:"",website:"",domain:"",facebook:""};
 var acctEmail=(A.user&&A.user.email)?String(A.user.email).toLowerCase():"";
 var ad=acctDomain(),wd=vd.domain||domainOf(vd.website);
@@ -110,7 +158,7 @@ var db=$("claim-doc-block");if(db){var chk=box.querySelector("input[name='vm']:c
 function pickSlug(slug){
 if(!searchIdx)return;
 for(var i=0;i<searchIdx.length;i++){var e=searchIdx[i];
-if(e.url.replace(/^\/+|\/+$/g,"")===slug){chosen={slug:slug,name:e.name,city:e.city,trade:e.trade,where:(e.city||"")+(e.state?", "+e.state:"")};resolve();return}}
+if(e.url.replace(/^\/+|\/+$/g,"")===slug){chosen={slug:slug,name:e.name,city:e.city,trade:e.trade,claimed:!!e.claimed,where:(e.city||"")+(e.state?", "+e.state:"")};resolve();return}}
 }
 function wirePicker(){
 var q=$("claim-pick-q"),list=$("claim-pick-list");if(!q||!list)return;
@@ -130,17 +178,24 @@ for(var j=0;j<btns.length;j++){(function(b){b.addEventListener("click",function(
 function fail(){var e=$("ytp-claim-error");if(e)e.textContent="Something went wrong sending your claim. Please try again."}
 var gb=$("ytp-claim-signin");if(gb)gb.addEventListener("click",function(){A.signIn()});
 fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcSnap=d||null;if(chosen)resolve()}).catch(function(){});
-if(!(A.user&&A.sb)){if(gate)gate.hidden=false;if(wrap)wrap.hidden=true;return}
-if(gate)gate.hidden=true;if(wrap)wrap.hidden=false;
+/* Claim build (Nov 17, 2026): lookup first. The form
+is visible signed out; sign-in is asked only when the
+claim is sent (the submit handler reveals the sign-in
+block at the bottom of the form). Prefill happens
+only for a signed-in owner. */
+if(signedIn){
 var emailEl=$("claim-email");if(emailEl)emailEl.value=A.user.email||"";
 var cname=$("claim-name");if(cname&&!cname.value)cname.value=(A.user.user_metadata&&A.user.user_metadata.full_name)||A.displayName();
+}
 var wantSlug=(p.get("business")||"").replace(/^\/+|\/+$/g,"");
+if(!wantSlug){try{wantSlug=(sessionStorage.getItem("ytpClaimPick")||"").replace(/^\/+|\/+$/g,"")}catch(e){}}
 fetch("/search-index.json").then(function(r){return r.json()}).then(function(d){searchIdx=d;wirePicker();
 if(wantSlug){pickSlug(wantSlug)}else if(p.get("name")){
 var nm=p.get("name").toLowerCase();
-for(var i=0;i<d.length;i++){if(d[i].name.toLowerCase()===nm){chosen={slug:d[i].url.replace(/^\/+|\/+$/g,""),name:d[i].name,city:d[i].city,trade:d[i].trade,where:(d[i].city||"")+(d[i].state?", "+d[i].state:"")};resolve();break}}
+for(var i=0;i<d.length;i++){if(d[i].name.toLowerCase()===nm){chosen={slug:d[i].url.replace(/^\/+|\/+$/g,""),name:d[i].name,city:d[i].city,trade:d[i].trade,claimed:!!d[i].claimed,where:(d[i].city||"")+(d[i].state?", "+d[i].state:"")};resolve();break}}
 }}).catch(function(){});
 fetch("/verify-data.json").then(function(r){return r.json()}).then(function(d){verifyData=d;if(chosen)renderMethods()}).catch(function(){});
+fetch("/biz-data.json").then(function(r){return r.json()}).then(function(d){bizData=d;renderChips()}).catch(function(){});
 if(form)form.addEventListener("change",function(ev){
 if(!ev.target||ev.target.name!=="vm")return;
 var db=$("claim-doc-block");if(db)db.hidden=ev.target.value!=="document";
@@ -153,6 +208,8 @@ m.textContent=(f&&f.size>10485760)?"That file is too big. Please pick a photo or
 });
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
+if(!signedIn){if(gate){gate.hidden=false;if(gate.scrollIntoView)gate.scrollIntoView()}var ge=$("ytp-claim-error");if(ge)ge.textContent="Sign in with Google above to send your claim.";return}
+if(chosen.claimed){var ce=$("ytp-claim-error");if(ce)ce.textContent="This listing has already been claimed, so there is nothing to send.";return}
 if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
 var radios=form.querySelectorAll("input[name='vm']"),method="";
 for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}

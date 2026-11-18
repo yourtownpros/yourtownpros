@@ -499,7 +499,7 @@ if(!saved)return;
 var htop=document.querySelector(".htop");if(!htop)return;
 var pill=document.createElement("span");pill.className="citypill28";pill.id="ytp-citypill";
 pill.title="Saved on this device only, from the city you searched for. Change picks a different city, and the × makes the site forget it.";
-var nm=document.createElement("span");nm.className="cp-name";nm.textContent="📍 "+saved;pill.appendChild(nm);
+var nm=document.createElement("span");nm.className="cp-name";nm.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>';nm.appendChild(document.createTextNode(saved));pill.appendChild(nm);
 var chg=document.createElement("button");chg.type="button";chg.className="cp-change";chg.textContent="Change";pill.appendChild(chg);
 var clr=document.createElement("button");clr.type="button";clr.className="cp-clear";clr.setAttribute("aria-label","Clear saved city");clr.textContent="×";pill.appendChild(clr);
 var hr=htop.querySelector(".hright");if(hr)htop.insertBefore(pill,hr);else htop.appendChild(pill);

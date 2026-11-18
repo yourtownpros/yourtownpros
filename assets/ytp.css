@@ -663,3 +663,25 @@ a.cardlink::after{content:"";position:absolute;inset:0;border-radius:12px}
 .checklist57 li::before{content:"\2713";position:absolute;left:0;top:0;color:#0e7a5f;font-weight:800}
 .checkmore57 summary{cursor:pointer;color:#0e7a5f;font-weight:700;font-size:14px}
 .vbtag57{display:inline-block;background:#e8f3ee;color:#0e7a5f;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;margin-left:8px;vertical-align:middle}
+
+/* v5.19 VISUAL: maps, half stars, anchor offset, containment. */
+.lmap,.ytp-map{position:relative;z-index:0;isolation:isolate}
+.cat-map{isolation:isolate}
+.lmap .leaflet-tile-pane,.ytp-map .leaflet-tile-pane{z-index:1}
+.lmap .leaflet-overlay-pane,.ytp-map .leaflet-overlay-pane{z-index:2}
+.lmap .leaflet-shadow-pane,.ytp-map .leaflet-shadow-pane{z-index:3}
+.lmap .leaflet-marker-pane,.ytp-map .leaflet-marker-pane{z-index:4}
+.lmap .leaflet-tooltip-pane,.ytp-map .leaflet-tooltip-pane{z-index:5}
+.lmap .leaflet-popup-pane,.ytp-map .leaflet-popup-pane{z-index:6}
+.lmap .leaflet-top,.lmap .leaflet-bottom,.ytp-map .leaflet-top,.ytp-map .leaflet-bottom{z-index:7}
+.starhalf{position:relative;display:inline-block}
+.starhalf-f{position:absolute;left:0;top:0;width:50%;overflow:hidden;white-space:nowrap}
+section[id],div[id],h2[id],h3[id]{scroll-margin-top:120px}
+@media(max-width:900px){section[id],div[id],h2[id],h3[id]{scroll-margin-top:170px}}
+@media(max-width:480px){section[id],div[id],h2[id],h3[id]{scroll-margin-top:224px}}
+.grid>*,.foot57>*,.tradegrid>*,.hsearch>*,.htop>*{min-width:0}
+img,svg,video,iframe{max-width:100%}
+.hgo57 svg{display:block;margin:0 auto}
+.citypill28 .cp-name svg{width:11px;height:13px;vertical-align:-2px;margin-right:2px;fill:#0e7a5f}
+.header-home .brand,.header-home .hright a{text-shadow:0 1px 10px rgba(18,33,46,.65)}
+@media(max-width:767px){.hsearch57 input{font-size:16px}}

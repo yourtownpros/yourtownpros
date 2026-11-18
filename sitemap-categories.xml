@@ -494,7 +494,6 @@
 <url><loc>https://yourtownpros.com/auto-repair/oregon/corvallis/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/auto-repair/oregon/eugene/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/auto-repair/oregon/grants-pass/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/auto-repair/oregon/gresham/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/auto-repair/oregon/klamath-falls/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/auto-repair/oregon/lebanon/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/auto-repair/oregon/lincoln-city/</loc><lastmod>2026-11-14</lastmod></url>
@@ -1446,6 +1445,7 @@
 <url><loc>https://yourtownpros.com/chiropractors/california/hanford/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/chiropractors/california/hayward/</loc><lastmod>2026-11-15</lastmod></url>
 <url><loc>https://yourtownpros.com/chiropractors/california/hemet/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://yourtownpros.com/chiropractors/california/modesto/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/chiropractors/california/murrieta/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/chiropractors/california/napa/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/chiropractors/california/oxnard/</loc><lastmod>2026-11-18</lastmod></url>
@@ -3991,7 +3991,6 @@
 <url><loc>https://yourtownpros.com/jewelry/california/stockton/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/california/temecula/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/california/vacaville/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/jewelry/california/vallejo/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/california/visalia/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/california/yorba-linda/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/colorado/arvada/</loc><lastmod>2026-11-14</lastmod></url>
@@ -4022,7 +4021,6 @@
 <url><loc>https://yourtownpros.com/jewelry/colorado/windsor/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/florida/pensacola-fl/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/illinois/champaign/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/jewelry/illinois/rockford/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/indiana/columbus/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/indiana/westfield/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/iowa/cedar-falls/</loc><lastmod>2026-11-18</lastmod></url>
@@ -4036,7 +4034,6 @@
 <url><loc>https://yourtownpros.com/jewelry/louisiana/baton-rouge/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/mississippi/hattiesburg/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/mississippi/jackson/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/jewelry/mississippi/ocean-springs/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/montana/billings/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/montana/bozeman/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/jewelry/montana/missoula/</loc><lastmod>2026-11-14</lastmod></url>
@@ -5354,7 +5351,9 @@
 <url><loc>https://yourtownpros.com/pawn-shops/california/lodi/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/california/ontario/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/california/oxnard/</loc><lastmod>2026-11-15</lastmod></url>
+<url><loc>https://yourtownpros.com/pawn-shops/california/vallejo/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/colorado/centennial/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/pawn-shops/colorado/sterling/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/connecticut/bridgeport/</loc><lastmod>2026-11-15</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/connecticut/new-haven/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/connecticut/waterbury/</loc><lastmod>2026-11-18</lastmod></url>
@@ -5384,6 +5383,7 @@
 <url><loc>https://yourtownpros.com/pawn-shops/massachusetts/boston/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/michigan/flint/</loc><lastmod>2026-11-15</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/michigan/warren/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/pawn-shops/mississippi/ocean-springs/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/mississippi/tupelo/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/missouri/joplin/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/montana/belgrade/</loc><lastmod>2026-11-18</lastmod></url>
@@ -5406,6 +5406,7 @@
 <url><loc>https://yourtownpros.com/pawn-shops/oregon/portland/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/pennsylvania/philadelphia/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/south-carolina/columbia/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/pawn-shops/south-dakota/rapid-city/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/tennessee/memphis/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/texas/amarillo/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pawn-shops/texas/arlington/</loc><lastmod>2026-11-18</lastmod></url>
@@ -5520,7 +5521,6 @@
 <url><loc>https://yourtownpros.com/pest-control/wisconsin/madison/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pest-control/wisconsin/milwaukee/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/arizona/surprise/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/pet-boarding/arizona/yuma/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/california/el-cajon/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/california/eureka/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/california/hanford/</loc><lastmod>2026-11-14</lastmod></url>
@@ -5548,9 +5548,7 @@
 <url><loc>https://yourtownpros.com/pet-boarding/florida/tallahassee/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/idaho/pocatello/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/new-mexico/carlsbad/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/pet-boarding/new-york/new-york/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/ohio/mentor/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/pet-boarding/south-carolina/greenville/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/south-dakota/sioux-falls/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/tennessee/johnson-city/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-boarding/texas/beaumont/</loc><lastmod>2026-11-18</lastmod></url>
@@ -5817,7 +5815,6 @@
 <url><loc>https://yourtownpros.com/pet-grooming/texas/brownsville/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/bryan/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/buda/</loc><lastmod>2026-11-18</lastmod></url>
-<url><loc>https://yourtownpros.com/pet-grooming/texas/canyon/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/carrollton/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/cibolo/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/cleburne/</loc><lastmod>2026-11-14</lastmod></url>
@@ -5849,7 +5846,6 @@
 <url><loc>https://yourtownpros.com/pet-grooming/texas/paris/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/pasadena/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/rockwall/</loc><lastmod>2026-11-14</lastmod></url>
-<url><loc>https://yourtownpros.com/pet-grooming/texas/rowlett/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/san-antonio/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/schertz/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/pet-grooming/texas/sugar-land/</loc><lastmod>2026-11-18</lastmod></url>
@@ -6640,6 +6636,7 @@
 <url><loc>https://yourtownpros.com/tanning/wyoming/laramie/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/arizona/chandler/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/arizona/glendale/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/tattoo/arizona/goodyear/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/arizona/kingman/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/arizona/lake-havasu-city/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/arizona/phoenix/</loc><lastmod>2026-11-14</lastmod></url>
@@ -6716,6 +6713,7 @@
 <url><loc>https://yourtownpros.com/tattoo/colorado/longmont/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/colorado/louisville/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/colorado/loveland/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/tattoo/colorado/milliken/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/colorado/northglenn/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/colorado/parker/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/colorado/pueblo-west/</loc><lastmod>2026-11-18</lastmod></url>
@@ -6791,6 +6789,7 @@
 <url><loc>https://yourtownpros.com/tattoo/oregon/bend/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/oregon/eugene/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/oregon/grants-pass/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/tattoo/oregon/gresham/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/oregon/klamath-falls/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/oregon/portland/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/tattoo/oregon/salem/</loc><lastmod>2026-11-14</lastmod></url>
@@ -7254,6 +7253,7 @@
 <url><loc>https://yourtownpros.com/veterinary/new-mexico/hobbs/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/new-mexico/las-cruces/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/new-mexico/santa-fe/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/new-york/new-york/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/north-carolina/cary/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/north-carolina/fayetteville/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/north-carolina/high-point-nc/</loc><lastmod>2026-11-18</lastmod></url>
@@ -7285,6 +7285,7 @@
 <url><loc>https://yourtownpros.com/veterinary/oregon/albany/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/oregon/newberg/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/oregon/portland/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/oregon/roseburg/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/oregon/salem/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/oregon/sweet-home/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/oregon/tigard/</loc><lastmod>2026-11-18</lastmod></url>
@@ -7294,6 +7295,7 @@
 <url><loc>https://yourtownpros.com/veterinary/puerto-rico/bayam-n/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/puerto-rico/guaynabo/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/puerto-rico/san-juan/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/south-carolina/greenville/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/south-dakota/brandon/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/south-dakota/brookings/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/south-dakota/custer/</loc><lastmod>2026-11-18</lastmod></url>
@@ -7319,19 +7321,25 @@
 <url><loc>https://yourtownpros.com/veterinary/texas/amarillo/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/arlington/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/beaumont/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/canyon/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/celina/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/college-station/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/conroe/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/dickinson/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/el-paso/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/fort-worth/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/frisco/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/garland/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/grand-prairie/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/harlingen/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/helotes/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/houston/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/huntsville/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/irving/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/katy/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/killeen/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/league-city/</loc><lastmod>2026-11-14</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/longview/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/lubbock/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/mcallen/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/mesquite/</loc><lastmod>2026-11-14</lastmod></url>
@@ -7342,6 +7350,7 @@
 <url><loc>https://yourtownpros.com/veterinary/texas/plano/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/prosper/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/round-rock/</loc><lastmod>2026-11-18</lastmod></url>
+<url><loc>https://yourtownpros.com/veterinary/texas/rowlett/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/san-antonio/</loc><lastmod>2026-11-14</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/san-marcos/</loc><lastmod>2026-11-18</lastmod></url>
 <url><loc>https://yourtownpros.com/veterinary/texas/sugar-land/</loc><lastmod>2026-11-18</lastmod></url>

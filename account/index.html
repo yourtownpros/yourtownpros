@@ -36,35 +36,50 @@ A.sb.from("profiles").select("city,display_name").eq("id",A.user.id).then(functi
 document.getElementById("acct-city-save").addEventListener("click",function(){
 var city=document.getElementById("acct-city").value.trim();
 A.sb.from("profiles").upsert({id:A.user.id,display_name:A.displayName(),city:city}).then(function(r){var m=document.getElementById("acct-city-msg");if(m)m.textContent=(r&&r.error)?"Could not save. Please try again.":"Saved."}).catch(function(){})});
-fetch("/search-index.json").then(function(r){return r.json()}).then(function(d){for(var i=0;i<d.length;i++)idx[d[i].url]=d[i]}).catch(function(){}).then(function(){
+/* FORMS/PAGES (Nov 17, 2026): the section loaders used
+to ride the tail of this fetch chain, so a slow or hung
+search-index fetch left every section below sitting at
+its static "Loading..." (QA round 2). The loaders now
+start on whichever comes first: the index landing or a
+4 second wait. Names resolve from the index when it
+arrives in time and fall back to the slug itself, exactly
+as nameFor already handled a miss. The loaders' own
+silent catches also rendered nothing on a query error;
+each one now lands an honest could-not-load line instead
+of leaving "Loading..." up forever. */
+var idxDone=false;function idxFin(){if(idxDone)return;idxDone=true;startSections()}
+setTimeout(idxFin,4000);
+fetch("/search-index.json").then(function(r){return r.json()}).then(function(d){for(var i=0;i<d.length;i++)idx[d[i].url]=d[i]}).catch(function(){}).then(idxFin);
+function startSections(){
 function loadClaims(withDoc){
+var box=document.getElementById("acct-claims");
 var sel="business_slug,business_name,status,created_at,verify_method,verify_code,notes"+(withDoc?",document_path":"");
 A.sb.from("claims").select(sel).eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
-if(r&&r.error){if(withDoc)loadClaims(false);return}
-var rows=(r&&r.data)||[];var box=document.getElementById("acct-claims");
+if(r&&r.error){if(withDoc){loadClaims(false)}else if(box){box.innerHTML='<p class="listed">Claims could not be loaded right now.</p>'}return}
+var rows=(r&&r.data)||[];
 if(!rows.length){box.innerHTML='<p class="listed">No claims yet.</p>';return}
 box.innerHTML=rows.map(function(c){var extra="";
 if(c.status==="pending"&&(c.verify_method==="website"||c.verify_method==="facebook")&&c.verify_code){extra='<div class="meta">Your verification code: <span class="acctcode">'+esc(c.verify_code)+"</span>. Put it on your "+(c.verify_method==="website"?"website (a page, a meta tag, or a DNS TXT record)":"Facebook page as a public post")+" and we will approve your claim automatically once our check finds it.</div>"}
 if(c.status==="pending"&&c.verify_method==="document"){
 var hasDoc=!!(c.document_path||(c.notes&&c.notes.indexOf("document_path: ")===0));
 extra=hasDoc?'<div class="meta">Document received. We review documents by hand.</div>':'<div class="meta">Document still needed: email a photo of a business license or a utility bill that matches the listing name and address to yourtownpros@gmail.com and mention the business name.</div>'}
-return '<div class="card"><h3><a href="'+urlFor(c.business_slug)+'">'+esc(c.business_name)+'</a></h3><div class="meta">Status: '+esc(c.status)+"</div>"+extra+"</div>"}).join("")}).catch(function(){if(withDoc)loadClaims(false)})}
+return '<div class="card"><h3><a href="'+urlFor(c.business_slug)+'">'+esc(c.business_name)+'</a></h3><div class="meta">Status: '+esc(c.status)+"</div>"+extra+"</div>"}).join("")}).catch(function(){if(withDoc){loadClaims(false)}else if(box){box.innerHTML='<p class="listed">Claims could not be loaded right now.</p>'}})}
 loadClaims(true);
 A.sb.from("saved_pros").select("business_slug").eq("user_id",A.user.id).then(function(r){
 var rows=(r&&r.data)||[];var box=document.getElementById("acct-saved");
 if(!rows.length){box.innerHTML='<p class="listed">No saved pros yet. Tap Save on any listing to keep it here.</p>';return}
 box.innerHTML=rows.map(function(s){return '<div class="card"><h3><a href="'+urlFor(s.business_slug)+'">'+esc(nameFor(s.business_slug))+'</a></h3><button type="button" class="savebtn" data-unsave="'+esc(s.business_slug)+'">Remove</button></div>'}).join("");
 var btns=box.querySelectorAll("[data-unsave]");
-for(var i=0;i<btns.length;i++){(function(b){b.addEventListener("click",function(){var slug=b.getAttribute("data-unsave");A.sb.from("saved_pros").delete().eq("user_id",A.user.id).eq("business_slug",slug).then(function(){if(b.parentNode)b.parentNode.remove()}).catch(function(){})})})(btns[i])}}).catch(function(){});
+for(var i=0;i<btns.length;i++){(function(b){b.addEventListener("click",function(){var slug=b.getAttribute("data-unsave");A.sb.from("saved_pros").delete().eq("user_id",A.user.id).eq("business_slug",slug).then(function(){if(b.parentNode)b.parentNode.remove()}).catch(function(){})})})(btns[i])}}).catch(function(){var box=document.getElementById("acct-saved");if(box)box.innerHTML='<p class="listed">Saved pros could not be loaded right now.</p>'});
 A.sb.from("reviews").select("business_slug,rating,body,status,created_at").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
 var rows=(r&&r.data)||[];var box=document.getElementById("acct-reviews");
 if(!rows.length){box.innerHTML='<p class="listed">No reviews yet.</p>';return}
-box.innerHTML=rows.map(function(x){var st=x.status==="pending"?"awaiting moderation":x.status;return '<div class="card"><h3><a href="'+urlFor(x.business_slug)+'">'+esc(nameFor(x.business_slug))+'</a></h3><div class="stars">'+stars(x.rating)+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p><div class="meta">Status: '+esc(st)+"</div></div>"}).join("")}).catch(function(){});
+box.innerHTML=rows.map(function(x){var st=x.status==="pending"?"awaiting moderation":x.status;return '<div class="card"><h3><a href="'+urlFor(x.business_slug)+'">'+esc(nameFor(x.business_slug))+'</a></h3><div class="stars">'+stars(x.rating)+" "+esc(x.rating)+'</div><p style="margin:4px 0">'+esc(x.body)+'</p><div class="meta">Status: '+esc(st)+"</div></div>"}).join("")}).catch(function(){var box=document.getElementById("acct-reviews");if(box)box.innerHTML='<p class="listed">Reviews could not be loaded right now.</p>'});
 A.sb.from("claims").select("business_slug,business_name").eq("user_id",A.user.id).eq("status","approved").then(function(r){
 var rows=(r&&r.data)||[];var box=document.getElementById("acct-biz");
 if(!rows.length){box.innerHTML='<p class="listed">When a claim is approved, your business appears here with a link to its dashboard.</p>';return}
-box.innerHTML=rows.map(function(c){return '<div class="card"><h3>'+esc(c.business_name)+'</h3><p class="listed">Listing updates and review responses live in the business dashboard.</p><p style="margin:8px 0 2px"><a class="claimbtn" href="/business/">Open the business dashboard</a></p></div>'}).join("")}).catch(function(){});
-});
+box.innerHTML=rows.map(function(c){return '<div class="card"><h3>'+esc(c.business_name)+'</h3><p class="listed">Listing updates and review responses live in the business dashboard.</p><p style="margin:8px 0 2px"><a class="claimbtn" href="/business/">Open the business dashboard</a></p></div>'}).join("")}).catch(function(){var box=document.getElementById("acct-biz");if(box)box.innerHTML='<p class="listed">Your businesses could not be loaded right now.</p>'});
+}
 });
 </script><script>
 /* v5.3: collections and public-profile settings on

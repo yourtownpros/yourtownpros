@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Search | YourTownPros</title><meta name="description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><link rel="canonical" href="https://yourtownpros.com/search/"><meta name="robots" content="noindex"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta property="og:type" content="website"><meta property="og:site_name" content="YourTownPros"><meta property="og:title" content="Search"><meta property="og:description" content="Search YourTownPros by category and town: every listing within reach, nearest first."><meta property="og:url" content="https://yourtownpros.com/search/"><meta property="og:image" content="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&h=630&q=70"><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<link rel="stylesheet" href="../assets/ytp.css?v=20261118c1"><script src="../assets/ytp.js?v=20261118c1" defer></script><style>#ytp-srch-note{background:#fdf6e0;border:1px solid #e4d9a8;border-radius:8px;padding:10px 14px;margin:10px 0}
+<link rel="stylesheet" href="../assets/ytp.css?v=20261118c2"><script src="../assets/ytp.js?v=20261118c1" defer></script><style>#ytp-srch-note{background:#fdf6e0;border:1px solid #e4d9a8;border-radius:8px;padding:10px 14px;margin:10px 0}
 #ytp-smap-wrap{position:relative}
 .smap-load{position:absolute;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;background:linear-gradient(100deg,#eceee7 40%,#f7f8f3 50%,#eceee7 60%);background-size:200% 100%;animation:smapsk 1.2s linear infinite;color:#5a6672;font-size:14px;font-weight:600}
 .smap-load[hidden]{display:none}
@@ -160,7 +160,7 @@ function radiusSearch(rows, trade, townCity, townState, center) {
     }
   }
   chosen.sort(function (a, b) {
-    if (isHold(a) !== isHold(b)) return isHold(a) ? 1 : -1; if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
+    if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
     if (Math.abs(a.dist - b.dist) > 1e-9) return a.dist - b.dist;
     var ra = (a.row.rating == null) ? -1 : parseFloat(a.row.rating),
         rb = (b.row.rating == null) ? -1 : parseFloat(b.row.rating);
@@ -352,7 +352,7 @@ function srchSummary(res, label, town, st) {
   var GLYPH57 = {"bakeries-and-cafes": "☕", "plumbers": "⚒", "electricians": "⚡", "hvac": "❄", "roofing": "▲", "painting": "■", "lawn-and-landscaping": "❀", "handyman": "⚒", "locksmiths": "⚿", "cleaners": "✨", "florists": "⚘", "auto-repair": "⚙", "towing": "➤", "auto-glass": "▣", "hair-salons": "✂", "barbers": "☰", "nails": "✧", "med-spas": "✶", "spas": "✿", "massage": "❁", "tanning": "☀", "fitness": "✩", "dance-studios": "♫", "bookstores": "❧", "jewelry": "★", "pet-grooming": "🐾", "pet-boarding": "⌂", "veterinary": "✚", "tattoo": "✦"};
   function slugOf(r) { return String(r.url || "")
     .replace(/^\//, "").replace(/\/$/, ""); }
-  function isFeat(p) { return !isHold(p) && !!FEAT57[slugOf(p.row)]; } function isHold(p) { return !!HOLD57[slugOf(p.row)]; }
+  function isFeat(p) { return !isHold(p) && !!FEAT57[slugOf(p.row)]; } function isHold(p) { return !!(p && p.row) && !!HOLD57[slugOf(p.row)]; }
   
   function legacyCmp(a, b) {
     if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
@@ -864,6 +864,13 @@ function srchSummary(res, label, town, st) {
       if (slug) {
         if (townQ || nm.place) {
           townNotFound(townQ || nm.place); return; }
+        var savedC = null;
+        try { savedC = window.localStorage.getItem("ytp-city"); }
+        catch (e) {}
+        if (savedC) { var sp = savedC.split(",");
+          var sc = findTown(CT, sp[0].trim(),
+            (sp[1] || "").trim());
+          if (sc) { runRadius(label, slug, sc); return; } }
         window.YTPLoad.cb("/category-index.json",
           function (CI) {
             townPicker(label, slug, CI || {}, CT); });

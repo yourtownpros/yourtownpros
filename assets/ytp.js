@@ -361,7 +361,15 @@ else if(ev.key==="Escape"){s1.style.display="none"}});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
-/* v5.12.2 (owner ruling Nov 14): NO where-box prefill, ever. v5.17: savedCity57 reads the legacy ytp-city key only to resolve an explicit "near me" query; the box is still never prefilled and the key is never written here. */
+/* Nov 18, 2026 (owner-reported fix): the where box prefills
+from the saved city (the legacy ytp-city key) when a saved
+city exists and the box is empty. This supersedes the
+v5.12.2 no-prefill ruling for the saved city only: the pill
+already announces the saved city on every page, and an
+empty box beside it read as a bug. Nothing else fills the
+box: no geolocation, no IP guess, no page city. */
+try{var svW=null;try{svW=localStorage.getItem("ytp-city")}catch(e){}
+if(svW&&!f2.value)f2.value=svW}catch(x){}
 })();
 
 (function(){
@@ -426,7 +434,7 @@ var chg=document.createElement("button");chg.type="button";chg.className="cp-cha
 var clr=document.createElement("button");clr.type="button";clr.className="cp-clear";clr.setAttribute("aria-label","Clear saved city");clr.textContent="×";pill.appendChild(clr);
 var hr=htop.querySelector(".hright");if(hr)htop.insertBefore(pill,hr);else htop.appendChild(pill);
 chg.addEventListener("click",function(ev){if(ev&&ev.stopPropagation)ev.stopPropagation();var w=document.getElementById("ytp-w57")||document.getElementById("hs-city");if(!w)return;w.value=saved;w.scrollIntoView({block:"center"});w.focus();if(w.select)w.select();try{w.dispatchEvent(new Event("input",{bubbles:true}))}catch(e){}});
-clr.addEventListener("click",function(){setSaved("");
+clr.addEventListener("click",function(){setSaved("");var wb=document.getElementById("ytp-w57");if(wb)wb.value="";var hb=document.getElementById("hs-city");if(hb)hb.value="";
 for(var j=0;j<navLinks.length;j++){var o=navLinks[j].getAttribute("data-loc28");if(o)navLinks[j].setAttribute("href",o);navLinks[j].removeAttribute("data-loc28")}
 if(pill.parentNode)pill.parentNode.removeChild(pill);
 var hint=document.getElementById("hs-loc-hint");

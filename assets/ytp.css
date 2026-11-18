@@ -49,8 +49,8 @@ header{position:sticky;top:0;z-index:60;box-shadow:0 1px 8px rgba(0,0,0,.25)}
 .sug a:first-child{border-top:0}
 .sug a:hover{background:#e8f3ee}
 .sug a span{display:block;font-size:13px;color:#5a6672}
-.slidecap{position:absolute;left:24px;bottom:54px;z-index:3;color:#fff;opacity:0;transition:opacity 1.1s ease}
-.slidecap.on{opacity:1}
+.slidecap{position:absolute;left:24px;bottom:54px;z-index:3;color:#fff;opacity:0;transition:opacity 1.1s ease;pointer-events:none}
+.slidecap.on{opacity:1;pointer-events:auto}
 .slidecap .sh{font-size:27px;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.55)}
 .pillbtn{display:inline-block;background:#fff;color:#12212e;padding:8px 15px;border-radius:20px;font-weight:700;text-decoration:none;margin-top:9px;font-size:14px}
 .ticks{position:absolute;bottom:18px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:3}

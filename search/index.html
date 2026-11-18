@@ -160,7 +160,7 @@ function radiusSearch(rows, trade, townCity, townState, center) {
     }
   }
   chosen.sort(function (a, b) {
-    if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
+    if (isHold(a) !== isHold(b)) return isHold(a) ? 1 : -1; if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
     if (Math.abs(a.dist - b.dist) > 1e-9) return a.dist - b.dist;
     var ra = (a.row.rating == null) ? -1 : parseFloat(a.row.rating),
         rb = (b.row.rating == null) ? -1 : parseFloat(b.row.rating);
@@ -348,10 +348,11 @@ function srchSummary(res, label, town, st) {
   
   var FEAT57 = { "natural-skincare/renaud-naturals-loveland": 1,
     "website-design/rankly-design-westminster": 1 };
+    var HOLD57 = { "pet-grooming/auntie-jens-pet-grooming-lakewood": 1 };
   var GLYPH57 = {"bakeries-and-cafes": "☕", "plumbers": "⚒", "electricians": "⚡", "hvac": "❄", "roofing": "▲", "painting": "■", "lawn-and-landscaping": "❀", "handyman": "⚒", "locksmiths": "⚿", "cleaners": "✨", "florists": "⚘", "auto-repair": "⚙", "towing": "➤", "auto-glass": "▣", "hair-salons": "✂", "barbers": "☰", "nails": "✧", "med-spas": "✶", "spas": "✿", "massage": "❁", "tanning": "☀", "fitness": "✩", "dance-studios": "♫", "bookstores": "❧", "jewelry": "★", "pet-grooming": "🐾", "pet-boarding": "⌂", "veterinary": "✚", "tattoo": "✦"};
   function slugOf(r) { return String(r.url || "")
     .replace(/^\//, "").replace(/\/$/, ""); }
-  function isFeat(p) { return !!FEAT57[slugOf(p.row)]; }
+  function isFeat(p) { return !isHold(p) && !!FEAT57[slugOf(p.row)]; } function isHold(p) { return !!HOLD57[slugOf(p.row)]; }
   
   function legacyCmp(a, b) {
     if (a.inTown !== b.inTown) return a.inTown ? -1 : 1;
@@ -369,6 +370,7 @@ function srchSummary(res, label, town, st) {
     (parseInt(p.row.reviews, 10) || 0) > 0; }
   function sortResults(list, mode) {
     var arr = list.slice();
+    var hd = arr.filter(function (p) { return isHold(p); }); if (hd.length) { var nh = arr.filter(function (p) { return !isHold(p); }); return sortResults(nh, mode).concat(hd.sort(legacyCmp)); }
     if (mode === "distance") { arr.sort(legacyCmp); return arr; }
     if (mode === "rating") { arr.sort(function (a, b) {
       var ra = a.row.rating == null ? -1 : parseFloat(a.row.rating),

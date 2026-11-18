@@ -221,7 +221,7 @@ function amenParts(l) {
 
 function factsParagraph(l, t, st, ap) {
   const parts = [`${esc(l.name)} is a ${esc(t.phrase)} business in ${esc(l.city)}, ${esc(st.name)}.`];
-  if (l.rating != null && l.review_count != null && l.review_count >= 10)
+  if (l.rating != null && l.review_count != null)
     parts.push(`It holds a ${esc(l.rating_text || fmtRatingCard(l.rating))}-star ` +
       `${esc(l.rating_source || "Google")} rating from ${fmtInt(l.review_count)} reviews.`);
   const phr = ap.attrs.map((a) => ATTR_PHRASE[a]);

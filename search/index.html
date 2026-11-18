@@ -11,6 +11,14 @@
 .stownlist{columns:2;column-gap:32px;margin:12px 0}
 .stownlist a{display:block;padding:4px 0;break-inside:avoid}
 @media(max-width:640px){.stownlist{columns:1}}</style>
+<style>
+.ytp-modal-overlay{position:fixed;inset:0;background:rgba(10,20,16,.55);z-index:1200;display:flex;align-items:center;justify-content:center;padding:24px 12px;overflow-y:auto}
+.ytp-modal-overlay[hidden]{display:none}
+.ytp-modal-panel{background:#fff;border-radius:14px;max-width:560px;width:100%;position:relative;padding:20px 20px 10px;box-shadow:0 18px 50px rgba(0,0,0,.35);border-top:4px solid #0e7a5f}
+.ytp-modal-panel .matchbox{margin:0}
+.ytp-modal-x{position:absolute;top:6px;right:10px;background:none;border:0;font-size:26px;line-height:1;color:#0e7a5f;cursor:pointer;padding:6px;z-index:2}
+html.ytp-modal-lock{overflow:hidden}
+</style>
 </head><body><a class="skiplink" href="#main">Skip to main content</a>
 <script>window.YTPQ=window.YTPQ||[];window.ytpOnReady=function(fn){if(window.YTPAuth&&window.YTPAuth._resolved){try{fn(window.YTPAuth)}catch(e){}}else{window.YTPQ.push(fn)}}</script>
 <header class="hdr57"><div class="htop"><a class="brand" href="/"><svg class="bmark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M256 36c-82 0-148 66-148 148 0 104 148 292 148 292s148-188 148-292c0-82-66-148-148-148z" fill="#0e7a5f"/><circle cx="256" cy="184" r="84" fill="#ffffff"/><path d="M196 184 L238 228 L322 134" fill="none" stroke="#0e7a5f" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/></svg>YourTown<span>Pros</span></a><form class="hsearch57" id="ytp-hform57" role="search" action="/" method="get"><div class="fld57"><input id="ytp-q57" type="text" placeholder="Plumbers, hair salons, auto repair..." autocomplete="off" aria-label="What are you looking for"><div class="sug" id="sug-q57"></div></div><div class="fld57"><input id="ytp-w57" type="text" placeholder="City" autocomplete="off" aria-label="Where"><div class="sug" id="sug-w57"></div></div><button type="submit" class="hgo57" aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#fff" stroke-width="2.4"/><line x1="15.3" y1="15.3" x2="21" y2="21" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></svg></button></form><div class="hright"><div class="fbmenu"><button type="button" class="fbbtn" aria-haspopup="true" aria-expanded="false">For Business <span class="car">&#9662;</span></button><div class="fbdrop" role="menu"><a role="menuitem" href="/claim/">Claim your business</a><a role="menuitem" href="/for-business/#featured">Get featured: booking + top placement</a><a role="menuitem" href="/for-business/#matching">Get matched customers</a><a role="menuitem" href="/for-business/">How YourTownPros works</a><a role="menuitem" href="/add-business/">Add a business</a></div></div><a class="hwrite" href="/">Write a Review</a><span class="authzone"><button type="button" class="hsignin" id="ytp-signin">Sign in</button><span class="umenu" id="ytp-umenu" hidden><button type="button" class="hsignin" id="ytp-ubtn" aria-haspopup="true" aria-expanded="false"></button><span class="udrop"><a href="/account/">My account</a><a href="/business/" id="ytp-biz-link" hidden>Business dashboard</a><a href="/account/#saved">Saved pros</a><button type="button" id="ytp-signout">Sign out</button></span></span></span><a class="hclaim" href="/claim/">Claim your business</a></div></div><div class="catnav"><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Restaurants <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/bakeries-and-cafes/"><span class="navic57">&#9749;</span>Bakeries &amp; Cafes</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Home &amp; Garden <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/plumbers/"><span class="navic57">&#9874;</span>Plumbers</a><a href="/electricians/"><span class="navic57">&#9889;</span>Electricians</a><a href="/hvac/"><span class="navic57">&#10052;</span>HVAC</a><a href="/roofing/"><span class="navic57">&#9650;</span>Roofing</a><a href="/painting/"><span class="navic57">&#9632;</span>Painters</a><a href="/lawn-and-landscaping/"><span class="navic57">&#10048;</span>Lawn &amp; Landscaping</a><a href="/handyman/"><span class="navic57">&#9874;</span>Handyman</a><a href="/locksmiths/"><span class="navic57">&#9919;</span>Locksmiths</a><a href="/cleaners/"><span class="navic57">&#10024;</span>Cleaners &amp; Laundry</a><a href="/florists/"><span class="navic57">&#9880;</span>Florists</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Auto Services <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/auto-repair/"><span class="navic57">&#9881;</span>Auto Repair</a><a href="/towing/"><span class="navic57">&#10148;</span>Towing</a><a href="/auto-glass/"><span class="navic57">&#9635;</span>Auto Glass</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Health &amp; Beauty <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/hair-salons/"><span class="navic57">&#9986;</span>Hair Salons</a><a href="/barbers/"><span class="navic57">&#9776;</span>Barbers</a><a href="/nails/"><span class="navic57">&#10023;</span>Nail Salons</a><a href="/med-spas/"><span class="navic57">&#10038;</span>Med Spas</a><a href="/spas/"><span class="navic57">&#10047;</span>Spas</a><a href="/massage/"><span class="navic57">&#10049;</span>Massage</a><a href="/tanning/"><span class="navic57">&#9728;</span>Tanning Salons</a><a href="/fitness/"><span class="navic57">&#10025;</span>Fitness</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">Travel &amp; Activities <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/dance-studios/"><span class="navic57">&#9835;</span>Dance Studios</a><a href="/bookstores/"><span class="navic57">&#10087;</span>Bookstores</a><a href="/jewelry/"><span class="navic57">&#9733;</span>Jewelry</a></div></div><div class="cnav-item"><button type="button" class="cnav-btn" aria-haspopup="true" aria-expanded="false">More <span class="car">&#9662;</span></button><div class="cnav-drop navpanel57"><a href="/pet-grooming/"><span class="navic57">&#128062;</span>Pet Grooming</a><a href="/pet-boarding/"><span class="navic57">&#8962;</span>Pet Boarding &amp; Daycare</a><a href="/veterinary/"><span class="navic57">&#10010;</span>Veterinary</a><a href="/tattoo/"><span class="navic57">&#10022;</span>Tattoo</a></div></div></div></header>
@@ -19,7 +27,7 @@
 <form action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="" data-match-source="search">
 <input type="hidden" name="_subject" value="Match request"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="leads@muse.ai"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
 <label for="m-name">Your name *</label><input id="m-name" type="text" name="name" required>
-<label for="m-phone">Your phone *</label><input id="m-phone" type="tel" name="phone" required>
+<label for="m-phone">Your phone *</label><input id="m-phone" type="tel" name="phone" inputmode="tel" autocomplete="tel" required><p class="fine mphone-err" role="alert" hidden style="color:#b3261e;margin:4px 0 0"></p>
 <label for="m-service">What do you need?</label><input id="m-service" type="text" name="service" placeholder="Example: water heater leaking, need it replaced">
 <label for="m-when">When do you need it?</label><input id="m-when" type="text" name="when" placeholder="Example: this week, weekday mornings">
 <label for="m-zip">ZIP code</label><input id="m-zip" type="text" name="zip" inputmode="numeric" maxlength="10" autocomplete="postal-code">
@@ -921,6 +929,16 @@ setTimeout(checkMatchHash,50);
 form.addEventListener("submit",function(ev){
 ev.preventDefault();
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
+var phoneEl=form.querySelector("[name='phone']");
+var perr=form.querySelector(".mphone-err");
+var digits=phoneEl?String(phoneEl.value||"").replace(/\D/g,""):"";
+var phoneOk=(digits.length===10)||(digits.length===11&&digits.charAt(0)==="1");
+if(!phoneOk){
+if(perr){perr.textContent="Please enter a valid 10-digit phone number.";perr.hidden=false;}
+if(phoneEl){try{phoneEl.focus();}catch(e){}}
+return;
+}
+if(perr){perr.textContent="";perr.hidden=true;}
 var msg=form.querySelector(".mmsg");
 function fail(){if(msg)msg.textContent="Could not send. Please try again later.";}
 var slug=form.getAttribute("data-match-slug")||"";
@@ -980,4 +998,38 @@ setTimeout(once,1500);
 });
 </script></main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a><a href="/about/">About YourTownPros</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
+<script>
+(function(){
+var mbox=document.getElementById("match");if(!mbox)return;
+var overlay=document.createElement("div");overlay.className="ytp-modal-overlay";overlay.hidden=true;
+overlay.innerHTML='<div class="ytp-modal-panel" role="dialog" aria-modal="true" aria-label="Request a pro"><button type="button" class="ytp-modal-x" aria-label="Close">&times;</button><div class="ytp-modal-body"></div></div>';
+document.body.appendChild(overlay);
+var mbody=overlay.querySelector(".ytp-modal-body");
+var home={parent:null,next:null};
+function openModal(){
+if(!overlay.hidden)return;
+home.parent=mbox.parentNode;home.next=mbox.nextSibling;
+mbody.appendChild(mbox);
+overlay.hidden=false;
+document.documentElement.classList.add("ytp-modal-lock");
+var f=document.getElementById("m-name");
+if(f){try{f.focus({preventScroll:true});}catch(e){f.focus();}}
+}
+function closeModal(){
+if(overlay.hidden)return;
+overlay.hidden=true;
+document.documentElement.classList.remove("ytp-modal-lock");
+if(home.parent){
+if(home.next&&home.next.parentNode===home.parent){home.parent.insertBefore(mbox,home.next);}
+else{home.parent.appendChild(mbox);}
+}
+home.parent=null;home.next=null;
+}
+overlay.querySelector(".ytp-modal-x").addEventListener("click",closeModal);
+overlay.addEventListener("click",function(e){if(e.target===overlay)closeModal();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"||e.keyCode===27)closeModal();});
+var links=document.querySelectorAll('a[href="#match"]');
+for(var i=0;i<links.length;i++){(function(l){l.addEventListener("click",function(ev){ev.preventDefault();openModal();});})(links[i]);}
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

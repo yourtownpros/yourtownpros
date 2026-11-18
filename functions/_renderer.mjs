@@ -73,7 +73,7 @@ const fmtRatingCard = (r) => String(Number(r)); // rail cards print 5, not 5.0
 const stars = (r) => {
   const halves = Math.round(r * 2);
   const full = Math.floor(halves / 2), half = halves % 2;
-  return "★".repeat(full) + (half ? "⯨" : "") + "☆".repeat(5 - full - half);
+  return "★".repeat(full) + (half ? "<span class=\"starhalf\">☆<span class=\"starhalf-f\">★</span></span>" : "") + "☆".repeat(5 - full - half);
 };
 
 // ---- Ship 2 content rules, ported from the static build's transform

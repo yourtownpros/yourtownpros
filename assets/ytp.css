@@ -649,3 +649,17 @@ metadata. New classes only; no existing rule changes. */
 @media(max-width:560px){.sicon57{width:104px;height:96px;font-size:42px}.result-card[data-feat="1"] .sicon57{width:104px;height:96px}}
 @container (max-width:480px){.sicon57{width:104px;height:96px}}
 @container (max-width:380px){.sicon57{width:100%;height:120px}}
+/* Items 44 + 46 (Nov 17, 2026): whole-card links on hub cards
+   (stretched link; inner top-city links ride above), and the
+   two-column services checklist on listing pages. */
+.card{position:relative}
+a.cardlink::after{content:"";position:absolute;inset:0;border-radius:12px}
+.topcities{margin:8px 0 0;font-size:14px;color:#5a6672}
+.topcities a{position:relative;z-index:1;font-weight:600}
+.check57{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 28px;margin:2px 0 10px}
+.check57 h3{font-size:16px;margin:10px 0 6px}
+.checklist57{list-style:none;margin:0;padding:0}
+.checklist57 li{position:relative;padding-left:24px;margin:0 0 6px}
+.checklist57 li::before{content:"\2713";position:absolute;left:0;top:0;color:#0e7a5f;font-weight:800}
+.checkmore57 summary{cursor:pointer;color:#0e7a5f;font-weight:700;font-size:14px}
+.vbtag57{display:inline-block;background:#e8f3ee;color:#0e7a5f;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;margin-left:8px;vertical-align:middle}

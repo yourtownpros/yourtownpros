@@ -1,14 +1,15 @@
 // GENERATED FILE - DO NOT EDIT.
 //
 // Copy of the renderer bundle: renderer/worker.mjs in this repo at
-// the v5.24 item 57 renderer commit (base 80799647d75 plus the item
+// the v5.26 item 59 renderer state (asset query 20261119a59; bundle
+// base: the v5.24 item 57 renderer commit, base 80799647d75 plus the item
 // 57 honest nav labels: Restaurants becomes Food & Cafes and Travel
 // & Activities becomes Local Shops & Studios in the header template;
 // base bundle: v5.23 item 75, v5.21 item 54, matchfix, indexable
 // flag). Regenerate whenever the Worker bundle changes: copy
 // renderer/worker.mjs over this file and re-apply this header. The
-// adapter in functions/[[path]].js imports this module's default
-// export and calls its fetch handler with the same env.DB binding.
+// adapter in functions/[[path]].js imports this module's default export
+// and calls its fetch handler with the same env.DB binding.
 
 // YourTownPros listing renderer, single-file bundle for the Cloudflare
 // dashboard editor. Built mechanically from renderer/worker.mjs,

@@ -728,3 +728,29 @@ header :focus-visible,footer :focus-visible{outline-color:#fff}
 .cat-layout.showmap53>.cat-map{display:block;order:4}
 .cat-main #results-list{order:5}
 }
+
+/* v5.23 item 75: mobile ergonomics. Sticky bottom action bar on listing profiles, floating Map/List toggle, horizontal filter chips, and the residual sub-44px touch target sweep from the Nov 19 mobile performance audit (finding 8). Mobile breakpoints only; desktop layout unchanged. The homepage header stays absolute and scrolls away (decided in this pass: a sticky homepage bar would cost viewport on every home view, the hero already carries the search, and every interior page keeps the sticky header). */
+.stickybar75{display:none}
+@media(max-width:767px){
+body.has-sbar75{padding-bottom:78px}
+.stickybar75{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:90;background:#12212e;padding:10px 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -2px 12px rgba(18,33,46,.28);transition:transform .2s ease}
+.stickybar75.barhide75{transform:translateY(110%)}
+.stickybar75 a{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:8px;font-weight:700;font-size:15px;text-decoration:none;padding:10px 8px;text-align:center}
+.stickybar75 .sb-call75{background:#fff;color:#12212e}
+.stickybar75 .sb-cta75{background:#0e7a5f;color:#fff}
+/* Floating Map/List toggle: the item 53 in-flow button becomes a floating pill on phones. */
+.maptoggle53{position:fixed;left:auto;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:85;width:auto;min-width:124px;min-height:48px;margin:0;padding:10px 18px;border-radius:999px;background:#12212e;color:#fff;border:1px solid #12212e;box-shadow:0 4px 16px rgba(18,33,46,.35)}
+/* Horizontal filter chips: the toolbar scrolls sideways as one chip row instead of wrapping into a tall stack. */
+.filterbar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.filterbar::-webkit-scrollbar{display:none}
+.filterbar>*{flex:0 0 auto}
+.frail .fgroup{overflow-x:auto;overflow-y:hidden;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+.frail .fgroup::-webkit-scrollbar{display:none}
+.frail .fgroup .flab,.frail .fgroup label,.frail .fgroup .listed{white-space:normal}
+.frail .fbtn{display:inline-flex;align-items:center;min-height:44px}
+/* Residual sub-44px touch targets raised to 44px (audit finding 8). */
+.managebar .mbtn{min-height:44px}
+.citypill28 button{min-height:44px;min-width:44px;justify-content:center}
+.tickbtn{min-height:44px;min-width:44px}
+#ytp-ubtn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+}

@@ -475,3 +475,22 @@ shorten();
 var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(shorten,150)});
 });
 })();
+
+/* Item 75 (v5.23): sticky bottom action bar on mobile listing profiles. The bar is built from the listing's own Contact card links (Call plus the primary request CTA), so it always carries this listing's real phone and request target; CSS in ytp.css shows it at 767px and down only. It hides while the request form is on screen so it never duplicates the form. Listings with no Contact card actions (for example fully held listings) get no bar. */
+(function(){
+function ready(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+ready(function(){
+if(document.querySelector(".stickybar75"))return;
+var card=document.querySelector(".bizcard57");
+if(!card)return;
+var tel=card.querySelector("a.tel[href^='tel:']");
+var cta=card.querySelector("a.act57");
+if(!tel&&!cta)return;
+var bar=document.createElement("nav");bar.className="stickybar75";bar.setAttribute("aria-label","Contact this pro");
+if(tel){var a=document.createElement("a");a.className="sb-call75";a.href=tel.getAttribute("href");a.textContent=tel.textContent.trim()||"Call";bar.appendChild(a)}
+if(cta){var b=document.createElement("a");b.className="sb-cta75";b.href=cta.getAttribute("href");b.textContent=cta.textContent.trim()||"Request";bar.appendChild(b)}
+document.body.appendChild(bar);document.body.classList.add("has-sbar75");
+var form=document.getElementById("match");
+if(form&&"IntersectionObserver" in window){var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){bar.classList.toggle("barhide75",es[i].isIntersecting)}},{rootMargin:"-10% 0px 0px 0px"});io.observe(form)}
+});
+})();

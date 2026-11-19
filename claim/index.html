@@ -15,9 +15,9 @@
 <p>To keep listings in the right hands, every claim includes one quick proof that the business is yours. When you pick your business below, the form shows the proofs that work for it: an automatic match when your account email is the email we already have for the business (or shares its website domain), a short code you put on your website, in your DNS, or on the business Facebook page, or a photo of a business license or utility bill emailed to us. Approval is automatic once our check finds your proof, except for a document, which a person reviews by hand. Only when none of those work do we call the phone number on the listing as a last step.</p>
 <h2>Request your claim</h2>
 <p>Find your business below and check it is the right one. You only sign in at the end, when you send the claim: your account is how you manage the listing once it is approved, and signing in helps us check the claim really comes from the business.</p>
-<div id="ytp-claimwrap"><form id="ytp-claim-form" class="match" style="margin:0">
+<div id="ytp-claimwrap"><form id="ytp-claim-form" class="match" style="margin:0" novalidate><style>.ferr{display:none;color:#a33;font-size:13px;margin:2px 0 6px}.ferr.on{display:block}.errsum{display:none;background:#fdf0f0;border:1px solid #d99;border-radius:8px;padding:10px 14px;margin:0 0 12px;color:#7a1f1f;font-size:14px}.errsum.on{display:block}.errsum ul{margin:6px 0 0;padding-left:18px}.match input.fbad{border-color:#a33;outline:1px solid #a33}</style><div class="errsum" id="ytp-claim-errsum" role="alert"></div>
 <label for="claim-pick-q">Find your business</label><input type="text" id="claim-pick-q" placeholder="Start typing your business name" autocomplete="off">
-<div class="picklist" id="claim-pick-list"></div>
+<div class="picklist" id="claim-pick-list"></div><p class="ferr" id="err-pick"></p>
 <div class="bizcard" id="ytp-bizcard" hidden></div>
 <div class="hlchips" id="ytp-chips" hidden></div>
 <div class="bizcard" id="ytp-claimed-note" hidden></div>
@@ -26,13 +26,13 @@
 <label for="claim-city">City</label><input type="text" name="city" id="claim-city" readonly required>
 <input type="hidden" name="business_slug" id="claim-slug">
 <div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
-<div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div>
+<div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div><p class="ferr" id="err-verify"></p>
 <div class="docup" id="claim-doc-block" hidden><label for="claim-doc-file">Upload your document</label><p class="listed" style="margin:0">A photo of a business license or a utility bill that matches the listing name and address. A photo or a PDF, up to 10 MB. It goes straight to us with your claim, and we review documents by hand.</p><input type="file" id="claim-doc-file" accept="image/*,application/pdf"><p class="fine" id="claim-doc-msg" style="color:#a33"></p></div>
-<label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required>
+<label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required><p class="ferr" id="err-name"></p>
 <label for="claim-role">Your role</label><input type="text" name="role" id="claim-role" placeholder="Owner, manager, family member">
-<label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
-<label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
-<label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
+<label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required><p class="ferr" id="err-phone"></p>
+<label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required><p class="ferr" id="err-email"></p>
+<label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label><p class="ferr" id="err-owns"></p>
 <div id="ytp-claim-gate" hidden><p>One last step: sign in with Google to send your claim. Your account is how you manage the listing once it is approved.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
 <div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></div></form></div>
 <script>
@@ -45,6 +45,32 @@ var searchIdx=null,verifyData=null,chosen=null,code="",gcSnap=null;
 var bizData=null,signedIn=!!(A&&A.user&&A.sb);
 function newCode(){var h="";var a=new Uint32Array(3);if(window.crypto&&window.crypto.getRandomValues){window.crypto.getRandomValues(a);h=(a[0].toString(16)+a[1].toString(16)+a[2].toString(16)).toUpperCase()}else{h=Math.random().toString(16).slice(2,14).toUpperCase()}return "YTP-"+h.slice(0,6)}
 code=newCode();
+/* Roadmap item 56 (v5.22, Nov 19, 2026): claim form validation feedback.
+Before this build the only feedback on a failed submit was small red text
+below the submit button, with no scroll, no focus and no per-field note:
+the business fields are readonly (barred from native validation), the
+verification radios carry no required attribute, and the disabled submit
+button gave no reason. Validation is now run by this handler (the form
+carries novalidate): every problem gets an inline note next to its field,
+a summary at the top of the form, and a scroll plus focus to the first
+problem. */
+function ferr(id,msg){var e=$(id);if(e){e.textContent=msg||"";if(msg){e.classList.add("on")}else{e.classList.remove("on")}}}
+function setBad(el,bad){if(!el)return;if(bad){el.classList.add("fbad");el.setAttribute("aria-invalid","true")}else{el.classList.remove("fbad");el.removeAttribute("aria-invalid")}}
+function showClaimError(msg){var e=$("ytp-claim-error");if(e)e.textContent=msg||"";var b=$("ytp-claim-errsum");if(b){if(msg){b.innerHTML="<strong>"+esc(msg)+"</strong>";b.classList.add("on");if(b.scrollIntoView)b.scrollIntoView({block:"center"})}else{b.innerHTML="";b.classList.remove("on")}}}
+function showErrors(errs){
+ferr("err-pick",errs.pick);ferr("err-verify",errs.verify);ferr("err-name",errs.name);ferr("err-phone",errs.phone);ferr("err-email",errs.email);ferr("err-owns",errs.owns);
+setBad($("claim-pick-q"),!!errs.pick);setBad($("claim-name"),!!errs.name);setBad($("claim-phone"),!!errs.phone);setBad($("claim-email"),!!errs.email);
+var order=["pick","verify","name","phone","email","owns"],items=[],first="";
+for(var i=0;i<order.length;i++){var k=order[i];if(errs[k]){items.push(errs[k]);if(!first)first=k}}
+var b=$("ytp-claim-errsum");
+if(b){if(items.length){b.innerHTML="<strong>Please fix the following:</strong><ul><li>"+items.map(function(m){return esc(m)}).join("</li><li>")+"</li></ul>";b.classList.add("on")}else{b.innerHTML="";b.classList.remove("on")}}
+if(!first)return 0;
+var t=null;
+if(first==="pick")t=$("claim-pick-q");else if(first==="verify")t=$("claim-verify");else if(first==="name")t=$("claim-name");else if(first==="phone")t=$("claim-phone");else if(first==="email")t=$("claim-email");else if(first==="owns"&&form)t=form.querySelector("input[name='owns_or_manages']");
+if(t){if(t.scrollIntoView)t.scrollIntoView({block:"center"});if(first!=="verify"&&t.focus){try{t.focus({preventScroll:true})}catch(e){t.focus()}}}
+return items.length}
+function clearFieldErr(ev){var t=ev.target;if(!t||!t.id&&!t.name)return;var map={"claim-pick-q":"err-pick","claim-name":"err-name","claim-phone":"err-phone","claim-email":"err-email"};if(map[t.id]){ferr(map[t.id],"");setBad(t,false)}if(t.name==="owns_or_manages")ferr("err-owns","");if(t.name==="vm")ferr("err-verify","")}
+
 function ytpPerfFigures(snap,slug,win){
 var out={ok:false,lv:0,cv:null,call:0,website:0,directions:0};
 if(!snap||!snap.meta||snap.meta.complete!==true||!snap.listings)return out;
@@ -130,6 +156,7 @@ if(fields)fields.hidden=false;
 renderChips();
 renderMethods();
 var sub=$("ytp-claim-submit");if(sub)sub.disabled=false;
+ferr("err-pick","");setBad($("claim-pick-q"),false);
 }
 function renderMethods(){
 var box=$("claim-verify");if(!box||!chosen)return;
@@ -175,7 +202,7 @@ var btns=list.querySelectorAll("button");
 for(var j=0;j<btns.length;j++){(function(b){b.addEventListener("click",function(){pickSlug(b.getAttribute("data-slug"));list.innerHTML=""})})(btns[j])}
 });
 }
-function fail(){var e=$("ytp-claim-error");if(e)e.textContent="Something went wrong sending your claim. Please try again."}
+function fail(){showClaimError("Something went wrong sending your claim. Please try again.")}
 var gb=$("ytp-claim-signin");if(gb)gb.addEventListener("click",function(){A.signIn()});
 fetch("/gc-snapshot.json").then(function(r){return r.ok?r.json():null}).then(function(d){gcSnap=d||null;if(chosen)resolve()}).catch(function(){});
 /* Claim build (Nov 17, 2026): lookup first. The form
@@ -206,16 +233,25 @@ var m=$("claim-doc-msg");if(!m)return;
 var f=docFile.files&&docFile.files.length?docFile.files[0]:null;
 m.textContent=(f&&f.size>10485760)?"That file is too big. Please pick a photo or PDF under 10 MB.":"";
 });
+if(form){form.addEventListener("input",clearFieldErr);form.addEventListener("change",clearFieldErr)}
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
-if(!signedIn){if(gate){gate.hidden=false;if(gate.scrollIntoView)gate.scrollIntoView()}var ge=$("ytp-claim-error");if(ge)ge.textContent="Sign in with Google above to send your claim.";return}
-if(chosen.claimed){var ce=$("ytp-claim-error");if(ce)ce.textContent="This listing has already been claimed, so there is nothing to send.";return}
-if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
+if(chosen&&chosen.claimed){showClaimError("This listing has already been claimed, so there is nothing to send.");return}
 var radios=form.querySelectorAll("input[name='vm']"),method="";
 for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}
-if(!method){var me=$("ytp-claim-error");if(me)me.textContent="Pick a verification method so we know how you will prove the business is yours.";return}
+var errs={};
+if(!chosen)errs.pick="Pick your business from the list first, so we know which listing you are claiming.";
+if(!$("claim-name").value.trim())errs.name="Enter your name.";
+if(!$("claim-phone").value.trim())errs.phone="Enter your phone number.";
+var emv=$("claim-email").value.trim();
+if(!emv)errs.email="Enter your email address.";else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emv))errs.email="That email address does not look complete. Check it and try again.";
+var ow=form.querySelector("input[name='owns_or_manages']");if(ow&&!ow.checked)errs.owns="Check the box to confirm you own or manage this business.";
+if(signedIn&&chosen&&!method)errs.verify="Pick a verification method so we know how you will prove the business is yours.";
+if(showErrors(errs))return;
+showClaimError("");
+if(!signedIn){if(gate){gate.hidden=false;if(gate.scrollIntoView)gate.scrollIntoView({block:"center"})}showClaimError("Sign in with Google above to send your claim.");return}
 var docF=(method==="document"&&docFile&&docFile.files&&docFile.files.length)?docFile.files[0]:null;
-if(docF&&docF.size>10485760){var dm=$("claim-doc-msg");if(dm)dm.textContent="That file is too big. Please pick a photo or PDF under 10 MB.";var de=$("ytp-claim-error");if(de)de.textContent="Your document is too big to upload. Pick a smaller file, or remove it and we will tell you how to email it instead.";return}
+if(docF&&docF.size>10485760){var dm=$("claim-doc-msg");if(dm)dm.textContent="That file is too big. Please pick a photo or PDF under 10 MB.";showClaimError("Your document is too big to upload. Pick a smaller file, or remove it and we will tell you how to email it instead.");var dbk=$("claim-doc-block");if(dbk&&dbk.scrollIntoView)dbk.scrollIntoView({block:"center"});return}
 var row={business_slug:chosen.slug,
 business_name:chosen.name,
 user_id:A.user.id,

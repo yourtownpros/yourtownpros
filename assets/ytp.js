@@ -439,3 +439,39 @@ return null}
 window.ytpCloses54=ytpCloses54;
 (function(){function up(){if(typeof ytpOpenNow54!=="function"||typeof hoursBySlug54==="undefined")return;var ss=document.querySelectorAll("[data-open57]");for(var i=0;i<ss.length;i++){var s=ss[i];if(s.hidden)continue;var c=s.closest?s.closest("[data-slug]"):null;var e=c?hoursBySlug54[c.getAttribute("data-slug")]:null;if(!e)continue;var st=ytpOpenNow54(e.h,e.tz);if(!st)continue;if(st.open){var ct=ytpCloses54(e.h,e.tz);s.textContent=ct?("Open now · Closes "+ct):"Open now"}else s.textContent="Closed now"}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",up);else up()})();
+
+/* Item 53 (v5.20): phone Map/List toggle, map resize re-sync, small-width card link shortening, result-card photo links. */
+(function(){
+function ready(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+ready(function(){
+var layout=document.querySelector(".cat-layout");
+var mapEl=layout?layout.querySelector(":scope > .cat-map"):null;
+var fb=document.querySelector(".cat-main .filterbar");
+if(layout&&mapEl&&fb&&!document.querySelector(".maptoggle53")){
+var b=document.createElement("button");b.type="button";b.className="maptoggle53";b.textContent="Show map";b.setAttribute("aria-expanded","false");
+fb.parentNode.insertBefore(b,fb.nextSibling);
+b.addEventListener("click",function(){var on=layout.classList.toggle("showmap53");b.textContent=on?"Show list":"Show map";b.setAttribute("aria-expanded",on?"true":"false");setTimeout(function(){window.dispatchEvent(new Event("resize"))},60)});
+}
+/* Leaflet maps track window resize themselves; nudging a resize after layout settles re-syncs tile size on category and listing maps. */
+setTimeout(function(){window.dispatchEvent(new Event("resize"))},350);
+/* Result-card photo carries the profile link (item 44 extended to result cards). */
+var cards=document.querySelectorAll(".result-card");
+for(var i=0;i<cards.length;i++){(function(c){
+var title=c.querySelector("h2 a");if(!title)return;
+var img=c.querySelector(":scope > img")||c.querySelector(":scope > .sicon57");
+if(!img||img.parentNode!==c)return;
+var w=document.createElement("a");w.className="cardimg53";w.href=title.getAttribute("href");w.setAttribute("aria-label",title.textContent.trim());
+c.insertBefore(w,img);w.appendChild(img);
+})(cards[i])}
+/* Secondary card link shortens to View details at small widths, full name kept in aria-label. */
+function shorten(){
+var small=window.matchMedia&&window.matchMedia("(max-width: 767px)").matches;
+var links=document.querySelectorAll(".result-card .rlinks a, .result-card .ract57 a");
+for(var i=0;i<links.length;i++){var a=links[i];var full=a.getAttribute("data-viewfull53");
+if(!full){var t=a.textContent.trim();if(/^View\s+\S/.test(t)&&t!=="View details"){a.setAttribute("data-viewfull53",t);full=t}else continue}
+if(small){a.textContent="View details";a.setAttribute("aria-label",full)}else{a.textContent=full;a.removeAttribute("aria-label")}}
+}
+shorten();
+var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(shorten,150)});
+});
+})();

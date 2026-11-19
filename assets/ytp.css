@@ -686,3 +686,45 @@ header :focus-visible,footer :focus-visible{outline-color:#fff}
 .qasec.qa-empty>*:not(#ytp-qa-list){display:none}
 .badges52{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0 3px;align-items:center}
 .badg52{display:inline-block;background:#fff;color:#12212e;border:1px solid #d8d4c8;font-size:12px;font-weight:700;padding:3px 9px;border-radius:10px;vertical-align:middle}
+
+/* v5.20 item 53: mobile and tablet pass (desktop layout unchanged). */
+/* Overflow containment: flex and grid children shrink instead of forcing sideways scroll. */
+.result-card>*,.filterbar>*,.ract57>*,.rlinks>*,.biz57>*,.hsearch57>*,.match>*,.cat-side>*,.slidecap>*{min-width:0}
+/* Listing hero: sane aspect ratio, capped height, cover fit (was a fixed 180px strip). */
+.bizhero57 .photoband-img{height:auto;aspect-ratio:16/9;max-height:430px;object-fit:cover}
+@media(min-width:1400px){.bizhero57 .photoband-img{aspect-ratio:21/9}}
+.photoband{height:auto;aspect-ratio:16/9;max-height:320px}
+/* Card actions: 44px minimum touch height on every card action link. */
+.rlinks a,.ract57 a{display:inline-flex;align-items:center;min-height:44px}
+.cardimg53{display:block;flex:none;text-decoration:none}
+/* Location pill controls stay compact styled controls at every width. */
+.citypill28 button{min-height:32px;display:inline-flex;align-items:center}
+/* Logo legibility backdrop where the home header overlays hero photos. */
+@media(min-width:1200px){.header-home .brand{background:rgba(18,33,46,.38);border-radius:10px;padding:4px 12px 4px 5px}}
+/* Header search stacks into clean rows under 640px. */
+@media(max-width:639px){
+.hsearch57{height:auto;flex-wrap:wrap}
+.hsearch57 .fld57{flex:1 1 100%}
+.hsearch57 .fld57:first-child{border-right:0;border-bottom:1px solid #e4e0d5}
+.hsearch57 input{height:46px}
+.hsearch57 .hgo57{width:100%;height:44px;border-radius:0 0 7px 7px}
+}
+/* Tablet step 768-1279px: filters as a compact top bar, then cards plus sticky map in two columns. Full three-column layout returns at 1280px. */
+@media(min-width:768px) and (max-width:1279px){
+.cat-layout{grid-template-columns:minmax(0,1fr) minmax(300px,36%);grid-template-areas:"side side" "main map";gap:18px}
+.cat-layout>.cat-side{grid-area:side;position:static}
+.cat-layout>.cat-main{grid-area:main}
+.cat-layout>.cat-map{grid-area:map;position:sticky;top:112px;height:calc(100vh - 112px)}
+.cat-layout>.cat-side .frail{display:flex;flex-wrap:wrap;gap:6px 22px;align-items:flex-start}
+.cat-layout>.cat-side .frail h2{display:none}
+.cat-layout>.cat-side .frail .fgroup{margin:0}
+.cat-layout .ftoggle{display:none}
+}
+/* Phone Map/List toggle (button inserted by ytp.js on category pages). */
+.maptoggle53{display:none}
+@media(max-width:767px){
+.maptoggle53{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin:10px 0 2px;padding:10px 14px;background:#fff;border:1px solid #0e7a5f;border-radius:10px;font:inherit;font-weight:700;color:#0b5c46;cursor:pointer;order:3}
+.cat-layout:not(.showmap53)>.cat-map{display:none}
+.cat-layout.showmap53>.cat-map{display:block;order:4}
+.cat-main #results-list{order:5}
+}

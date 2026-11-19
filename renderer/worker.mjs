@@ -161,7 +161,12 @@ function nearestTowns(l, towns, k, catSet) {
   }
   out.sort((x, y) => (x[0] - y[0]) ||
     (x[1].toLowerCase() < y[1].toLowerCase() ? -1 : x[1].toLowerCase() > y[1].toLowerCase() ? 1 : 0));
-  const res = catSet ? out.filter(([, , c]) => catSet.has(c.city_slug)) : out;
+  // Item 54 (v5.21): the Nearby radius cap. Only towns inside a
+  // 25-mile radius are ever named as nearby, in the service-area
+  // line or the nearby-links line; a sparse state no longer
+  // presents a town 100+ miles away as a neighbour.
+  const capped = out.filter(([d]) => d <= 25);
+  const res = catSet ? capped.filter(([, , c]) => catSet.has(c.city_slug)) : capped;
   return res.slice(0, k);
 }
 
@@ -600,7 +605,7 @@ async function renderListing(db, path) {
   const t = await db.prepare("SELECT * FROM trades WHERE trade_slug = ?").bind(l.trade_slug).first();
   const st = await db.prepare("SELECT * FROM states WHERE state = ?").bind(l.state).first();
   const sim = await db.prepare(
-    "SELECT x.* FROM similar_pros s JOIN listings x ON x.path = s.similar_path WHERE s.path = ? ORDER BY s.rank")
+    "SELECT x.*, s.distance_mi AS sim_dist FROM similar_pros s JOIN listings x ON x.path = s.similar_path WHERE s.path = ? ORDER BY s.rank")
     .bind(path).all();
   const pc = await db.prepare(
     "SELECT p.* FROM listing_partner_cards c JOIN partner_cards p ON p.partner_id = c.partner_id" +
@@ -618,7 +623,66 @@ async function renderListing(db, path) {
 
   const holdSet = await leadHold(db);
   const held = holdSet.has(l.path);
-  const simRows = (sim.results || []).filter((x) => !holdSet.has(x.path));
+  // Item 54 (v5.21): the Nearby radius cap on the Similar pros rail.
+  // Precomputed edges carry a distance_mi (town-center basis at load
+  // time; when an edge has none, the town-center distance is computed
+  // here from the towns table). An edge past 25 miles is never
+  // presented as nearby: the Pembroke Pines audit case offered Tampa
+  // at 192 mi and Jacksonville at 312 mi. Below 3 same-trade pros
+  // inside the radius, the rail fills at render time (the
+  // nearest-fill owed since item 5): nearest same-trade towns inside
+  // the radius first, then other trades in the same town. The county
+  // tier of the fallback chain needs county data the D1 towns table
+  // does not carry, so it stays a static-generator tier.
+  const townBySlug = new Map(towns.map((x) => [x.city_slug, x]));
+  const myTown = townBySlug.get(l.city_slug);
+  const townDist = (x) => {
+    if (x.city_slug === l.city_slug) return 0;
+    const o = townBySlug.get(x.city_slug);
+    if (!myTown || !o || myTown.lat == null || o.lat == null) return null;
+    return havMi([myTown.lat, myTown.lng], [o.lat, o.lng]);
+  };
+  let simRows = (sim.results || []).filter((x) => !holdSet.has(x.path))
+    .filter((x) => {
+      const d = x.sim_dist != null ? x.sim_dist : townDist(x);
+      return d != null ? d <= 25 : x.city_slug === l.city_slug;
+    });
+  if (!held && simRows.length < 3) {
+    const have = new Set(simRows.map((x) => x.path));
+    const nearSlugs = towns
+      .filter((x) => myTown && x.lat != null &&
+        (x.city_slug === l.city_slug ||
+         havMi([myTown.lat, myTown.lng], [x.lat, x.lng]) <= 25))
+      .map((x) => x.city_slug);
+    if (nearSlugs.length) {
+      const ph = nearSlugs.map(() => "?").join(",");
+      const fillRes = await db.prepare(
+        `SELECT * FROM listings WHERE trade_slug = ? AND state = ? AND path != ? AND city_slug IN (${ph})`)
+        .bind(l.trade_slug, l.state, path, ...nearSlugs).all();
+      const fills = (fillRes.results || [])
+        .filter((x) => !have.has(x.path) && !holdSet.has(x.path))
+        .map((x) => [townDist(x), x])
+        .filter(([d]) => d != null && d <= 25)
+        .sort((a, b) => (a[0] - b[0]) ||
+          ((b[1].review_count || -1) - (a[1].review_count || -1)) ||
+          ((b[1].rating || -1) - (a[1].rating || -1)));
+      for (const [, x] of fills) {
+        if (simRows.length >= 4) break;
+        simRows.push(x); have.add(x.path);
+      }
+    }
+    if (simRows.length < 3) {
+      const t2Res = await db.prepare(
+        "SELECT * FROM listings WHERE state = ? AND city_slug = ? AND trade_slug != ? AND path != ? ORDER BY review_count DESC")
+        .bind(l.state, l.city_slug, l.trade_slug, path).all();
+      for (const x of (t2Res.results || [])) {
+        if (simRows.length >= 4) break;
+        if (have.has(x.path) || holdSet.has(x.path)) continue;
+        simRows.push(x); have.add(x.path);
+      }
+    }
+    simRows = simRows.slice(0, 4);
+  }
 
   let html = TEMPLATE;
   const slots = {

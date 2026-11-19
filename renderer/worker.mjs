@@ -459,12 +459,25 @@ function needOptsHtml(slug) {
     `</fieldset>\n`;
 }
 
-function matchopen(l, t) {
+function matchopen(l, t, similars, held) {
   // Ship 2 E8.1: the match form is collapsed behind a details button.
   // Item 49: the heading follows the trade's CTA mode; walk-in
   // trades lead with direct contact actions and keep the form as
   // a message option inside the collapse.
   const mode = ctaMode(l.trade_slug);
+  if (held) {
+    // Lead hold, held-page v3 (owner, Nov 18, 2026): the request
+    // goes to the town pool, never to this listing, and exactly
+    // ONE competitor leads the block: the same single competitor
+    // the Similar rail below carries.
+    const label = mode === "quote" ? "Get Free Quote" : mode === "appt" ? "Request Appointment" : mode === "walkin" ? "Message the Business" : "Request this pro";
+    const intro = `<p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we match you with an available ${esc(l.city)} ${esc(t.phrase)} pro.</p>\n`;
+    const formOpen = `<form action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="" data-match-source="listing">\n` +
+      `<input type="hidden" name="_subject" value="Match request: ${escAttr(t.label)}, ${escAttr(l.city)}"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="leads@muse.ai"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>`;
+    const strip = (similars || []).slice(0, 1).map((x) => `<div class="card"><h3><a href="/${x.path}/">${esc(x.name)}</a></h3><div class="meta cardreq"><a href="/${x.path}/?src=card#match">Request this pro</a></div></div>`).join("");
+    const stripHtml = strip ? `<div class="similar"><h2>${esc(t.label)} pros in ${esc(l.city)}</h2><div class="grid">${strip}</div></div>` : "";
+    return stripHtml + `<div class="match" id="match"><details class="ytp-collapse"><summary class="ytp-collapse-btn">${label}</summary><h2>${label}</h2>` + intro + formOpen;
+  }
   const intro = `<p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we contact ${esc(l.name)} about it, and if they cannot take the job, we match you with another ${esc(l.city)} ${esc(t.phrase)} pro instead.</p>\n`;
   const formOpen = `<form action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="${l.path}" data-match-source="listing">\n` +
     `<input type="hidden" name="_subject" value="Match request: ${escAttr(t.label)}, ${escAttr(l.city)} (via ${escAttr(l.name)} listing)"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="leads@muse.ai"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>`;
@@ -480,9 +493,9 @@ function matchopen(l, t) {
   return `<div class="match" id="match"><details class="ytp-collapse"><summary class="ytp-collapse-btn">${label}</summary><h2>${label}</h2>` + intro + formOpen;
 }
 
-function contact(l) {
+function contact(l, held) {
   let s = `<div class="bizcard57"><h2>Contact</h2>`;
-  if (l.phone) s += `<p><a class="tel" href="tel:${l.phone_digits}">Call ${esc(l.phone)}</a></p>`;
+  if (l.phone && !held) s += `<p><a class="tel" href="tel:${l.phone_digits}">Call ${esc(l.phone)}</a></p>`;
   if (l.show_website_link && l.website)
     s += `<a class="act57" href="${escAttr(l.website)}" target="_blank" rel="ugc nofollow noopener noreferrer">Visit their website</a>`;
   if (l.address)
@@ -493,7 +506,13 @@ function contact(l) {
   return s;
 }
 
-function claimstrip(l) {
+function claimstrip(l, held) {
+  if (held) {
+    // Held-page v3 rule 1: the official number stays on the page,
+    // de-emphasized under the match form, never as a Call button.
+    if (!l.phone) return "";
+    return `<p class="fine" style="margin:14px 0 0">Want to try calling ${esc(l.name)} yourself? Their official number is <a href="tel:${l.phone_digits}">${esc(l.phone)}</a>.</p>`;
+  }
   return `<div class="claimstrip">Is this your business? <a href="/claim/?business=${l.path}&name=${enc(l.name)}">Claim this free listing</a> to keep your hours, services and photos current.</div>`;
 }
 
@@ -597,6 +616,10 @@ async function renderListing(db, path) {
   const catSet = new Set((catRes.results || []).map((r) => r.city_slug));
   const hubExists = towns.some((x) => x.city_slug === l.city_slug);
 
+  const holdSet = await leadHold(db);
+  const held = holdSet.has(l.path);
+  const simRows = (sim.results || []).filter((x) => !holdSet.has(x.path));
+
   let html = TEMPLATE;
   const slots = {
     "{{HEAD}}": head(l, t, st),
@@ -607,7 +630,7 @@ async function renderListing(db, path) {
     "{{AMEN}}": amen(l),
     "{{LOCHRS}}": lochrs(l),
     "{{FEAT}}": feat(l, t),
-    "{{MATCHOPEN}}": matchopen(l, t),
+    "{{MATCHOPEN}}": matchopen(l, t, simRows, held),
     "{{NEEDOPTS}}": needOptsHtml(l.trade_slug),
     "{{SVC_LABEL}}": ctaMode(l.trade_slug) === "quote" ? "Describe the job (optional)" : "What do you need?",
     "{{SUBMIT_LABEL}}": ctaMode(l.trade_slug) === "walkin" ? "Send message" : "Send request",
@@ -616,10 +639,10 @@ async function renderListing(db, path) {
     "{{SG_CAT}}": esc(t.label),
     "{{SG_ADDR}}": esc(l.address || "Address not listed"),
     "{{SG_PHONE}}": esc(l.phone || "Phone not listed"),
-    "{{CONTACT}}": contact(l),
-    "{{CLAIMSTRIP}}": claimstrip(l),
+    "{{CONTACT}}": contact(l, held),
+    "{{CLAIMSTRIP}}": claimstrip(l, held),
     "{{JSONLD}}": jsonld(l, t),
-    "{{BREADCRUMB_SIMILAR}}": breadcrumbSimilar(l, t, st, sim.results || [], pc, hubExists),
+    "{{BREADCRUMB_SIMILAR}}": breadcrumbSimilar(l, t, st, held ? simRows.slice(0, 1) : simRows, held ? null : pc, hubExists),
     "{{OPENNOW}}": l.hours_json ? OPENNOW_SCRIPT : "",
     "{{RENTRACK}}": pc ? RENTRACK_SCRIPT : "",
   };
@@ -716,6 +739,48 @@ async function datasetVersion(db) {
   }
   versionMemo = { value, at: now };
   return value;
+}
+
+// Lead hold registry (the kill switch): meta['lead_hold'] holds a
+// JSON array written by dated D1 deltas. Entries are listing path
+// strings (level "full" implied) or objects {path, level}; only
+// "full" entries hold. A listing that claims flips to "soft" by a
+// dated delta and renders normally again. A held listing keeps its
+// page and its facts, but loses featured placement, drops out of
+// other listings' Similar pros rails, shows exactly one competitor,
+// and its match form diverts to the town pool. Read with the same
+// memo pattern as the dataset version.
+const LEAD_HOLD_KEY = "lead_hold";
+const LEAD_HOLD_REFRESH_MS = 60_000;
+let leadHoldMemo = { set: null, at: 0 };
+
+async function leadHold(db) {
+  const now = Date.now();
+  if (leadHoldMemo.set !== null && now - leadHoldMemo.at < LEAD_HOLD_REFRESH_MS) {
+    return leadHoldMemo.set;
+  }
+  let set = leadHoldMemo.set !== null ? leadHoldMemo.set : new Set();
+  try {
+    const row = await db
+      .prepare("SELECT value FROM meta WHERE key = ?")
+      .bind(LEAD_HOLD_KEY)
+      .first();
+    if (row && row.value) {
+      const parsed = JSON.parse(String(row.value));
+      if (Array.isArray(parsed)) {
+        set = new Set(parsed.map((x) => {
+          if (typeof x === "string") return x;
+          if (x && typeof x === "object" && x.path && x.level !== "soft") return String(x.path);
+          return null;
+        }).filter(Boolean));
+      }
+    }
+  } catch {
+    // Fail open to the last known set (empty before the first good
+    // read): a registry read fault must never take a listing page down.
+  }
+  leadHoldMemo = { set, at: now };
+  return set;
 }
 
 function defaultCache() {

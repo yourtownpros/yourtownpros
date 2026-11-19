@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.17",
+  "version": "v5.10.18",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1946,13 +1946,13 @@
     },
     "house_page_check": {
       "Rankly Design": {
-        "claim_strip_present": true,
+        "claim_strip_present": false,
         "match_form_present": false,
         "featured_badge_present": true,
         "featured_label_present": true
       },
       "Renaud Naturals": {
-        "claim_strip_present": true,
+        "claim_strip_present": false,
         "match_form_present": false,
         "featured_badge_present": true,
         "featured_label_present": true
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7281,
+      "hours": 7363,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -2815,13 +2815,15 @@
     "house_claim_strips": {
       "Rankly Design": {
         "claim_strip_present": true,
-        "claim_link_carries_slug": true,
+        "owner_status_line_present": true,
+        "claim_prompt_absent": true,
         "match_form_absent": true,
         "featured_badge_present": true
       },
       "Renaud Naturals": {
         "claim_strip_present": true,
-        "claim_link_carries_slug": true,
+        "owner_status_line_present": true,
+        "claim_prompt_absent": true,
         "match_form_absent": true,
         "featured_badge_present": true
       }
@@ -3176,7 +3178,7 @@
     "schema_v9_index": true,
     "per_card_links_match_instrumentation": true,
     "per_card_targets_scoped": true,
-    "per_card_count": 76095,
+    "per_card_count": 76082,
     "flagged_never_card_target": true,
     "flagged_listings_unscoped": true,
     "match_script_pages_complete": true,
@@ -3392,12 +3394,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 2947,
-    "open_now_category_entries_count": 7281,
+    "open_now_category_pages_count": 2974,
+    "open_now_category_entries_count": 7363,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3426,
+      "parsed": 3430,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -3458,7 +3460,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7238,
+    "open_now_determined_listings": 7320,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3524,8 +3526,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7277,
-    "open_now_determined_listings_v55": 7238,
+    "hours_listings_total": 7359,
+    "open_now_determined_listings_v55": 7320,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/automotive-concepts-inc-alamosa",
@@ -3783,7 +3785,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 7380,
-    "detail_pill_pages": 2947
+    "detail_pill_pages": 2974
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -4645,6 +4647,27 @@
     "hours21_changed_subset_of_hours_pages": true,
     "hours_pages_7277": true,
     "fragment_count_6836": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51018_checks": {
+    "note": "v5.10.18: IDAHO HOURS MERGE (Nov 18, data-only). The hours lane Idaho batch (hours-lane-idaho-rows-2026-11-14.json, sourced 2026-11-14 from each business's own website or Google profile, all 83 staged rows OPERATIONAL on the closure checks run during sourcing) merges hours only, after the Wisconsin batch, under the standing guards. One staged row is held back by owner decision: Rachel Breton Hair Company (hair-salons/rachel-breton-hair-company-nampa), whose staged Sunday hours read 11 AM to 5 AM, an overnight close flagged for review at collection; it is excluded through HOURS22_EXCLUDED, so 82 of the 83 rows apply. Hours pages 7,277 to 7,359; the hours-honesty fragment set 6,836 to 6,754. No listing, total or sitemap URL moves; the Open Now parser pins are unchanged (all 83 staged Idaho weeks parse and determine under the v5.4 engine, fixture-proven before the build).",
+    "hours22_stats": {
+      "keys_loaded": 83,
+      "rows_keyed": 82,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [
+        "hair-salons/rachel-breton-hair-company-nampa"
+      ],
+      "hours_applied": 82,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours22_stats_exact": true,
+    "hours22_changed_set_exact": true,
+    "hours22_changed_subset_of_hours_pages": true,
+    "hours_pages_7359": true,
+    "fragment_count_6754": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32481,7 +32504,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2282632,
+    "internal_hrefs_checked": 2282496,
     "broken": []
   },
   "phone_spot_check": {

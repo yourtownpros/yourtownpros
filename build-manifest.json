@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.21",
+  "version": "v5.10.22",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7425,
+      "hours": 7429,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -3394,12 +3394,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 2983,
-    "open_now_category_entries_count": 7425,
+    "open_now_category_pages_count": 2984,
+    "open_now_category_entries_count": 7429,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3594,
+      "parsed": 3595,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -3486,7 +3486,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7374,
+    "open_now_determined_listings": 7378,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3552,8 +3552,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7421,
-    "open_now_determined_listings_v55": 7374,
+    "hours_listings_total": 7425,
+    "open_now_determined_listings_v55": 7378,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/a-step-above-auto-repairs-warr-acres",
@@ -3819,7 +3819,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 7380,
-    "detail_pill_pages": 2983
+    "detail_pill_pages": 2984
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -4760,6 +4760,25 @@
     "hours25_changed_subset_of_hours_pages": true,
     "hours_pages_7421": true,
     "fragment_count_6692": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51022_checks": {
+    "note": "v5.10.22: NEBRASKA NEXT-STATE HOURS MERGE (Nov 19, data-only). The hours lane Nebraska next-state batch (hours-lane-nebraska-nextstate-rows-2026-11-19.json, consolidated from the FOUND rows of the 2026-11-18 recheck segments 02 and 03, sourced from each business's own website for 3 rows and its Places or Google profile for 1 row, all 4 staged rows OPERATIONAL on the closure checks run during sourcing) merges hours only, after the Wyoming batch, under the standing guards. All 4 staged slugs key over the included set. Hours pages 7,421 to 7,425; the hours-honesty fragment set 6,692 to 6,688. No listing, total or sitemap URL moves.",
+    "hours26_stats": {
+      "keys_loaded": 4,
+      "rows_keyed": 4,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [],
+      "hours_applied": 4,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours26_stats_exact": true,
+    "hours26_changed_set_exact": true,
+    "hours26_changed_subset_of_hours_pages": true,
+    "hours_pages_7425": true,
+    "fragment_count_6688": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32596,7 +32615,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2282434,
+    "internal_hrefs_checked": 2282430,
     "broken": []
   },
   "phone_spot_check": {

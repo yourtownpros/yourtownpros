@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.22",
+  "version": "v5.10.23",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7429,
+      "hours": 7430,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -3395,11 +3395,11 @@
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
     "open_now_category_pages_count": 2984,
-    "open_now_category_entries_count": 7429,
+    "open_now_category_entries_count": 7430,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3595,
+      "parsed": 3599,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -3486,7 +3486,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7378,
+    "open_now_determined_listings": 7379,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3552,8 +3552,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7425,
-    "open_now_determined_listings_v55": 7378,
+    "hours_listings_total": 7426,
+    "open_now_determined_listings_v55": 7379,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/a-step-above-auto-repairs-warr-acres",
@@ -4779,6 +4779,25 @@
     "hours26_changed_subset_of_hours_pages": true,
     "hours_pages_7425": true,
     "fragment_count_6688": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51023_checks": {
+    "note": "v5.10.23: OREGON NEXT-STATE HOURS MERGE (Nov 19, data-only). The hours lane Oregon next-state batch (hours-lane-oregon-nextstate-rows-2026-11-19.json, consolidated from the FOUND rows of the 2026-11-18 recheck segments 01 to 03, sourced from the business's own website for 1 row, the 1 staged row OPERATIONAL on the closure checks run during sourcing) merges hours only, after the Nebraska batch, under the standing guards. The 1 staged slug keys over the included set. Hours pages 7,425 to 7,426; the hours-honesty fragment set 6,688 to 6,687. No listing, total or sitemap URL moves.",
+    "hours27_stats": {
+      "keys_loaded": 1,
+      "rows_keyed": 1,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [],
+      "hours_applied": 1,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours27_stats_exact": true,
+    "hours27_changed_set_exact": true,
+    "hours27_changed_subset_of_hours_pages": true,
+    "hours_pages_7426": true,
+    "fragment_count_6687": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32615,7 +32634,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2282430,
+    "internal_hrefs_checked": 2282429,
     "broken": []
   },
   "phone_spot_check": {

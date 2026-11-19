@@ -326,7 +326,7 @@ return pre.concat(sub)}
 function sugCity(){if(!CT)return;
 var q=f2.value.trim().toLowerCase();
 var ms=cityMatches(q).slice(0,7);
-show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+e.count+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
+show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+Number(e.count).toLocaleString("en-US")+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
 function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
 return resolveCityText(f2.value)}

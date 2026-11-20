@@ -1032,3 +1032,18 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 window.ytpGuard80={compOf:compOf80,signals:cardSignals80,isDnc:isDnc80,itemOf:itemOf80,cmpFree:cmpFree80,sortFree:sortFree80,related:related80,labels:LABELS80,version:"v5.44-item80"};
 })();
 /* item80:end */
+
+/* item82:start */
+/* v5.45 item 82: hero carousel CTAs route through the same saved-city helper as nav and category picks. The Item 28 Part A module in this file rewrites every nav link whose href is a bare trade root (/tattoo/ and the like) to /search/?v=<trade>&city=<saved city>&state=<saved state> when the legacy ytp-city key holds a saved city, and leaves it national when none is saved. The hero carousel missed that routing: the first slide pill is static markup and the deferred slides are built by the homepage script with national hrefs, so the grooming pill landed on the national page while nav picks localized. This module closes that gap with the same parse and the same target shape: every .herofull .pillbtn keeps its original national href in data-loc82 and its live href is the localized form when a saved city exists, or the original when none does. It runs on DOM ready, again on window load (the deferred slides are built on load), and under a MutationObserver on the hero so slides inserted after either pass are routed too. The homepage script also routes deferred pills through window.ytpHero82.localize at creation time. No new city mechanism: the ytp-city key and the Item 28 target shape are the only inputs. */
+(function(){
+"use strict";
+function getSaved82(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
+function parseSaved82(v){var i=String(v||"").lastIndexOf(",");if(i<1)return null;var c=String(v).slice(0,i).trim(),st=String(v).slice(i+1).trim();return (c&&st)?{city:c,state:st}:null}
+function localize82(href){var p=parseSaved82(getSaved82());if(!p)return href;var m=/^\/([a-z0-9-]+)\/$/.exec(String(href||""));if(!m)return href;return "/search/?v="+m[1]+"&city="+encodeURIComponent(p.city)+"&state="+encodeURIComponent(p.state)}
+function apply82(){var pills=document.querySelectorAll(".herofull .pillbtn");for(var i=0;i<pills.length;i++){var a=pills[i];var orig=a.getAttribute("data-loc82");if(!orig){orig=a.getAttribute("href")||"";if(orig)a.setAttribute("data-loc82",orig)}if(orig)a.setAttribute("href",localize82(orig))}return pills.length}
+function boot82(){apply82();var hero=document.querySelector(".herofull");if(hero&&typeof MutationObserver!=="undefined"&&!hero.getAttribute("data-hero82-obs")){hero.setAttribute("data-hero82-obs","1");var mo=new MutationObserver(function(){apply82()});mo.observe(hero,{childList:true,subtree:true})}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot82);else boot82();
+if(typeof window!=="undefined"&&window.addEventListener)window.addEventListener("load",apply82);
+window.ytpHero82={localize:localize82,apply:apply82,parse:parseSaved82,version:"v5.45-item82"};
+})();
+/* item82:end */

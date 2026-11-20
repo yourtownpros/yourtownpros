@@ -848,3 +848,10 @@ a.cs78:hover{border-color:#0e7a5f;color:#0e7a5f}
 /* v5.43 item 79: reviews scale-up. The anti-filter line sits under the review tools and shows only while approved reviews are rendered; the Verified Business Owner badge rides the existing ownerbadge pill next to the owner response label. */
 .revanti79{font-size:13.5px;color:#5a6672;margin:8px 0 0}
 .revanti79[hidden]{display:none}
+
+/* v5.44 item 80: Related trades strip on city-trade pages. */
+.related80{max-width:1100px;margin:18px auto;padding:0 16px}
+.related80 h2{font-size:20px;margin:0 0 10px}
+.related80links{display:flex;flex-wrap:wrap;gap:8px}
+.related80links a{display:inline-block;padding:10px 14px;border:1px solid var(--line,#ddd);border-radius:999px;color:var(--ink,#123);text-decoration:none;background:var(--card,#fff);font-size:15px}
+.related80links a:hover{text-decoration:underline}

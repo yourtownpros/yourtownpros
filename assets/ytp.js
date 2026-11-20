@@ -921,3 +921,114 @@ mo.observe(list,{childList:true,subtree:true})}}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot79);else boot79();
 window.ytpReviews79={dist:dist79,ratings:ratings79,enhance:enhance79,anti:ANTI79,version:"v5.43-item79"};
 })();
+
+/* item80:start */
+/* v5.44 item 80: generator guardrails, shared module.
+(a) Completeness weighting inside the FREE pool's organic order on
+city-trade pages: the default order stays the v5.7 Recommended order
+(rated first by rating, then review count) with one added tiebreak,
+a completeness score from the card's own rendered facts (verified
+hours slot, phone, website, street address, claimed badge). Cards
+carrying data-feat (Featured and house) are pinned at their rendered
+positions and never move; do-not-call cards (their Request link is
+the unscoped #match form, the v5.0 marker) stay after every other
+free card. Nothing here lifts a hold or outranks Featured.
+(c) "Related trades in [City]" strip on every city-trade page: the
+links come from /category-index.json itself, so every href is a
+city-trade page that exists; the strip renders only when at least
+one other trade serves the same city. */
+(function(){
+"use strict";
+var LABELS80={"pet-grooming":"Pet Grooming","tattoo":"Tattoo","nails":"Nail Salons","barbers":"Barbers","tanning":"Tanning Salons","hair-salons":"Hair Salons","med-spas":"Med Spas","massage":"Massage","auto-repair":"Auto Repair","towing":"Towing","plumbers":"Plumbers","electricians":"Electricians","hvac":"HVAC","roofing":"Roofing","painting":"Painters","lawn-and-landscaping":"Lawn & Landscaping","handyman":"Handyman","cleaners":"Cleaners & Laundry","florists":"Florists","bakeries-and-cafes":"Bakeries & Cafes","jewelry":"Jewelry","veterinary":"Veterinary","fitness":"Fitness","locksmiths":"Locksmiths","spas":"Spas","auto-glass":"Auto Glass","pet-boarding":"Pet Boarding & Daycare","dance-studios":"Dance Studios","bookstores":"Bookstores","website-design":"Website Design","natural-skincare":"Natural Skincare"};
+function compOf80(s){var n=0;if(s.hours)n++;if(s.phone)n++;if(s.web)n++;if(s.street)n++;if(s.claimed)n++;return n}
+function cardSignals80(card){
+var meta=card.querySelector(".meta");
+var mtext=meta?String(meta.textContent||""):"";
+var street=/^\s*\d+\s+\S/.test(mtext);
+return{hours:!!card.querySelector("[data-open57]"),
+phone:!!card.querySelector("a.telbtn57"),
+web:card.getAttribute("data-web")==="1",
+street:street,
+claimed:!!card.querySelector(".cbadge")}}
+function isDnc80(card){
+var a=card.querySelector("a.rtel");
+if(!a)return false;
+var h=a.getAttribute("href")||"";
+return h.indexOf("#match")!==-1&&h.indexOf("src=card")===-1}
+function itemOf80(card,idx){
+var r=parseFloat(card.getAttribute("data-rating")||"");
+return{card:card,idx:idx,feat:card.hasAttribute("data-feat"),
+dnc:isDnc80(card),rating:isNaN(r)?null:r,
+reviews:parseFloat(card.getAttribute("data-reviews")||"0")||0,
+comp:compOf80(cardSignals80(card))}}
+function cmpFree80(a,c){
+if(a.dnc!==c.dnc)return a.dnc?1:-1;
+var ah=a.rating===null?0:1,ch=c.rating===null?0:1;
+if(ah!==ch)return ch-ah;
+if(ah&&ch&&a.rating!==c.rating)return c.rating-a.rating;
+if(a.reviews!==c.reviews)return c.reviews-a.reviews;
+if(a.comp!==c.comp)return c.comp-a.comp;
+return a.idx-c.idx}
+function sortFree80(items){
+var free=items.filter(function(it){return !it.feat});
+free.sort(cmpFree80);
+var out=items.slice(),k=0;
+for(var i=0;i<out.length;i++){if(!out[i].feat){out[i]=free[k];k++}}
+return out}
+function related80(index,trade,key){
+var out=[];
+for(var t in index){
+if(t===trade)continue;
+if(index[t]&&index[t][key])out.push({trade:t,url:index[t][key]})}
+out.sort(function(a,c){return (LABELS80[a.trade]||a.trade)<(LABELS80[c.trade]||c.trade)?-1:1});
+return out}
+function cityName80(){
+var h1=document.querySelector("h1");
+var t=h1?String(h1.textContent||""):"";
+var m=t.match(/ in ([^,]+),\s*[A-Z]{2}\s*$/);
+return m?m[1].trim():""}
+function boot80(){
+var list=document.getElementById("results-list");
+if(!list)return;
+var seg=String(window.location.pathname||"").split("/").filter(function(s){return s});
+if(seg.length!==3)return;
+var trade=seg[0],key=seg[1]+"/"+seg[2];
+var cards=Array.prototype.slice.call(list.querySelectorAll(".result-card"));
+if(cards.length>1){
+var items=cards.map(function(c,i){return itemOf80(c,i)});
+var sorted=sortFree80(items);
+var changed=false;
+for(var i=0;i<sorted.length;i++)if(sorted[i].card!==cards[i]){changed=true;break}
+if(changed){
+for(var j=0;j<sorted.length;j++)list.appendChild(sorted[j].card);
+var all=list.querySelectorAll(".result-card");
+for(var n=0;n<all.length;n++){
+var rn=all[n].querySelector(".rnum");
+if(rn)rn.textContent=(n+1)+"."}}}
+if(typeof fetch!=="function")return;
+fetch("/category-index.json").then(function(r){return r.json()}).then(function(index){
+var rel=related80(index,trade,key);
+if(!rel.length)return;
+if(document.querySelector(".related80"))return;
+var city=cityName80();
+var sec=document.createElement("section");
+sec.className="related80";
+var h=document.createElement("h2");
+h.textContent="Related trades in "+(city||"this city");
+sec.appendChild(h);
+var div=document.createElement("div");
+div.className="related80links";
+rel.slice(0,12).forEach(function(r){
+var a=document.createElement("a");
+a.href=r.url;
+a.textContent=(LABELS80[r.trade]||r.trade)+(city?" in "+city:"");
+div.appendChild(a)});
+sec.appendChild(div);
+var layout=list.closest?list.closest(".cat-layout"):null;
+if(layout&&layout.parentNode)layout.parentNode.insertBefore(sec,layout.nextSibling);
+else if(list.parentNode)list.parentNode.appendChild(sec);
+}).catch(function(){})}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot80);else boot80();
+window.ytpGuard80={compOf:compOf80,signals:cardSignals80,isDnc:isDnc80,itemOf:itemOf80,cmpFree:cmpFree80,sortFree:sortFree80,related:related80,labels:LABELS80,version:"v5.44-item80"};
+})();
+/* item80:end */

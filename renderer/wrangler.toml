@@ -17,12 +17,13 @@ database_id = "845f5cc7-19ad-4d75-b720-a1289ff48fd1"
 [limits]
 cpu_ms = 50
 
-# Workers Logs on, sampled at 10 percent of invocations. No Logpush.
+# Workers Logs OFF (owner ruling Nov 20 2026: no metered Observability billing).
+# Matches the dashboard state set Nov 20 2026; keep off so deploys cannot re-enable it.
 [observability]
-enabled = true
+enabled = false
 
 [observability.logs]
-enabled = true
+enabled = false
 head_sampling_rate = 0.1
 
 # matchfix deploy retrigger 2026-11-16 (no config change)

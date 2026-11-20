@@ -472,6 +472,21 @@ function ctaMode(slug) {
 function ctaLabel(mode) {
   return mode === "quote" ? "Get Free Quote" : mode === "appt" ? "Check Availability" : "Request this pro";
 }
+function simReqHtml(path, mode) {
+  // Item 76: similar pros share the listing's trade, so their card
+  // request link takes that trade's archetype label; walk-in shops
+  // carry no request link on cards at all.
+  if (mode === "walkin") return "";
+  const lbl = mode === "quote" ? "Get Free Quote" : mode === "appt" ? "Check Availability" : "Request this pro";
+  return `<div class="meta cardreq"><a href="/${path}/?src=card#match">${lbl}</a></div>`;
+}
+function callLabel(l, mode) {
+  // Item 76: emergency trades lead with Call Now, appointment
+  // trades with Call to Book; the number stays visible in both.
+  if (l.trade_slug === "towing" || l.trade_slug === "locksmiths") return "Call Now ";
+  if (mode === "appt") return "Call to Book ";
+  return "Call ";
+}
 function needOptsHtml(slug) {
   if (ctaMode(slug) !== "quote") return "";
   const opts = NEED_SETS[slug] || NEED_DEFAULT;
@@ -495,7 +510,7 @@ function matchopen(l, t, similars, held) {
     const intro = `<p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we match you with an available ${esc(l.city)} ${esc(t.phrase)} pro.</p>\n`;
     const formOpen = `<form action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="" data-match-source="listing">\n` +
       `<input type="hidden" name="_subject" value="Match request: ${escAttr(t.label)}, ${escAttr(l.city)}"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="leads@muse.ai"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>`;
-    const strip = (similars || []).slice(0, 1).map((x) => `<div class="card"><h3><a href="/${x.path}/">${esc(x.name)}</a></h3><div class="meta cardreq"><a href="/${x.path}/?src=card#match">Request this pro</a></div></div>`).join("");
+    const strip = (similars || []).slice(0, 1).map((x) => `<div class="card"><h3><a href="/${x.path}/">${esc(x.name)}</a></h3>${simReqHtml(x.path, mode)}</div>`).join("");
     const stripHtml = strip ? `<div class="similar"><h2>${esc(t.label)} pros in ${esc(l.city)}</h2><div class="grid">${strip}</div></div>` : "";
     return stripHtml + `<div class="match" id="match"><details class="ytp-collapse"><summary class="ytp-collapse-btn">${label}</summary><h2>${label}</h2>` + intro + formOpen;
   }
@@ -516,7 +531,7 @@ function matchopen(l, t, similars, held) {
 
 function contact(l, held) {
   let s = `<div class="bizcard57"><h2>Contact</h2>`;
-  if (l.phone && !held) s += `<p><a class="tel" href="tel:${l.phone_digits}">Call ${esc(l.phone)}</a></p>`;
+  if (l.phone && !held) s += `<p><a class="tel" href="tel:${l.phone_digits}">${callLabel(l, ctaMode(l.trade_slug))}${esc(l.phone)}</a></p>`;
   if (l.show_website_link && l.website)
     s += `<a class="act57" href="${escAttr(l.website)}" target="_blank" rel="ugc nofollow noopener noreferrer">Visit their website</a>`;
   if (l.address)
@@ -591,7 +606,7 @@ function breadcrumbSimilar(l, t, st, similars, partner, hubExists) {
     if (x.address) c += `<div class="meta">${esc(x.address)}</div>`;
     else c += `<div class="meta">${esc(x.city)}, ${x.state}</div>`;
     if (x.phone) c += `<div class="meta">${esc(x.phone)}</div>`;
-    c += `<div class="meta cardreq"><a href="/${x.path}/?src=card#match">Request this pro</a></div></div>`;
+    c += simReqHtml(x.path, ctaMode(l.trade_slug)) + "</div>";
     return c;
   }).join("");
   // Rail footer second link (generator T4.6 #7): the city hub when the

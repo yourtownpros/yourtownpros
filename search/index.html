@@ -646,11 +646,18 @@ function srchSummary(res, label, town, st) {
           p.dist.toFixed(1) + " mi"
         : "Serves " + esc(r.city) + " area") + "</div>" +
       '<div class="rlinks ract57 srch-act">' +
-      (r.phone ? '<a class="telbtn57" href="tel:' +
-        r.phone.replace(/[^0-9]/g, "") + '">' + esc(fmtPhone62(r.phone)) +
-        "</a> " : "") +
+      (function () { if (!r.phone) return "";
+        var sg = String(r.url || "").split("/")[1] || "";
+        var pl = (sg === "towing" || sg === "locksmiths") ? "Call Now " : "";
+        return '<a class="telbtn57" href="tel:' +
+        r.phone.replace(/[^0-9]/g, "") + '">' + pl + esc(fmtPhone62(r.phone)) +
+        "</a> "; })() +
       (function () { var m = mode49(String(r.url || "").split("/")[1] || "");
-        if (m === "walkin") return "";
+        if (m === "walkin") { var la = (r.effLat != null) ? r.effLat : r.lat;
+          var ln = (r.effLng != null) ? r.effLng : r.lng;
+          if (p.pinned && typeof la === "number" && typeof ln === "number")
+            return '<a class="rtel dir76" data-dir76 target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=' + la + "," + ln + '">Get Directions</a>';
+          return ""; }
         var lbl = m === "quote" ? "Get Free Quote" : m === "appt" ? "Check Availability" : "Request this pro";
         return '<a class="rtel" href="' + r.url +
         '?src=card#match">' + lbl + "</a>"; })() +

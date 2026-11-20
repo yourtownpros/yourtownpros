@@ -511,6 +511,38 @@ var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeou
 });
 })();
 
+/* v5.40 item 76: Trade archetype CTAs (item 49 completion). On listing profiles this module registers before the item 75 sticky bar and the item 72 shortlist read the Contact card, and it finishes the archetype mapping those surfaces inherit: (1) the Contact card phone link for towing and locksmiths reads "Call Now (number)" and for appointment trades "Call to Book (number)", with the number kept visible; other trades keep "Call (number)"; a link already carrying the archetype label is left alone. (2) Similar pros cards on the profile take the profile trade's own card label: "Get Free Quote" for trades and auto, "Check Availability" for appointment services, no request link at all for walk-in shops (a bakery never shows a request CTA on its cards), and "Request this pro" unchanged for categories not yet mapped. The D1 renderer emits the same labels natively; this module is the static tree's parity path and is idempotent. Held profiles keep their hold treatment: the held Contact card carries no phone link, so no call label is applied there. */
+(function(){
+function ready76(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+var QUOTE76="plumbers hvac electricians auto-repair auto-glass roofing handyman lawn-and-landscaping painting towing locksmiths tree-service pest-control movers flooring concrete-contractors kitchen-remodelers bathroom-remodelers general-contractors pool-builders";
+var APPT76="hair-salons barbers nails massage spas med-spas natural-skincare pet-grooming pet-boarding tattoo fitness dance-studios veterinary chiropractors dentists optometrists photographers";
+var WALK76="bakeries-and-cafes florists bookstores jewelry cleaners pawn-shops bars";
+function has76(list,x){return (" "+list+" ").indexOf(" "+x+" ")>=0}
+function mode76(slug){if(has76(QUOTE76,slug))return "quote";if(has76(APPT76,slug))return "appt";if(has76(WALK76,slug))return "walkin";return "default"}
+function apply76(){
+var card=document.querySelector(".bizcard57");
+if(!card)return;
+var slug=location.pathname.split("/")[1]||"";
+var mode=mode76(slug);
+var tel=card.querySelector("a.tel[href^='tel:']");
+if(tel){
+var txt=tel.textContent.trim();
+if(mode==="quote"&&(slug==="towing"||slug==="locksmiths")&&txt.indexOf("Call Now")!==0){tel.textContent="Call Now "+txt.replace(/^Call\s*/,"");tel.classList.add("callnow76")}
+else if(mode==="appt"&&txt.indexOf("Call to Book")!==0){tel.textContent="Call to Book "+txt.replace(/^Call\s*/,"");tel.classList.add("callbook76")}
+}
+var lbl=mode==="quote"?"Get Free Quote":mode==="appt"?"Check Availability":null;
+var sims=document.querySelectorAll(".similar .card .cardreq");
+for(var i=0;i<sims.length;i++){
+if(mode==="walkin"){if(sims[i].remove)sims[i].remove();else if(sims[i].parentNode)sims[i].parentNode.removeChild(sims[i]);continue}
+if(!lbl)continue;
+var a=sims[i].querySelector("a");
+if(a)a.textContent=lbl;
+}
+}
+window.ytpArchetype76={mode:mode76,apply:apply76,version:"v5.40-item76"};
+ready76(apply76);
+})();
+
 /* Item 75 (v5.23): sticky bottom action bar on mobile listing profiles. The bar is built from the listing's own Contact card links (Call plus the primary request CTA), so it always carries this listing's real phone and request target; CSS in ytp.css shows it at 767px and down only. It hides while the request form is on screen so it never duplicates the form. Listings with no Contact card actions (for example fully held listings) get no bar. */
 (function(){
 function ready(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
@@ -519,7 +551,8 @@ if(document.querySelector(".stickybar75"))return;
 var card=document.querySelector(".bizcard57");
 if(!card)return;
 var tel=card.querySelector("a.tel[href^='tel:']");
-var cta=card.querySelector("a.act57");
+var cta=card.querySelector('a.act57[href="#match"]')||card.querySelector("a.act57");
+if(cta&&cta.textContent.trim()==="Message the Business"){var dir75=card.querySelector('a.act57[href*="google.com/maps"]')||card.querySelector('a.act57[href^="http"]');if(dir75)cta=dir75}
 if(!tel&&!cta)return;
 var bar=document.createElement("nav");bar.className="stickybar75";bar.setAttribute("aria-label","Contact this pro");
 if(tel){var a=document.createElement("a");a.className="sb-call75";a.href=tel.getAttribute("href");a.textContent=tel.textContent.trim()||"Call";bar.appendChild(a)}
@@ -563,7 +596,7 @@ if(!e.rating){var rm=card.querySelector(".rmeta57 strong");if(rm)e.rating=rm.tex
 if(!e.reviews){var rt=card.querySelector(".rmeta57");if(rt){var m=/\(([0-9,]+) reviews?\)/.exec(rt.textContent);if(m)e.reviews=m[1]}}
 var tel=card.querySelector(".rlinks a[href^='tel:'], .ract57 a[href^='tel:']");if(tel){e.phone=tel.textContent.trim();e.phoneHref=tel.getAttribute("href")||""}
 var cta=card.querySelector("a.rtel");if(cta){e.ctaLabel=cta.textContent.trim();e.ctaHref=cta.getAttribute("href")||""}
-if(!e.ctaHref){e.ctaLabel="Request this pro";e.ctaHref=url+(url.indexOf("?")>=0?"&":"?")+"src=card#match"}
+if(!e.ctaHref){var dir76=card.querySelector("a[data-dir76]");if(dir76){e.ctaLabel=dir76.textContent.trim();e.ctaHref=dir76.getAttribute("href")||""}else{e.ctaLabel="View profile";e.ctaHref=url}}
 var ol=card.querySelector(".openline57");if(ol&&!ol.hidden&&ol.textContent.trim())e.open=ol.textContent.trim();
 return e}
 function profileEntry72(){
@@ -573,8 +606,8 @@ if(!slug)slug=location.pathname.replace(/^\/+|\/+$/g,"");
 var h1=document.querySelector("h1");if(!h1||!slug)return null;
 var e={slug:slug,name:h1.textContent.trim(),url:location.pathname,rating:"",reviews:"",rsrc:"",phone:"",phoneHref:"",ctaLabel:"",ctaHref:"",open:"",hours:""};
 var st=document.querySelector("p.stars");if(st){var m=/([0-9]+(?:\.[0-9]+)?)/.exec(st.textContent);if(m)e.rating=m[1];var m2=/([0-9,]+) reviews?/.exec(st.textContent);if(m2)e.reviews=m2[1];var g=st.querySelector(".gsrc");if(g)e.rsrc=g.textContent.trim()}
-var tel=document.querySelector(".bizcard57 a.tel[href^='tel:']")||document.querySelector("a.tel[href^='tel:']");if(tel){e.phone=tel.textContent.trim().replace(/^Call\s+/,"");e.phoneHref=tel.getAttribute("href")||""}
-var act=document.querySelector(".bizcard57 a.act57");if(act){e.ctaLabel=act.textContent.trim();e.ctaHref=location.pathname+"#match"}
+var tel=document.querySelector(".bizcard57 a.tel[href^='tel:']")||document.querySelector("a.tel[href^='tel:']");if(tel){e.phone=tel.textContent.trim().replace(/^(Call Now|Call to Book|Call)\s+/,"");e.phoneHref=tel.getAttribute("href")||""}
+var act=document.querySelector('.bizcard57 a.act57[href="#match"]')||document.querySelector(".bizcard57 a.act57");if(act){e.ctaLabel=act.textContent.trim();e.ctaHref=location.pathname+"#match"}
 if(!e.ctaHref){var mh=document.querySelector("#match h2");e.ctaLabel=mh?mh.textContent.trim():"Request this pro";e.ctaHref=location.pathname+"#match"}
 var on=document.getElementById("ytp-opennow");if(on&&!on.hidden&&on.textContent.trim())e.open=on.textContent.trim();
 var ul=document.querySelector(".lochrs57 ul.hourslist");if(ul){var lis=ul.querySelectorAll("li");var parts=[];for(var i=0;i<lis.length;i++)parts.push(lis[i].textContent.trim());e.hours=parts.join("; ")}

@@ -118,6 +118,7 @@ at zoom 15 so a lone result does not slam to street level,
 instead of opening on a fixed neighborhood view. */
 if(hasPins){var allPts=[];for(var pk in pins)allPts.push([pins[pk].lat,pins[pk].lng]);
 if(allPts.length){map.fitBounds(allPts,{padding:[24,24],maxZoom:15});map._ytpFit=true}}}
+if(map){var ab78=document.createElement("button");ab78.type="button";ab78.className="area78btn";ab78.id="ytp-area78";ab78.textContent="Search this area";ab78.hidden=true;if(mapEl.parentNode)mapEl.parentNode.appendChild(ab78);var chip78=document.createElement("button");chip78.type="button";chip78.className="fbtn areachip78";chip78.id="ytp-areachip78";chip78.textContent="Map area only \u00b7 Clear";chip78.hidden=true;var rc78=document.querySelector(".rcount");if(rc78&&rc78.parentNode)rc78.parentNode.insertBefore(chip78,rc78.nextSibling);function snap78(){lastB78=boundsKey78(map.getBounds())}setTimeout(function(){snap78();ready78=true},500);map.on("moveend",function(){if(!ready78)return;var k=boundsKey78(map.getBounds());ab78.hidden=!(k&&lastB78&&k!==lastB78)});ab78.addEventListener("click",function(){var b=map.getBounds();areaB78={s:b.getSouth(),w:b.getWest(),n:b.getNorth(),e:b.getEast()};ab78.hidden=true;chip78.hidden=false;applyFilters();snap78()});chip78.addEventListener("click",function(){areaB78=null;chip78.hidden=true;applyFilters();snap78()})}
 for(var ci=0;ci<cards.length;ci++){(function(card){card.addEventListener("click",function(e){if(e.target.closest("a"))return;var m=markers[card.getAttribute("data-slug")];if(m&&map){map.panTo(m.getLatLng());m.openPopup()}}) })(cards[ci])}
 function setActive(sel,btn){var bs=document.querySelectorAll(sel);for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i]===btn)}
 var fT=0;
@@ -175,7 +176,11 @@ levels; both groups render only where their data exists. */
 var fD57=0;
 function passDist57(c){if(!fD57)return true;var p=pins[c.getAttribute("data-slug")];if(!p||!cityD)return false;return dist56(p)*0.621371<=fD57}
 function passPrice57(c){var boxes=document.querySelectorAll(".pricechk57:checked");if(!boxes.length)return true;var have=c.getAttribute("data-price")||"";for(var i=0;i<boxes.length;i++){if(boxes[i].value===have)return true}return false}
-function applyFilters(){if(map)map.closePopup();for(var i=0;i<cards.length;i++){var c=cards[i];c.style.display=(passRating(c)&&passAttrs(c)&&passWeb(c)&&passOpen(c)&&passDist57(c)&&passPrice57(c)&&passReviews(c)&&passClaim(c))?"":"none"}sync()}
+/* v5.42 item 78: "Search this area" bounding-box filter. After the visitor pans or zooms the map, a Search this area button appears over the map; tapping it filters the already loaded cards and pins to the visible bounding box (pinned listings only, the same rule the distance filter uses: an unpinned listing has no location to judge). It never fires on its own; the map-area chip clears the box and restores the filtered list. */
+var areaB78=null,lastB78=null,ready78=false;
+function boundsKey78(b){return b?[b.getSouth().toFixed(5),b.getWest().toFixed(5),b.getNorth().toFixed(5),b.getEast().toFixed(5)].join(","):null}
+function passArea78(c){if(!areaB78)return true;var p=pins[c.getAttribute("data-slug")];if(!p)return false;return p.lat>=areaB78.s&&p.lat<=areaB78.n&&p.lng>=areaB78.w&&p.lng<=areaB78.e}
+function applyFilters(){if(map)map.closePopup();for(var i=0;i<cards.length;i++){var c=cards[i];c.style.display=(passRating(c)&&passAttrs(c)&&passWeb(c)&&passOpen(c)&&passDist57(c)&&passPrice57(c)&&passReviews(c)&&passClaim(c)&&passArea78(c))?"":"none"}sync()}
 /* v5.6-distance-sort: haversine distance in km from the
 page city center (the ytp-citymap point) to a pin. Only
 pinned listings have a distance; the comparator gives

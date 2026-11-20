@@ -32,7 +32,7 @@ html.ytp-modal-lock{overflow:hidden}
 <label for="m-when">When do you need it?</label><input id="m-when" type="text" name="when" placeholder="Example: this week, weekday mornings">
 <label for="m-zip">ZIP code</label><input id="m-zip" type="text" name="zip" inputmode="numeric" maxlength="10" autocomplete="postal-code">
 <div class="fine">Free for customers, and no obligation. We do not sell your number.</div>
-<button type="submit">Send request</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro.</div><p class="fine mmsg" role="status"></p></form></div></aside><div class="cat-main"><div class="filterbar" id="ytp-sbar" hidden><span class="rcount" id="ytp-scount"></span><span>Sort: <button type="button" class="fbtn sf-sort active" data-s="rec">Recommended</button> <button type="button" class="fbtn sf-sort" data-s="rating">Rating</button> <button type="button" class="fbtn sf-sort" data-s="reviews">Most reviewed</button> <button type="button" class="fbtn sf-sort" data-s="distance">Distance</button></span> <a class="mlink" href="#match">Request a pro</a></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Featured partners come first and are labeled Sponsored · Featured. After them, pros with reviews come before pros without reviews: among reviewed pros, a higher rating counts for more, and so do more reviews. Pros without reviews follow, nearest first. The Sort control in the filters can reorder the list by rating, review count, or distance instead. The labeled Featured spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p></div><aside class="cat-map" aria-label="Map" id="ytp-smap-wrap"><div class="mappanel"><div id="ytp-smap" class="ytp-map"></div><div id="ytp-smap-load" class="smap-load" hidden>Loading map</div></div></aside></div>
+<button type="submit">Send request</button><div class="fine">Your request goes to YourTownPros and we connect you with a local pro.</div><p class="fine mmsg" role="status"></p></form></div></aside><div class="cat-main"><div class="filterbar" id="ytp-sbar" hidden><span class="rcount" id="ytp-scount"></span> <button type="button" class="fbtn areachip78" id="ytp-areachip78" hidden>Map area only · Clear</button><span>Sort: <button type="button" class="fbtn sf-sort active" data-s="rec">Recommended</button> <button type="button" class="fbtn sf-sort" data-s="rating">Rating</button> <button type="button" class="fbtn sf-sort" data-s="reviews">Most reviewed</button> <button type="button" class="fbtn sf-sort" data-s="distance">Distance</button></span> <a class="mlink" href="#match">Request a pro</a></div><div id="results-list"></div><details class="listed"><summary>How results are ranked</summary><p>Featured partners come first and are labeled Sponsored · Featured. After them, pros with reviews come before pros without reviews: among reviewed pros, a higher rating counts for more, and so do more reviews. Pros without reviews follow, nearest first. The Sort control in the filters can reorder the list by rating, review count, or distance instead. The labeled Featured spot is the only paid placement; nothing else about the order is for sale.</p></details><p class="listed">Map pins show listings with a verified street address. A listing without a verified address is placed by its town center for distance only and marked "Serves [Town] area"; it gets no map pin. Every listing keeps its town and category pages.</p></div><aside class="cat-map" aria-label="Map" id="ytp-smap-wrap"><div class="mappanel"><div id="ytp-smap" class="ytp-map"></div><button type="button" id="ytp-area78" class="area78btn" hidden>Search this area</button><div id="ytp-smap-load" class="smap-load" hidden>Loading map</div></div></aside></div>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 
 window.YTPLoad = (function () {
@@ -504,10 +504,19 @@ function srchSummary(res, label, town, st) {
     if (P2.get("open") === "1") f.open = true;
     if (P2.get("web") === "1") f.web = true;
     return { f: f, s: so }; }
+  function parseBbox61(P2) {
+    var v = P2.get("bbox"); if (!v) return null;
+    var a = v.split(",").map(function (x) {
+      return parseFloat(x); });
+    if (a.length !== 4 || a.some(function (x) {
+      return !isFinite(x); })) return null;
+    if (a[0] >= a[2] || a[1] >= a[3]) return null;
+    return { s: a[0], w: a[1], n: a[2], e: a[3] }; }
   function applyFiltersFromURL61() {
     var got = filtersFromParams61(
       new URLSearchParams(location.search));
-    F = got.f; SORT = got.s; }
+    F = got.f; SORT = got.s;
+    AREA78 = parseBbox61(new URLSearchParams(location.search)); }
   var syncing61 = false;
   function syncURL61(push) {
     if (syncing61) return;
@@ -524,6 +533,9 @@ function srchSummary(res, label, town, st) {
       else p2.delete("claim");
       if (F.open) p2.set("open", "1"); else p2.delete("open");
       if (F.web) p2.set("web", "1"); else p2.delete("web");
+      if (AREA78) p2.set("bbox", [AREA78.s, AREA78.w, AREA78.n,
+        AREA78.e].map(function (x) { return x.toFixed(4); })
+        .join(",")); else p2.delete("bbox");
       var qs = p2.toString();
       var url = location.pathname + (qs ? "?" + qs : "") +
         location.hash;
@@ -542,6 +554,14 @@ function srchSummary(res, label, town, st) {
     applyFiltersFromURL61();
     syncFilterUI(); renderResults(); });
   var ALL = null, CURCROW = null, CURSLUG = "", CURLABEL = "";
+  /* v5.42 item 78: bounding-box ("Search this area") state.
+  AREA78 is the active box {s,w,n,e} or null; lastB78 is the
+  bounds key of the last rendered view, so the button offers
+  itself only after the visitor moves the map away from it. */
+  var AREA78 = null, lastB78 = null, snapT78 = 0, mvT78 = 0;
+  function boundsKey78(b) { return b ? [b.getSouth().toFixed(5),
+    b.getWest().toFixed(5), b.getNorth().toFixed(5),
+    b.getEast().toFixed(5)].join(",") : null; }
   var HOURS = {}, HOURS_READY = false;
   function isOpenNow(p) {
     var pl = HOURS[slugOf(p.row)];
@@ -556,6 +576,11 @@ function srchSummary(res, label, town, st) {
     if (F.web && !r.web) return false;
     if (F.open && !isOpenNow(p)) return false;
     if (F.dist && !(p.pinned && p.dist <= F.dist)) return false;
+    if (AREA78) { var la = (r.effLat != null) ? r.effLat : r.lat,
+      ln = (r.effLng != null) ? r.effLng : r.lng;
+      if (typeof la !== "number" || typeof ln !== "number" ||
+        la < AREA78.s || la > AREA78.n || ln < AREA78.w ||
+        ln > AREA78.e) return false; }
     return true; }
   function syncCounts() {
     if (!ALL) return;
@@ -703,7 +728,14 @@ function srchSummary(res, label, town, st) {
         attribution: "&copy; <a href=\"https://www." +
         "openstreetmap.org/copyright\">OpenStreetMap</a> " +
         "contributors" }).addTo(map);
-      layer = L.layerGroup().addTo(map); }
+      layer = L.layerGroup().addTo(map);
+      map.on("moveend", function () {
+        clearTimeout(mvT78);
+        mvT78 = setTimeout(function () {
+          var b = document.getElementById("ytp-area78");
+          if (!b || !map) return;
+          var k = boundsKey78(map.getBounds());
+          b.hidden = !(k && lastB78 && k !== lastB78); }, 150); }); }
     layer.clearLayers(); markers = {};
     var pts = [];
     shown.forEach(function (p, ix) {
@@ -747,6 +779,11 @@ function srchSummary(res, label, town, st) {
     if (pts.length) {
       map.fitBounds(pts, { padding: [24, 24], maxZoom: 15 });
     } else { map.setView([CURCROW.lat, CURCROW.lng], 11); }
+    clearTimeout(snapT78);
+    snapT78 = setTimeout(function () {
+      if (map) lastB78 = boundsKey78(map.getBounds());
+      var b78 = document.getElementById("ytp-area78");
+      if (b78) b78.hidden = true; }, 60);
     showSkel(false); }
   function renderResults() {
     if (!ALL) return;
@@ -754,6 +791,8 @@ function srchSummary(res, label, town, st) {
     var shown = sortResults(ALL.results.filter(passF), SORT);
     if (countEl) countEl.textContent = "Showing " +
       shown.length + " of " + ALL.results.length + " pros";
+    var chip78 = document.getElementById("ytp-areachip78");
+    if (chip78) chip78.hidden = !AREA78;
     if (!shown.length) {
       var expandBtn = "";
       if (F.dist) expandBtn = ' <button type="button" ' +
@@ -822,6 +861,22 @@ function srchSummary(res, label, town, st) {
   if (ftog) ftog.addEventListener("click", function () {
     var open = layoutEl.classList.toggle("fopen");
     ftog.setAttribute("aria-expanded", open ? "true" : "false"); });
+  /* v5.42 item 78: the Search this area button applies the
+  visible bounding box as a filter over the listings already
+  loaded for this view; it never fires on pan by itself. The
+  chip clears the box. Both stay coherent with the item 61
+  URL params through syncURL61 (bbox round-trips). */
+  var areaBtn78 = document.getElementById("ytp-area78");
+  if (areaBtn78) areaBtn78.addEventListener("click", function () {
+    if (!map) return;
+    var b = map.getBounds();
+    AREA78 = { s: b.getSouth(), w: b.getWest(), n: b.getNorth(),
+      e: b.getEast() };
+    areaBtn78.hidden = true;
+    syncURL61(true); renderResults(); });
+  var areaChip78 = document.getElementById("ytp-areachip78");
+  if (areaChip78) areaChip78.addEventListener("click", function () {
+    AREA78 = null; syncURL61(true); renderResults(); });
   function emptyRadiusHTML(label, slug, crow) {
     return '<div class="sempty"><p>No ' +
       esc(label.toLowerCase()) + ' are listed within 25 ' +
@@ -1009,6 +1064,8 @@ function srchSummary(res, label, town, st) {
         layoutEl.style.gridTemplateColumns = "";
         syncCounts(); syncFilterUI();
         renderResults();
+        if (window.ytpMap78) window.ytpMap78.mount({ trade: slug,
+          cur: crow, before: layoutEl });
         window.YTPLoad.json("/search-hours/" +
           String(st).toLowerCase() + ".json")
           .then(function (hd) {

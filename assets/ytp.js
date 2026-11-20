@@ -816,3 +816,53 @@ if(pr&&typeof pr.catch==="function")pr.catch(function(){});
 if(typeof ytpOnReady==="function"){ytpOnReady(boot74)}
 window.ytpReviewLink74={show:show74,url:buildUrl74,copy:copy74,boot:boot74,version:"v5.39-item74"};
 })();
+
+/* v5.42 item 78: Map discovery part 2, city switcher. The switcher lists the current town plus up to 5 nearby towns for the SAME trade, so switching town keeps the active trade. Nearby uses the item 54 rule: towns within 25 miles by haversine over cities-index.json coordinates, nearest first, never a town 100+ miles away. A town is offered only when category-index.json carries that town's page for the active trade, so a switch never lands on a 404. The module auto-mounts on city-trade pages (pathname trade/state/city plus the ytp-citymap payload) and the /search/ inline script mounts it through window.ytpMap78.mount once a town is active. The "Search this area" bounding-box control lives in the /search/ and city-trade inline scripts, which own their Leaflet map and result state; this module owns the switcher and the shared nearby math. Existing client data only, no backend change. */
+(function(){
+function hav78(aLa,aLo,bLa,bLo){var R=3959,p=Math.PI/180,dLa=(bLa-aLa)*p,dLo=(bLo-aLo)*p,h=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(aLa*p)*Math.cos(bLa*p)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(h))}
+function nearby78(cities,cur,cat,trade){
+if(!cities||!cur||!cat||!cat[trade])return[];
+if(typeof cur.lat!=="number"||typeof cur.lng!=="number")return[];
+var tm=cat[trade],out=[];
+for(var i=0;i<cities.length;i++){var c=cities[i];
+if(!c||typeof c.lat!=="number"||typeof c.lng!=="number")continue;
+if(c.city===cur.city&&c.state===cur.state)continue;
+var url=tm[c.sslug+"/"+c.cslug];if(!url)continue;
+var d=hav78(cur.lat,cur.lng,c.lat,c.lng);
+if(d>25)continue;
+out.push({city:c.city,state:c.state,url:url,dist:d})}
+out.sort(function(a,b){return a.dist-b.dist||String(a.city).localeCompare(String(b.city))});
+return out.slice(0,5)}
+function esc78(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function mount78(o){
+if(!o||!o.trade||!o.cur||!o.before||!o.before.parentNode)return;
+if(document.getElementById("ytp-cityswitch78"))return;
+if(!window.YTPLoad||!window.YTPLoad.cb)return;
+window.YTPLoad.cb("/cities-index.json",function(cities){
+if(!cities)return;
+window.YTPLoad.cb("/category-index.json",function(cat){
+if(!cat)return;
+var near=nearby78(cities,o.cur,cat,o.trade);
+if(!near.length)return;
+if(document.getElementById("ytp-cityswitch78"))return;
+var div=document.createElement("nav");
+div.className="cityswitch78";div.id="ytp-cityswitch78";
+div.setAttribute("aria-label","Nearby towns");
+var h='<span class="cs-lab78">Town:</span><span class="cs78 cur" aria-current="true">'+esc78(o.cur.city)+", "+esc78(o.cur.state)+"</span>";
+for(var i=0;i<near.length;i++){h+='<a class="cs78" href="'+esc78(near[i].url)+'">'+esc78(near[i].city)+", "+esc78(near[i].state)+"</a>"}
+div.innerHTML=h;
+o.before.parentNode.insertBefore(div,o.before);
+});});}
+function auto78(){
+var cm=document.getElementById("ytp-citymap");
+if(!cm||!document.getElementById("ytp-map"))return;
+var seg=location.pathname.split("/").filter(function(x){return x});
+if(seg.length!==3)return;
+var cd=null;try{cd=JSON.parse(cm.textContent)}catch(e){}
+if(!cd||typeof cd.lat!=="number")return;
+var lay=document.querySelector(".cat-layout");
+if(!lay)return;
+mount78({trade:seg[0],cur:{city:cd.city,state:cd.state,lat:cd.lat,lng:cd.lng},before:lay})}
+window.ytpMap78={nearby:nearby78,mount:mount78,hav:hav78,version:"v5.42-item78"};
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",auto78);else auto78();
+})();

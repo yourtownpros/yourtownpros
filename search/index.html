@@ -433,6 +433,62 @@ function srchSummary(res, label, town, st) {
   var F = { rate: 0, rev: false, claim: false, open: false,
     dist: 0 };
   var SORT = "rec";
+  var SORTS61 = { rec: 1, rating: 1, reviews: 1, distance: 1 };
+  function baseKey61(P2) {
+    return [(P2.get("v") || "").trim(), (P2.get("q") || "").trim(),
+      (P2.get("city") || "").trim(),
+      (P2.get("state") || "").trim()].join("|"); }
+  var BASE61 = baseKey61(P);
+  function filtersFromParams61(P2) {
+    var f = { rate: 0, rev: false, claim: false, open: false,
+      dist: 0 };
+    var so = "rec";
+    var sv = P2.get("sort");
+    if (sv && SORTS61[sv]) so = sv;
+    var rv = parseFloat(P2.get("rate"));
+    if (rv === 4 || rv === 4.5) f.rate = rv;
+    var dv = parseFloat(P2.get("dist"));
+    if (dv === 2 || dv === 5 || dv === 10) f.dist = dv;
+    if (P2.get("rev") === "1") f.rev = true;
+    if (P2.get("claim") === "1") f.claim = true;
+    if (P2.get("open") === "1") f.open = true;
+    return { f: f, s: so }; }
+  function applyFiltersFromURL61() {
+    var got = filtersFromParams61(
+      new URLSearchParams(location.search));
+    F = got.f; SORT = got.s; }
+  var syncing61 = false;
+  function syncURL61(push) {
+    if (syncing61) return;
+    try {
+      var p2 = new URLSearchParams(location.search);
+      if (SORT && SORT !== "rec") p2.set("sort", SORT);
+      else p2.delete("sort");
+      if (F.rate) p2.set("rate", String(F.rate));
+      else p2.delete("rate");
+      if (F.dist) p2.set("dist", String(F.dist));
+      else p2.delete("dist");
+      if (F.rev) p2.set("rev", "1"); else p2.delete("rev");
+      if (F.claim) p2.set("claim", "1");
+      else p2.delete("claim");
+      if (F.open) p2.set("open", "1"); else p2.delete("open");
+      var qs = p2.toString();
+      var url = location.pathname + (qs ? "?" + qs : "") +
+        location.hash;
+      var cur = location.pathname + location.search +
+        location.hash;
+      if (url === cur) return;
+      syncing61 = true;
+      if (push) history.pushState({ ytp61: 1 }, "", url);
+      else history.replaceState(history.state, "", url);
+      syncing61 = false;
+    } catch (x) { syncing61 = false; } }
+  window.addEventListener("popstate", function () {
+    var P2 = new URLSearchParams(location.search);
+    if (baseKey61(P2) !== BASE61) { location.reload(); return; }
+    if (!ALL) return;
+    applyFiltersFromURL61();
+    syncFilterUI(); renderResults(); });
   var ALL = null, CURCROW = null, CURSLUG = "", CURLABEL = "";
   var HOURS = {}, HOURS_READY = false;
   function isOpenNow(p) {
@@ -630,12 +686,12 @@ function srchSummary(res, label, town, st) {
       var eb = document.getElementById("sf-expand");
       if (eb) eb.addEventListener("click", function () {
         F.dist = 0;
-        syncFilterUI(); renderResults(); });
+        syncFilterUI(); syncURL61(true); renderResults(); });
       var cb = document.getElementById("sf-clear");
       if (cb) cb.addEventListener("click", function () {
         F = { rate: 0, rev: false, claim: false, open: false,
           dist: 0 };
-        syncFilterUI(); renderResults(); });
+        syncFilterUI(); syncURL61(true); renderResults(); });
       renderMap([]); return; }
     listEl.innerHTML = shown.map(function (p, i) {
       return cardHTML(p, i + 1); }).join("");
@@ -663,7 +719,7 @@ function srchSummary(res, label, town, st) {
     var bs = document.querySelectorAll(sel), i;
     for (i = 0; i < bs.length; i++) (function (b) {
       b.addEventListener("click", function () {
-        fn(b); renderResults(); }); })(bs[i]); }
+        fn(b); syncURL61(true); renderResults(); }); })(bs[i]); }
   bindBtns(".sf-sort", function (b) {
     SORT = b.getAttribute("data-s") || "rec"; syncFilterUI(); });
   bindBtns(".sf-rate", function (b) {
@@ -673,11 +729,12 @@ function srchSummary(res, label, town, st) {
     F.dist = parseFloat(b.getAttribute("data-d")) || 0;
     syncFilterUI(); });
   if (revEl) revEl.addEventListener("change", function () {
-    F.rev = revEl.checked; renderResults(); });
+    F.rev = revEl.checked; syncURL61(true); renderResults(); });
   if (claimEl) claimEl.addEventListener("change", function () {
-    F.claim = claimEl.checked; renderResults(); });
+    F.claim = claimEl.checked; syncURL61(true);
+    renderResults(); });
   if (openEl) openEl.addEventListener("change", function () {
-    F.open = openEl.checked; renderResults(); });
+    F.open = openEl.checked; syncURL61(true); renderResults(); });
   var ftog = document.getElementById("ytp-ftoggle");
   if (ftog) ftog.addEventListener("click", function () {
     var open = layoutEl.classList.toggle("fopen");
@@ -820,9 +877,7 @@ function srchSummary(res, label, town, st) {
       if (sum.notice) { noteEl.textContent = sum.notice;
         noteEl.hidden = false; }
       ALL = res;
-      F = { rate: 0, rev: false, claim: false, open: false,
-        dist: 0 };
-      SORT = "rec";
+      applyFiltersFromURL61();
       if (res.results.length) {
         if (frailEl) frailEl.hidden = false;
         if (barEl) barEl.hidden = false;

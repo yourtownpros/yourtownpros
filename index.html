@@ -38,7 +38,7 @@ comes from typeahead.json names, mapped to the row
 shape this script has always used. */
 function YL(){if(window.YTPLoad)return window.YTPLoad;if(!window._ytfb){var c={},p={};window._ytfb={json:function(u){if(c[u])return Promise.resolve(c[u]);if(p[u])return p[u];p[u]=fetch(u).then(function(r){return r.json()}).then(function(d){c[u]=d;delete p[u];return d}).catch(function(e){delete p[u];throw e});return p[u]},cb:function(u,f){this.json(u).then(function(d){f(d)},function(){f(null)})}}}return window._ytfb}
 var TAC=null,TAS=null;
-function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){TAC=(d&&d.cats)||[];TAS=(d&&d.shared)||{};var ns=(d&&d.names)||[];D=ns.map(function(e){return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,la:e.la,lo:e.lo,attrs:[],services:[]}});cb()})}
+function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){TAC=(d&&d.cats)||[];TAS=(d&&d.shared)||{};var ns=(d&&d.names)||[];D=ns.map(function(e){if(Array.isArray(e))return{name:e[0],vertical:e[2],vslug:String(e[1]).split("/")[1],url:e[1],city:e[3],state:e[4],v:e[5]||0,la:e[6],lo:e[7],cl:(e[8]&1)?1:0,f:(e[8]&2)?1:0,attrs:[],services:[]};return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,v:e.v||0,la:e.la,lo:e.lo,cl:e.cl||0,f:e.f||0,attrs:[],services:[]}});cb()})}
 function loadCT(cb){if(CT){cb();return}YL().cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}YL().cb("/category-index.json",function(d){CAT=d||{};cb()})}
 function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
@@ -61,7 +61,9 @@ var cats=catMatches57(q).map(function(c){return{k:"c"+c.slug,label:c.label,vslug
 if(!cats.length&&!(TAC&&TAC.length))cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
 var biz=D.filter(function(e){return bm56(e,q)});
 var hc=resolveCity();
-if(hc&&typeof hc.lat==="number"){biz=biz.map(function(e){return{w:e,d:(typeof e.la==="number")?havKm(e.la,e.lo,hc.lat,hc.lng):1e18}}).sort(function(a,b){return a.d-b.d}).map(function(x){return x.w})}
+/* v5.31 item 64: exact name matches first, then local distance, then Featured and Claimed, then review count. */
+function ex64(e){var n=e.name.toLowerCase();if(n===q)return 0;if(n.indexOf(q)===0)return 1;var ws=n.split(/[^a-z0-9]+/);for(var i=0;i<ws.length;i++)if(ws[i]&&ws[i].indexOf(q)===0)return 2;return 3}
+biz=biz.map(function(e){return{w:e,d:(hc&&typeof hc.lat==="number"&&typeof e.la==="number")?havKm(e.la,e.lo,hc.lat,hc.lng):1e18}}).sort(function(a,b){return ex64(a.w)-ex64(b.w)||a.d-b.d||(((b.w.f?2:0)+(b.w.cl?1:0))-((a.w.f?2:0)+(a.w.cl?1:0)))||(b.w.v||0)-(a.w.v||0)}).map(function(x){return x.w})
 biz=biz.slice(0,6).map(function(e){return{k:"b"+e.url,label:e.name,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>",go:e.url}});
 show(s1,cats.concat(biz).slice(0,8),pickTerm,N1)}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");

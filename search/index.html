@@ -36,7 +36,7 @@ html.ytp-modal-lock{overflow:hidden}
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
 
 window.YTPLoad = (function () {
-  var BUILD = "v512-20261114-ship1";
+  var BUILD = "v531-20261119-item64";
   var cache = {}, pending = {};
   var SESS = { "/typeahead.json": "ytp-ta-",
     "/cities-index.json": "ytp-ci-",
@@ -943,6 +943,7 @@ function srchSummary(res, label, town, st) {
     if (crow && (typeof crow.lat !== "number" ||
         !crow.sh || !crow.sh.length)) crow = null;
     window.YTPLoad.cb("/typeahead.json", function (TA) {
+      if (TA && TA.names && TA.names.length && Array.isArray(TA.names[0])) TA.names = TA.names.map(function (a) { return { n: a[0], u: a[1], t: a[2], c: a[3], s: a[4], v: a[5], la: a[6], lo: a[7], cl: (a[8] & 1) ? 1 : 0, f: (a[8] & 2) ? 1 : 0 }; });
       var label = null, slug = v || null, i;
       if (slug && TA && TA.cats) {
         for (i = 0; i < TA.cats.length; i++) {

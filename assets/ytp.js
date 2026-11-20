@@ -129,7 +129,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(nul
 
 /* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader: a URL is fetched at most once per page; some indexes persist in sessionStorage under versioned keys. */
 window.YTPLoad = (function () {
-  var BUILD = "v512-20261114-ship1";
+  var BUILD = "v531-20261119-item64";
   var cache = {}, pending = {};
   var SESS = { "/typeahead.json": "ytp-ta-",
     "/cities-index.json": "ytp-ci-",
@@ -196,9 +196,9 @@ window.YTPLoad = (function () {
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
-var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null;
+var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null,hiW57=-1,s2Items=null,s2Fn=null;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
-function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};cb()})}
+function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};if(TA.names&&TA.names.length&&Array.isArray(TA.names[0]))TA.names=TA.names.map(function(a){return{n:a[0],u:a[1],t:a[2],vs:String(a[1]).split("/")[1],c:a[3],s:a[4],v:a[5],la:a[6],lo:a[7],cl:(a[8]&1)?1:0,f:(a[8]&2)?1:0}});cb()})}
 function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json",function(d){CAT=d||{};cb()})}
 function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(cb)})})}
@@ -290,6 +290,7 @@ if(n.indexOf(qn)===0)return 0;
 var ws=n.split(/[^a-z0-9]+/);
 for(var i=0;i<ws.length;i++)if(ws[i]&&ws[i].indexOf(qn)===0)return 1;
 return 2}
+function pri64(e){return (e.f?2:0)+(e.cl?1:0)}
 function nameMatches(q){if(!TA)return[];
 var qn=normQ(q);if(qn.length<2)return[];
 var ms=TA.names.filter(function(e){return e.n.toLowerCase().indexOf(qn)>-1});
@@ -299,19 +300,19 @@ for(var i=0;i<ms.length;i++){var e=ms[i];
 if(typeof e.la==="number"){e._d=havMi(e.la,e.lo,loc.lat,loc.lng);
 if(e._d<=50)near.push(e);else if(e.s===loc.state)far.push(e)}
 else if(e.s===loc.state)far.push(e)}
-near.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||a._d-b._d||(b.v||0)-(a.v||0)});
-far.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||(b.v||0)-(a.v||0)});
+near.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||a._d-b._d||(b.v||0)-(a.v||0)});
+far.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)});
 var out=near.slice(0,5);
 if(near.length<2)out=near.concat(far).slice(0,5);
 return out}
-ms.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||(b.v||0)-(a.v||0)});
+ms.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)});
 return ms.slice(0,5)}
 function show(box,items,fn){if(!items.length){box.style.display="none";box.innerHTML="";return}
 box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join("");
 box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}
-if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}}
+if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}if(box===s2){s2Items=items;s2Fn=fn;hiW57=-1}}
 function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){s1.style.display="none";return}
 var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
 var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
@@ -358,6 +359,12 @@ f1.addEventListener("keydown",function(ev){if(s1.style.display!=="block"||!s1Ite
 if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hi57=ev.key==="ArrowDown"?(hi57+1)%s1Items.length:(hi57-1+s1Items.length)%s1Items.length;paint57()}
 else if(ev.key==="Enter"&&hi57>=0){ev.preventDefault();var it=s1Items[hi57];if(it&&s1Fn)s1Fn(it)}
 else if(ev.key==="Escape"){s1.style.display="none"}});
+/* v5.31 item 64: the header where box gets the same keyboard navigation as the what box (ArrowDown/ArrowUp/Enter/Escape). */
+function paintW57(){var ls=s2.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hiW57)}
+f2.addEventListener("keydown",function(ev){if(s2.style.display!=="block"||!s2Items||!s2Items.length)return;
+if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hiW57=ev.key==="ArrowDown"?(hiW57+1)%s2Items.length:(hiW57-1+s2Items.length)%s2Items.length;paintW57()}
+else if(ev.key==="Enter"&&hiW57>=0){ev.preventDefault();var it=s2Items[hiW57];if(it&&s2Fn)s2Fn(it)}
+else if(ev.key==="Escape"){s2.style.display="none"}});
 f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});

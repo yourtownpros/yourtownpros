@@ -1,2 +1,0 @@
--- Claim-only listings (owner ruling Nov 20 2026): dataset_version bump to 20261120T155117Z. Re-keys D1-rendered pages onto the renderer bundle whose Suggest an edit no longer offers a Remove my listing option. Ships after the Functions renderer copy is live on production (main a8620882021).
-INSERT INTO meta (key, value) VALUES ('dataset_version', '20261120T155117Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

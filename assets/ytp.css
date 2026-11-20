@@ -769,3 +769,10 @@ body.has-sbar75{padding-bottom:78px}
 .fld57 input{padding-right:38px}
 .hsearch .fld input{padding-right:38px}
 .revbanner62{background:#e8f3ee;border:1px solid #bcd8cb;border-radius:10px;padding:12px 16px;margin:14px 0;font-size:15px}
+
+/* v5.36 item 71: card stars are inline SVG stars with fractional fill, not boxes. */
+.rstars57{display:inline-flex;gap:2px;vertical-align:middle;margin-right:8px}
+.rstar57{position:relative;width:18px;height:18px;flex:none;display:inline-block}
+.rstar57 svg{width:18px;height:18px;display:block}
+.rstarfg57{position:absolute;left:0;top:0;bottom:0;overflow:hidden}
+.rstarfg57 svg{width:18px;height:18px;max-width:none}

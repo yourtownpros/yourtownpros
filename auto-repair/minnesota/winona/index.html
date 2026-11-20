@@ -18,7 +18,7 @@
 <div class="filterbar toolbar59"><span class="rcount">1 pro in Winona, MN</span><span>Sort: <button type="button" class="fbtn sortbtn active" data-sort="recommended">Recommended</button> <button type="button" class="fbtn sortbtn" data-sort="rating">Rating</button> <button type="button" class="fbtn sortbtn" data-sort="reviews">Most reviewed</button> <button type="button" class="fbtn sortbtn" data-sort="distance">Distance</button></span> <a class="mlink" href="#match">Request a pro</a></div>
 <p id="dist-note56" class="listed" hidden>Distance from Winona center, nearest first. Listings without a map pin sort last.</p>
 <h2>Auto repair services in Winona</h2><p>Winona mechanics handle brake repair, transmission service, auto AC repair, axle repair, engine diagnostics, oil changes and more.</p>
-<div id="results-list"><article class="result-card" data-rating="" data-reviews="0" data-slug="auto-repair/maximum-mechanics-winona" data-attrs="" data-web="1" data-price=""><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60" srcset="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&amp;fit=crop&amp;w=252&amp;h=168&amp;q=60 1x, https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&amp;fit=crop&amp;w=504&amp;h=336&amp;q=55 2x" width="252" height="168" loading="lazy" decoding="async" alt="Stock photo: auto repair in Winona, MN"><div class="pbody"><h2><span class="rnum">1.</span> <a href="/auto-repair/maximum-mechanics-winona/">Maximum Mechanics</a></h2><div class="rtags57"><a class="rtag57" href="/auto-repair/minnesota/">Auto Repair</a></div><div class="meta">166 Vine Street, Winona, MN</div><div class="rlinks ract57"><a href="/auto-repair/maximum-mechanics-winona/?src=card#match" class="rtel" aria-label="Get Free Quote: Maximum Mechanics">Get Free Quote</a><a href="tel:+15303602610">(530) 360-2610</a><a href="/auto-repair/maximum-mechanics-winona/">View Maximum Mechanics</a></div></div></article></div>
+<div id="results-list"><article class="result-card" data-rating="" data-reviews="0" data-slug="auto-repair/maximum-mechanics-winona" data-attrs="" data-web="1" data-price=""><div class="sicon57" aria-hidden="true">⚙</div><div class="pbody"><h2><span class="rnum">1.</span> <a href="/auto-repair/maximum-mechanics-winona/">Maximum Mechanics</a></h2><div class="rtags57"><a class="rtag57" href="/auto-repair/minnesota/">Auto Repair</a></div><div class="meta">166 Vine Street, Winona, MN<span class="dist57" data-dist57 hidden></span></div><div class="rlinks ract57"><a class="telbtn57" href="tel:+15303602610">(530) 360-2610</a><a href="/auto-repair/maximum-mechanics-winona/?src=card#match" class="rtel" aria-label="Get Free Quote: Maximum Mechanics">Get Free Quote</a><a href="/auto-repair/maximum-mechanics-winona/">View Maximum Mechanics</a></div></div></article></div>
 <p id="noresults" style="display:none">No businesses match those filters yet.</p>
 <div class="match" id="match"><details class="ytp-collapse"><summary class="ytp-collapse-btn">Get Free Quote</summary><h2>Get Free Quote</h2><p style="margin:0">Tell us what you need. Your request comes to YourTownPros first: we match you with a local auto repair pro who can take the job.</p>
 <form action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST" id="ytp-match-form" data-match-slug="" data-match-source="category">
@@ -72,7 +72,7 @@ var ost=ytpOpenNow54(oe.h,oe.tz);
 if(!ost){os.hidden=true;continue}
 os.hidden=false;os.textContent=ost.open?("Open now"+((window.ytpCloses54&&ytpCloses54(oe.h,oe.tz))?" \u00b7 Closes "+ytpCloses54(oe.h,oe.tz):"")):"Closed now";
 os.style.color=ost.open?"":"#5a6672"}
-var vis=0;for(var j=0;j<cards.length;j++)if(cards[j].style.display!=="none")vis++;
+for(var di57=0;di57<cards.length;di57++){var dc57=cards[di57];var ds57=dc57.querySelector("[data-dist57]");if(!ds57)continue;var dp57=pins[dc57.getAttribute("data-slug")];if(!dp57||!cityD){ds57.hidden=true;continue}ds57.hidden=false;ds57.textContent=" · "+(dist56(dp57)*0.621371).toFixed(1)+" mi"}var vis=0;for(var j=0;j<cards.length;j++)if(cards[j].style.display!=="none")vis++;
 /* v5.17 search group: the filter header count always
 matches the cards actually shown. The server-rendered
 text is kept as the template; only the number and the
@@ -174,13 +174,13 @@ levels; both groups render only where their data exists. */
 var fD57=0;
 function passDist57(c){if(!fD57)return true;var p=pins[c.getAttribute("data-slug")];if(!p||!cityD)return false;return dist56(p)*0.621371<=fD57}
 function passPrice57(c){var boxes=document.querySelectorAll(".pricechk57:checked");if(!boxes.length)return true;var have=c.getAttribute("data-price")||"";for(var i=0;i<boxes.length;i++){if(boxes[i].value===have)return true}return false}
-function applyFilters(){for(var i=0;i<cards.length;i++){var c=cards[i];c.style.display=(passRating(c)&&passAttrs(c)&&passWeb(c)&&passOpen(c)&&passDist57(c)&&passPrice57(c)&&passReviews(c)&&passClaim(c))?"":"none"}sync()}
+function applyFilters(){if(map)map.closePopup();for(var i=0;i<cards.length;i++){var c=cards[i];c.style.display=(passRating(c)&&passAttrs(c)&&passWeb(c)&&passOpen(c)&&passDist57(c)&&passPrice57(c)&&passReviews(c)&&passClaim(c))?"":"none"}sync()}
 /* v5.6-distance-sort: haversine distance in km from the
 page city center (the ytp-citymap point) to a pin. Only
 pinned listings have a distance; the comparator gives
 unpinned listings Infinity so they sort after every
 pinned one, and ties fall back to most reviewed. */
-function dist56(p){var r=Math.PI/180;var la1=cityD.lat*r,la2=p.lat*r;var dla=(p.lat-cityD.lat)*r,dlo=(p.lng-cityD.lng)*r;var h=Math.sin(dla/2)*Math.sin(dla/2)+Math.cos(la1)*Math.cos(la2)*Math.sin(dlo/2)*Math.sin(dlo/2);return 2*Math.asin(Math.sqrt(h))}
+function dist56(p){var r=Math.PI/180;var la1=cityD.lat*r,la2=p.lat*r;var dla=(p.lat-cityD.lat)*r,dlo=(p.lng-cityD.lng)*r;var h=Math.sin(dla/2)*Math.sin(dla/2)+Math.cos(la1)*Math.cos(la2)*Math.sin(dlo/2)*Math.sin(dlo/2);return 2*Math.asin(Math.sqrt(h))*6371}
 function distCmp56(a,c){var pa=pins[a.getAttribute("data-slug")],pc=pins[c.getAttribute("data-slug")];var da=pa?dist56(pa):Infinity,dc=pc?dist56(pc):Infinity;if(da!==dc)return da-dc;return parseFloat(c.getAttribute("data-reviews")||"0")-parseFloat(a.getAttribute("data-reviews")||"0")}
 /* v5.7: Recommended is the default sort: rated listings
 first by rating, ties and the unrated tail by reviews.
@@ -191,7 +191,7 @@ if(ah!==ch)return ch-ah;
 if(ah&&ch&&ar!==cr)return cr-ar;
 return parseFloat(c.getAttribute("data-reviews")||"0")-parseFloat(a.getAttribute("data-reviews")||"0")}
 var sb=document.querySelectorAll(".sortbtn");
-for(var i=0;i<sb.length;i++){(function(b){b.addEventListener("click",function(){setActive(".sortbtn",b);var k=b.getAttribute("data-sort");
+for(var i=0;i<sb.length;i++){(function(b){b.addEventListener("click",function(){setActive(".sortbtn",b);if(map)map.closePopup();var k=b.getAttribute("data-sort");
 var dn=document.getElementById("dist-note56");if(dn)dn.hidden=(k!=="distance");
 var sorted=cards.slice().sort(function(a,c){if(k==="distance")return distCmp56(a,c);if(k==="recommended")return recCmp57(a,c);var av=parseFloat((k==="rating"?a.getAttribute("data-rating"):a.getAttribute("data-reviews"))||"0");var cv=parseFloat((k==="rating"?c.getAttribute("data-rating"):c.getAttribute("data-reviews"))||"0");return cv-av});
 for(var j=0;j<sorted.length;j++)list.appendChild(sorted[j]);cards=sorted;sync()})})(sb[i])}

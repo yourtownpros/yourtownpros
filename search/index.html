@@ -341,6 +341,54 @@ function srchSummary(res, label, town, st) {
       if (e.city.toLowerCase() === name.toLowerCase()) {
         crow = e; break; } } }
     return crow; }
+  /* v5.32 item 65: search language helpers, the same contract
+  as the header and hero resolvers. TA65 and ZIPD65 are filled
+  by the load flow below. zip-index.json is built only from
+  our own listing addresses (majority city per ZIP). */
+  var TA65 = null, ZIPD65 = {};
+  var STATES65 = {"alabama":["AL","alabama"],"alaska":["AK","alaska"],"arizona":["AZ","arizona"],"arkansas":["AR","arkansas"],"california":["CA","california"],"colorado":["CO","colorado"],"connecticut":["CT","connecticut"],"florida":["FL","florida"],"georgia":["GA","georgia"],"idaho":["ID","idaho"],"illinois":["IL","illinois"],"indiana":["IN","indiana"],"iowa":["IA","iowa"],"kansas":["KS","kansas"],"kentucky":["KY","kentucky"],"louisiana":["LA","louisiana"],"maryland":["MD","maryland"],"michigan":["MI","michigan"],"minnesota":["MN","minnesota"],"mississippi":["MS","mississippi"],"missouri":["MO","missouri"],"montana":["MT","montana"],"nebraska":["NE","nebraska"],"nevada":["NV","nevada"],"new mexico":["NM","new-mexico"],"new york":["NY","new-york"],"north carolina":["NC","north-carolina"],"north dakota":["ND","north-dakota"],"ohio":["OH","ohio"],"oklahoma":["OK","oklahoma"],"oregon":["OR","oregon"],"pennsylvania":["PA","pennsylvania"],"puerto rico":["PR","puerto-rico"],"rhode island":["RI","rhode-island"],"south dakota":["SD","south-dakota"],"tennessee":["TN","tennessee"],"texas":["TX","texas"],"utah":["UT","utah"],"virginia":["VA","virginia"],"washington":["WA","washington"],"wisconsin":["WI","wisconsin"],"wyoming":["WY","wyoming"]};
+  function stateOf65(tx) {
+    var low = String(tx || "").trim().toLowerCase()
+      .replace(/\s+/g, " ");
+    if (!low) return null;
+    var e = STATES65[low];
+    if (e) return { abbr: e[0], sslug: e[1],
+      name: low.replace(/\b\w/g, function (c) {
+        return c.toUpperCase(); }) };
+    for (var k in STATES65)
+      if (STATES65[k][0].toLowerCase() === low)
+        return { abbr: STATES65[k][0], sslug: STATES65[k][1],
+          name: k.replace(/\b\w/g, function (c) {
+            return c.toUpperCase(); }) };
+    return null; }
+  function zipTown65(CT, tx) {
+    var m = /^(\d{5})(?:-\d{4})?$/.exec(
+      String(tx || "").trim());
+    if (!m) return null;
+    var z = ZIPD65[m[1]];
+    if (!z) return null;
+    return findTown(CT, z[0], z[1]); }
+  function closestCat65(TA, q) {
+    if (!TA || !TA.cats) return null;
+    var qn = normQ(q); if (!qn) return null;
+    var toks = qn.split(" "), best = null, bd = 99,
+        tie = false, i, j, k, t;
+    for (i = 0; i < TA.cats.length; i++) {
+      var c = TA.cats[i],
+          cands = [c.label.toLowerCase()]
+            .concat(c.syn || []), d = 99;
+      for (j = 0; j < cands.length; j++) {
+        var ws = cands[j].split(" ");
+        for (k = 0; k < ws.length; k++)
+          for (t = 0; t < toks.length; t++) {
+            var dw = lev57(sing57(toks[t]), sing57(ws[k]));
+            if (dw < d) d = dw; }
+        for (t = 0; t < toks.length; t++) {
+          var df = lev57(sing57(toks[t]), sing57(cands[j]));
+          if (df < d) d = df; } }
+      if (d <= 2) { if (d < bd) { bd = d; best = c;
+        tie = false; } else if (d === bd) tie = true; } }
+    return (best && !tie) ? best : null; }
   function showSkel(on) {
     if (mapLoadEl) mapLoadEl.hidden = !on; }
   function hideMap() {
@@ -758,18 +806,35 @@ function srchSummary(res, label, town, st) {
       '">Browse ' + esc(crow.city) + ", " + crow.state +
       '</a> · <a href="/add-business/">Add a business' +
       "</a></p></div>"; }
-  function townNotFound(name) {
+  function townNotFound(name, keepLabel, keepSlug) {
+    /* v5.32 item 65: a location miss never wipes the typed
+    query. The what box is refilled with the category or query
+    the visitor came with, the heading keeps it, and the body
+    links carry it into a town picker instead of a dead end. */
     setSolo(true);
-    hEl.textContent = "Search";
+    try { var f1 = document.getElementById("ytp-q57");
+      if (f1 && (keepLabel || qRaw))
+        f1.value = keepLabel || qRaw; } catch (x) {}
+    hEl.textContent = keepLabel ?
+      keepLabel + " near " + name : "Search";
     subEl.textContent = "We could not find the town “" +
-      name + "”. Try the town search above.";
+      name + "”. " + (keepLabel ?
+        "Your search for " + keepLabel + " is kept in the " +
+        "search box above." :
+        "Your search is kept in the search box above.");
     hideMap();
+    var keepLinks = "";
+    if (keepSlug && keepLabel) keepLinks = '<p><a href=' +
+      '"/search/?v=' + keepSlug + '">Pick a town for ' +
+      esc(keepLabel) + '</a> · <a href="/' + keepSlug +
+      '/">See ' + esc(keepLabel) + " in other towns</a></p>";
     listEl.innerHTML = '<div class="sempty"><p>Towns join ' +
       'the directory as listings are added, so yours may ' +
       'not be covered yet. You can still <a href=' +
       '"/add-business/">add a business</a>, or browse ' +
-      'pros by category from the menu above.</p></div>'; }
-  function townPicker(label, slug, CI, CT) {
+      'pros by category from the menu above.</p>' +
+      keepLinks + "</div>"; }
+  function townPicker(label, slug, CI, CT, stF65) {
     setSolo(true);
     var towns = CI[slug] || {};
     var byKey = {}, i;
@@ -777,10 +842,13 @@ function srchSummary(res, label, town, st) {
       byKey[CT[i].sslug + "/" + CT[i].cslug] = CT[i];
     var items = Object.keys(towns).map(function (k) {
       return byKey[k] || null; }).filter(Boolean);
+    if (stF65) items = items.filter(function (e) {
+      return e.sslug === stF65.sslug; });
     items.sort(function (a, b) {
       return (b.count || 0) - (a.count || 0); });
-    if (!items.length) { emptyQueryState(label); return; }
-    hEl.textContent = label + ": pick your town";
+    if (!items.length) { emptyQueryState(label, TA65); return; }
+    hEl.textContent = label + ": pick your town" +
+      (stF65 ? " in " + stF65.name : "");
     document.title = label + " | YourTownPros";
     subEl.textContent = "Pick a town to see " +
       label.toLowerCase() + " near you, nearest first.";
@@ -795,10 +863,32 @@ function srchSummary(res, label, town, st) {
         .join("") + '</div><p class="listed">Or see the ' +
       '<a href="/' + slug + '/">' + esc(label) +
       " directory by state</a>.</p>"; }
-  function emptyQueryState(q) {
+  function emptyQueryState(q, TA) {
     setSolo(true);
     try { var f1 = document.getElementById("ytp-q57");
       if (f1) f1.value = q; } catch (x) {}
+    /* v5.32 item 65: no match falls back to the closest
+    category with a clear notice instead of a dead end. */
+    var cc65 = TA ? closestCat65(TA, q) : null;
+    if (cc65) {
+      hEl.textContent = "No exact match for “" + q + "”";
+      document.title = "Search | YourTownPros";
+      subEl.textContent = "Closest category: " + cc65.label +
+        ". Pick a town to see " + cc65.label.toLowerCase() +
+        " near you, or browse the category hub.";
+      hideMap();
+      listEl.innerHTML = '<div class="sempty"><p>We could ' +
+        'not find a category or a business named “' +
+        esc(q) + '”. The closest category we list is ' +
+        '<strong>' + esc(cc65.label) + '</strong>.</p>' +
+        '<p><a href="/search/?v=' + cc65.slug + '">See ' +
+        esc(cc65.label) + ' by town</a> · <a href="/' +
+        cc65.slug + '/">Browse the ' + esc(cc65.label) +
+        ' hub</a></p>' +
+        '<p>Own a business that should be here? ' +
+        '<a href="/add-business/">Add a business</a> · ' +
+        '<a href="/claim/">Claim your business</a></p></div>';
+      return; }
     hEl.textContent = "No matches for “" + q + "”";
     document.title = "Search | YourTownPros";
     subEl.textContent = "We could not find a category or " +
@@ -826,7 +916,7 @@ function srchSummary(res, label, town, st) {
       function (e) {
         return e.n.toLowerCase().indexOf(qn) > -1; })
       .slice(0, 12);
-    if (!ms.length) { emptyQueryState(q); return; }
+    if (!ms.length) { emptyQueryState(q, TA); return; }
     hEl.textContent = "Businesses matching “" + q +
       "”";
     document.title = "Search | YourTownPros";
@@ -909,6 +999,11 @@ function srchSummary(res, label, town, st) {
   }
   var nm = nearMe57(normQ(qRaw));
   if (!v && !qRaw) {
+    /* v5.32 item 65: a bare state name in the location box
+    routes to the state hub. */
+    var stEarly65 = stateOf65(townQ);
+    if (stEarly65) { location.href = "/" + stEarly65.sslug +
+      "/"; return; }
     setSolo(true);
     subEl.textContent = "Choose a category and a town in " +
       "the search above to see pros near you.";
@@ -926,12 +1021,16 @@ function srchSummary(res, label, town, st) {
     return;
   }
   showSkel(true);
+  window.YTPLoad.cb("/zip-index.json", function (ZD) {
+    ZIPD65 = ZD || {};
   window.YTPLoad.cb("/cities-index.json", function (CT) {
     if (!CT) { subEl.textContent =
       "Search is unavailable right now."; hideMap(); return; }
     var crow = null;
     if (townQ) crow = findTown(CT, townQ, stQ);
+    if (!crow && townQ) crow = zipTown65(CT, townQ);
     if (!crow && nm.place) crow = findTown(CT, nm.place, "");
+    if (!crow && nm.place) crow = zipTown65(CT, nm.place);
     if (!crow && nm.near && !townQ) {
       
       var sv = null;
@@ -944,6 +1043,7 @@ function srchSummary(res, label, town, st) {
         !crow.sh || !crow.sh.length)) crow = null;
     window.YTPLoad.cb("/typeahead.json", function (TA) {
       if (TA && TA.names && TA.names.length && Array.isArray(TA.names[0])) TA.names = TA.names.map(function (a) { return { n: a[0], u: a[1], t: a[2], c: a[3], s: a[4], v: a[5], la: a[6], lo: a[7], cl: (a[8] & 1) ? 1 : 0, f: (a[8] & 2) ? 1 : 0 }; });
+      TA65 = TA;
       var label = null, slug = v || null, i;
       if (slug && TA && TA.cats) {
         for (i = 0; i < TA.cats.length; i++) {
@@ -958,9 +1058,20 @@ function srchSummary(res, label, town, st) {
           label = cms[0].label; } }
       if (slug && crow) { runRadius(label, slug, crow);
         return; }
+      /* v5.32 item 65: a state name or a state parameter with
+      a category but no town shows the town picker for that
+      state only, keeping the typed category. */
+      var stName65 = stateOf65(townQ) || stateOf65(stQ);
+      if (slug && !crow && stName65 && (townQ || stQ)) {
+        window.YTPLoad.cb("/category-index.json",
+          function (CI) {
+            townPicker(label, slug, CI || {}, CT,
+              stName65); });
+        return; }
       if (slug) {
         if (townQ || nm.place) {
-          townNotFound(townQ || nm.place); return; }
+          townNotFound(townQ || nm.place, label, slug);
+          return; }
         var savedC = null;
         try { savedC = window.localStorage.getItem("ytp-city"); }
         catch (e) {}
@@ -973,11 +1084,14 @@ function srchSummary(res, label, town, st) {
             townPicker(label, slug, CI || {}, CT); });
         return; }
       if (qRaw) { renderNameState(qRaw, TA); return; }
+      if (stName65) { location.href = "/" + stName65.sslug +
+        "/"; return; }
       setSolo(true);
       subEl.textContent = "Choose a category and a town " +
         "in the search above to see pros near you.";
       hideMap();
     });
+  });
   });
 })();
 </script>

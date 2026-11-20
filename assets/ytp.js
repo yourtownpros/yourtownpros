@@ -129,10 +129,11 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll(nul
 
 /* SHIP 1 (spec 2.2): window.YTPLoad, the one shared loader: a URL is fetched at most once per page; some indexes persist in sessionStorage under versioned keys. */
 window.YTPLoad = (function () {
-  var BUILD = "v531-20261119-item64";
+  var BUILD = "v532-20261119-item65";
   var cache = {}, pending = {};
   var SESS = { "/typeahead.json": "ytp-ta-",
     "/cities-index.json": "ytp-ci-",
+    "/zip-index.json": "ytp-zi-",
     "/category-index.json": "ytp-cat-" };
   var SHARD_CAP = 2500000;
   function sessGet(key) {
@@ -196,12 +197,27 @@ window.YTPLoad = (function () {
 var form=document.getElementById("ytp-hform57");if(!form)return;
 var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
-var TA=null,CT=null,CAT=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null,hiW57=-1,s2Items=null,s2Fn=null;
+var TA=null,CT=null,CAT=null,ZIPD=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null,hiW57=-1,s2Items=null,s2Fn=null;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};if(TA.names&&TA.names.length&&Array.isArray(TA.names[0]))TA.names=TA.names.map(function(a){return{n:a[0],u:a[1],t:a[2],vs:String(a[1]).split("/")[1],c:a[3],s:a[4],v:a[5],la:a[6],lo:a[7],cl:(a[8]&1)?1:0,f:(a[8]&2)?1:0}});cb()})}
 function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json",function(d){CAT=d||{};cb()})}
-function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(cb)})})}
+function loadZIP65(cb){if(ZIPD){cb();return}window.YTPLoad.cb("/zip-index.json",function(d){ZIPD=d||{};cb()})}
+function ensure(cb){loadTA(function(){loadCT(function(){loadCAT(function(){loadZIP65(cb)})})})}
+/* v5.32 item 65: search language helpers. STATES65 maps a bare
+state name (or its abbreviation) in the where box to the state
+hub slug; zipCity65 resolves a 5-digit ZIP through zip-index.json,
+which is built only from our own listing addresses (majority city
+per ZIP, towns we list only), never an external lookup. */
+var STATES65={"alabama":["AL","alabama"],"alaska":["AK","alaska"],"arizona":["AZ","arizona"],"arkansas":["AR","arkansas"],"california":["CA","california"],"colorado":["CO","colorado"],"connecticut":["CT","connecticut"],"florida":["FL","florida"],"georgia":["GA","georgia"],"idaho":["ID","idaho"],"illinois":["IL","illinois"],"indiana":["IN","indiana"],"iowa":["IA","iowa"],"kansas":["KS","kansas"],"kentucky":["KY","kentucky"],"louisiana":["LA","louisiana"],"maryland":["MD","maryland"],"michigan":["MI","michigan"],"minnesota":["MN","minnesota"],"mississippi":["MS","mississippi"],"missouri":["MO","missouri"],"montana":["MT","montana"],"nebraska":["NE","nebraska"],"nevada":["NV","nevada"],"new mexico":["NM","new-mexico"],"new york":["NY","new-york"],"north carolina":["NC","north-carolina"],"north dakota":["ND","north-dakota"],"ohio":["OH","ohio"],"oklahoma":["OK","oklahoma"],"oregon":["OR","oregon"],"pennsylvania":["PA","pennsylvania"],"puerto rico":["PR","puerto-rico"],"rhode island":["RI","rhode-island"],"south dakota":["SD","south-dakota"],"tennessee":["TN","tennessee"],"texas":["TX","texas"],"utah":["UT","utah"],"virginia":["VA","virginia"],"washington":["WA","washington"],"wisconsin":["WI","wisconsin"],"wyoming":["WY","wyoming"]};
+function stateOf65(tx){var low=String(tx||"").trim().toLowerCase().replace(/\s+/g," ");if(!low)return null;
+var e=STATES65[low];if(e)return{abbr:e[0],sslug:e[1]};
+for(var k in STATES65)if(STATES65[k][0].toLowerCase()===low)return{abbr:STATES65[k][0],sslug:STATES65[k][1]};
+return null}
+function zipCity65(tx){if(!ZIPD)return null;
+var m=/^(\d{5})(?:-\d{4})?$/.exec(String(tx||"").trim());if(!m)return null;
+var z=ZIPD[m[1]];if(!z)return null;
+return resolveCityText(z[0]+", "+z[1])}
 function normQ(q){return q.toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
 function havMi(aLa,aLo,bLa,bLo){var R=3959,p=Math.PI/180,dLa=(bLa-aLa)*p,dLo=(bLo-aLo)*p,h=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(aLa*p)*Math.cos(bLa*p)*Math.sin(dLo/2)*Math.sin(dLo/2);return 2*R*Math.asin(Math.sqrt(h))}
 /* v5.17 search group helpers. */
@@ -326,18 +342,30 @@ if(!name||nm.indexOf(name)===0)pre.push(e);else if(nm.indexOf(name)>-1)sub.push(
 return pre.concat(sub)}
 function sugCity(){if(!CT)return;
 var q=f2.value.trim().toLowerCase();
-var ms=cityMatches(q).slice(0,7);
+var ms=cityMatches(q);
+var zc=zipCity65(q);
+if(zc)ms=[zc].concat(ms.filter(function(e){return e!==zc}));
+ms=ms.slice(0,7);
 show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+Number(e.count).toLocaleString("en-US")+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
 function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
-return resolveCityText(f2.value)}
+return resolveCityText(f2.value)||zipCity65(f2.value)}
 function go(){var raw=f1.value.trim();
 var nm=nearMe57(normQ(raw));
 var city=resolveCity();
-if(!city&&nm.place)city=resolveCityText(nm.place);
+if(!city&&nm.place)city=resolveCityText(nm.place)||zipCity65(nm.place);
 if(!city&&nm.near)city=savedCity57();
 if(city&&city.city&&city.state)storeCity28(city);else if(!city&&f2&&!f2.value.trim()){try{localStorage.removeItem("ytp-city")}catch(e){}}
 var q=nm.q;
+/* v5.32 item 65: a bare state name in the where box routes to
+that state: its hub when nothing was typed in the what box, or
+a state-scoped search (the typed query is carried, never
+dropped) when something was. */
+var st65=!city?(stateOf65(f2.value)||(nm.place?stateOf65(nm.place):null)):null;
+if(st65){var cms65=q?catMatches(q):[];
+if(cms65.length){location.href="/search/?v="+cms65[0].slug+"&state="+st65.abbr;return}
+if(q){location.href="/search/?q="+encodeURIComponent(raw)+"&state="+st65.abbr;return}
+location.href="/"+st65.sslug+"/";return}
 /* v5.17 search group (QA item 3): typed text never lands on a single listing or the home page; only an explicit suggestion click routes to a listing. */
 if(pickB&&!nm.near){location.href=pickB;return}
 if(city&&pickCat&&pickV){location.href="/search/?v="+pickV+"&city="+encodeURIComponent(city.city)+"&state="+city.state;return}
@@ -365,7 +393,7 @@ f2.addEventListener("keydown",function(ev){if(s2.style.display!=="block"||!s2Ite
 if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hiW57=ev.key==="ArrowDown"?(hiW57+1)%s2Items.length:(hiW57-1+s2Items.length)%s2Items.length;paintW57()}
 else if(ev.key==="Enter"&&hiW57>=0){ev.preventDefault();var it=s2Items[hiW57];if(it&&s2Fn)s2Fn(it)}
 else if(ev.key==="Escape"){s2.style.display="none"}});
-f2.addEventListener("input",function(){pickC=null;loadCT(sugCity)});
+f2.addEventListener("input",function(){pickC=null;loadCT(function(){loadZIP65(sugCity)})});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
 /* Nov 18, 2026 (owner-reported fix): the where box prefills

@@ -41,7 +41,23 @@ var TAC=null,TAS=null;
 function loadD(cb){if(D){cb();return}YL().cb("/typeahead.json",function(d){TAC=(d&&d.cats)||[];TAS=(d&&d.shared)||{};var ns=(d&&d.names)||[];D=ns.map(function(e){if(Array.isArray(e))return{name:e[0],vertical:e[2],vslug:String(e[1]).split("/")[1],url:e[1],city:e[3],state:e[4],v:e[5]||0,la:e[6],lo:e[7],cl:(e[8]&1)?1:0,f:(e[8]&2)?1:0,attrs:[],services:[]};return{name:e.n,vertical:e.t,vslug:e.vs,url:e.u,city:e.c,state:e.s,v:e.v||0,la:e.la,lo:e.lo,cl:e.cl||0,f:e.f||0,attrs:[],services:[]}});cb()})}
 function loadCT(cb){if(CT){cb();return}YL().cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}YL().cb("/category-index.json",function(d){CAT=d||{};cb()})}
-function ensure(cb){loadD(function(){loadCT(function(){loadCAT(cb)})})}
+var ZIPD=null;
+function loadZIP65(cb){if(ZIPD){cb();return}YL().cb("/zip-index.json",function(d){ZIPD=d||{};cb()})}
+function ensure(cb){loadD(function(){loadCT(function(){loadCAT(function(){loadZIP65(cb)})})})}
+/* v5.32 item 65: search language helpers, the same contract
+as the header resolver (assets/ytp.js). A bare state name in
+the where box routes to that state; a 5-digit ZIP resolves
+through zip-index.json, built only from our own listing
+addresses, never an external lookup. */
+var STATES65={"alabama":["AL","alabama"],"alaska":["AK","alaska"],"arizona":["AZ","arizona"],"arkansas":["AR","arkansas"],"california":["CA","california"],"colorado":["CO","colorado"],"connecticut":["CT","connecticut"],"florida":["FL","florida"],"georgia":["GA","georgia"],"idaho":["ID","idaho"],"illinois":["IL","illinois"],"indiana":["IN","indiana"],"iowa":["IA","iowa"],"kansas":["KS","kansas"],"kentucky":["KY","kentucky"],"louisiana":["LA","louisiana"],"maryland":["MD","maryland"],"michigan":["MI","michigan"],"minnesota":["MN","minnesota"],"mississippi":["MS","mississippi"],"missouri":["MO","missouri"],"montana":["MT","montana"],"nebraska":["NE","nebraska"],"nevada":["NV","nevada"],"new mexico":["NM","new-mexico"],"new york":["NY","new-york"],"north carolina":["NC","north-carolina"],"north dakota":["ND","north-dakota"],"ohio":["OH","ohio"],"oklahoma":["OK","oklahoma"],"oregon":["OR","oregon"],"pennsylvania":["PA","pennsylvania"],"puerto rico":["PR","puerto-rico"],"rhode island":["RI","rhode-island"],"south dakota":["SD","south-dakota"],"tennessee":["TN","tennessee"],"texas":["TX","texas"],"utah":["UT","utah"],"virginia":["VA","virginia"],"washington":["WA","washington"],"wisconsin":["WI","wisconsin"],"wyoming":["WY","wyoming"]};
+function stateOf65(tx){var low=String(tx||"").trim().toLowerCase().replace(/\s+/g," ");if(!low)return null;
+var e=STATES65[low];if(e)return{abbr:e[0],sslug:e[1]};
+for(var k in STATES65)if(STATES65[k][0].toLowerCase()===low)return{abbr:STATES65[k][0],sslug:STATES65[k][1]};
+return null}
+function zipCity65(tx){if(!ZIPD)return null;
+var m=/^(\d{5})(?:-\d{4})?$/.exec(String(tx||"").trim());if(!m)return null;
+var z=ZIPD[m[1]];if(!z)return null;
+return resolveCityText(z[0]+", "+z[1])}
 function uniq(arr){var seen={},out=[];for(var i=0;i<arr.length;i++){if(!seen[arr[i].k]){seen[arr[i].k]=1;out.push(arr[i])}}return out}
 /* v5.6: a business matches a query by name, by a canonical
 attribute or by its services text (search-index v5.6 fields). */
@@ -78,7 +94,11 @@ function pickCity(it){if(it.loc){useCurrentLocation();return}
 applyCity(it.city);s2.style.display="none";N2.act=-1}
 function sugCity(){if(suppressCity||!CT)return;
 var q=f2.value.trim().toLowerCase();
-var ms=cityMatches(q).slice(0,7),items=[{loc:true,cls:"locrow",html:"<strong>\u25ce Current Location</strong>"}],i;
+var ms=cityMatches(q);
+var zc=zipCity65(q);
+if(zc)ms=[zc].concat(ms.filter(function(e){return e!==zc}));
+ms=ms.slice(0,7);
+var items=[{loc:true,cls:"locrow",html:"<strong>\u25ce Current Location</strong>"}],i;
 for(i=0;i<ms.length;i++){(function(e){items.push({city:e,html:"<strong>"+esc(e.city)+", "+e.state+"</strong><span>"+Number(e.count).toLocaleString("en-US")+" businesses</span>"})})(ms[i])}
 show(s2,items,pickCity,N2)}
 function savedLoc28(){try{return localStorage.getItem("ytp-city")||""}catch(e){return ""}}
@@ -180,14 +200,22 @@ loadCT(function(){var best=nearestCity(pos.coords.latitude,pos.coords.longitude)
 if(best)applyCity(best);else locFallback()})},function(){locFallback()},{timeout:8000})}
 function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
-return resolveCityText(f2.value)}
+return resolveCityText(f2.value)||zipCity65(f2.value)}
 function go(){var raw=f1.value.trim();
 var nm=nearMe57(normQ(raw));
 var city=resolveCity();
-if(!city&&nm.place)city=resolveCityText(nm.place);
+if(!city&&nm.place)city=resolveCityText(nm.place)||zipCity65(nm.place);
 if(!city&&nm.near)city=savedCity57();
 if(city&&city.city&&city.state)storeCity28(city);else if(!city&&!f2.value.trim()){try{localStorage.removeItem("ytp-city")}catch(e){}}
 var q=nm.q;
+/* v5.32 item 65: a bare state name in the where box routes to
+that state: its hub when the what box is empty, or a
+state-scoped search carrying the typed query when it is not. */
+var st65=!city?(stateOf65(f2.value)||(nm.place?stateOf65(nm.place):null)):null;
+if(st65){var cms65=q?catMatches57(q):[];
+if(cms65.length){location.href="/search/?v="+cms65[0].slug+"&state="+st65.abbr;return}
+if(q){location.href="/search/?q="+encodeURIComponent(raw)+"&state="+st65.abbr;return}
+location.href="/"+st65.sslug+"/";return}
 /* v5.17 search group (QA item 3): the same routing
 contract as the header. Typed text never lands on a
 single listing (the old first-name-match jumps are gone:
@@ -213,7 +241,7 @@ if(e.key==="Escape"){box.style.display="none";st.act=-1}}}
 f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadD(sugBiz)});
 f1.addEventListener("focus",function(){loadD(sugBiz)});
 f1.addEventListener("keydown",keyNav(s1,N1,pickTerm));
-f2.addEventListener("input",function(){pickC=null;hideHint();loadCT(sugCity)});
+f2.addEventListener("input",function(){pickC=null;hideHint();loadCT(function(){loadZIP65(sugCity)})});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 f2.addEventListener("keydown",keyNav(s2,N2,pickCity));
 document.getElementById("hs-go").addEventListener("click",function(){ensure(go)});

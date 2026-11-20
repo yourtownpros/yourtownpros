@@ -12,11 +12,38 @@
 <p>Claiming tells us the listing is yours. Once we verify you own or manage the business, you can request updates to your hours, your description, your services list and your photos. Every change is reviewed by a person before it goes live.</p>
 <p>Start at <a href="/claim/">/claim/</a> and sign in with Google. Verification is one quick proof: an automatic match when your account email is the email we already have for the business or shares its website domain; a short code placed on your website, in your DNS, or on the business's Facebook page; or a photo of a business license or utility bill emailed to us. Approval is automatic once our check finds your proof. Only when none of those work do we call the phone number on the listing, as a last step.</p>
 <h2>Option 2: Ask for removal</h2>
-<p>If you would rather not be listed, email <a href="mailto:yourtownpros@gmail.com">yourtownpros@gmail.com</a> (the inbox our team monitors every day) with the business name, the town, and a link to the listing if you have it, and say that you own or manage the business and want the listing removed.</p>
+<p>If you would rather not be listed, use this form to ask for your listing to be removed. Tell us the business name, the town, and how to reach you, and confirm that you own or manage the business.</p>
+<form class="match" id="ytp-removal-form" action="https://formsubmit.co/ajax/yourtownpros@gmail.com" method="POST">
+<input type="hidden" name="_subject" value="Listing removal request"><input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false"><input type="hidden" name="_cc" value="leads@muse.ai"><div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
+<label for="rm-business">Business name</label><input type="text" name="business" id="rm-business" required>
+<label for="rm-town">Town or city</label><input type="text" name="town" id="rm-town" required>
+<label for="rm-url">Link to your listing (optional)</label><input type="url" name="listing_url" id="rm-url" placeholder="https://yourtownpros.com/...">
+<label for="rm-name">Your name</label><input type="text" name="name" id="rm-name" required>
+<label for="rm-email">Your email</label><input type="email" name="email" id="rm-email" required>
+<label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
+<label for="rm-notes">Anything else we should know? (optional)</label><textarea name="notes" id="rm-notes" rows="2"></textarea>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-removal-submit">Request removal</button><p class="fine" id="ytp-removal-msg" role="status"></p></form>
+<p>Prefer email? Write to <a href="mailto:yourtownpros@gmail.com">yourtownpros@gmail.com</a> (the inbox our team monitors every day) with the same details.</p>
+<script>
+(function(){
+var form=document.getElementById("ytp-removal-form");if(!form)return;
+form.addEventListener("submit",function(ev){ev.preventDefault();
+var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
+var msg=document.getElementById("ytp-removal-msg"),btn=document.getElementById("ytp-removal-submit");
+if(btn)btn.disabled=true;if(msg)msg.textContent="Sending...";
+function fail(){if(btn)btn.disabled=false;if(msg)msg.textContent="Something went wrong sending your request. Please try again, or email yourtownpros@gmail.com with the same details."}
+var fd;try{fd=new FormData(form)}catch(e){fail();return}
+fetch(form.action,{method:"POST",body:fd,headers:{"Accept":"application/json"}}).then(function(r){return r.json()}).then(function(d){
+if(d&&(d.success==="true"||d.success===true)){form.innerHTML="<h3>Request received</h3><p style='margin:0'>We will email you within 2 business days to confirm the listing and the action we will take.</p>"}
+else{fail()}
+}).catch(fail);
+});
+})();
+</script>
 <p>We acknowledge removal requests within 2 business days, by email, naming the listing and the action we will take. Removal or correction is completed within 5 business days of the request.</p>
 <p>So listings stay in the right hands, we may ask for one of the same proofs used for claiming before removing a listing: we have to know the request comes from the business. Requests from anyone else, for example a report that a business has closed, are checked against the business's own website and public profiles, and a business shown as permanently closed is removed.</p>
 <h2>Which should you choose?</h2>
 <p>Claim if the business is operating: a claimed listing shows your correct hours and details, and claimed owners hear from us when customers ask for their kind of work nearby. Remove if the business has closed, never operated at the listed address, or you simply do not want a listing. Either way there is no charge, and neither choice affects any rating your business has on Google, Birdeye or anywhere else: those belong to those services, not to us.</p>
 </main>
 <footer><div class="foot57"><div class="fcol"><h3>About</h3><span class="fbrand">YourTown<span>Pros</span></span><p>YourTownPros is a local directory. Listings show publicly available business information. Featured placements are labeled Sponsored.</p><a href="/">Home</a><a href="/account/">My account</a><a href="/about/">About YourTownPros</a><a href="/contact/">Contact</a></div><div class="fcol"><h3>Discover</h3><a href="/plumbers/">Plumbers</a><a href="/hair-salons/">Hair Salons</a><a href="/auto-repair/">Auto Repair</a><a href="/pet-grooming/">Pet Grooming</a><a href="/electricians/">Electricians</a><a href="/cleaners/">Cleaners &amp; Laundry</a></div><div class="fcol"><h3>For Business</h3><a href="/claim/">Claim your business</a><a href="/for-business/">How YourTownPros works</a><a href="/for-business/#featured">Get featured</a><a href="/add-business/">Add a business</a><a href="/business/">Business dashboard</a></div><div class="fcol"><h3>Legal</h3><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></div></div><div class="footbase57">&copy; 2026 YourTownPros. Listings are built from publicly available sources; businesses can claim a listing free to request corrections.</div></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script><script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

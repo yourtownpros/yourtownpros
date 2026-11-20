@@ -1,2 +1,0 @@
--- v5.41 item 77 timezone-accurate hours intelligence: dataset_version bump to 20261120T132651Z. Re-keys D1-rendered pages onto the v5.41 renderer bundle (shared hours helper computing status in the business local timezone, closes-in amber label, opens-at labels, bold today row). Ships after the Functions renderer copy is live on production.
-INSERT INTO meta (key, value) VALUES ('dataset_version', '20261120T132651Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

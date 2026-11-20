@@ -39,7 +39,7 @@ var sgRep=document.getElementById("sgx-report");
 if(sgRep)sgRep.addEventListener("click",function(ev){
 ev.preventDefault();
 var o=form.querySelector('.sgx-row[data-type="other"]');
-if(o){sgSelect(o);o.scrollIntoView({behavior:"smooth",block:"center"});}
+if(o){sgSelect(o);o.scrollIntoView({behavior:"smooth",block:"nearest"});}
 });
 form.addEventListener("submit",function(ev){
 ev.preventDefault();
@@ -97,7 +97,7 @@ mount.appendChild(card);
 }).catch(function(){});
 });
 
-(function(){var b=document.querySelector(".share57");if(!b||!navigator.clipboard)return;b.addEventListener("click",function(){navigator.clipboard.writeText(location.href).then(function(){b.textContent="Link copied"},function(){})})})();
+(function(){var b=document.querySelector(".share57");if(!b||!navigator.clipboard)return;b.addEventListener("click",function(){navigator.clipboard.writeText(location.href).then(function(){b.textContent="Link copied";setTimeout(function(){b.textContent="Share"},2500)},function(){})})})();
 
 /* Item 20 (Nov 18, 2026): shared dropdown keyboard navigation: arrows open and move, Home and End jump, Escape closes and refocuses the button. */
 function ytpKbNav(box,btn,getItems,open,close){box.addEventListener("keydown",function(e){var items=getItems();if(!items||!items.length)return;var idx=-1;for(var i=0;i<items.length;i++)if(items[i]===document.activeElement)idx=i;
@@ -492,5 +492,21 @@ if(cta){var b=document.createElement("a");b.className="sb-cta75";b.href=cta.getA
 document.body.appendChild(bar);document.body.classList.add("has-sbar75");
 var form=document.getElementById("match");
 if(form&&"IntersectionObserver" in window){var io=new IntersectionObserver(function(es){for(var i=0;i<es.length;i++){bar.classList.toggle("barhide75",es[i].isIntersecting)}},{rootMargin:"-10% 0px 0px 0px"});io.observe(form)}
+});
+})();
+
+/* v5.29 item 62: one-tap clear buttons inside the header search inputs and the homepage hero inputs. */
+(function(){
+function ready(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+ready(function(){
+var inputs=document.querySelectorAll(".fld57 input[type='text'], .hsearch .fld input[type='text']");
+for(var i=0;i<inputs.length;i++){(function(inp){
+var wrap=inp.parentNode;if(!wrap||wrap.querySelector(".clearx62"))return;
+var b=document.createElement("button");b.type="button";b.className="clearx62";b.textContent="\u00d7";b.setAttribute("aria-label","Clear");
+b.addEventListener("click",function(){inp.value="";inp.dispatchEvent(new Event("input",{bubbles:true}));b.classList.remove("on");inp.focus()});
+wrap.appendChild(b);
+function sync(){b.classList.toggle("on",!!inp.value)}
+inp.addEventListener("input",sync);sync();
+})(inputs[i])}
 });
 })();

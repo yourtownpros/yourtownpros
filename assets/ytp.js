@@ -705,3 +705,66 @@ window.addEventListener("storage",function(e){if(e.key===KEY73)render73()})});
 window.ytpPinScroll73=pinScroll73;
 window.ytpRecent73={record:record73,load:load73,render:render73,profileEntry:profileEntry73,version:"v5.38-item73"};
 })();
+
+/* v5.39 item 74: "Copy your free review link" on claimed profiles. A listing is claimed when either signal the site already uses says so: the static owner status line in the claim strip slot ("This listing is claimed and managed by its owner.", carried by the house and Featured profiles), or the public claimed_listings view (schema v5) positively answering for the slug, the same check the v4.4 claim script runs. Only then does this module insert the control, directly above the reviews section; unclaimed profiles never carry it in markup and never get it inserted, and any error, empty answer or unreachable Supabase leaves the page exactly as rendered. One click copies the canonical listing URL plus #reviews (every listing profile carries the id="reviews" anchor, verified across the static tree and the renderer template). Feedback follows the item 62 share pattern: the label changes to Copied and resets after 2500ms. Clipboard failure is never silent and never an alert: the link is shown in a readonly field and selected so the owner can copy it manually. No login, no auth change; this is a display control on the public claimed profile. */
+(function(){
+var LABEL74="Copy your free review link";
+function buildUrl74(){
+var url="";
+var can=document.querySelector('link[rel="canonical"]');
+if(can)url=can.getAttribute("href")||"";
+if(!url)url=location.origin+location.pathname;
+url=url.split("#")[0].split("?")[0];
+if(url.charAt(url.length-1)!=="/")url+="/";
+return url+"#reviews"}
+function fallback74(btn,urlEl){
+if(urlEl){urlEl.hidden=false;try{urlEl.focus();urlEl.select()}catch(e){}}
+btn.textContent="Copy failed, link shown below";
+setTimeout(function(){btn.textContent=LABEL74},2500)}
+function copied74(btn){
+btn.textContent="Copied";
+setTimeout(function(){btn.textContent=LABEL74},2500)}
+function copy74(btn,urlEl){
+var url=buildUrl74();
+function fail(){fallback74(btn,urlEl)}
+var clip=(typeof navigator!=="undefined")?navigator.clipboard:null;
+if(clip&&clip.writeText){
+try{var p=clip.writeText(url);
+if(p&&typeof p.then==="function"){p.then(function(){copied74(btn)},fail)}
+else copied74(btn)}catch(e){fail()}
+}else fail()}
+function show74(){
+var existing=document.querySelector(".revlink74");
+if(existing)return existing;
+var rev=document.getElementById("reviews");
+if(!rev||!rev.parentNode)return null;
+var wrap=document.createElement("div");
+wrap.className="revlink74";
+var btn=document.createElement("button");
+btn.type="button";btn.className="revlink74-btn";btn.textContent=LABEL74;
+var urlEl=document.createElement("input");
+urlEl.type="text";urlEl.className="revlink74-url";urlEl.readOnly=true;urlEl.hidden=true;
+urlEl.value=buildUrl74();urlEl.setAttribute("aria-label","Your free review link");
+btn.addEventListener("click",function(){copy74(btn,urlEl)});
+wrap.appendChild(btn);wrap.appendChild(urlEl);
+rev.parentNode.insertBefore(wrap,rev);
+return wrap}
+function boot74(A){
+var strip=document.querySelector(".claimstrip");
+if(strip&&/claimed and managed by its owner/.test(strip.textContent||"")){show74();return}
+if(!A||!A.sb)return;
+var mf=document.getElementById("ytp-match-form");
+if(!mf||mf.getAttribute("data-match-source")!=="listing")return;
+var slug=mf.getAttribute("data-match-slug")||"";
+if(!slug)slug=location.pathname.replace(/^\/+|\/+$/g,"");
+if(!slug)return;
+if(!document.getElementById("reviews"))return;
+try{
+var pr=A.sb.from("claimed_listings").select("business_slug").eq("business_slug",slug).then(function(r){
+if(!r||r.error||!r.data||!r.data.length)return;
+show74()});
+if(pr&&typeof pr.catch==="function")pr.catch(function(){});
+}catch(e){}}
+if(typeof ytpOnReady==="function"){ytpOnReady(boot74)}
+window.ytpReviewLink74={show:show74,url:buildUrl74,copy:copy74,boot:boot74,version:"v5.39-item74"};
+})();

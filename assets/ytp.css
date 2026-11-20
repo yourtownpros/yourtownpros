@@ -844,3 +844,7 @@ body.has-short72 .maptoggle53{bottom:calc(196px + env(safe-area-inset-bottom))}
 .cs78{display:inline-flex;align-items:center;min-height:44px;padding:6px 14px;border:1px solid #d8d4c8;border-radius:999px;background:#fff;color:#12212e;text-decoration:none;font-size:14.5px}
 a.cs78:hover{border-color:#0e7a5f;color:#0e7a5f}
 .cs78.cur{background:#e8f3ee;border-color:#0e7a5f;font-weight:700}
+
+/* v5.43 item 79: reviews scale-up. The anti-filter line sits under the review tools and shows only while approved reviews are rendered; the Verified Business Owner badge rides the existing ownerbadge pill next to the owner response label. */
+.revanti79{font-size:13.5px;color:#5a6672;margin:8px 0 0}
+.revanti79[hidden]{display:none}

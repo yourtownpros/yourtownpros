@@ -866,3 +866,58 @@ mount78({trade:seg[0],cur:{city:cd.city,state:cd.state,lat:cd.lat,lng:cd.lng},be
 window.ytpMap78={nearby:nearby78,mount:mount78,hav:hav78,version:"v5.42-item78"};
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",auto78);else auto78();
 })();
+
+/* v5.43 item 79: reviews scale-up, shared enhancement module. Stage 3 of the reviews track. The v4.9 inline review script on every listing profile (static tree and the D1 renderer template, identical) already ships the 5-to-1 star histogram (ytpHistogram, counts from the loaded approved reviews only), client-side sort (Newest, Highest rated, Lowest rated) plus search, owner replies from response_text or owner_response, and the Helpful counter backed by the real review_votes table (schema v8; counts render only when that table answers, and a signed-out click asks for sign-in first, so no count is ever invented and no localStorage substitute is needed). This module ships the three gaps that inspection found, and only where real rendered data supports them: (1) the anti-filter line, shown only while at least one approved review is actually rendered and hidden otherwise; (2) a Verified Business Owner badge next to the Response from the owner label, added only to a review that carries a real owner response; (3) a distribution fill: when the inline histogram stays empty because its text gate blocked rating-only reviews, the 5-to-1 bar is computed here from the ratings of the reviews actually shown and rendered into the same histogram container with the same markup. Empty, loading, and no-native-review states get nothing extra. Moderation still governs what publishes: this module only enhances approved reviews the inline script already rendered. */
+(function(){
+var ANTI79="We don't hide legitimate reviews behind an algorithm.";
+function ratings79(scope){
+var out=[];if(!scope)return out;
+var revs=scope.querySelectorAll(".review");
+for(var i=0;i<revs.length;i++){
+var st=revs[i].querySelector(".stars");if(!st)continue;
+var m=/(?:^|\s)([1-5])\s*$/.exec(String(st.textContent||"").trim());
+if(m)out.push(Number(m[1]))}
+return out}
+function dist79(rs){
+var counts=[0,0,0,0,0],sum=0;rs=rs||[];
+for(var i=0;i<rs.length;i++){var r=rs[i];if(r>=1&&r<=5){counts[r-1]++;sum+=r}}
+var total=rs.length;
+var pct=counts.map(function(c){return total?Math.round(100*c/total):0});
+return{total:total,counts:counts,pct:pct,avg:total?Math.round(10*sum/total)/10:0}}
+function histHtml79(d){
+return '<div class="histbox"><p class="histavg">'+d.avg.toFixed(1)+' average from '+d.total+' YourTownPros reviews</p>'+[5,4,3,2,1].map(function(s){return '<div class="histrow"><span class="hstar">'+s+' stars</span><span class="histbar"><i style="width:'+d.pct[s-1]+'%"></i></span><span class="hcount">'+d.counts[s-1]+' ('+d.pct[s-1]+'%)</span></div>'}).join("")+"</div>"}
+function enhance79(){
+var list=document.getElementById("ytp-reviews-list");if(!list)return{reviews:0};
+var sec=document.getElementById("reviews");if(!sec)return{reviews:0};
+var revs=list.querySelectorAll(".review");
+for(var i=0;i<revs.length;i++){
+var rev=revs[i];
+if(rev.querySelector(".vbadge79"))continue;
+var strongs=rev.querySelectorAll("strong"),hit=null;
+for(var j=0;j<strongs.length;j++){if(String(strongs[j].textContent||"").indexOf("Response from the owner")===0){hit=strongs[j];break}}
+if(!hit||!hit.parentNode)continue;
+var b=document.createElement("span");
+b.className="ownerbadge vbadge79";b.textContent="Verified Business Owner";
+hit.parentNode.insertBefore(b,hit.nextSibling)}
+var anti=document.getElementById("ytp-rev-anti79");
+if(revs.length){
+if(!anti){anti=document.createElement("p");anti.id="ytp-rev-anti79";anti.className="revanti79";anti.textContent=ANTI79;
+var tools=document.getElementById("ytp-rev-tools");
+if(tools&&tools.parentNode)tools.parentNode.insertBefore(anti,tools.nextSibling);else sec.appendChild(anti)}
+anti.hidden=false}
+else if(anti)anti.hidden=true;
+var hist=document.getElementById("ytp-rev-hist");
+if(hist&&revs.length&&!String(hist.textContent||"").trim()){
+var rs=ratings79(list);
+if(rs.length){hist.innerHTML=histHtml79(dist79(rs));
+var t2=document.getElementById("ytp-rev-tools");if(t2)t2.hidden=false}}
+return{reviews:revs.length}}
+function boot79(){
+var list=document.getElementById("ytp-reviews-list");if(!list)return;
+enhance79();
+if(typeof MutationObserver!=="undefined"){
+var mo=new MutationObserver(function(){enhance79()});
+mo.observe(list,{childList:true,subtree:true})}}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot79);else boot79();
+window.ytpReviews79={dist:dist79,ratings:ratings79,enhance:enhance79,anti:ANTI79,version:"v5.43-item79"};
+})();

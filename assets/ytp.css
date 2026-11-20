@@ -438,6 +438,8 @@ input,textarea,select{font-size:16px}
 .opennow{font-weight:700;margin:0 0 10px}
 .opennow .on-open{color:#177245}
 .opennow .on-closed{color:#b3261e}
+.opennow .on-closing77{color:#b45309}
+.hourslist li.today77{font-weight:700}
 .opennow .on-today{color:#5a6a75;font-weight:400}
 
 .lic56{margin:0 0 10px}

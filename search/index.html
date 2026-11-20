@@ -676,6 +676,7 @@ function srchSummary(res, label, town, st) {
       if (!st) { slot.hidden = true; slot.textContent = "";
         continue; }
       slot.hidden = false;
+      if (typeof ytpHoursCard77 === "function" && ytpHoursCard77(slot, pl.h, pl.tz)) continue;
       if (st.open) { var ct = (typeof ytpCloses54 === "function") ? ytpCloses54(pl.h, pl.tz) : null;
         slot.textContent = ct ? "Open now · Closes " + ct : "Open now"; }
       else slot.textContent = "Closed now";

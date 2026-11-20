@@ -1,0 +1,2 @@
+-- v5.37 item 72 shortlist and compare: dataset_version bump to 20261120T105233Z. Re-keys D1-rendered pages onto the v5.37 renderer bundle (profile Save delegates to the anonymous localStorage shortlist; no listing data change). Ships after the Functions renderer copy is live on production.
+INSERT INTO meta (key, value) VALUES ('dataset_version', '20261120T105233Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

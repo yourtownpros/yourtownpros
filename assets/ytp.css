@@ -776,3 +776,40 @@ body.has-sbar75{padding-bottom:78px}
 .rstar57 svg{width:18px;height:18px;display:block}
 .rstarfg57{position:absolute;left:0;top:0;bottom:0;overflow:hidden}
 .rstarfg57 svg{width:18px;height:18px;max-width:none}
+
+/* v5.37 item 72: shortlist and compare. The shortlist bar is fixed at the bottom on every surface; on mobile listing profiles it takes the bottom slot while a shortlist exists and the item 75 contact bar is hidden, so the two bars never stack or fight. */
+.result-card .cardsave72{margin-left:6px;width:auto;min-height:44px}
+.shortbar72{position:fixed;left:0;right:0;bottom:0;z-index:95;background:#12212e;color:#eef4f0;box-shadow:0 -2px 14px rgba(18,33,46,.3);padding:10px 14px calc(10px + env(safe-area-inset-bottom))}
+.shortbar72[hidden]{display:none}
+.shortbar-in72{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.shorthead72{font-size:15px}
+.shortcount72{color:#9fb4a9;font-size:13px}
+.shortchips72{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 auto}
+.shortchip72{display:inline-flex;align-items:center;gap:4px;background:#1d3448;border:1px solid #33505f;border-radius:999px;padding:4px 6px 4px 12px;font-size:14px}
+.shortchip72 button{background:#33505f;color:#fff;border:0;border-radius:50%;width:26px;height:26px;min-width:26px;font-size:15px;line-height:1;cursor:pointer;padding:0}
+.shortacts72{display:inline-flex;gap:8px;margin-left:auto}
+.shortcmp72{background:#0e7a5f;color:#fff;border:1px solid #0e7a5f;border-radius:8px;padding:9px 18px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;min-height:44px}
+.shortcmp72[disabled]{background:#33505f;border-color:#33505f;color:#9fb4a9;cursor:not-allowed}
+.shortclear72{background:transparent;color:#cfe3da;border:1px solid #33505f;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;min-height:44px}
+.shortnote72{flex:1 1 100%;margin:0;color:#ffd9a8;font-size:14px}
+body.has-short72{padding-bottom:118px}
+.cmp72{position:fixed;inset:0;z-index:120;background:rgba(18,33,46,.55);overflow:auto;padding:18px 12px}
+.cmp72[hidden]{display:none}
+.cmp-panel72{background:#fff;border-radius:14px;max-width:1020px;margin:0 auto;padding:18px 20px 22px;color:#1c2430}
+.cmp-head72{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cmp-head72 h2{margin:0;font-size:22px}
+.cmpclose72{background:#fff;border:1px solid #d8d4c8;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;min-height:44px;color:#12212e}
+.cmp-grid72{display:grid;gap:14px;grid-template-columns:repeat(var(--n72,2),minmax(200px,1fr));margin-top:14px}
+.cmp-col72{border:1px solid #e4e0d5;border-radius:12px;padding:14px 16px;min-width:0}
+.cmp-col72 h3{margin:0 0 10px;font-size:18px}
+.cmp-row72{margin:10px 0;font-size:15px;overflow-wrap:break-word}
+.cmp-lab72{display:block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5a6672;margin-bottom:2px}
+.cmp-cta72{display:inline-block;background:#0e7a5f;color:#fff;padding:10px 16px;border-radius:8px;font-weight:700;text-decoration:none;min-height:44px}
+.cmp-rm72{background:#fff;border:1px solid #d8d4c8;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:inherit;font-size:14px;min-height:44px;color:#12212e}
+@media(max-width:767px){
+body.has-short72{padding-bottom:188px}
+body.has-short72 .stickybar75{display:none}
+body.has-short72 .maptoggle53{bottom:calc(196px + env(safe-area-inset-bottom))}
+.cmp-grid72{grid-template-columns:repeat(var(--n72,2),minmax(220px,82vw));overflow-x:auto}
+.shortacts72{margin-left:0}
+}

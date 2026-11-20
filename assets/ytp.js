@@ -545,3 +545,101 @@ inp.addEventListener("input",sync);sync();
 })(inputs[i])}
 });
 })();
+
+/* v5.37 item 72: Shortlist / Compare with zero login. Save stores 2 to 4 pros in localStorage only (versioned key ytp-shortlist-v1); anonymous saving never touches auth, never calls Supabase, and never redirects. A bottom bar lists the saved pros and a Compare action (enabled at 2 or more) opens a side-by-side view (rating with its source label, hours or open state where verified hours exist, phone, and the pro's own request button). On listing profiles this module also takes over the existing #ytp-save button in the capture phase, before the legacy per-page handler can run, so the old sign-in redirect for saving is unreachable; the renderer template and the generator now emit a delegating handler instead. While a shortlist exists on a mobile listing profile, the shortlist bar takes the bottom slot and the item 75 contact bar is hidden (CSS in ytp.css), so the two bars never fight. */
+(function(){
+var KEY72="ytp-shortlist-v1",MAX72=4,noteMsg72="";
+function esc72(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function clean72(e){return{slug:String(e.slug),name:String(e.name),url:String(e.url),rating:e.rating?String(e.rating):"",reviews:e.reviews?String(e.reviews):"",rsrc:e.rsrc?String(e.rsrc):"",phone:e.phone?String(e.phone):"",phoneHref:e.phoneHref?String(e.phoneHref):"",ctaLabel:e.ctaLabel?String(e.ctaLabel):"",ctaHref:e.ctaHref?String(e.ctaHref):"",open:e.open?String(e.open):"",hours:e.hours?String(e.hours):""}}
+function load72(){try{var raw=localStorage.getItem(KEY72);if(!raw)return[];var arr=JSON.parse(raw);if(!arr||typeof arr.length!=="number")return[];var out=[];for(var i=0;i<arr.length;i++){var e=arr[i];if(e&&typeof e.slug==="string"&&e.slug&&typeof e.name==="string"&&e.name&&typeof e.url==="string"&&e.url)out.push(clean72(e))}return out.slice(0,MAX72)}catch(e){return[]}}
+function store72(list){try{localStorage.setItem(KEY72,JSON.stringify(list))}catch(e){}}
+function find72(list,slug){for(var i=0;i<list.length;i++)if(list[i].slug===slug)return i;return -1}
+function cardEntry72(card){
+var slug=card.getAttribute("data-slug")||"";var a=card.querySelector("h2 a");if(!slug||!a)return null;
+var url=a.getAttribute("href")||"";
+var e={slug:slug,name:a.textContent.trim(),url:url,rating:card.getAttribute("data-rating")||"",reviews:card.getAttribute("data-reviews")||"",rsrc:"",phone:"",phoneHref:"",ctaLabel:"",ctaHref:"",open:"",hours:""};
+var g=card.querySelector(".gsrc");if(g)e.rsrc=g.textContent.trim();
+if(!e.rating){var rm=card.querySelector(".rmeta57 strong");if(rm)e.rating=rm.textContent.trim()}
+if(!e.reviews){var rt=card.querySelector(".rmeta57");if(rt){var m=/\(([0-9,]+) reviews?\)/.exec(rt.textContent);if(m)e.reviews=m[1]}}
+var tel=card.querySelector(".rlinks a[href^='tel:'], .ract57 a[href^='tel:']");if(tel){e.phone=tel.textContent.trim();e.phoneHref=tel.getAttribute("href")||""}
+var cta=card.querySelector("a.rtel");if(cta){e.ctaLabel=cta.textContent.trim();e.ctaHref=cta.getAttribute("href")||""}
+if(!e.ctaHref){e.ctaLabel="Request this pro";e.ctaHref=url+(url.indexOf("?")>=0?"&":"?")+"src=card#match"}
+var ol=card.querySelector(".openline57");if(ol&&!ol.hidden&&ol.textContent.trim())e.open=ol.textContent.trim();
+return e}
+function profileEntry72(){
+var slug="";var mf=document.getElementById("ytp-match-form");if(mf)slug=mf.getAttribute("data-match-slug")||"";
+if(!slug){var hl=document.getElementById("ytp-highlights");if(hl)slug=hl.getAttribute("data-slug")||""}
+if(!slug)slug=location.pathname.replace(/^\/+|\/+$/g,"");
+var h1=document.querySelector("h1");if(!h1||!slug)return null;
+var e={slug:slug,name:h1.textContent.trim(),url:location.pathname,rating:"",reviews:"",rsrc:"",phone:"",phoneHref:"",ctaLabel:"",ctaHref:"",open:"",hours:""};
+var st=document.querySelector("p.stars");if(st){var m=/([0-9]+(?:\.[0-9]+)?)/.exec(st.textContent);if(m)e.rating=m[1];var m2=/([0-9,]+) reviews?/.exec(st.textContent);if(m2)e.reviews=m2[1];var g=st.querySelector(".gsrc");if(g)e.rsrc=g.textContent.trim()}
+var tel=document.querySelector(".bizcard57 a.tel[href^='tel:']")||document.querySelector("a.tel[href^='tel:']");if(tel){e.phone=tel.textContent.trim().replace(/^Call\s+/,"");e.phoneHref=tel.getAttribute("href")||""}
+var act=document.querySelector(".bizcard57 a.act57");if(act){e.ctaLabel=act.textContent.trim();e.ctaHref=location.pathname+"#match"}
+if(!e.ctaHref){var mh=document.querySelector("#match h2");e.ctaLabel=mh?mh.textContent.trim():"Request this pro";e.ctaHref=location.pathname+"#match"}
+var on=document.getElementById("ytp-opennow");if(on&&!on.hidden&&on.textContent.trim())e.open=on.textContent.trim();
+var ul=document.querySelector(".lochrs57 ul.hourslist");if(ul){var lis=ul.querySelectorAll("li");var parts=[];for(var i=0;i<lis.length;i++)parts.push(lis[i].textContent.trim());e.hours=parts.join("; ")}
+return e}
+var bar72=null,ov72=null;
+function ensureUI72(){
+if(bar72)return;
+bar72=document.createElement("div");bar72.className="shortbar72";bar72.id="shortbar72";bar72.hidden=true;bar72.setAttribute("role","region");bar72.setAttribute("aria-label","Saved pros");
+bar72.innerHTML='<div class="shortbar-in72"><span class="shorthead72"><strong>Saved pros</strong> <span class="shortcount72"></span></span><span class="shortchips72"></span><span class="shortacts72"><button type="button" class="shortcmp72">Compare</button><button type="button" class="shortclear72">Clear</button></span><p class="shortnote72" hidden></p></div>';
+document.body.appendChild(bar72);
+ov72=document.createElement("div");ov72.className="cmp72";ov72.hidden=true;
+ov72.innerHTML='<div class="cmp-panel72" role="dialog" aria-label="Compare saved pros"><div class="cmp-head72"><h2>Compare saved pros</h2><button type="button" class="cmpclose72">Close</button></div><div class="cmp-grid72"></div></div>';
+document.body.appendChild(ov72)}
+function ratingText72(e){if(!e.rating)return "-";var t=e.rating;if(e.reviews)t+=" ("+e.reviews+" reviews)";if(e.rsrc)t+=" \u00b7 "+e.rsrc;return t}
+function renderCompare72(){
+if(!ov72||ov72.hidden)return;var list=load72();var g=ov72.querySelector(".cmp-grid72");g.style.setProperty("--n72",String(Math.max(list.length,1)));
+g.innerHTML=list.map(function(e){
+return '<section class="cmp-col72"><h3><a href="'+esc72(e.url)+'">'+esc72(e.name)+'</a></h3>'
++'<p class="cmp-row72"><span class="cmp-lab72">Rating</span>'+esc72(ratingText72(e))+'</p>'
++'<p class="cmp-row72"><span class="cmp-lab72">Hours</span>'+esc72(e.open||e.hours||"-")+'</p>'
++'<p class="cmp-row72"><span class="cmp-lab72">Phone</span>'+(e.phone?'<a href="'+esc72(e.phoneHref||("tel:"+e.phone.replace(/[^0-9+]/g,"")))+'">'+esc72(e.phone)+'</a>':"-")+'</p>'
++'<p class="cmp-row72"><a class="cmp-cta72" href="'+esc72(e.ctaHref||e.url)+'">'+esc72(e.ctaLabel||"Request this pro")+'</a></p>'
++'<p class="cmp-row72"><a href="'+esc72(e.url)+'">View full profile</a></p>'
++'<p class="cmp-row72"><button type="button" class="cmp-rm72" data-remove72="'+esc72(e.slug)+'">Remove</button></p></section>'}).join("")}
+function syncButtons72(list){
+var btns=document.querySelectorAll(".cardsave72");for(var i=0;i<btns.length;i++){var card=btns[i].closest?btns[i].closest(".result-card"):null;var slug=card?card.getAttribute("data-slug"):"";var on=slug&&find72(list,slug)>=0;btns[i].classList.toggle("saved",!!on);btns[i].textContent=on?"Saved":"Save";btns[i].setAttribute("aria-pressed",on?"true":"false")}
+var pb=document.getElementById("ytp-save");if(pb){var pe=profileEntry72();var pon=pe&&find72(list,pe.slug)>=0;pb.classList.toggle("saved",!!pon);pb.textContent=pon?"Saved":"Save this pro";pb.setAttribute("aria-pressed",pon?"true":"false")}}
+function paint72(){
+ensureUI72();var list=load72();
+document.body.classList.toggle("has-short72",list.length>0);
+bar72.hidden=!list.length;
+if(list.length){
+bar72.querySelector(".shortcount72").textContent=list.length+" of "+MAX72+" saved";
+bar72.querySelector(".shortchips72").innerHTML=list.map(function(e){return '<span class="shortchip72">'+esc72(e.name)+' <button type="button" data-remove72="'+esc72(e.slug)+'" aria-label="Remove '+esc72(e.name)+'">\u00d7</button></span>'}).join("");
+var cmp=bar72.querySelector(".shortcmp72");cmp.disabled=list.length<2;
+var note=bar72.querySelector(".shortnote72");var msg=noteMsg72||(list.length===1?"Save at least 2 pros to compare.":"");
+note.textContent=msg;note.hidden=!msg}
+syncButtons72(list);renderCompare72()}
+function remove72(slug){var list=load72();var i=find72(list,slug);if(i>=0){list.splice(i,1);store72(list)}noteMsg72="";if(list.length<2&&ov72&&!ov72.hidden&&list.length<1){ov72.hidden=true}paint72()}
+function toggle72(entry){
+if(!entry)return;var list=load72();var i=find72(list,entry.slug);
+if(i>=0){list.splice(i,1);store72(list);noteMsg72="";paint72();return}
+if(list.length>=MAX72){noteMsg72="Your shortlist is full (4 pros). Remove one to save another.";paint72();return}
+list.push(clean72(entry));store72(list);noteMsg72="";paint72()}
+function inject72(){
+var cards=document.querySelectorAll(".result-card[data-slug]");
+for(var i=0;i<cards.length;i++){var c=cards[i];if(c.querySelector(".cardsave72"))continue;
+var host=c.querySelector(".ract57")||c.querySelector(".rlinks")||c.querySelector(".pbody");if(!host)continue;
+var b=document.createElement("button");b.type="button";b.className="cardsave72 savebtn";b.textContent="Save";b.setAttribute("aria-pressed","false");host.appendChild(b)}
+syncButtons72(load72())}
+document.addEventListener("click",function(ev){
+var t=ev.target;if(!t||t.nodeType!==1||!t.closest)return;
+if(t.closest("#ytp-save")){ev.preventDefault();ev.stopPropagation();toggle72(profileEntry72());return}
+var cs=t.closest(".cardsave72");if(cs){ev.preventDefault();ev.stopPropagation();var card=cs.closest(".result-card");toggle72(card?cardEntry72(card):null);return}
+var rm=t.closest("[data-remove72]");if(rm){remove72(rm.getAttribute("data-remove72"));return}
+if(t.closest(".shortclear72")){store72([]);noteMsg72="";if(ov72)ov72.hidden=true;paint72();return}
+if(t.closest(".shortcmp72")){ensureUI72();ov72.hidden=false;renderCompare72();return}
+if(t.closest(".cmpclose72")||t===ov72){ov72.hidden=true;return}
+},true);
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape"&&ov72&&!ov72.hidden)ov72.hidden=true});
+function ready72(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+ready72(function(){
+ensureUI72();inject72();paint72();
+if("MutationObserver" in window&&document.body){var pend=false;var mo=new MutationObserver(function(){if(pend)return;pend=true;setTimeout(function(){pend=false;inject72()},120)});mo.observe(document.body,{childList:true,subtree:true})}
+setTimeout(paint72,600);setTimeout(paint72,1800);setTimeout(paint72,5200);
+window.addEventListener("storage",function(e){if(e.key===KEY72)paint72()})});
+window.ytpShort72={toggle:toggle72,load:load72,paint:paint72,bindProfile:function(){paint72()},version:"v5.37-item72"};
+})();

@@ -86,7 +86,7 @@ var slug=card.getAttribute("data-slug");var p=pins[slug];if(!p)continue;
 var mk=L.marker([p.lat,p.lng],{icon:iconFor(v)});
 mk.bindPopup(popHtml(p),{maxWidth:280});
 mk._n57=v;
-(function(cd,m){m.on("click",function(){cd.scrollIntoView({block:"center",behavior:"smooth"});cd.classList.add("hl");setTimeout(function(){cd.classList.remove("hl")},1800)});
+(function(cd,m){m.on("click",function(){if(window.ytpPinScroll73)window.ytpPinScroll73(cd);else{cd.scrollIntoView({block:"center",behavior:"smooth"});cd.classList.add("hl");setTimeout(function(){cd.classList.remove("hl")},1800)}});
 /* v5.7: hovering a card scales its pin up and darkens it;
 hovering the pin outlines the card. */
 cd.addEventListener("mouseenter",function(){var mm=markers[cd.getAttribute("data-slug")];if(mm)mm.setIcon(iconFor(mm._n57,true))});

@@ -813,3 +813,14 @@ body.has-short72 .maptoggle53{bottom:calc(196px + env(safe-area-inset-bottom))}
 .cmp-grid72{grid-template-columns:repeat(var(--n72,2),minmax(220px,82vw));overflow-x:auto}
 .shortacts72{margin-left:0}
 }
+
+/* v5.38 item 73: map and memory niceties. Result cards carry scroll-margin so pin-click scrollIntoView (block center) accounts for the sticky header instead of landing under it. The Recently Viewed strip is a plain horizontal row on /search/ and the homepage, rendered by assets/ytp.js only when at least one pro has been viewed. */
+.result-card{scroll-margin-top:150px;scroll-margin-bottom:80px}
+@media(max-width:900px){.result-card{scroll-margin-top:190px}}
+.recent73{max-width:1100px;margin:18px auto 4px;padding:0 16px}
+.cat-main .recent73{margin:4px 0 14px;padding:0}
+.recent-h73{font-size:17px;margin:0 0 8px}
+.recent-row73{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.recent-card73{flex:0 0 auto;display:flex;flex-direction:column;gap:2px;max-width:240px;background:var(--card,#fff);border:1px solid var(--line,#d8dee4);border-radius:10px;padding:9px 12px;text-decoration:none;color:var(--ink)}
+.recent-name73{font-weight:700;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-meta73{font-size:12.5px;color:var(--muted,#5a6672);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

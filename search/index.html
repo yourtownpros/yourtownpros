@@ -725,11 +725,13 @@ function srchSummary(res, label, town, st) {
       mk.on("click", function () {
         var c = listEl.querySelector(
           '.result-card[data-slug="' + slug + '"]');
-        if (c) { c.scrollIntoView({ block: "center",
+        if (c) { if (window.ytpPinScroll73) {
+            window.ytpPinScroll73(c); }
+          else { c.scrollIntoView({ block: "center",
             behavior: "smooth" });
           c.classList.add("hl");
           setTimeout(function () {
-            c.classList.remove("hl"); }, 1800); } });
+            c.classList.remove("hl"); }, 1800); } } });
       mk.addTo(layer);
       markers[slug] = mk;
       pts.push([p.row.lat, p.row.lng]); });

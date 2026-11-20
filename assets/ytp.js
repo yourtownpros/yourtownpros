@@ -643,3 +643,65 @@ setTimeout(paint72,600);setTimeout(paint72,1800);setTimeout(paint72,5200);
 window.addEventListener("storage",function(e){if(e.key===KEY72)paint72()})});
 window.ytpShort72={toggle:toggle72,load:load72,paint:paint72,bindProfile:function(){paint72()},version:"v5.37-item72"};
 })();
+
+/* v5.38 item 73: Map and memory niceties. (1) Pin-click scroll reliability: window.ytpPinScroll73 scrolls the matching card into view with block center (cards carry scroll-margin in ytp.css for the sticky header) and keeps the card highlight until the scroll finishes, with a quiet-period detector and a hard cap, instead of the old fixed 1800ms timer that could clear mid-scroll on deep pins. The city-trade template, the generator, and /search/ all delegate their pin click to this helper with the old behavior as fallback. Hover linkage (card hover enlarges its pin, pin hover outlines its card) already shipped with item 60 on both templates and is unchanged. (2) Recently Viewed: listing profile visits are recorded in localStorage under the versioned key ytp-recent-v1 (cap 8, most recent first, a revisit moves the pro to the front), and a Recently Viewed strip renders on /search/ and the homepage only when at least one pro has been viewed. Recording reads only the listing's own page (match form with data-match-source listing and a non-empty slug, plus the business card and H1); non-listing pages record nothing. Malformed stored data is tolerated without breaking the page. No login, no auth, no Supabase. */
+(function(){
+var KEY73="ytp-recent-v1",MAX73=8;
+function esc73(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+function clean73(e){return{slug:String(e.slug),name:String(e.name),url:String(e.url),rating:e.rating?String(e.rating):"",reviews:e.reviews?String(e.reviews):"",rsrc:e.rsrc?String(e.rsrc):"",cat:e.cat?String(e.cat):""}}
+function load73(){try{var raw=localStorage.getItem(KEY73);if(!raw)return[];var arr=JSON.parse(raw);if(!arr||typeof arr.length!=="number")return[];var out=[];for(var i=0;i<arr.length;i++){var e=arr[i];if(e&&typeof e.slug==="string"&&e.slug&&typeof e.name==="string"&&e.name&&typeof e.url==="string"&&e.url)out.push(clean73(e))}return out.slice(0,MAX73)}catch(e){return[]}}
+function store73(list){try{localStorage.setItem(KEY73,JSON.stringify(list.slice(0,MAX73)))}catch(e){}}
+function record73(entry){
+if(!entry||!entry.slug||!entry.name||!entry.url)return load73();
+var list=load73();var out=[clean73(entry)];
+for(var i=0;i<list.length;i++)if(list[i].slug!==entry.slug)out.push(list[i]);
+out=out.slice(0,MAX73);store73(out);return out}
+function profileEntry73(){
+var mf=document.getElementById("ytp-match-form");
+if(!mf||mf.getAttribute("data-match-source")!=="listing")return null;
+var slug=mf.getAttribute("data-match-slug")||"";if(!slug)return null;
+if(!document.querySelector(".bizcard57"))return null;
+var h1=document.querySelector("h1");if(!h1)return null;
+var e={slug:slug,name:h1.textContent.trim(),url:location.pathname,rating:"",reviews:"",rsrc:"",cat:""};
+var st=document.querySelector("p.stars");if(st){var m=/([0-9]+(?:\.[0-9]+)?)/.exec(st.textContent);if(m)e.rating=m[1];var m2=/([0-9,]+) reviews?/.exec(st.textContent);if(m2)e.reviews=m2[1];var g=st.querySelector(".gsrc");if(g)e.rsrc=g.textContent.trim()}
+var bc=document.querySelector('nav[aria-label="Breadcrumb"]');if(bc){var as=bc.querySelectorAll("a");if(as.length>1)e.cat=as[1].textContent.trim()}
+return e}
+function pinScroll73(card){
+if(!card)return;
+card.classList.add("hl");
+try{card.scrollIntoView({block:"center",behavior:"smooth"})}catch(e){try{card.scrollIntoView()}catch(x){}}
+var start=Date.now(),lastScroll=0,saw=false,done=false;
+function onScroll(){saw=true;lastScroll=Date.now()}
+window.addEventListener("scroll",onScroll,{passive:true});
+var iv=setInterval(function(){
+if(done)return;var now=Date.now();
+if((saw&&now-lastScroll>350)||(!saw&&now-start>1400)||now-start>6000)finish()},100);
+function finish(){if(done)return;done=true;clearInterval(iv);window.removeEventListener("scroll",onScroll);card.classList.remove("hl")}}
+function meta73(e){
+var parts=[];
+if(e.rating)parts.push("\u2605 "+e.rating+(e.reviews?" ("+e.reviews+" reviews)":"")+(e.rsrc?" \u00b7 "+e.rsrc:""));
+if(e.cat)parts.push(e.cat);
+return parts.join(" \u00b7 ")}
+function render73(){
+if(document.querySelector(".recent73"))return;
+var list=load73();if(!list.length)return;
+var host=null,before=null;
+var hero=document.querySelector(".herofull");
+var cmain=document.querySelector(".cat-main");
+if(hero&&location.pathname==="/"){host=hero.parentNode;before=hero.nextSibling}
+else if(cmain&&document.getElementById("results-list")){host=cmain;before=cmain.firstChild}
+if(!host)return;
+var sec=document.createElement("section");sec.className="recent73";sec.setAttribute("aria-label","Recently viewed");
+var h=document.createElement("h2");h.className="recent-h73";h.textContent="Recently viewed";sec.appendChild(h);
+var row=document.createElement("div");row.className="recent-row73";
+row.innerHTML=list.map(function(e){var m=meta73(e);return '<a class="recent-card73" href="'+esc73(e.url)+'"><span class="recent-name73">'+esc73(e.name)+"</span>"+(m?'<span class="recent-meta73">'+esc73(m)+"</span>":"")+"</a>"}).join("");
+sec.appendChild(row);
+host.insertBefore(sec,before)}
+function ready73(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
+ready73(function(){
+var pe=profileEntry73();if(pe)record73(pe);
+render73();
+window.addEventListener("storage",function(e){if(e.key===KEY73)render73()})});
+window.ytpPinScroll73=pinScroll73;
+window.ytpRecent73={record:record73,load:load73,render:render73,profileEntry:profileEntry73,version:"v5.38-item73"};
+})();

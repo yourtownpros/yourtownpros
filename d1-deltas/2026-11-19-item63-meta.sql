@@ -1,2 +1,0 @@
--- v5.30 item 63 footer links: dataset_version bump to 20261120T055910Z. Re-keys D1-rendered pages onto the v5.30 renderer bundle (listing footer gains Contact, How we source data, and Ratings sources links; no listing data change). Ships after the Functions renderer copy is live on production.
-INSERT INTO meta (key, value) VALUES ('dataset_version', '20261120T055910Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

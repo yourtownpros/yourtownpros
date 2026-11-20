@@ -1,0 +1,2 @@
+-- v5.40 item 76 trade archetype CTAs: dataset_version bump to 20261120T130701Z. Re-keys D1-rendered pages onto the v5.40 renderer bundle (Call Now for towing and locksmiths, Call to Book for appointment trades, similar pros archetype labels, no request link for walk-in shops). Ships after the Functions renderer copy is live on production.
+INSERT INTO meta (key, value) VALUES ('dataset_version', '20261120T130701Z') ON CONFLICT (key) DO UPDATE SET value = excluded.value;

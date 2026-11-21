@@ -438,7 +438,7 @@ function feat(l, t) {
 // need options, appointment trades with an appointment request,
 // walk-in food and retail lead with direct contact actions.
 const CTA_QUOTE = new Set(["plumbers", "hvac", "electricians", "auto-repair", "auto-glass", "roofing", "handyman", "lawn-and-landscaping", "painting", "towing", "locksmiths", "tree-service", "pest-control", "movers", "flooring", "concrete-contractors", "kitchen-remodelers", "bathroom-remodelers", "general-contractors", "pool-builders", "architects", "interior-designers"]);
-const CTA_APPT = new Set(["hair-salons", "barbers", "nails", "massage", "spas", "med-spas", "natural-skincare", "pet-grooming", "pet-boarding", "tattoo", "fitness", "dance-studios", "veterinary", "chiropractors", "dentists", "optometrists", "photographers"]);
+const CTA_APPT = new Set(["hair-salons", "barbers", "nails", "massage", "spas", "med-spas", "natural-skincare", "pet-grooming", "pet-boarding", "tattoo", "fitness", "dance-studios", "veterinary", "chiropractors", "dentists", "optometrists", "photographers", "hotels"]);
 const CTA_WALKIN = new Set(["bakeries-and-cafes", "florists", "bookstores", "jewelry", "cleaners", "pawn-shops", "bars"]);
 const NEED_SETS = {
   "plumbers": ["Fix a leak, clog, or backup", "Install or replace a fixture or appliance", "Water heater repair or replacement", "Remodel or new construction", "Something else"],

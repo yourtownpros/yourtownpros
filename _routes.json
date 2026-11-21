@@ -3,6 +3,7 @@
   "include": [
     "/architects/*",
     "/interior-designers/*",
+    "/hotels/*",
     "/auto-glass/*",
     "/auto-repair/*",
     "/bakeries-and-cafes/*",

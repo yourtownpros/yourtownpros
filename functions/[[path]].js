@@ -26,6 +26,7 @@ import renderer from "./_renderer.mjs";
 const VERTICALS = new Set([
   "architects",
   "interior-designers",
+  "hotels",
   "auto-glass",
   "auto-repair",
   "bakeries-and-cafes",

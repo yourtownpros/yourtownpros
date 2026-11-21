@@ -27,6 +27,7 @@ const VERTICALS = new Set([
   "architects",
   "interior-designers",
   "hotels",
+  "home-builders",
   "auto-glass",
   "auto-repair",
   "bakeries-and-cafes",

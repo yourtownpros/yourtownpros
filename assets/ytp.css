@@ -855,3 +855,15 @@ a.cs78:hover{border-color:#0e7a5f;color:#0e7a5f}
 .related80links{display:flex;flex-wrap:wrap;gap:8px}
 .related80links a{display:inline-block;padding:10px 14px;border:1px solid var(--line,#ddd);border-radius:999px;color:var(--ink,#123);text-decoration:none;background:var(--card,#fff);font-size:15px}
 .related80links a:hover{text-decoration:underline}
+
+
+/* v5.52 item 90: badge offer block on the claim confirmation screen and the business dashboard "Your badge" section. The preview keeps the artwork at its true size so the page does not shift, the pickers and copy button keep 44px touch targets, and the code box wraps the one-line snippet instead of scrolling sideways. */
+.badgeb90{border:1px solid #d8d4c8;border-radius:12px;padding:16px;margin:18px 0;background:#fff}
+.badgeb90 h2{margin:0 0 8px}
+.badgeprev90{margin:10px 0}
+.badgepick90{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0}
+.badgepick90 select{min-height:44px;font:inherit}
+.badgelab90{display:block;font-weight:700;margin:10px 0 4px}
+.badgecode90{width:100%;box-sizing:border-box;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;overflow-wrap:anywhere}
+.badgecopy90{min-height:44px;padding:8px 16px;font:inherit;font-weight:700;background:#0e7a5f;color:#fff;border:1px solid #0e7a5f;border-radius:999px;cursor:pointer}
+.badgelapse90{background:#e8f3ee;border-radius:8px;padding:10px 12px}

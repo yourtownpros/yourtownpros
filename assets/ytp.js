@@ -1047,3 +1047,52 @@ if(typeof window!=="undefined"&&window.addEventListener)window.addEventListener(
 window.ytpHero82={localize:localize82,apply:apply82,parse:parseSaved82,version:"v5.45-item82"};
 })();
 /* item82:end */
+
+/* item90:start */
+/* v5.52 item 90: YourTownPros badges (roadmap item 90, Nov 21, 2026). One shared module renders the badge offer block for the two owner surfaces that carry it: the claim confirmation screen (/claimed/, fed by the just-claimed listing stored at claim submit) and the claimed-listing management view (/business/, the permanent "Your badge" section). The offer copy is offer-copy.md v2 verbatim (Goldfish gate passed Nov 21, 2026); this module never rewrites it. The snippet follows embed-spec.md exactly: a plain link wrapping a plain image, generated at render time from the listing record (canonical listing URL from the record slugs, artwork from the variant plus the owner theme and size choice, alt text from the display name, 224 x 56 standard or 160 x 40 compact). No per-business asset, no identifier, no query string, no scripts in the snippet, no tracking pixel. Eligibility is decided in the same render: unclaimed or not live renders nothing; a full hold replaces the block with the paused note; the Featured variant appears only while that listing's Featured state is active (leased, taste, or house in window.YTP_FEAT, the same live state the dashboard Featured pane reads). A lapsed Featured listing reverts to the Listed snippet with the swap note. Missing or partial data renders nothing, so both surfaces stay exactly as built without this module. */
+(function(){
+"use strict";
+function esc90(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
+function badgeFile90(variant,theme,size){var v=variant==="featured"?"featured":"listed";var t=theme==="dark"?"dark":"light";var s=size==="compact"?"compact-":"";return "badge-"+v+"-"+s+t+".svg"}
+function badgeSize90(size){return size==="compact"?{w:160,h:40}:{w:224,h:56}}
+function listingUrl90(slug){return "https://yourtownpros.com/"+String(slug||"").replace(/^\/+|\/+$/g,"")+"/"}
+function altText90(name,featured){return featured?String(name||"")+", Featured on YourTownPros":String(name||"")+" on YourTownPros"}
+function snippet90(o){var f=!!o.featured;var sz=badgeSize90(o.size);return '<a href="'+listingUrl90(o.slug)+'"><img src="https://yourtownpros.com/assets/badges/'+badgeFile90(f?"featured":"listed",o.theme,o.size)+'" alt="'+esc90(altText90(o.name,f))+'" width="'+sz.w+'" height="'+sz.h+'" loading="lazy"></a>'}
+function featuredActive90(slug){var F=window.YTP_FEAT||{by_slug:{}};var e=F.by_slug&&F.by_slug[slug];if(!e)return false;return e.state==="leased"||e.state==="taste"||e.state==="house"}
+function featuredEntry90(slug){var F=window.YTP_FEAT||{by_slug:{}};return (F.by_slug&&F.by_slug[slug])||null}
+function stateFor90(o){if(!o||!o.claimed||!o.live)return "none";if(o.hold)return "hold";return o.featuredActive?"featured":"listed"}
+var PAUSED90="Your badge is paused while this listing is on hold. You do not need to remove the badge code from your site. If the hold lifts, the same code works again unchanged.";
+var LAPSE90="Your Featured profile has ended, so the badge offered here is now the Listed version. The badge already on your site stays as it is until you paste the new code, and your listing no longer shows as Featured.";
+function offerHtml90(o){
+var st=stateFor90(o);if(st==="none")return "";
+if(st==="hold")return '<div class="badgeb90"><h2>Your badge</h2><p>'+PAUSED90+"</p></div>";
+var f=st==="featured";var theme=o.theme==="dark"?"dark":"light";var size=o.size==="compact"?"compact":"standard";
+var sn=snippet90({slug:o.slug,name:o.name,featured:f,theme:theme,size:size});var sz=badgeSize90(size);
+var h='<div class="badgeb90"><h2>Add your YourTownPros badge to your website</h2>';
+h+="<p>You just claimed your listing on YourTownPros, the directory this listing lives on. Your listing is a page of its own showing your rating, your hours, and your phone number, kept current in one place. This badge is a small picture for your website that links straight to that page, so a customer can check your rating and hours and call you from your listing.</p>";
+h+='<p class="badgeprev90"><img src="/assets/badges/'+badgeFile90(f?"featured":"listed",theme,size)+'" alt="'+esc90(altText90(o.name,f))+'" width="'+sz.w+'" height="'+sz.h+'"></p>';
+h+='<div class="badgepick90"><label>Theme <select class="btheme90"><option value="light"'+(theme==="light"?" selected":"")+'>Light</option><option value="dark"'+(theme==="dark"?" selected":"")+">Dark</option></select></label> ";
+h+='<label>Size <select class="bsize90"><option value="standard"'+(size==="standard"?" selected":"")+'>Standard</option><option value="compact"'+(size==="compact"?" selected":"")+">Compact</option></select></label></div>";
+h+='<label class="badgelab90">Your badge code</label><textarea class="badgecode90" rows="3" readonly>'+esc90(sn)+'</textarea>';
+h+='<p><button type="button" class="badgecopy90">Copy the code</button> <span class="badgemsg90 listed"></span></p>';
+if(!f&&o.featuredWas)h+='<p class="badgelapse90">'+LAPSE90+"</p>";
+h+="<p>Pick the light or dark version, copy the code, and paste it where you want the badge to appear. The footer is a common spot, and the compact size is small. If your site was built with a website builder, drop the code into its embed or HTML block. If someone else looks after your site, send them the code: it is a two minute job for them.</p>";
+h+="<p>A few straight answers:</p><ul>";
+h+="<li>It costs nothing. The badge comes with claiming your listing, and it never turns into a charge.</li>";
+h+="<li>It links to your listing page, and only your listing page. Not to a category, not to a list of other businesses.</li>";
+h+="<li>It is a plain picture with a link. No scripts, no tracking, nothing extra running on your site. The picture itself shows no rating; your rating is on the listing it opens, so what customers see there is always current.</li>";
+h+="<li>Why we offer it: a directory is only useful if people can reach the listings in it. Your customers get a short path to your listing, and your listing gets a link from your site. That is the whole arrangement. Nothing else is attached: no fee later, no change to how your listing is shown or ordered, nothing you have to buy.</li>";
+h+="<li>You can take it down any time by deleting the code. Nothing breaks.</li></ul>";
+h+="<p>If your business has a Featured profile, which is a separate paid option, your badge says Featured on YourTownPros. If a Featured profile ends, the badge offered in your account switches back to the Listed version; the badge already on your site stays as it is until you paste the new code, and your listing stops showing as Featured either way.</p>";
+h+="</div>";return h}
+function renderInto90(box,o){
+if(!box)return "";box.innerHTML=offerHtml90(o);
+var th=box.querySelector(".btheme90"),sz=box.querySelector(".bsize90");
+function re(){renderInto90(box,{slug:o.slug,name:o.name,claimed:o.claimed,live:o.live,hold:o.hold,featuredActive:o.featuredActive,featuredWas:o.featuredWas,theme:th?th.value:o.theme,size:sz?sz.value:o.size})}
+if(th)th.addEventListener("change",re);if(sz)sz.addEventListener("change",re);
+var cp=box.querySelector(".badgecopy90");
+if(cp)cp.addEventListener("click",function(){var ta=box.querySelector(".badgecode90");var msg=box.querySelector(".badgemsg90");if(!ta)return;ta.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}if(!ok&&navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(function(){if(msg)msg.textContent="Copied."}).catch(function(){});if(msg)msg.textContent="Copied.";return}if(msg)msg.textContent=ok?"Copied.":"Select the code and copy it."});
+return box.innerHTML}
+window.ytpBadge90={file:badgeFile90,size:badgeSize90,url:listingUrl90,alt:altText90,snippet:snippet90,featuredActive:featuredActive90,featuredEntry:featuredEntry90,stateFor:stateFor90,offerHtml:offerHtml90,renderInto:renderInto90,paused:PAUSED90,lapse:LAPSE90,version:"v5.52-item90"};
+})();
+/* item90:end */

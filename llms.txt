@@ -66,6 +66,7 @@
 - [Auto Glass](https://yourtownpros.com/auto-glass/): 31 listings
 - [Tanning Salons](https://yourtownpros.com/tanning/): 27 listings
 - [Dance Studios](https://yourtownpros.com/dance-studios/): 22 listings
+- [Architects](https://yourtownpros.com/architects/): 6 listings
 - [Bookstores](https://yourtownpros.com/bookstores/): 1 listing
 - [Natural Skincare](https://yourtownpros.com/natural-skincare/): 1 listing
 - [Website Design](https://yourtownpros.com/website-design/): 1 listing

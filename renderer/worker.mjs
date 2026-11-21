@@ -437,7 +437,7 @@ function feat(l, t) {
 // tree patcher): quote trades lead with a quote form carrying
 // need options, appointment trades with an appointment request,
 // walk-in food and retail lead with direct contact actions.
-const CTA_QUOTE = new Set(["plumbers", "hvac", "electricians", "auto-repair", "auto-glass", "roofing", "handyman", "lawn-and-landscaping", "painting", "towing", "locksmiths", "tree-service", "pest-control", "movers", "flooring", "concrete-contractors", "kitchen-remodelers", "bathroom-remodelers", "general-contractors", "pool-builders"]);
+const CTA_QUOTE = new Set(["plumbers", "hvac", "electricians", "auto-repair", "auto-glass", "roofing", "handyman", "lawn-and-landscaping", "painting", "towing", "locksmiths", "tree-service", "pest-control", "movers", "flooring", "concrete-contractors", "kitchen-remodelers", "bathroom-remodelers", "general-contractors", "pool-builders", "architects"]);
 const CTA_APPT = new Set(["hair-salons", "barbers", "nails", "massage", "spas", "med-spas", "natural-skincare", "pet-grooming", "pet-boarding", "tattoo", "fitness", "dance-studios", "veterinary", "chiropractors", "dentists", "optometrists", "photographers"]);
 const CTA_WALKIN = new Set(["bakeries-and-cafes", "florists", "bookstores", "jewelry", "cleaners", "pawn-shops", "bars"]);
 const NEED_SETS = {
@@ -447,6 +447,7 @@ const NEED_SETS = {
   "auto-glass": ["Replace a windshield", "Repair a chip or crack", "Replace a side or rear window", "Something else"],
   "electricians": ["Fix an electrical problem", "Install lighting, outlets, or a panel", "Wiring for a remodel or addition", "Something else"],
   "roofing": ["Repair a leak or damage", "Replace my roof", "New roof installation", "Inspection or estimate", "Something else"],
+  "architects": ["Design a custom home", "Addition or remodel drawings", "Commercial space design", "Permit drawings", "Something else"],
 };
 const NEED_DEFAULT = ["Repair or fix something", "Install or replace something", "New project or remodel", "Something else"];
 function ctaMode(slug) {

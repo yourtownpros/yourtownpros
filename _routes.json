@@ -2,6 +2,7 @@
   "version": 1,
   "include": [
     "/architects/*",
+    "/interior-designers/*",
     "/auto-glass/*",
     "/auto-repair/*",
     "/bakeries-and-cafes/*",

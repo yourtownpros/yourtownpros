@@ -54,10 +54,10 @@
 - [Lawn & Landscaping](https://yourtownpros.com/lawn-and-landscaping/): 393 listings
 - [HVAC](https://yourtownpros.com/hvac/): 390 listings
 - [Jewelry](https://yourtownpros.com/jewelry/): 329 listings
-- [Spas](https://yourtownpros.com/spas/): 291 listings
+- [Spas](https://yourtownpros.com/spas/): 292 listings
 - [Roofing](https://yourtownpros.com/roofing/): 231 listings
 - [Fitness](https://yourtownpros.com/fitness/): 183 listings
-- [Massage](https://yourtownpros.com/massage/): 170 listings
+- [Massage](https://yourtownpros.com/massage/): 175 listings
 - [Painters](https://yourtownpros.com/painting/): 125 listings
 - [Towing](https://yourtownpros.com/towing/): 106 listings
 - [Handyman](https://yourtownpros.com/handyman/): 91 listings

@@ -1,0 +1,10 @@
+-- v5.69 DesignTimes test block (route A): the held Sweet Bay Design fleet
+-- block from build-packages/designtimes.com-2026-11-21.md section 5B item 1
+-- (Goldfish gate passed Nov 21, 2026). General guidance for readers, labelled
+-- Before you hire; not a description of the business. Row identity: phone
+-- digits 9104082449 + Sweet Bay Design (publish-set.csv, 2026-11-21).
+INSERT INTO listings (path, trade_slug, slug, name, city, state, state_slug, city_slug, topic_html)
+VALUES ('interior-designers/sweet-bay-design-wilmington', 'interior-designers', 'sweet-bay-design-wilmington', 'Sweet Bay Design', 'Wilmington', 'NC', 'north-carolina', 'wilmington', '<h2>Before you hire: how to choose artwork that complements your interior design style.</h2>
+<p>The guidance below is general advice for readers, not a description of this business or its services. Artwork is usually the last thing bought for a room and the first thing that makes it feel finished, and the choosing goes wrong in predictable ways: pieces bought one at a time with no relation to each other, sizes too small for the wall they hang on, and frames that fight the furniture. A steadier order of work is to start from the room you already have. Name the style in plain words (coastal, traditional, modern, collected over time), pick the one wall that needs the piece most, and measure it before shopping, because a too-small picture on a big wall reads as a mistake no frame can fix. As a working rule, art over a sofa or a sideboard looks settled when it spans a good share of the furniture''s width rather than floating in the middle of the wall. If you are choosing between one large piece and a group of small ones, the group gives you flexibility and the single piece gives you calm; rooms that already have pattern and color usually want the calm. When the room matters enough to get right the first time, this is one of the decisions a designer earns the fee on, because they are choosing against the whole room at once, not one wall at a time.</p>
+')
+ON CONFLICT (path) DO UPDATE SET topic_html = excluded.topic_html;

@@ -451,7 +451,7 @@ function feat(l, t) {
 // tree patcher): quote trades lead with a quote form carrying
 // need options, appointment trades with an appointment request,
 // walk-in food and retail lead with direct contact actions.
-const CTA_QUOTE = new Set(["plumbers", "hvac", "electricians", "auto-repair", "auto-glass", "roofing", "handyman", "lawn-and-landscaping", "painting", "towing", "locksmiths", "tree-service", "pest-control", "movers", "flooring", "concrete-contractors", "kitchen-remodelers", "bathroom-remodelers", "general-contractors", "pool-builders", "architects", "interior-designers", "home-builders"]);
+const CTA_QUOTE = new Set(["plumbers", "hvac", "electricians", "auto-repair", "auto-glass", "roofing", "handyman", "lawn-and-landscaping", "painting", "towing", "locksmiths", "tree-service", "pest-control", "movers", "flooring", "concrete-contractors", "kitchen-remodelers", "bathroom-remodelers", "general-contractors", "pool-builders", "architects", "interior-designers", "home-builders", "website-design"]);
 const CTA_APPT = new Set(["hair-salons", "barbers", "nails", "massage", "spas", "med-spas", "natural-skincare", "pet-grooming", "pet-boarding", "tattoo", "fitness", "dance-studios", "veterinary", "chiropractors", "dentists", "optometrists", "photographers", "hotels"]);
 const CTA_WALKIN = new Set(["bakeries-and-cafes", "florists", "bookstores", "jewelry", "cleaners", "pawn-shops", "bars"]);
 const NEED_SETS = {
@@ -464,6 +464,7 @@ const NEED_SETS = {
   "architects": ["Design a custom home", "Addition or remodel drawings", "Commercial space design", "Permit drawings", "Something else"],
   "interior-designers": ["Design a whole home", "Kitchen or bath design", "One room refresh", "Color, furniture, and finishes", "Something else"],
   "home-builders": ["Build a custom home", "Build on my lot", "Compare floor plans and prices", "Buy in a builder community", "Something else"],
+  "website-design": ["Build a new website", "Redesign my current website", "Online store or ecommerce", "Marketing and SEO help", "Something else"],
 };
 const NEED_DEFAULT = ["Repair or fix something", "Install or replace something", "New project or remodel", "Something else"];
 function ctaMode(slug) {

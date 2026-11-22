@@ -42,9 +42,9 @@
 - [Hair Salons](https://yourtownpros.com/hair-salons/): 1438 listings
 - [Nail Salons](https://yourtownpros.com/nails/): 912 listings
 - [Pet Grooming](https://yourtownpros.com/pet-grooming/): 828 listings
-- [Plumbers](https://yourtownpros.com/plumbers/): 785 listings
+- [Plumbers](https://yourtownpros.com/plumbers/): 792 listings
 - [Florists](https://yourtownpros.com/florists/): 741 listings
-- [Electricians](https://yourtownpros.com/electricians/): 706 listings
+- [Electricians](https://yourtownpros.com/electricians/): 709 listings
 - [Barbers](https://yourtownpros.com/barbers/): 685 listings
 - [Med Spas](https://yourtownpros.com/med-spas/): 674 listings
 - [Bakeries & Cafes](https://yourtownpros.com/bakeries-and-cafes/): 656 listings
@@ -52,7 +52,7 @@
 - [Tattoo](https://yourtownpros.com/tattoo/): 515 listings
 - [Cleaners & Laundry](https://yourtownpros.com/cleaners/): 499 listings
 - [Lawn & Landscaping](https://yourtownpros.com/lawn-and-landscaping/): 393 listings
-- [HVAC](https://yourtownpros.com/hvac/): 390 listings
+- [HVAC](https://yourtownpros.com/hvac/): 392 listings
 - [Jewelry](https://yourtownpros.com/jewelry/): 329 listings
 - [Spas](https://yourtownpros.com/spas/): 292 listings
 - [Roofing](https://yourtownpros.com/roofing/): 231 listings
@@ -60,7 +60,7 @@
 - [Massage](https://yourtownpros.com/massage/): 175 listings
 - [Painters](https://yourtownpros.com/painting/): 125 listings
 - [Towing](https://yourtownpros.com/towing/): 106 listings
-- [Handyman](https://yourtownpros.com/handyman/): 91 listings
+- [Handyman](https://yourtownpros.com/handyman/): 92 listings
 - [Locksmiths](https://yourtownpros.com/locksmiths/): 54 listings
 - [Pet Boarding & Daycare](https://yourtownpros.com/pet-boarding/): 43 listings
 - [Auto Glass](https://yourtownpros.com/auto-glass/): 31 listings

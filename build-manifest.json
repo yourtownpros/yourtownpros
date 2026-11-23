@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.28",
+  "version": "v5.10.29",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7893,
+      "hours": 7915,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -3394,12 +3394,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 3113,
-    "open_now_category_entries_count": 7893,
+    "open_now_category_pages_count": 3118,
+    "open_now_category_entries_count": 7915,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3658,
+      "parsed": 3660,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -3486,7 +3486,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7842,
+    "open_now_determined_listings": 7864,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3552,8 +3552,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7889,
-    "open_now_determined_listings_v55": 7842,
+    "hours_listings_total": 7911,
+    "open_now_determined_listings_v55": 7864,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/a-step-above-auto-repairs-warr-acres",
@@ -3819,7 +3819,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 7380,
-    "detail_pill_pages": 3113
+    "detail_pill_pages": 3118
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -4904,6 +4904,25 @@
     "hours32_changed_subset_of_hours_pages": true,
     "hours_pages_7889": true,
     "fragment_count_6224": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51029_checks": {
+    "note": "v5.10.29: COLORADO FRONT RANGE TRANCHE 4 HOURS MERGE (Nov 22, data-only). The hours lane Front Range tranche 4 batch (hours-lane-front-range-tranche4-rows-2026-11-22.json, sourced from Places for 9 rows and the business's own website for 13 rows, all 22 staged rows OPERATIONAL on the closure checks run during sourcing) merges hours only, after the tranche 3 batch, under the standing guards. 22 of the 22 staged slugs key over the included set and 22 apply; no keyed row is do-not-call flagged. The batch also resolves three earlier second-look holds: the batch 5 hold on Lock Works LLC (Sterling) and the batch 6 ship-gate holds on Artistry Salon LLC (Windsor) and Blooming Glow Salon (Johnstown), each re-read fresh at collection; the v5919 and v5920 fragment pins are superseded in this patch. Hours pages 7,889 to 7,911; the hours-honesty fragment set 6,224 to 6,202. No listing, total or sitemap URL moves.",
+    "hours33_stats": {
+      "keys_loaded": 22,
+      "rows_keyed": 22,
+      "rows_unkeyed": [],
+      "flagged_skipped": [],
+      "excluded_second_look": [],
+      "hours_applied": 22,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours33_stats_exact": true,
+    "hours33_changed_set_exact": true,
+    "hours33_changed_subset_of_hours_pages": true,
+    "hours_pages_7911": true,
+    "fragment_count_6202": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32740,7 +32759,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2281966,
+    "internal_hrefs_checked": 2281944,
     "broken": []
   },
   "phone_spot_check": {

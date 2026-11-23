@@ -61,7 +61,7 @@
 - [Painters](https://yourtownpros.com/painting/): 125 listings
 - [Towing](https://yourtownpros.com/towing/): 106 listings
 - [Handyman](https://yourtownpros.com/handyman/): 92 listings
-- [Locksmiths](https://yourtownpros.com/locksmiths/): 54 listings
+- [Locksmiths](https://yourtownpros.com/locksmiths/): 81 listings
 - [Pet Boarding & Daycare](https://yourtownpros.com/pet-boarding/): 43 listings
 - [Auto Glass](https://yourtownpros.com/auto-glass/): 31 listings
 - [Tanning Salons](https://yourtownpros.com/tanning/): 27 listings
@@ -69,7 +69,7 @@
 - [Architects](https://yourtownpros.com/architects/): 6 listings
 - [Interior Designers](https://yourtownpros.com/interior-designers/): 3 listings
 - [Hotels and Lodging](https://yourtownpros.com/hotels/): 37 listings
-- [Home Builders](https://yourtownpros.com/home-builders/): 5 listings
+- [Home Builders](https://yourtownpros.com/home-builders/): 6 listings
 - [Bookstores](https://yourtownpros.com/bookstores/): 1 listing
 - [Natural Skincare](https://yourtownpros.com/natural-skincare/): 1 listing
 - [Website Design](https://yourtownpros.com/website-design/): 19 listings

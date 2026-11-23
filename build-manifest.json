@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.26",
+  "version": "v5.10.27",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7773,
+      "hours": 7838,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -3394,12 +3394,12 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 3102,
-    "open_now_category_entries_count": 7773,
+    "open_now_category_pages_count": 3105,
+    "open_now_category_entries_count": 7838,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
-      "parsed": 3647,
+      "parsed": 3656,
       "all24": 3,
       "unparseable": [
         "Closed Saturday &amp; Sunday",
@@ -3486,7 +3486,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7722,
+    "open_now_determined_listings": 7787,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3552,8 +3552,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7769,
-    "open_now_determined_listings_v55": 7722,
+    "hours_listings_total": 7834,
+    "open_now_determined_listings_v55": 7787,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/a-step-above-auto-repairs-warr-acres",
@@ -3819,7 +3819,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 7380,
-    "detail_pill_pages": 3102
+    "detail_pill_pages": 3105
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -4860,6 +4860,29 @@
     "hours30_changed_subset_of_hours_pages": true,
     "hours_pages_7769": true,
     "fragment_count_6344": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51027_checks": {
+    "note": "v5.10.27: COLORADO FRONT RANGE TRANCHE 2 HOURS MERGE (Nov 22, data-only). The hours lane Front Range tranche 2 batch (hours-lane-front-range-tranche2-rows-2026-11-22.json, sourced from Places for 54 rows and the business's own website for 13 rows, all 67 staged rows OPERATIONAL on the closure checks run during sourcing) merges hours only, after the tranche 1 batch, under the standing guards. 66 of the 67 staged slugs key over the included set and 65 apply; one staged slug is unkeyed (Renaud Naturals, a partner listing the generator included set does not carry) and one keyed row is do-not-call flagged in the generator DNC set (Electric Tattoo); both stay unenriched under the guards. Hours pages 7,769 to 7,834; the hours-honesty fragment set 6,344 to 6,279. No listing, total or sitemap URL moves.",
+    "hours31_stats": {
+      "keys_loaded": 67,
+      "rows_keyed": 66,
+      "rows_unkeyed": [
+        "natural-skincare/renaud-naturals-loveland"
+      ],
+      "flagged_skipped": [
+        "tattoo/electric-tattoo-longmont"
+      ],
+      "excluded_second_look": [],
+      "hours_applied": 65,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours31_stats_exact": true,
+    "hours31_changed_set_exact": true,
+    "hours31_changed_subset_of_hours_pages": true,
+    "hours_pages_7834": true,
+    "fragment_count_6279": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32696,7 +32719,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2282086,
+    "internal_hrefs_checked": 2282021,
     "broken": []
   },
   "phone_spot_check": {

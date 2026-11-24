@@ -16,8 +16,8 @@
 <h2>Request your claim</h2>
 <p>Find your business below and check it is the right one. You only sign in at the end, when you send the claim: your account is how you manage the listing once it is approved, and signing in helps us check the claim really comes from the business.</p>
 <div id="ytp-claimwrap"><form id="ytp-claim-form" class="match" style="margin:0" novalidate><style>.ferr{display:none;color:#a33;font-size:13px;margin:2px 0 6px}.ferr.on{display:block}.errsum{display:none;background:#fdf0f0;border:1px solid #d99;border-radius:8px;padding:10px 14px;margin:0 0 12px;color:#7a1f1f;font-size:14px}.errsum.on{display:block}.errsum ul{margin:6px 0 0;padding-left:18px}.match input.fbad{border-color:#a33;outline:1px solid #a33}</style><div class="errsum" id="ytp-claim-errsum" role="alert"></div>
-<label for="claim-pick-q">Find your business</label><input type="text" id="claim-pick-q" placeholder="Start typing your business name" autocomplete="off">
-<div class="picklist" id="claim-pick-list"></div><p class="ferr" id="err-pick"></p>
+<label for="claim-pick-q">Find your business</label><input type="text" id="claim-pick-q" placeholder="Start typing your business name" autocomplete="off" aria-describedby="err-pick">
+<div class="picklist" id="claim-pick-list"></div><p class="ferr" id="err-pick" role="alert"></p>
 <div class="bizcard" id="ytp-bizcard" hidden></div>
 <div class="hlchips" id="ytp-chips" hidden></div>
 <div class="bizcard" id="ytp-claimed-note" hidden></div>
@@ -26,13 +26,13 @@
 <label for="claim-city">City</label><input type="text" name="city" id="claim-city" readonly required>
 <input type="hidden" name="business_slug" id="claim-slug">
 <div class="hpf" aria-hidden="true"><label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
-<div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div><p class="ferr" id="err-verify"></p>
+<div id="claim-verify" class="vmethods"><p class="listed">Pick your business above and the ways to prove it is yours appear here.</p></div><p class="ferr" id="err-verify" role="alert"></p>
 <div class="docup" id="claim-doc-block" hidden><label for="claim-doc-file">Upload your document</label><p class="listed" style="margin:0">A photo of a business license or a utility bill that matches the listing name and address. A photo or a PDF, up to 10 MB. It goes straight to us with your claim, and we review documents by hand.</p><input type="file" id="claim-doc-file" accept="image/*,application/pdf"><p class="fine" id="claim-doc-msg" style="color:#a33"></p></div>
-<label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required><p class="ferr" id="err-name"></p>
+<label for="claim-name">Your name</label><input type="text" name="name" id="claim-name" required aria-describedby="err-name"><p class="ferr" id="err-name" role="alert"></p>
 <label for="claim-role">Your role</label><input type="text" name="role" id="claim-role" placeholder="Owner, manager, family member">
-<label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required><p class="ferr" id="err-phone"></p>
-<label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required><p class="ferr" id="err-email"></p>
-<label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label><p class="ferr" id="err-owns"></p>
+<label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required aria-describedby="err-phone"><p class="ferr" id="err-phone" role="alert"></p>
+<label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required aria-describedby="err-email"><p class="ferr" id="err-email" role="alert"></p>
+<label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required aria-describedby="err-owns"><span>I own or manage this business</span></label><p class="ferr" id="err-owns" role="alert"></p>
 <div id="ytp-claim-gate" hidden><p>One last step: sign in with Google to send your claim. Your account is how you manage the listing once it is approved.</p><button type="button" class="claimbtn" id="ytp-claim-signin">Sign in with Google</button></div>
 <div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></div></form></div>
 <script>
@@ -67,7 +67,7 @@ if(b){if(items.length){b.innerHTML="<strong>Please fix the following:</strong><u
 if(!first)return 0;
 var t=null;
 if(first==="pick")t=$("claim-pick-q");else if(first==="verify")t=$("claim-verify");else if(first==="name")t=$("claim-name");else if(first==="phone")t=$("claim-phone");else if(first==="email")t=$("claim-email");else if(first==="owns"&&form)t=form.querySelector("input[name='owns_or_manages']");
-if(t){if(t.scrollIntoView)t.scrollIntoView({block:"center"});if(first!=="verify"&&t.focus){try{t.focus({preventScroll:true})}catch(e){t.focus()}}}
+if(t){if(t.scrollIntoView)t.scrollIntoView({block:"center"});if(first==="verify"){var vr=form?form.querySelector("input[name='vm']:not([disabled])"):null;if(vr){try{vr.focus({preventScroll:true})}catch(e){vr.focus()}}}else if(t.focus){try{t.focus({preventScroll:true})}catch(e){t.focus()}}}
 return items.length}
 function clearFieldErr(ev){var t=ev.target;if(!t||!t.id&&!t.name)return;var map={"claim-pick-q":"err-pick","claim-name":"err-name","claim-phone":"err-phone","claim-email":"err-email"};if(map[t.id]){ferr(map[t.id],"");setBad(t,false)}if(t.name==="owns_or_manages")ferr("err-owns","");if(t.name==="vm")ferr("err-verify","")}
 
@@ -167,18 +167,18 @@ var acctEmail=(A.user&&A.user.email)?String(A.user.email).toLowerCase():"";
 var ad=acctDomain(),wd=vd.domain||domainOf(vd.website);
 var autoOk=!!((vd.email&&acctEmail&&vd.email===acctEmail)||(wd&&ad&&wd===ad));
 var out="<p class='listed' style='margin:0 0 8px'>Pick how you will prove this business is yours. Approval is automatic once our check finds your proof, usually within a day.</p>";
-out+="<label class='vmethod"+(autoOk?"":" off")+"'><input type='radio' name='vm' value='email'"+(autoOk?" checked":" disabled")+"><strong>Email match</strong><span class='vnote'>"+(autoOk?"Good news: your account email matches this business, so this claim approves automatically once we check it. Nothing else for you to do.":(vd.email?"We have a contact email on file for this business, but it is not the email you signed in with, so this method is not available. Pick another method below.":"We do not have a contact email on file for this business, so this method is not available. Pick another method below."))+"</span></label>";
+out+="<label class='vmethod"+(autoOk?"":" off")+"'><input type='radio' name='vm' aria-describedby='err-verify' value='email'"+(autoOk?" checked":" disabled")+"><strong>Email match</strong><span class='vnote'>"+(autoOk?"Good news: your account email matches this business, so this claim approves automatically once we check it. Nothing else for you to do.":(vd.email?"We have a contact email on file for this business, but it is not the email you signed in with, so this method is not available. Pick another method below.":"We do not have a contact email on file for this business, so this method is not available. Pick another method below."))+"</span></label>";
 if(vd.website){
-out+="<label class='vmethod'><input type='radio' name='vm' value='website'><strong>Put a code on your website or in your DNS</strong><span class='vnote'>After you submit this claim we show you a short code. Add a page or a meta tag containing the code on "+esc(domainOf(vd.website))+", or add a DNS TXT record containing the code. Our check looks for it and approves your claim automatically.</span></label>";
+out+="<label class='vmethod'><input type='radio' name='vm' aria-describedby='err-verify' value='website'><strong>Put a code on your website or in your DNS</strong><span class='vnote'>After you submit this claim we show you a short code. Add a page or a meta tag containing the code on "+esc(domainOf(vd.website))+", or add a DNS TXT record containing the code. Our check looks for it and approves your claim automatically.</span></label>";
 }else{
-out+="<label class='vmethod off'><input type='radio' name='vm' value='website' disabled><strong>Put a code on your website or in your DNS</strong><span class='vnote'>We do not have a website on file for this business, so this method is not available.</span></label>";
+out+="<label class='vmethod off'><input type='radio' name='vm' aria-describedby='err-verify' value='website' disabled><strong>Put a code on your website or in your DNS</strong><span class='vnote'>We do not have a website on file for this business, so this method is not available.</span></label>";
 }
 if(vd.facebook){
-out+="<label class='vmethod'><input type='radio' name='vm' value='facebook'><strong>Post a code on the business Facebook page</strong><span class='vnote'>After you submit this claim we show you a short code. Post it publicly on the business Facebook page and our check will find it and approve your claim automatically.</span></label>";
+out+="<label class='vmethod'><input type='radio' name='vm' aria-describedby='err-verify' value='facebook'><strong>Post a code on the business Facebook page</strong><span class='vnote'>After you submit this claim we show you a short code. Post it publicly on the business Facebook page and our check will find it and approve your claim automatically.</span></label>";
 }else{
-out+="<label class='vmethod off'><input type='radio' name='vm' value='facebook' disabled><strong>Post a code on the business Facebook page</strong><span class='vnote'>We do not have a Facebook page on file for this business, so this method is not available.</span></label>";
+out+="<label class='vmethod off'><input type='radio' name='vm' aria-describedby='err-verify' value='facebook' disabled><strong>Post a code on the business Facebook page</strong><span class='vnote'>We do not have a Facebook page on file for this business, so this method is not available.</span></label>";
 }
-out+="<label class='vmethod'><input type='radio' name='vm' value='document'><strong>Upload a document</strong><span class='vnote'>Upload a photo of a business license or a utility bill that matches this listing's name and address, right here in this form. We review documents by hand. If uploading does not work for you, email it to yourtownpros@gmail.com instead and mention the business name.</span></label>";
+out+="<label class='vmethod'><input type='radio' name='vm' aria-describedby='err-verify' value='document'><strong>Upload a document</strong><span class='vnote'>Upload a photo of a business license or a utility bill that matches this listing's name and address, right here in this form. We review documents by hand. If uploading does not work for you, email it to yourtownpros@gmail.com instead and mention the business name.</span></label>";
 box.innerHTML=out;
 var db=$("claim-doc-block");if(db){var chk=box.querySelector("input[name='vm']:checked");db.hidden=!(chk&&chk.value==="document")}
 }

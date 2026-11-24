@@ -73,7 +73,7 @@
 <label for="claim-phone">Your phone</label><input type="tel" name="phone" id="claim-phone" required>
 <label for="claim-email">Your email</label><input type="email" name="email" id="claim-email" required>
 <label class="checkline"><input type="checkbox" name="owns_or_manages" value="yes" required><span>I own or manage this business</span></label>
-<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33"></p></form></div>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAAGEaoSJo66KaSUsy"></div><button type="submit" id="ytp-claim-submit" disabled>Request claim</button><div class="fine">We check the proof you pick first: an email match, the code on your website, DNS or Facebook page, or the document you send. If none of those work, we may call the phone number on the listing as a last step before approving changes.</div><p class="fine" id="ytp-claim-error" style="color:#a33" role="alert"></p></form></div>
 </div>
 <div id="fb-claim-pending" hidden></div>
 <div id="fb-claim-approved" hidden></div>
@@ -164,10 +164,10 @@ m.textContent=(f&&f.size>10485760)?"That file is too big. Please pick a photo or
 });
 if(form)form.addEventListener("submit",function(ev){ev.preventDefault();
 var hp=form.querySelector("input[name='company_website']");if(hp&&hp.value)return;
-if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";return}
+if(!chosen){var pe=$("ytp-claim-error");if(pe)pe.textContent="Pick your business from the list first, so we know which listing you are claiming.";var pq=$("claim-pick-q");if(pq&&pq.focus)pq.focus();return}
 var radios=form.querySelectorAll("input[name='vm']"),method="";
 for(var i=0;i<radios.length;i++){if(radios[i].checked)method=radios[i].value}
-if(!method){var me=$("ytp-claim-error");if(me)me.textContent="Pick a verification method so we know how you will prove the business is yours.";return}
+if(!method){var me=$("ytp-claim-error");if(me)me.textContent="Pick a verification method so we know how you will prove the business is yours.";var vr=form.querySelector("input[name='vm']:not([disabled])");if(vr&&vr.focus)vr.focus();return}
 var docF=(method==="document"&&docFile&&docFile.files&&docFile.files.length)?docFile.files[0]:null;
 if(docF&&docF.size>10485760){var dm=$("claim-doc-msg");if(dm)dm.textContent="That file is too big. Please pick a photo or PDF under 10 MB.";var de=$("ytp-claim-error");if(de)de.textContent="Your document is too big to upload. Pick a smaller file, or remove it and we will tell you how to email it instead.";return}
 var row={business_slug:chosen.slug,

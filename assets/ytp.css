@@ -559,7 +559,7 @@ header.hdr57 .catnav{background:transparent;border-bottom:0;max-width:1400px;mar
 /* v5.7 footer: four-column sitemap matrix, real pages only. */
 footer{padding:0}
 .foot57{max-width:1240px;margin:0 auto;padding:32px 24px 6px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:24px}
-.foot57 h3{color:#fff;font-size:13px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.foot57 h2{color:#fff;font-size:13px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
 .foot57 a{display:block;margin:0 0 8px;color:#cfe3da;text-decoration:none;font-size:14px}
 .foot57 a:hover{color:#fff;text-decoration:underline}
 .foot57 .fbrand{font-size:20px;font-weight:800;color:#fff}

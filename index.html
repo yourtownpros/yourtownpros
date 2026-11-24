@@ -9,7 +9,7 @@
 <img class="hslide on" src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&amp;fit=crop&amp;w=1280&amp;q=65" srcset="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&amp;fit=crop&amp;w=640&amp;q=60 640w, https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&amp;fit=crop&amp;w=828&amp;q=60 828w, https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&amp;fit=crop&amp;w=1280&amp;q=65 1280w, https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&amp;fit=crop&amp;w=1800&amp;q=65 1800w" sizes="100vw" width="1800" height="1200" fetchpriority="high" alt=""><div class="hoverlay hoverlay-v3"></div>
 <div class="herocontent herocontent-v3">
 <h1>Local pros and shops in your town</h1>
-<div class="hsearch"><div class="fld"><input id="hs-q" type="text" placeholder="Pet grooming, tattoo, plumbers..." autocomplete="off" aria-label="Service or business name"><div class="sug" id="sug1"></div></div><div class="fld"><input id="hs-city" type="text" placeholder="City" autocomplete="off" aria-label="City"><div class="sug" id="sug2"></div></div><button id="hs-go" type="button">Search</button></div>
+<div class="hsearch"><div class="fld"><input id="hs-q" type="text" placeholder="Pet grooming, tattoo, plumbers..." autocomplete="off" aria-label="Service or business name" role="combobox" aria-expanded="false" aria-controls="sug1" aria-autocomplete="list" aria-haspopup="listbox"><div class="sug" id="sug1" role="listbox"></div></div><div class="fld"><input id="hs-city" type="text" placeholder="City" autocomplete="off" aria-label="City" role="combobox" aria-expanded="false" aria-controls="sug2" aria-autocomplete="list" aria-haspopup="listbox"><div class="sug" id="sug2" role="listbox"></div></div><button id="hs-go" type="button">Search</button></div>
 <div id="hs-loc-hint" class="lochint" style="display:none">Location unavailable, type your city instead</div>
 </div>
 <div class="slidecap on"><div class="sh">A groomer they&#x27;ll love.</div><a class="pillbtn" href="/pet-grooming/">Pet Grooming</a></div><div class="ticks"><button type="button" class="tick tickbtn on" data-slide="0" aria-label="Show slide 1"></button><button type="button" class="tick tickbtn" data-slide="1" aria-label="Show slide 2"></button><button type="button" class="tick tickbtn" data-slide="2" aria-label="Show slide 3"></button><button type="button" class="ppbtn" id="hero-pp" aria-label="Pause slideshow" hidden><svg class="pp-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.5" y="2" width="4" height="12" rx="1"/><rect x="9.5" y="2" width="4" height="12" rx="1"/></svg><svg class="pp-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false" hidden><path d="M4 2l9 6-9 6z"/></svg></button></div>
@@ -50,6 +50,11 @@ var f1=document.getElementById("hs-q"),f2=document.getElementById("hs-city"),
 s1=document.getElementById("sug1"),s2=document.getElementById("sug2"),
 hint=document.getElementById("hs-loc-hint"),hintTimer=null;
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+/* WCAG F2: typeahead combobox semantics, matching the header module in assets/ytp.js. */
+function setupCombo(input,box){input.setAttribute("role","combobox");input.setAttribute("aria-expanded","false");input.setAttribute("aria-controls",box.id);input.setAttribute("aria-autocomplete","list");input.setAttribute("aria-haspopup","listbox");box.setAttribute("role","listbox")}
+setupCombo(f1,s1);setupCombo(f2,s2);
+function syncCombo(box,st){var input=box===s1?f1:f2;var open=box.style.display==="block";input.setAttribute("aria-expanded",open?"true":"false");var links=box.querySelectorAll("a");for(var i=0;i<links.length;i++)links[i].setAttribute("aria-selected",i===st.act?"true":"false");if(open&&st.act>=0&&links[st.act])input.setAttribute("aria-activedescendant",links[st.act].id);else input.removeAttribute("aria-activedescendant")}
+function hideSug(box,st){box.style.display="none";st.act=-1;syncCombo(box,st)}
 /* SHIP 1: the hero reads the same split files through
 the shared YTPLoad loader (spec 6, s14 dedupe); the
 fallback below is a fetch-once shim used only if the
@@ -84,15 +89,15 @@ attribute or by its services text (search-index v5.6 fields). */
 function bm56(e,q){return e.name.toLowerCase().indexOf(q)>-1||(e.attrs||[]).join(" ").toLowerCase().indexOf(q)>-1||(e.services||[]).join(" ").toLowerCase().indexOf(q)>-1}
 function N(){return{items:[],act:-1}}
 var N1=N(),N2=N();
-function paint(box,st){var ls=box.querySelectorAll("a");for(var i=0;i<ls.length;i++){if(i===st.act)ls[i].classList.add("active");else ls[i].classList.remove("active")}}
+function paint(box,st){var ls=box.querySelectorAll("a");for(var i=0;i<ls.length;i++){if(i===st.act)ls[i].classList.add("active");else ls[i].classList.remove("active")}syncCombo(box,st)}
 function show(box,items,fn,st){st.items=items;st.act=-1;
-if(!items.length){box.style.display="none";box.innerHTML="";return}
-box.innerHTML=items.map(function(it,i){return '<a href="#" data-i="'+i+'"'+(it.cls?' class="'+it.cls+'"':"")+">"+it.html+"</a>"}).join("");
-box.style.display="block";
+if(!items.length){box.innerHTML="";hideSug(box,st);return}
+box.innerHTML=items.map(function(it,i){return '<a href="#" id="'+box.id+'-opt-'+i+'" role="option" aria-selected="false" data-i="'+i+'"'+(it.cls?' class="'+it.cls+'"':"")+">"+it.html+"</a>"}).join("");
+box.style.display="block";syncCombo(box,st);
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
-function pickTerm(it){pickB=it.k.charAt(0)==="c"?null:it.go;pickV=it.vslug||null;pickCat=it.k.charAt(0)==="c";f1.value=it.label;s1.style.display="none";N1.act=-1;ensure(go)}
-function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!D){s1.style.display="none";N1.items=[];return}
+function pickTerm(it){pickB=it.k.charAt(0)==="c"?null:it.go;pickV=it.vslug||null;pickCat=it.k.charAt(0)==="c";f1.value=it.label;hideSug(s1,N1);ensure(go)}
+function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!D){hideSug(s1,N1);N1.items=[];return}
 var cats=catMatches57(q).map(function(c){return{k:"c"+c.slug,label:c.label,vslug:c.slug,html:"<strong>"+esc(c.label)+"</strong><span>Category</span>",go:"/"+c.slug+"/"}});
 if(!cats.length&&!(TAC&&TAC.length))cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
 var biz=D.filter(function(e){return bm56(e,q)});
@@ -111,7 +116,7 @@ if(!name||nm.indexOf(name)===0)pre.push(e);else if(nm.indexOf(name)>-1)sub.push(
 return pre.concat(sub)}
 function applyCity(e){pickC=e;f2.value=e.city+", "+e.state;hideHint()}
 function pickCity(it){if(it.loc){useCurrentLocation();return}
-applyCity(it.city);s2.style.display="none";N2.act=-1}
+applyCity(it.city);hideSug(s2,N2)}
 function sugCity(){if(suppressCity||!CT)return;
 var q=f2.value.trim().toLowerCase();
 var ms=cityMatches(q);
@@ -213,7 +218,7 @@ if(!wc.length)return null;
 var best=null,bd=1e18,i,e,d;
 for(i=0;i<wc.length;i++){e=wc[i];d=havKm(la,lo,e.lat,e.lng);if(d<bd){bd=d;best=e}}
 return best}
-function useCurrentLocation(){s2.style.display="none";N2.act=-1;
+function useCurrentLocation(){hideSug(s2,N2);
 if(!navigator.geolocation){locFallback();return}
 navigator.geolocation.getCurrentPosition(function(pos){
 loadCT(function(){var best=nearestCity(pos.coords.latitude,pos.coords.longitude);
@@ -257,7 +262,7 @@ location.href="/search/"}
 function keyNav(box,st,fn){return function(e){
 if(e.key==="ArrowDown"||e.key==="ArrowUp"){if(box.style.display==="block"&&st.items.length){e.preventDefault();st.act=(st.act+(e.key==="ArrowDown"?1:-1)+st.items.length)%st.items.length;paint(box,st)}return}
 if(e.key==="Enter"){if(box.style.display==="block"&&st.act>=0&&st.items[st.act]){e.preventDefault();fn(st.items[st.act])}else ensure(go);return}
-if(e.key==="Escape"){box.style.display="none";st.act=-1}}}
+if(e.key==="Escape"){hideSug(box,st)}}}
 f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadD(sugBiz)});
 f1.addEventListener("focus",function(){loadD(sugBiz)});
 f1.addEventListener("keydown",keyNav(s1,N1,pickTerm));
@@ -265,7 +270,7 @@ f2.addEventListener("input",function(){pickC=null;hideHint();loadCT(function(){l
 f2.addEventListener("focus",function(){loadCT(sugCity)});
 f2.addEventListener("keydown",keyNav(s2,N2,pickCity));
 document.getElementById("hs-go").addEventListener("click",function(){ensure(go)});
-document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
+document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)hideSug(s1,N1);if(!s2.contains(ev.target)&&ev.target!==f2)hideSug(s2,N2)});
 /* v5.12.2 (owner ruling Nov 14): NO hero where-box prefill.
 The saved-city read, the geolocation fill and the ipapi.co
 IP guess that used to run here are removed: the box starts

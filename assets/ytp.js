@@ -199,6 +199,11 @@ var f1=document.getElementById("ytp-q57"),f2=document.getElementById("ytp-w57"),
 s1=document.getElementById("sug-q57"),s2=document.getElementById("sug-w57");
 var TA=null,CT=null,CAT=null,ZIPD=null,pickB=null,pickV=null,pickC=null,pickCat=false,hi57=-1,s1Items=null,s1Fn=null,hiW57=-1,s2Items=null,s2Fn=null;
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
+/* WCAG F2: typeahead combobox semantics. The inputs own the listbox state, and aria-activedescendant follows the visual highlight. */
+function setupCombo(input,box){input.setAttribute("role","combobox");input.setAttribute("aria-expanded","false");input.setAttribute("aria-controls",box.id);input.setAttribute("aria-autocomplete","list");input.setAttribute("aria-haspopup","listbox");box.setAttribute("role","listbox")}
+setupCombo(f1,s1);setupCombo(f2,s2);
+function syncCombo(box,input,hi){var open=box.style.display==="block";input.setAttribute("aria-expanded",open?"true":"false");var links=box.querySelectorAll("a");for(var i=0;i<links.length;i++)links[i].setAttribute("aria-selected",i===hi?"true":"false");if(open&&hi>=0&&links[hi])input.setAttribute("aria-activedescendant",links[hi].id);else input.removeAttribute("aria-activedescendant")}
+function hideSug(box,input){box.style.display="none";syncCombo(box,input,-1)}
 function loadTA(cb){if(TA){cb();return}window.YTPLoad.cb("/typeahead.json",function(d){TA=d||{cats:[],towns:[],names:[],shared:{}};if(TA.names&&TA.names.length&&Array.isArray(TA.names[0]))TA.names=TA.names.map(function(a){return{n:a[0],u:a[1],t:a[2],vs:String(a[1]).split("/")[1],c:a[3],s:a[4],v:a[5],la:a[6],lo:a[7],cl:(a[8]&1)?1:0,f:(a[8]&2)?1:0}});cb()})}
 function loadCT(cb){if(CT){cb();return}window.YTPLoad.cb("/cities-index.json",function(d){CT=d||[];cb()})}
 function loadCAT(cb){if(CAT){cb();return}window.YTPLoad.cb("/category-index.json",function(d){CAT=d||{};cb()})}
@@ -323,16 +328,16 @@ if(near.length<2)out=near.concat(far).slice(0,5);
 return out}
 ms.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)});
 return ms.slice(0,5)}
-function show(box,items,fn){if(!items.length){box.style.display="none";box.innerHTML="";return}
-box.innerHTML=items.map(function(it){return '<a href="#">'+it.html+"</a>"}).join("");
+function show(box,items,fn){var input=box===s1?f1:f2;if(!items.length){box.innerHTML="";hideSug(box,input);return}
+box.innerHTML=items.map(function(it,i){return '<a href="#" id="'+box.id+'-opt-'+i+'" role="option" aria-selected="false">'+it.html+"</a>"}).join("");
 box.style.display="block";
 var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}
-if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}if(box===s2){s2Items=items;s2Fn=fn;hiW57=-1}}
-function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){s1.style.display="none";return}
+if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}if(box===s2){s2Items=items;s2Fn=fn;hiW57=-1}syncCombo(box,input,-1)}
+function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){hideSug(s1,f1);return}
 var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
 var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
-show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.cat?null:it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");s1.style.display="none";ensure(go)})}
+show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.cat?null:it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");hideSug(s1,f1);ensure(go)})}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[];
@@ -346,7 +351,7 @@ var ms=cityMatches(q);
 var zc=zipCity65(q);
 if(zc)ms=[zc].concat(ms.filter(function(e){return e!==zc}));
 ms=ms.slice(0,7);
-show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+Number(e.count).toLocaleString("en-US")+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;s2.style.display="none"})}
+show(s2,ms.map(function(e){return{city:e,html:"<strong>"+esc(e.city)+", "+esc(e.state)+"</strong><span>"+Number(e.count).toLocaleString("en-US")+" businesses</span>"}}),function(it){pickC=it.city;f2.value=it.city.city+", "+it.city.state;hideSug(s2,f2)})}
 function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
 return resolveCityText(f2.value)||zipCity65(f2.value)}
@@ -382,20 +387,20 @@ f1.addEventListener("focus",function(){loadTA(sugBiz)});
 search keyboard navigation, and trades offer from the
 first keystroke (sugBiz gate above). A category pick
 fills the box with the clean trade label. */
-function paint57(){var ls=s1.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hi57)}
+function paint57(){var ls=s1.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hi57);syncCombo(s1,f1,hi57)}
 f1.addEventListener("keydown",function(ev){if(s1.style.display!=="block"||!s1Items||!s1Items.length)return;
 if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hi57=ev.key==="ArrowDown"?(hi57+1)%s1Items.length:(hi57-1+s1Items.length)%s1Items.length;paint57()}
 else if(ev.key==="Enter"&&hi57>=0){ev.preventDefault();var it=s1Items[hi57];if(it&&s1Fn)s1Fn(it)}
-else if(ev.key==="Escape"){s1.style.display="none"}});
+else if(ev.key==="Escape"){hideSug(s1,f1)}});
 /* v5.31 item 64: the header where box gets the same keyboard navigation as the what box (ArrowDown/ArrowUp/Enter/Escape). */
-function paintW57(){var ls=s2.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hiW57)}
+function paintW57(){var ls=s2.querySelectorAll("a");for(var i=0;i<ls.length;i++)ls[i].classList.toggle("active",i===hiW57);syncCombo(s2,f2,hiW57)}
 f2.addEventListener("keydown",function(ev){if(s2.style.display!=="block"||!s2Items||!s2Items.length)return;
 if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){ev.preventDefault();hiW57=ev.key==="ArrowDown"?(hiW57+1)%s2Items.length:(hiW57-1+s2Items.length)%s2Items.length;paintW57()}
 else if(ev.key==="Enter"&&hiW57>=0){ev.preventDefault();var it=s2Items[hiW57];if(it&&s2Fn)s2Fn(it)}
-else if(ev.key==="Escape"){s2.style.display="none"}});
+else if(ev.key==="Escape"){hideSug(s2,f2)}});
 f2.addEventListener("input",function(){pickC=null;loadCT(function(){loadZIP65(sugCity)})});
 f2.addEventListener("focus",function(){loadCT(sugCity)});
-document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)s1.style.display="none";if(!s2.contains(ev.target)&&ev.target!==f2)s2.style.display="none"});
+document.addEventListener("click",function(ev){if(!s1.contains(ev.target)&&ev.target!==f1)hideSug(s1,f1);if(!s2.contains(ev.target)&&ev.target!==f2)hideSug(s2,f2)});
 /* Nov 18, 2026 (owner-reported fix): the where box prefills
 from the saved city (the legacy ytp-city key) when a saved
 city exists and the box is empty. This supersedes the

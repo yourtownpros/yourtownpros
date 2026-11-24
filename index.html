@@ -98,15 +98,66 @@ var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}}
 function pickTerm(it){pickB=it.k.charAt(0)==="c"?null:it.go;pickV=it.vslug||null;pickCat=it.k.charAt(0)==="c";f1.value=it.label;hideSug(s1,N1);ensure(go)}
 function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!D){hideSug(s1,N1);N1.items=[];return}
-var cats=catMatches57(q).map(function(c){return{k:"c"+c.slug,label:c.label,vslug:c.slug,html:"<strong>"+esc(c.label)+"</strong><span>Category</span>",go:"/"+c.slug+"/"}});
-if(!cats.length&&!(TAC&&TAC.length))cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
+var cm=catMatches57(q),cats=[],keys=[],ci;
+for(ci=0;ci<cm.length;ci++)(cm[ci].src==="k"?keys:cats).push(cm[ci]);
+function catItem(c){return{k:"c"+c.slug,label:c.label,vslug:c.slug,html:"<strong>"+esc(c.label)+"</strong><span>Category</span>",go:"/"+c.slug+"/"}}
+cats=cats.map(catItem);keys=keys.map(catItem);
+if(!cats.length&&!keys.length&&!(TAC&&TAC.length))cats=uniq(D.filter(function(e){return e.vertical.toLowerCase().indexOf(q)>-1}).map(function(e){return{k:"c"+e.vslug,label:e.vertical,vslug:e.vslug,html:"<strong>"+esc(e.vertical)+"</strong><span>Category</span>",go:"/"+e.vslug+"/"}}));
 var biz=D.filter(function(e){return bm56(e,q)});
 var hc=resolveCity();
 /* v5.31 item 64: exact name matches first, then local distance, then Featured and Claimed, then review count. */
 function ex64(e){var n=e.name.toLowerCase();if(n===q)return 0;if(n.indexOf(q)===0)return 1;var ws=n.split(/[^a-z0-9]+/);for(var i=0;i<ws.length;i++)if(ws[i]&&ws[i].indexOf(q)===0)return 2;return 3}
 biz=biz.map(function(e){return{w:e,d:(hc&&typeof hc.lat==="number"&&typeof e.la==="number")?havKm(e.la,e.lo,hc.lat,hc.lng):1e18}}).sort(function(a,b){return ex64(a.w)-ex64(b.w)||a.d-b.d||(((b.w.f?2:0)+(b.w.cl?1:0))-((a.w.f?2:0)+(a.w.cl?1:0)))||(b.w.v||0)-(a.w.v||0)}).map(function(x){return x.w})
-biz=biz.slice(0,6).map(function(e){return{k:"b"+e.url,label:e.name,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>",go:e.url}});
-show(s1,cats.concat(biz).slice(0,8),pickTerm,N1)}
+/* Gemini Ship 2 (Nov 24, 2026): local businesses
+first, then categories, then service keywords.
+Local means the active city or state (the sort above
+already puts the active city first inside local);
+out-of-area businesses appear only when no local
+business matches. With no active city, every match
+is local. */
+var locB=hc?biz.filter(function(e){return e.state===hc.state}):biz;
+var remB=hc?biz.filter(function(e){return e.state!==hc.state}):[];
+function bizItem(e){return{k:"b"+e.url,label:e.name,html:"<strong>"+esc(e.name)+"</strong><span>"+esc(e.vertical)+" \u00b7 "+esc(e.city)+", "+e.state+"</span>",go:e.url}}
+var items=locB.map(bizItem).concat(cats).concat(keys);
+if(!locB.length)items=items.concat(remB.map(bizItem));
+show(s1,items.slice(0,8),pickTerm,N1)}
+/* Gemini Ship 2 (Nov 24, 2026): the empty-focus
+dropdown, the same store and contract as the header
+module in assets/ytp.js (shared localStorage key
+ytp-recent-q57). Focusing the empty what box shows up
+to 3 recent searches, rendered synchronously from
+localStorage, plus up to 5 top trades for the active
+city ranked by review volume in the typeahead data.
+No new network call: the trades read the payload the
+focus handler already loads. */
+var RECQ="ytp-recent-q57";
+function recentsQ(){try{var v=JSON.parse(localStorage.getItem(RECQ)||"[]");
+return Array.isArray(v)?v.filter(function(x){return typeof x==="string"&&!!x}).slice(0,3):[]}catch(e){return[]}}
+function pushRecentQ(t){t=String(t||"").trim();if(!t)return;
+try{var v=JSON.parse(localStorage.getItem(RECQ)||"[]");if(!Array.isArray(v))v=[];
+var low=t.toLowerCase();
+v=v.filter(function(x){return typeof x==="string"&&x.toLowerCase()!==low});
+v.unshift(t);localStorage.setItem(RECQ,JSON.stringify(v.slice(0,5)))}catch(e){}}
+function tradeAggH(city){var agg={},n=0,i,e;
+for(i=0;i<D.length;i++){e=D[i];
+if(city&&!(e.city===city.city&&e.state===city.state))continue;
+agg[e.vslug]=(agg[e.vslug]||0)+(e.v||0);n++}
+return n?agg:null}
+function topTradesH(){if(!D||!TAC)return[];
+var city=resolveCity()||savedCity57();
+var agg=tradeAggH(city)||tradeAggH(null);if(!agg)return[];
+var bySlug={},i;
+for(i=0;i<TAC.length;i++)bySlug[TAC[i].slug]=TAC[i];
+return Object.keys(agg).sort(function(a,b){return agg[b]-agg[a]}).map(function(s){return bySlug[s]}).filter(Boolean).slice(0,5)}
+function showEmptyH(){var rec=recentsQ(),items=[],i;
+for(i=0;i<rec.length;i++)items.push({rec:rec[i],html:"<strong>"+esc(rec[i])+"</strong><span>Recent search</span>"});
+if(D){var tt=topTradesH();
+for(i=0;i<tt.length;i++)items.push({k:"c"+tt[i].slug,label:tt[i].label,vslug:tt[i].slug,html:"<strong>"+esc(tt[i].label)+"</strong><span>Category</span>",go:"/"+tt[i].slug+"/"})}
+if(!items.length){hideSug(s1,N1);N1.items=[];return}
+show(s1,items,function(it){if(it.rec){pickB=null;pickV=null;pickCat=false;f1.value=it.rec;hideSug(s1,N1);ensure(go);return}
+pickTerm(it)},N1)}
+function sugWhatH(){if(f1.value.trim()){loadD(sugBiz);return}
+showEmptyH();loadD(showEmptyH)}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[],i,e,nm;
@@ -186,21 +237,26 @@ for(i=0;i<TAC.length;i++)bySlug[TAC[i].slug]=TAC[i];
 var scored=[];
 if(qn.length===1){var one=[];
 for(i=0;i<TAC.length;i++){c=TAC[i];
-if(c.label.toLowerCase().indexOf(qn)===0)one.push({slug:c.slug,label:c.label,st:1})}
+if(c.label.toLowerCase().indexOf(qn)===0)one.push({slug:c.slug,label:c.label,st:1,src:"c"})}
 one.sort(function(a,b){return a.label.localeCompare(b.label)});
 return one.slice(0,5)}
-function push(slug,st){if(!bySlug[slug])return;
+/* Gemini Ship 2 (Nov 24, 2026): entries carry a src
+tag, "c" for a category match and "k" for a shared
+service keyword, so sugBiz can order categories ahead
+of service keywords. Routing in go() reads only the
+slug and is unchanged. */
+function push(slug,st,src){if(!bySlug[slug])return;
 for(var j=0;j<scored.length;j++)if(scored[j].slug===slug){if(st<scored[j].st)scored[j].st=st;return}
-scored.push({slug:slug,label:bySlug[slug].label,st:st})}
+scored.push({slug:slug,label:bySlug[slug].label,st:st,src:src||"c"})}
 for(i=0;i<TAC.length;i++){c=TAC[i];
 var lab=c.label.toLowerCase(),syns=c.syn||[];
-if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0);
-else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1);
-else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2)}
+if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0,"c");
+else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1,"c");
+else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2,"c")}
 var shared=TAS||{};
 for(var term in shared){var tl=term.toLowerCase();
 var st2=tl===qn?0:(tl.indexOf(qn)===0||qn.indexOf(tl)===0?1:(tl.indexOf(qn)>-1?2:-1));
-if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2)}
+if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2,"k")}
 if(!scored.length&&qn.length>=4){
 var fbest=null,fbd=99,ftie=false;
 for(i=0;i<TAC.length;i++){c=TAC[i];
@@ -210,7 +266,7 @@ var ws=cands[j].split(" ");
 for(var k=0;k<ws.length;k++){var dw=lev57(sing57(qn),sing57(ws[k]));if(dw<d)d=dw}}
 var th=qn.length<=5?1:2;
 if(d<=th){if(d<fbd){fbd=d;fbest=c.slug;ftie=false}else if(d===fbd)ftie=true}}
-if(fbest&&!ftie)push(fbest,3)}
+if(fbest&&!ftie)push(fbest,3,"c")}
 scored.sort(function(a,b){return a.st-b.st||a.label.localeCompare(b.label)});
 return scored.slice(0,3)}
 function nearestCity(la,lo){var wc=CT?CT.filter(function(e){return typeof e.lat==="number"&&typeof e.lng==="number"}):[];
@@ -227,6 +283,7 @@ function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
 return resolveCityText(f2.value)||zipCity65(f2.value)}
 function go(){var raw=f1.value.trim();
+pushRecentQ(raw);
 var nm=nearMe57(normQ(raw));
 var city=resolveCity();
 if(!city&&nm.place)city=resolveCityText(nm.place)||zipCity65(nm.place);
@@ -263,8 +320,8 @@ function keyNav(box,st,fn){return function(e){
 if(e.key==="ArrowDown"||e.key==="ArrowUp"){if(box.style.display==="block"&&st.items.length){e.preventDefault();st.act=(st.act+(e.key==="ArrowDown"?1:-1)+st.items.length)%st.items.length;paint(box,st)}return}
 if(e.key==="Enter"){if(box.style.display==="block"&&st.act>=0&&st.items[st.act]){e.preventDefault();fn(st.items[st.act])}else ensure(go);return}
 if(e.key==="Escape"){hideSug(box,st)}}}
-f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadD(sugBiz)});
-f1.addEventListener("focus",function(){loadD(sugBiz)});
+f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;sugWhatH()});
+f1.addEventListener("focus",function(){sugWhatH()});
 f1.addEventListener("keydown",keyNav(s1,N1,pickTerm));
 f2.addEventListener("input",function(){pickC=null;hideHint();loadCT(function(){loadZIP65(sugCity)})});
 f2.addEventListener("focus",function(){loadCT(sugCity)});

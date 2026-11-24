@@ -265,21 +265,26 @@ for(i=0;i<TA.cats.length;i++)bySlug[TA.cats[i].slug]=TA.cats[i];
 var scored=[];
 if(qn.length===1){var one=[];
 for(i=0;i<TA.cats.length;i++){c=TA.cats[i];
-if(c.label.toLowerCase().indexOf(qn)===0)one.push({slug:c.slug,label:c.label,st:1})}
+if(c.label.toLowerCase().indexOf(qn)===0)one.push({slug:c.slug,label:c.label,st:1,src:"c"})}
 one.sort(function(a,b){return a.label.localeCompare(b.label)});
 return one.slice(0,5)}
-function push(slug,st){if(!bySlug[slug])return;
+/* Gemini Ship 2 (Nov 24, 2026): entries carry a src tag,
+"c" for a category match and "k" for a shared service
+keyword, so sugBiz can order categories ahead of service
+keywords. Routing in go() reads only the slug and is
+unchanged. */
+function push(slug,st,src){if(!bySlug[slug])return;
 for(var j=0;j<scored.length;j++)if(scored[j].slug===slug){if(st<scored[j].st)scored[j].st=st;return}
-scored.push({slug:slug,label:bySlug[slug].label,st:st})}
+scored.push({slug:slug,label:bySlug[slug].label,st:st,src:src||"c"})}
 for(i=0;i<TA.cats.length;i++){c=TA.cats[i];
 var lab=c.label.toLowerCase(),syns=c.syn||[];
-if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0);
-else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1);
-else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2)}
+if(lab===qn||syns.indexOf(qn)>-1)push(c.slug,0,"c");
+else if(lab.indexOf(qn)===0||syns.some(function(s){return s.indexOf(qn)===0||qn.indexOf(s)===0}))push(c.slug,1,"c");
+else if(lab.indexOf(qn)>-1||syns.some(function(s){return s.indexOf(qn)>-1}))push(c.slug,2,"c")}
 var shared=TA.shared||{};
 for(var term in shared){var tl=term.toLowerCase();
 var st2=tl===qn?0:(tl.indexOf(qn)===0||qn.indexOf(tl)===0?1:(tl.indexOf(qn)>-1?2:-1));
-if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2)}
+if(st2>-1)for(i=0;i<shared[term].length;i++)push(shared[term][i],st2,"k")}
 /* Fuzzy stage: only when nothing matched above. A tie
 between two categories resolves to nothing, never a guess. */
 if(!scored.length&&qn.length>=4){
@@ -291,7 +296,7 @@ var ws=cands[j].split(" ");
 for(var k=0;k<ws.length;k++){var dw=lev57(sing57(qn),sing57(ws[k]));if(dw<d)d=dw}}
 var th=qn.length<=5?1:2;
 if(d<=th){if(d<fbd){fbd=d;fbest=c.slug;ftie=false}else if(d===fbd)ftie=true}}
-if(fbest&&!ftie)push(fbest,3)}
+if(fbest&&!ftie)push(fbest,3,"c")}
 scored.sort(function(a,b){return a.st-b.st||a.label.localeCompare(b.label)});
 return scored.slice(0,3)}
 function townLatLng(name){if(!name)return null;
@@ -312,22 +317,30 @@ var ws=n.split(/[^a-z0-9]+/);
 for(var i=0;i<ws.length;i++)if(ws[i]&&ws[i].indexOf(qn)===0)return 1;
 return 2}
 function pri64(e){return (e.f?2:0)+(e.cl?1:0)}
-function nameMatches(q){if(!TA)return[];
-var qn=normQ(q);if(qn.length<2)return[];
+/* Gemini Ship 2 (Nov 24, 2026): nameParts partitions
+business matches into local (the active town's 50-mile
+radius, then the active state, exactly the set the old
+nameMatches returned) and remote (out-of-area matches
+the old code dropped when a town was active). sugBiz
+shows remote matches only when no local business
+matches. With no active town there is no out of area:
+every match is local. */
+function nameParts(q){if(!TA)return{local:[],remote:[]};
+var qn=normQ(q);if(qn.length<2)return{local:[],remote:[]};
 var ms=TA.names.filter(function(e){return e.n.toLowerCase().indexOf(qn)>-1});
+function srt(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)}
 var loc=activeLoc();
-if(loc){var near=[],far=[];
+if(!loc){ms.sort(srt);return{local:ms.slice(0,5),remote:[]}}
+var near=[],far=[],rem=[];
 for(var i=0;i<ms.length;i++){var e=ms[i];
 if(typeof e.la==="number"){e._d=havMi(e.la,e.lo,loc.lat,loc.lng);
-if(e._d<=50)near.push(e);else if(e.s===loc.state)far.push(e)}
-else if(e.s===loc.state)far.push(e)}
+if(e._d<=50)near.push(e);else if(e.s===loc.state)far.push(e);else rem.push(e)}
+else if(e.s===loc.state)far.push(e);else rem.push(e)}
 near.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||a._d-b._d||(b.v||0)-(a.v||0)});
-far.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)});
-var out=near.slice(0,5);
-if(near.length<2)out=near.concat(far).slice(0,5);
-return out}
-ms.sort(function(a,b){return nameStr(a,qn)-nameStr(b,qn)||pri64(b)-pri64(a)||(b.v||0)-(a.v||0)});
-return ms.slice(0,5)}
+far.sort(srt);rem.sort(srt);
+var local=near.slice(0,5);
+if(near.length<2)local=near.concat(far).slice(0,5);
+return{local:local,remote:rem.slice(0,5)}}
 function show(box,items,fn){var input=box===s1?f1:f2;if(!items.length){box.innerHTML="";hideSug(box,input);return}
 box.innerHTML=items.map(function(it,i){return '<a href="#" id="'+box.id+'-opt-'+i+'" role="option" aria-selected="false">'+it.html+"</a>"}).join("");
 box.style.display="block";
@@ -335,9 +348,59 @@ var links=box.querySelectorAll("a");
 for(var i=0;i<links.length;i++){(function(a,it){a.addEventListener("click",function(ev){ev.preventDefault();fn(it)})})(links[i],items[i])}
 if(box===s1){s1Items=items;s1Fn=fn;hi57=-1}if(box===s2){s2Items=items;s2Fn=fn;hiW57=-1}syncCombo(box,input,-1)}
 function sugBiz(){var q=f1.value.trim().toLowerCase();q=nearMe57(q).q;if(q.length<1||!TA){hideSug(s1,f1);return}
-var cats=catMatches(q).map(function(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}});
-var biz=nameMatches(q).map(function(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}});
-show(s1,cats.concat(biz).slice(0,8),function(it){pickB=it.cat?null:it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");hideSug(s1,f1);ensure(go)})}
+var cm=catMatches(q),cats=[],keys=[],i;
+for(i=0;i<cm.length;i++)(cm[i].src==="k"?keys:cats).push(cm[i]);
+function catItem(c){return{vslug:c.slug,cat:true,label:c.label,go:"/"+c.slug+"/",html:"<strong>"+esc(c.label)+"</strong><span>Category</span>"}}
+function bizItem(e){return{go:e.u,vslug:e.vs,name:e.n,html:"<strong>"+esc(e.n)+"</strong><span>"+esc(e.t)+" \u00b7 "+esc(e.c)+", "+esc(e.s)+"</span>"}}
+/* Gemini Ship 2 order: local businesses first, then
+categories, then service keywords; out-of-area
+businesses only when no local business matches. */
+var np=nameParts(q);
+var items=np.local.map(bizItem).concat(cats.map(catItem)).concat(keys.map(catItem));
+if(!np.local.length)items=items.concat(np.remote.map(bizItem));
+show(s1,items.slice(0,8),function(it){pickB=it.cat?null:it.go;pickV=it.vslug||null;pickCat=!!it.cat;f1.value=it.cat?(it.label||""):(it.name||"");hideSug(s1,f1);ensure(go)})}
+/* Gemini Ship 2 (Nov 24, 2026): the empty-focus
+dropdown. Recent searches live in localStorage under
+ytp-recent-q57 (a different store from the recently
+viewed strip, ytp-recent-v1); a submitted search
+records its what text in go(). Focusing the empty
+what box shows up to 3 recents, rendered synchronously
+from localStorage, plus up to 5 top trades for the
+active city ranked by review volume in the typeahead
+data itself. No new network call: the trades read the
+payload the focus handler already loads, and the
+dropdown re-renders when it arrives. Rows go through
+show(), so the F2 combobox state, keyboard navigation,
+Escape and click-outside dismissal are the same as
+typed suggestions. */
+var RECQ="ytp-recent-q57";
+function recentsQ(){try{var v=JSON.parse(localStorage.getItem(RECQ)||"[]");
+return Array.isArray(v)?v.filter(function(x){return typeof x==="string"&&!!x}).slice(0,3):[]}catch(e){return[]}}
+function pushRecentQ(t){t=String(t||"").trim();if(!t)return;
+try{var v=JSON.parse(localStorage.getItem(RECQ)||"[]");if(!Array.isArray(v))v=[];
+var low=t.toLowerCase();
+v=v.filter(function(x){return typeof x==="string"&&x.toLowerCase()!==low});
+v.unshift(t);localStorage.setItem(RECQ,JSON.stringify(v.slice(0,5)))}catch(e){}}
+function tradeAgg57(city){var agg={},n=0,i,e;
+for(i=0;i<TA.names.length;i++){e=TA.names[i];
+if(city&&!(e.c===city.city&&e.s===city.state))continue;
+agg[e.vs]=(agg[e.vs]||0)+(e.v||0);n++}
+return n?agg:null}
+function topTrades57(){if(!TA||!TA.names||!TA.cats)return[];
+var city=resolveCity()||savedCity57();
+var agg=tradeAgg57(city)||tradeAgg57(null);if(!agg)return[];
+var bySlug={},i;
+for(i=0;i<TA.cats.length;i++)bySlug[TA.cats[i].slug]=TA.cats[i];
+return Object.keys(agg).sort(function(a,b){return agg[b]-agg[a]}).map(function(s){return bySlug[s]}).filter(Boolean).slice(0,5)}
+function showEmpty57(){var rec=recentsQ(),items=[],i;
+for(i=0;i<rec.length;i++)items.push({rec:rec[i],html:"<strong>"+esc(rec[i])+"</strong><span>Recent search</span>"});
+if(TA){var tt=topTrades57();
+for(i=0;i<tt.length;i++)items.push({vslug:tt[i].slug,cat:true,label:tt[i].label,go:"/"+tt[i].slug+"/",html:"<strong>"+esc(tt[i].label)+"</strong><span>Category</span>"})}
+if(!items.length){hideSug(s1,f1);return}
+show(s1,items,function(it){if(it.rec){pickB=null;pickV=null;pickCat=false;f1.value=it.rec;hideSug(s1,f1);ensure(go);return}
+pickB=null;pickV=it.vslug||null;pickCat=true;f1.value=it.label||"";hideSug(s1,f1);ensure(go)})}
+function sugWhat(){if(f1.value.trim()){loadTA(sugBiz);return}
+showEmpty57();loadTA(showEmpty57)}
 function cityMatches(q){var name=q,st="",ci=q.indexOf(",");
 if(ci>-1){name=q.slice(0,ci).trim();st=q.slice(ci+1).trim()}
 var pre=[],sub=[];
@@ -356,6 +419,7 @@ function resolveCity(){if(pickC)return pickC;
 if(!CT)return null;
 return resolveCityText(f2.value)||zipCity65(f2.value)}
 function go(){var raw=f1.value.trim();
+pushRecentQ(raw);
 var nm=nearMe57(normQ(raw));
 var city=resolveCity();
 if(!city&&nm.place)city=resolveCityText(nm.place)||zipCity65(nm.place);
@@ -381,8 +445,8 @@ if(city){location.href=city.url;return}
 if(q||nm.near){location.href=searchURL57(raw,null,f2.value.trim()||null);return}
 location.href="/search/"}
 form.addEventListener("submit",function(ev){ev.preventDefault();ensure(go)});
-f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;loadTA(sugBiz)});
-f1.addEventListener("focus",function(){loadTA(sugBiz)});
+f1.addEventListener("input",function(){pickB=null;pickV=null;pickCat=false;sugWhat()});
+f1.addEventListener("focus",function(){sugWhat()});
 /* v5.18 (item 45): the header dropdown gains the hero
 search keyboard navigation, and trades offer from the
 first keystroke (sugBiz gate above). A category pick

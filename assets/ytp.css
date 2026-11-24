@@ -630,6 +630,10 @@ html:has(body.has-sbar75){scroll-padding-bottom:90px}
 .result-card[data-feat="1"] .sicon57{width:200px;height:200px}
 .featchip{display:inline-block;background:#fdf6e0;color:#7a5200;border:1px solid #b07a00;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:10px;vertical-align:middle}
 .srch-act{justify-content:flex-end}
+/* Gemini Ship 2 (Nov 24, 2026): the search result card action bar stays on one row at normal card widths. The call and primary action buttons share the row equally and never wrap; the View link is the one that shrinks, ellipsized, when space runs out. */
+.srch-act{flex-wrap:nowrap}
+.srch-act .telbtn57,.srch-act .rtel{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;justify-content:center;text-align:center}
+.srch-act>a:last-child{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .telbtn57{display:inline-block;background:#fff;color:#0b5c46;border:1px solid #b9cdc4;padding:8px 13px;border-radius:8px;text-decoration:none;font-weight:700;min-height:44px;line-height:26px}
 .telbtn57:hover{border-color:#0e7a5f;color:#0e7a5f}
 .matchbox{margin:0 0 18px;padding:16px 18px}

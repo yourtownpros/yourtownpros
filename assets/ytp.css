@@ -599,6 +599,10 @@ footer{padding:0}
 .sgx-foot{margin-top:14px;border-top:1px solid #eee9dd;padding-top:12px;font-size:14px}
 .sgx-foot p{margin:4px 0}
 html{scroll-padding-top:120px}
+/* v5.76.9 WCAG group 6 (F7): on listing pages with the fixed mobile bottom bar, bottom scroll padding keeps focused elements clear of the bar. */
+html:has(body.has-sbar75){scroll-padding-bottom:90px}
+/* v5.76.9 WCAG group 6 (F6): honor reduced-motion requests globally. !important is required because class-level transition rules outrank the universal selector. */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 .ytp-collapse-btn{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d8d4c8;color:#12212e;font-weight:700;font-size:15px;padding:11px 18px;border-radius:8px;min-height:48px;cursor:pointer;list-style:none}
 .ytp-collapse-btn::-webkit-details-marker{display:none}
 .ytp-collapse-btn.matchbtn{display:flex;align-items:center;background:#0e7a5f;color:#fff;font-weight:700;font-size:15px;padding:11px 18px;border-radius:8px;min-height:48px;cursor:pointer;list-style:none}

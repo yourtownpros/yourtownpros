@@ -39,7 +39,7 @@ var sgRep=document.getElementById("sgx-report");
 if(sgRep)sgRep.addEventListener("click",function(ev){
 ev.preventDefault();
 var o=form.querySelector('.sgx-row[data-type="other"]');
-if(o){sgSelect(o);o.scrollIntoView({behavior:"smooth",block:"nearest"});}
+if(o){sgSelect(o);o.scrollIntoView({behavior:(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)?"auto":"smooth",block:"nearest"});}
 });
 form.addEventListener("submit",function(ev){
 ev.preventDefault();
@@ -632,7 +632,7 @@ if(!e.ctaHref){var mh=document.querySelector("#match h2");e.ctaLabel=mh?mh.textC
 var on=document.getElementById("ytp-opennow");if(on&&!on.hidden&&on.textContent.trim())e.open=on.textContent.trim();
 var ul=document.querySelector(".lochrs57 ul.hourslist");if(ul){var lis=ul.querySelectorAll("li");var parts=[];for(var i=0;i<lis.length;i++)parts.push(lis[i].textContent.trim());e.hours=parts.join("; ")}
 return e}
-var bar72=null,ov72=null;
+var bar72=null,ov72=null,opener72=null;
 function ensureUI72(){
 if(bar72)return;
 bar72=document.createElement("div");bar72.className="shortbar72";bar72.id="shortbar72";bar72.hidden=true;bar72.setAttribute("role","region");bar72.setAttribute("aria-label","Saved pros");
@@ -641,6 +641,8 @@ document.body.appendChild(bar72);
 ov72=document.createElement("div");ov72.className="cmp72";ov72.hidden=true;
 ov72.innerHTML='<div class="cmp-panel72" role="dialog" aria-label="Compare saved pros"><div class="cmp-head72"><h2>Compare saved pros</h2><button type="button" class="cmpclose72">Close</button></div><div class="cmp-grid72"></div></div>';
 document.body.appendChild(ov72)}
+function openCmp72(opener){ensureUI72();opener72=opener||null;ov72.hidden=false;renderCompare72();var cb=ov72.querySelector(".cmpclose72");if(cb)cb.focus()}
+function closeCmp72(restore){if(!ov72||ov72.hidden)return;ov72.hidden=true;var op=opener72;opener72=null;if(restore&&op&&document.contains(op))op.focus()}
 function ratingText72(e){if(!e.rating)return "-";var t=e.rating;if(e.reviews)t+=" ("+e.reviews+" reviews)";if(e.rsrc)t+=" \u00b7 "+e.rsrc;return t}
 function renderCompare72(){
 if(!ov72||ov72.hidden)return;var list=load72();var g=ov72.querySelector(".cmp-grid72");g.style.setProperty("--n72",String(Math.max(list.length,1)));
@@ -666,7 +668,7 @@ var cmp=bar72.querySelector(".shortcmp72");cmp.disabled=list.length<2;
 var note=bar72.querySelector(".shortnote72");var msg=noteMsg72||(list.length===1?"Save at least 2 pros to compare.":"");
 note.textContent=msg;note.hidden=!msg}
 syncButtons72(list);renderCompare72()}
-function remove72(slug){var list=load72();var i=find72(list,slug);if(i>=0){list.splice(i,1);store72(list)}noteMsg72="";if(list.length<2&&ov72&&!ov72.hidden&&list.length<1){ov72.hidden=true}paint72()}
+function remove72(slug){var list=load72();var i=find72(list,slug);if(i>=0){list.splice(i,1);store72(list)}noteMsg72="";if(list.length<2&&ov72&&!ov72.hidden&&list.length<1){closeCmp72(false)}paint72()}
 function toggle72(entry){
 if(!entry)return;var list=load72();var i=find72(list,entry.slug);
 if(i>=0){list.splice(i,1);store72(list);noteMsg72="";paint72();return}
@@ -683,11 +685,11 @@ var t=ev.target;if(!t||t.nodeType!==1||!t.closest)return;
 if(t.closest("#ytp-save")){ev.preventDefault();ev.stopPropagation();toggle72(profileEntry72());return}
 var cs=t.closest(".cardsave72");if(cs){ev.preventDefault();ev.stopPropagation();var card=cs.closest(".result-card");toggle72(card?cardEntry72(card):null);return}
 var rm=t.closest("[data-remove72]");if(rm){remove72(rm.getAttribute("data-remove72"));return}
-if(t.closest(".shortclear72")){store72([]);noteMsg72="";if(ov72)ov72.hidden=true;paint72();return}
-if(t.closest(".shortcmp72")){ensureUI72();ov72.hidden=false;renderCompare72();return}
-if(t.closest(".cmpclose72")||t===ov72){ov72.hidden=true;return}
+if(t.closest(".shortclear72")){store72([]);noteMsg72="";closeCmp72(false);paint72();return}
+if(t.closest(".shortcmp72")){openCmp72(t.closest(".shortcmp72"));return}
+if(t.closest(".cmpclose72")||t===ov72){closeCmp72(true);return}
 },true);
-document.addEventListener("keydown",function(ev){if(ev.key==="Escape"&&ov72&&!ov72.hidden)ov72.hidden=true});
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape")closeCmp72(true)});
 function ready72(f){if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",f);else f()}
 ready72(function(){
 ensureUI72();inject72();paint72();
@@ -722,7 +724,7 @@ return e}
 function pinScroll73(card){
 if(!card)return;
 card.classList.add("hl");
-try{card.scrollIntoView({block:"center",behavior:"smooth"})}catch(e){try{card.scrollIntoView()}catch(x){}}
+try{card.scrollIntoView({block:"center",behavior:(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)?"auto":"smooth"})}catch(e){try{card.scrollIntoView()}catch(x){}}
 var start=Date.now(),lastScroll=0,saw=false,done=false;
 function onScroll(){saw=true;lastScroll=Date.now()}
 window.addEventListener("scroll",onScroll,{passive:true});

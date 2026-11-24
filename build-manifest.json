@@ -1,5 +1,5 @@
 {
-  "version": "v5.10.34",
+  "version": "v5.10.35",
   "source_csv": "roster-input-extended.csv",
   "total_csv_rows": 17314,
   "phone_duplicates_dropped": 2,
@@ -1977,7 +1977,7 @@
       "map_embed": 12817,
       "attribute_chips": 1736,
       "about": 671,
-      "hours": 7963,
+      "hours": 7967,
       "since_year": 1511,
       "website_button": 3831,
       "services": 75,
@@ -3394,8 +3394,8 @@
     "open_now_scripts_exactly_on_hours_listings": true,
     "open_now_mount_timezones_match_state": true,
     "open_now_category_pages_exact": true,
-    "open_now_category_pages_count": 3129,
-    "open_now_category_entries_count": 7963,
+    "open_now_category_pages_count": 3132,
+    "open_now_category_entries_count": 7967,
     "open_now_category_script_wired": true,
     "open_now_js_syntax": true,
     "open_now_parser_fixture": {
@@ -3486,7 +3486,7 @@
     },
     "open_now_parser_coverage_exact": true,
     "open_now_unknown_listings_exact": true,
-    "open_now_determined_listings": 7912,
+    "open_now_determined_listings": 7916,
     "structure_matches_v53_after_deltas": true,
     "changed_files_fully_explained": true,
     "file_set_matches_v54_deltas": true,
@@ -3552,8 +3552,8 @@
     "events_snapshot_key_shipped": true,
     "events_fetch_tool_aggregates": true,
     "actions_block_copy": true,
-    "hours_listings_total": 7959,
-    "open_now_determined_listings_v55": 7912,
+    "hours_listings_total": 7963,
+    "open_now_determined_listings_v55": 7916,
     "open_now_unknown_listings_v55": [
       "auto-repair/3-carnales-automotive-santa-maria",
       "auto-repair/a-step-above-auto-repairs-warr-acres",
@@ -3819,7 +3819,7 @@
       "grid_winners_unchanged": true
     },
     "detail_category_pages": 7380,
-    "detail_pill_pages": 3129
+    "detail_pill_pages": 3132
   },
   "v591_checks": {
     "note": "v5.9.1: STATE OVERVIEW CITY INDEX (roadmap 10b; single theme). The state overviews linked their city hubs only indirectly, through the county hubs (the T4b finding: the 9 newest Colorado hubs had no direct link from the homepage or the state page). Each state overview now carries a 'Cities in <State>' section alongside (after) its Counties section: one card per city hub in the county section's card markup, anchor text the city name, alphabetical by city name, the card set exactly the construction set (city_hub_keys) for the state, so no link can point at a hub that does not exist. No meta line on the cards: the brief limits this section's copy to the heading and the city names. No other page changes; _norm591 strips exactly this block and is woven into the structural chains before _norm59 (deeper innermost).",
@@ -5023,6 +5023,27 @@
     "hours38_changed_subset_of_hours_pages": true,
     "hours_pages_7959": true,
     "fragment_count_6154": true,
+    "biz_data_delta_empty_vs_v51013_repo": true
+  },
+  "v51035_checks": {
+    "note": "v5.10.35: COLORADO FRONT RANGE TRANCHE 12 HOURS MERGE (Nov 23, data-only). The hours lane Front Range tranche 12 batch (hours-lane-front-range-tranche12-rows-2026-11-23.json, sourced from Places for 2 rows and the business's own website for 3 rows, all staged rows OPERATIONAL on the closure checks run during sourcing) merges hours only, after the tranche 11 batch, under the standing guards. 4 of the 5 staged slugs key over the included set and apply; one, Aspen Park Vet Hospital of Conifer, is do-not-call flagged and stays unenriched. Hours pages 7,959 to 7,963; the hours-honesty fragment set 6,154 to 6,150. No listing, total or sitemap URL moves.",
+    "hours39_stats": {
+      "keys_loaded": 5,
+      "rows_keyed": 5,
+      "rows_unkeyed": [],
+      "flagged_skipped": [
+        "veterinary/aspen-park-vet-hospital-conifer"
+      ],
+      "excluded_second_look": [],
+      "hours_applied": 4,
+      "hours_already_present": 0,
+      "hours_kept_existing": []
+    },
+    "hours39_stats_exact": true,
+    "hours39_changed_set_exact": true,
+    "hours39_changed_subset_of_hours_pages": true,
+    "hours_pages_7963": true,
+    "fragment_count_6150": true,
     "biz_data_delta_empty_vs_v51013_repo": true
   },
   "hub_checks": {
@@ -32859,7 +32880,7 @@
     "url_count": 23850
   },
   "link_check": {
-    "internal_hrefs_checked": 2281896,
+    "internal_hrefs_checked": 2281892,
     "broken": []
   },
   "phone_spot_check": {

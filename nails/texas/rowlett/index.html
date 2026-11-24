@@ -51,7 +51,7 @@ parts are escaped at construction; the half star rides in
 it as .hstar markup because U+2BE8 renders as tofu. */
 function popHtml(p){
 var h='<div class="ytp-pop">';
-if(p.img)h+='<img src="'+p.img+'" width="252" height="168" alt="Stock photo: nail salon">';
+if(p.img)h+='<img src="'+p.img+'" width="252" height="168" alt="nail salon">';
 h+='<p class="pname"><a href="'+p.url+'">'+esc(p.name)+"</a></p>";
 if(p.stars)h+='<p class="pstars">'+p.stars+"</p>";
 if(p.feat)h+='<p class="pstars">Sponsored · Featured</p>';

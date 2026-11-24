@@ -14,19 +14,19 @@
 <h2 id="featured">How Featured works</h2>
 <p>Featured is the paid top spot on YourTownPros, built on top of a claimed listing. Claiming stays free either way; Featured is the upgrade. Here is exactly how it works.</p>
 <ol class="featsteps">
-<li><strong>One spot per town and trade.</strong> Only one business holds the Featured spot for its kind of work in its town. While you hold it, no competitor in the same town and trade can take it.</li>
+<li><strong>Top placement in your town and trade.</strong> Featured puts your business at the top for its kind of work in its town, ahead of every free listing. Monthly Featured is not exclusive: a competitor in the same town and trade can buy it too, and Featured businesses appear together at the top. Only Founding Lifetime is exclusive, limited to one business per city and trade.</li>
 <li><strong>The top card, the badge, and booking.</strong> The holder gets the labeled Sponsored top card on its town and trade page, a Featured badge on its listing, and a booking block on the listing so customers can book or contact it directly.</li>
 <li><strong>Matched customers come to you first.</strong> When a customer asks us to find a pro in your town and trade, that request is flagged Featured priority and recorded against your business, so you hear about the work before anyone else.</li>
 <li><strong>It starts with a free taste week.</strong> The first week of routed demand is free, so you see real requests before paying anything.</li>
-<li><strong>Then a flat monthly lease.</strong> After the taste week, Featured continues as a flat monthly lease for as long as you keep the spot, exclusive to your business in your town and trade.</li>
+<li><strong>Then a flat monthly lease.</strong> After the taste week, Featured continues as a flat monthly lease for as long as you keep the spot.</li>
 <li><strong>Counted from real data.</strong> Results are counted from real visitor data: views of your listing and its category page, and the matched requests sent your way. We never use estimates.</li>
 </ol>
 <div id="fb-feat-state"></div>
 <div id="fb-partner"></div>
 <h2 id="pricing">Get Featured on YourTownPros</h2>
 <p>YourTownPros is run by Rankly Design. Every business in our directory already has a free listing. Paying never changes your rating or your reviews, and every paid placement is labeled Sponsored · Featured so customers always know. Payments are handled by Stripe; we never see or store your card number.</p>
-<p>The directory has 26,000+ pages live and drew about 15,600 Google searches in the last 28 days, and it is growing every week.</p>
-<p>Featured means your business shows first in your city and trade, and appears on your competitors' listing pages. A slot is one business, in one city, in one trade.</p>
+
+<p>Featured means your business shows at the top in your city and trade, and appears on your competitors' listing pages. A placement covers your business in one city and one trade.</p>
 <p><strong>Which one is for you?</strong></p>
 <ul>
 <li>Want steady top placement with no long commitment: Featured, $49/month.</li>
@@ -272,12 +272,12 @@ var box=document.getElementById("fb-feat-state");if(!box)return;
 var name=f?f.name:slug,trade=f?f.trade:"your trade",city=f?f.city:"your town";
 var mine=F.by_slug[slug];
 if(mine){
-var words=mine.state==="house"?"Featured is on for "+esc(name)+" as a house listing, and stays on.":(mine.state==="taste"?"The free taste week for "+esc(name)+" is running"+(mine.taste_end?" through "+esc(mine.taste_end):"")+". After the taste week it continues as a flat monthly lease for as long as the spot is kept.":"The flat monthly lease for "+esc(name)+" is active, and the spot is exclusive.");
+var words=mine.state==="house"?"Featured is on for "+esc(name)+" as a house listing, and stays on.":(mine.state==="taste"?"The free taste week for "+esc(name)+" is running"+(mine.taste_end?" through "+esc(mine.taste_end):"")+". After the taste week it continues as a flat monthly lease for as long as the spot is kept.":"The flat monthly lease for "+esc(name)+" is active.");
 box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">'+words+' <a href="/business/">Open your business dashboard</a></p></div>';
 return}
 var holder=F.by_cat[slug.split("/")[0]+"|"+(f?f.state:"")+"|"+city];
 if(holder&&holder.slug!==slug){
-box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is currently held by '+esc(holder.name)+'. Spots are exclusive: one business per town and trade. <a href="#matching">Talk to us</a> about your options.</p></div>';
+box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is currently held by '+esc(holder.name)+'. <a href="#matching">Talk to us</a> about your options.</p></div>';
 return}
 box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is open. It starts with a free taste week of routed demand, then a flat monthly lease for as long as you keep the spot. <a href="#matching">Talk to us</a> and we will set it up.</p></div>';
 }

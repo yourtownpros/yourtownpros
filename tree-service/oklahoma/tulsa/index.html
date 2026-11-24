@@ -48,7 +48,7 @@ function iconFor(n,big){return L.divIcon({className:"ytp-pinwrap",html:'<div cla
 function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function popHtml(p){
 var h='<div class="ytp-pop">';
-if(p.img)h+='<img src="'+p.img+'" width="252" height="168" alt="Stock photo: tree service company">';
+if(p.img)h+='<img src="'+p.img+'" width="252" height="168" alt="tree service company">';
 h+='<p class="pname"><a href="'+p.url+'">'+esc(p.name)+"</a></p>";
 if(p.stars)h+='<p class="pstars">'+esc(p.stars)+"</p>";
 if(p.feat)h+='<p class="pstars">Sponsored · Featured</p>';

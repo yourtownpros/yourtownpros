@@ -236,7 +236,7 @@ function factsParagraph(l, t, st, ap) {
   }
   let contact = `Call ${esc(l.phone)}`;
   if (l.address) contact += ` or visit ${esc(l.address)}`;
-  if (l.website) contact += "; the business also has its own website, linked on this page";
+  if (l.website && l.show_website_link) contact += "; the business also has its own website, linked on this page";
   parts.push(contact + ".");
   return parts.join(" ");
 }
@@ -308,7 +308,7 @@ function hero(l, t) {
   const img = (w) => `${base}?auto=format&amp;fit=crop&amp;w=${w}&amp;q=60`;
   return `<div class="bizhero57"><img class="photoband-img" src="${img(1200)}" ` +
     `srcset="${img(480)} 480w, ${img(828)} 828w, ${img(1200)} 1200w" sizes="100vw" width="1200" height="180" ` +
-    `fetchpriority="high" alt="Stock photo: ${escAttr(t.phrase)} in ${escAttr(l.city)}, ${l.state}" onerror="this.parentNode.classList.add('imgfail62');this.remove()"></div>`;
+    `fetchpriority="high" alt="${escAttr(t.phrase)} in ${escAttr(l.city)}, ${l.state}" onerror="this.parentNode.classList.add('imgfail62');this.remove()"></div>`;
 }
 
 function h1block(l, t) {

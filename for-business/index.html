@@ -17,8 +17,8 @@
 <li><strong>Top placement in your town and trade.</strong> Featured puts your business at the top for its kind of work in its town, ahead of every free listing. Monthly Featured is not exclusive: a competitor in the same town and trade can buy it too, and Featured businesses appear together at the top. Only Founding Lifetime is exclusive, limited to one business per city and trade.</li>
 <li><strong>The top card, the badge, and booking.</strong> The holder gets the labeled Sponsored top card on its town and trade page, a Featured badge on its listing, and a booking block on the listing so customers can book or contact it directly.</li>
 <li><strong>Matched customers come to you first.</strong> When a customer asks us to find a pro in your town and trade, that request is flagged Featured priority and recorded against your business, so you hear about the work before anyone else.</li>
-<li><strong>It starts with a free taste week.</strong> The first week of routed demand is free, so you see real requests before paying anything.</li>
-<li><strong>Then a flat monthly lease.</strong> After the taste week, Featured continues as a flat monthly lease for as long as you keep the spot.</li>
+<li><strong>At the founding rate, it starts with a free taste week.</strong> The founding rate's first week of routed demand is free, so you see real requests before paying anything. The standard $49 monthly rate has no free week: it is charged on day one.</li>
+<li><strong>Then a flat monthly lease.</strong> After any founding-rate taste week, Featured continues as a flat monthly lease for as long as you keep the spot.</li>
 <li><strong>Counted from real data.</strong> Results are counted from real visitor data: views of your listing and its category page, and the matched requests sent your way. We never use estimates.</li>
 </ol>
 <div id="fb-feat-state"></div>
@@ -279,7 +279,7 @@ var holder=F.by_cat[slug.split("/")[0]+"|"+(f?f.state:"")+"|"+city];
 if(holder&&holder.slug!==slug){
 box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is currently held by '+esc(holder.name)+'. <a href="#matching">Talk to us</a> about your options.</p></div>';
 return}
-box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is open. It starts with a free taste week of routed demand, then a flat monthly lease for as long as you keep the spot. <a href="#matching">Talk to us</a> and we will set it up.</p></div>';
+box.innerHTML='<div class="card"><h3>Featured and '+esc(name)+'</h3><p style="margin:0">The Featured spot for '+esc(trade)+' in '+esc(city)+' is open. At the founding rate it starts with a free taste week of routed demand, then continues as a flat monthly lease for as long as you keep the spot. The standard $49 monthly rate is charged from day one. <a href="#matching">Talk to us</a> and we will set it up.</p></div>';
 }
 A.sb.from("claims").select("business_slug,business_name,status,created_at").eq("user_id",A.user.id).order("created_at",{ascending:false}).then(function(r){
 var claims=(r&&r.data)||[];

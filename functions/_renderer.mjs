@@ -457,7 +457,9 @@ function lochrs(l) {
 
 function feat(l, t) {
   // Ship 2 E8.3: the Featured pitch collapsed to the Sponsored label only.
-  return `<div class="feat"><div class="k">Sponsored · Featured spot open</div></div>`;
+  // Nov 25 ship: the open-spot line is a working link to /for-business/,
+  // pre-identifying the listing the same way the claim link does.
+  return `<div class="feat"><div class="k">Sponsored · <a href="/for-business/?business=${l.path}&name=${enc(l.name)}">Featured spot open</a></div></div>`;
 }
 
 // Item 49 CTA modes (same map as the static generator and the

@@ -1,0 +1,9 @@
+-- Tranche 10 delta (staged 2026-11-25, v2 publish tranche 10, Option D gate with Census pin first and town-center fallback): towns rows for the new towns the published listings sit in.
+-- Centers are the centroid of the town's own Census-matched address pins
+-- from this tranche, or of its sheet pins where the town carries only
+-- fallback listings. listing_count counts only the listings this set
+-- publishes in the town.
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('CO', 'nunn', 'Nunn', 'colorado', 40.71003, -104.78277, NULL, 1) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('PA', 'conestoga', 'Conestoga', 'pennsylvania', 39.942379, -76.353984, NULL, 1) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('TX', 'dripping-springs', 'Dripping Springs', 'texas', 30.197274, -98.021356, NULL, 1) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;
+INSERT INTO towns (state, city_slug, city, state_slug, lat, lng, tz, listing_count) VALUES ('TX', 'kyle', 'Kyle', 'texas', 29.99862, -97.876977, NULL, 1) ON CONFLICT (state, city_slug) DO UPDATE SET city = excluded.city, state_slug = excluded.state_slug, lat = excluded.lat, lng = excluded.lng, tz = excluded.tz, listing_count = excluded.listing_count;

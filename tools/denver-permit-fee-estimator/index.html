@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Estimate a Denver building permit fee from your project valuation, using the fee table on the city's own Building and Land Development Fees page." />
+    <link rel="canonical" href="https://yourtownpros.com/tools/denver-permit-fee-estimator/" />
+    <link rel="icon" href="data:," />
+    <script async src="https://www.googletagmanager.com/gtm.js?id=G-N3X91JV46L"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+    <title>Denver Permit Fee Estimator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#f4f6f3; --surface:#ffffff; --surface-2:#eef3ee; --ink:#17251f; --ink-soft:#42544b; --ink-faint:#68796f;
+        --line:#d5ddd6; --pine:#174736; --pine-deep:#0f3125; --copper:#b04f1b; --copper-soft:#fdf0e6; --gold:#e9a13b;
+        --good:#1d7a4f; --good-soft:#e6f4ec; --flag:#b3261e; --flag-soft:#fdecea; --focus:#2f7fd0;
+        --shadow:0 1px 2px rgba(15,49,37,.06),0 8px 28px rgba(15,49,37,.07); --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{ --bg:#0d1512; --surface:#16211c; --surface-2:#1c2a23; --ink:#eef4f0; --ink-soft:#b9c9bf; --ink-faint:#8fa398;
+          --line:#2c3d34; --pine:#2c7a5c; --pine-deep:#123528; --copper:#eda06a; --copper-soft:#33231a; --good:#5cc48d;
+          --good-soft:#173327; --flag:#ff9d94; --flag-soft:#3a201d; --focus:#7ab5ec; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); }
+      }
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+      body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:16.5px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+      h1,h2,h3{font-family:"Bitter",Georgia,serif; line-height:1.15; margin:0}
+      a{color:var(--pine); text-underline-offset:3px}
+      @media (prefers-color-scheme: dark){ a{color:#8fd0b2} }
+      :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
+      .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+      .brandbar{background:var(--pine-deep); color:#fff}
+      .brandbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px; flex-wrap:wrap}
+      .brand{font-family:"Bitter",serif; font-weight:800; font-size:21px; letter-spacing:.2px; color:#fff; text-decoration:none}
+      .brand span{color:var(--gold)}
+      .brandbar p{margin:0; font-size:13.5px; color:#cfe3d8}
+      .hero{padding:38px 0 8px}
+      .hero h1{font-size:clamp(32px,5.4vw,50px); font-weight:800; max-width:18ch}
+      .hero .lede{font-size:19px; color:var(--ink-soft); max-width:62ch; margin:16px 0 0}
+      .hero .lede strong{color:var(--ink)}
+      .hero-note{margin-top:16px; font-size:14.5px; color:var(--ink-faint); max-width:66ch}
+      .tool{padding:30px 0 10px}
+      .tool-grid{display:grid; grid-template-columns:400px 1fr; gap:22px; align-items:start}
+      @media (max-width:900px){ .tool-grid{grid-template-columns:1fr} }
+      .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+      .step-tag{display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--copper); margin-bottom:8px}
+      .form-card{padding:24px; position:sticky; top:16px}
+      @media (max-width:900px){ .form-card{position:static} }
+      .form-card h2{font-size:23px; margin-bottom:6px}
+      .form-card .hint{color:var(--ink-soft); font-size:14.5px; margin:0 0 18px}
+      .field{margin-bottom:15px}
+      .field label{display:block; font-weight:600; font-size:14.5px; margin-bottom:5px}
+      .field input,.field select{ width:100%; font:inherit; font-size:16px; color:var(--ink); background:var(--surface); border:1.5px solid var(--line); border-radius:9px; padding:9px 12px; }
+      .field .sub{font-size:13.5px; color:var(--ink-faint); margin-top:4px}
+      .btn{display:inline-block; font:inherit; font-weight:700; font-size:16px; border-radius:10px; padding:11px 20px; border:1.5px solid transparent; cursor:pointer; text-decoration:none}
+      .btn-pine{background:var(--pine); color:#fff}
+      .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink)}
+      .btn-small{padding:8px 14px; font-size:14.5px}
+      .result-card{padding:24px}
+      .result-card h2{font-size:23px; margin-bottom:6px}
+      .placeholder{color:var(--ink-faint)}
+      .fee-big{font-family:"Bitter",serif; font-size:40px; font-weight:800; color:var(--pine); margin:8px 0 2px}
+      @media (prefers-color-scheme: dark){ .fee-big{color:#8fd0b2} }
+      .fee-lines{margin:14px 0; padding:0; list-style:none}
+      .fee-lines li{display:flex; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px solid var(--line)}
+      .fee-lines li.total{font-weight:700; border-bottom:none}
+      .math-note{background:var(--surface-2); border-radius:10px; padding:14px 16px; font-size:15px; margin:14px 0}
+      .caveat{font-size:14.5px; color:var(--ink-soft)}
+      .table-card{padding:24px; margin-top:22px}
+      table{width:100%; border-collapse:collapse; font-size:14.5px}
+      th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+      th{font-family:"Bitter",serif}
+      .faq{padding:30px 0}
+      .faq h2{font-size:26px; margin-bottom:14px}
+      .faq-item{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; box-shadow:var(--shadow)}
+      .faq-item h3{font-size:17.5px; margin-bottom:6px}
+      .faq-item p{margin:0; color:var(--ink-soft)}
+      .sources{padding:6px 0 30px; font-size:14.5px; color:var(--ink-soft)}
+      .claim{background:var(--pine-deep); color:#fff; border-radius:var(--radius); padding:26px; margin:10px 0 40px}
+      .claim h2{color:#fff; font-size:24px; margin-bottom:8px}
+      .claim p{color:#cfe3d8; margin:0 0 16px; max-width:60ch}
+      .claim .btn{background:var(--gold); color:#17251f}
+      .privacy-line{font-size:13px; color:var(--ink-faint); margin:12px 0 0; text-align:center}
+      footer{padding:0 0 44px; font-size:14px; color:var(--ink-faint)}
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Denver Permit Fee Estimator",
+      "url": "https://yourtownpros.com/tools/denver-permit-fee-estimator/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "provider": { "@type": "Organization", "name": "YourTownPros", "url": "https://yourtownpros.com/" },
+      "description": "Estimate a Denver building permit fee from your project valuation, using the fee table on the city's own Building and Land Development Fees page."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How does Denver calculate a building permit fee?", "acceptedAnswer": { "@type": "Answer", "text": "From the valuation of the work, using the fee table on the city's Building and Land Development Fees page. Small jobs pay a flat fee, and larger jobs pay a base amount plus a charge for each additional $1,000 of valuation or fraction of one." } },
+        { "@type": "Question", "name": "Is the plan review fee included?", "acceptedAnswer": { "@type": "Answer", "text": "Denver lists a plan review fee of 50 percent of the permit fee for valuations above $2,000, and no plan review fee at $2,000 or less. Quick permits, which cover like-for-like replacements such as water heaters and furnaces, have no plan review fee." } },
+        { "@type": "Question", "name": "Does this estimate include every city charge?", "acceptedAnswer": { "@type": "Answer", "text": "No. It covers the building permit fee and the standard plan review fee from the city's table. Denver also charges a separate zoning construction permit fee on many projects, plus charges such as reinspection fees when they apply. The city sets the final amount." } },
+        { "@type": "Question", "name": "What counts as the valuation of the work?", "acceptedAnswer": { "@type": "Answer", "text": "Denver's Admin 138 policy defines valuation as the total value of all construction work for the permit, including labor, materials, profit, overhead, and permanent equipment. If the city's valuation is higher than the one on the application, fees are assessed on the higher number." } }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="wrap">
+        <a class="brand" href="https://yourtownpros.com/">YourTown<span>Pros</span></a>
+        <p>Free tools for Denver homeowners and the pros they hire</p>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="wrap">
+        <h1>Denver permit fee estimator</h1>
+        <p class="lede">Denver charges building permit fees from the <strong>valuation of the work</strong>, not by the hour or by the trade. Enter your project valuation and this estimator applies the fee table from the city's own <strong>Building and Land Development Fees</strong> page, with the arithmetic shown.</p>
+        <p class="hero-note">This is an estimate. The City and County of Denver sets the final fee, and its valuation of your project can differ from yours. Fee table read from the city's page on November 27, 2026.</p>
+        <p class="hero-note" style="color:var(--ink)"><strong>Scope: the total covers the building permit fee and the standard plan review fee only. Denver's separate zoning construction permit fee is not included.</strong></p>
+      </div>
+    </header>
+
+    <section class="tool">
+      <div class="wrap">
+        <div class="tool-grid">
+          <div class="card form-card">
+            <span class="step-tag">Step 1</span>
+            <h2>Your project</h2>
+            <p class="hint">Valuation means the total value of the work: labor, materials, and permanent equipment.</p>
+            <div class="field">
+              <label for="valuation">Project valuation (USD)</label>
+              <input id="valuation" type="number" min="1" step="1" inputmode="decimal" placeholder="e.g. 7500" />
+            </div>
+            <div class="field">
+              <label for="ptype">Project type</label>
+              <select id="ptype">
+                <option value="water-heater">Water heater replacement</option>
+                <option value="furnace">Furnace or heat pump replacement</option>
+                <option value="electrical">Electrical work</option>
+                <option value="roofing">Roofing</option>
+                <option value="remodel">Interior remodel</option>
+                <option value="other">Other building work</option>
+              </select>
+              <p class="sub">The city's fee table is the same for every project type. The type still matters: water heater, furnace, and standard electrical jobs are Denver quick permits, which carry no plan review fee, so their headline total is the permit fee alone.</p>
+            </div>
+            <button class="btn btn-pine" id="calc" type="button">Estimate my fee</button>
+            <p class="privacy-line">Your estimate runs in this page. The valuation you type is never sent or saved. We count anonymous estimates and result views with Google Analytics and GoatCounter, never the numbers you typed.</p>
+          </div>
+
+          <div class="card result-card" aria-live="polite">
+            <span class="step-tag">Step 2</span>
+            <h2>Your estimate</h2>
+            <div id="result"><p class="placeholder">Enter a valuation and run the estimator. Your permit fee, plan review fee, and the math behind both will appear here.</p></div>
+          </div>
+        </div>
+
+        <div class="card table-card">
+          <h2 style="font-size:22px; margin-bottom:10px">The city's table, as published</h2>
+          <p class="caveat" style="margin-top:0">Building permit fees from the City and County of Denver's Building and Land Development Fees page, read November 27, 2026. The plan review fee column is the share of the permit fee the city lists for that bracket.</p>
+          <table>
+            <thead><tr><th>Valuation of work</th><th>Permit fee</th><th>Plan review fee</th></tr></thead>
+            <tbody>
+              <tr><td>$1.00 to $500.00</td><td>$20.00</td><td>0</td></tr>
+              <tr><td>$501.00 to $2,000.00</td><td>$35.00</td><td>0</td></tr>
+              <tr><td>$2,001.00 to $25,000.00</td><td>$35.00 for the first $2,000.00 plus $8.00 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+              <tr><td>$25,001.00 to $50,000.00</td><td>$220.00 for the first $25,000.00 plus $8.00 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+              <tr><td>$50,001.00 to $100,000.00</td><td>$420.00 for the first $50,000.00 plus $7.00 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+              <tr><td>$100,001.00 to $500,000.00</td><td>$770.00 for the first $100,000 plus $5.60 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+              <tr><td>$500,001.00 to $1,000,000.00</td><td>$3,010.00 for the first $500,000.00 plus $4.75 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+              <tr><td>$1,000,001.00 and over</td><td>$5,385.00 for the first $1,000,000.00 plus $3.65 for each additional $1,000.00 or fraction thereof</td><td>50%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div class="wrap">
+        <h2>Questions, answered plainly</h2>
+        <div class="faq-item">
+          <h3>How does Denver calculate a building permit fee?</h3>
+          <p>From the valuation of the work, using the fee table on the city's Building and Land Development Fees page. Small jobs pay a flat fee, and larger jobs pay a base amount plus a charge for each additional $1,000 of valuation or fraction of one.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is the plan review fee included?</h3>
+          <p>Denver lists a plan review fee of 50 percent of the permit fee for valuations above $2,000, and no plan review fee at $2,000 or less. Quick permits, which cover like-for-like replacements such as water heaters and furnaces, have no plan review fee.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does this estimate include every city charge?</h3>
+          <p>No. It covers the building permit fee and the standard plan review fee from the city's table. Denver also charges a separate zoning construction permit fee on many projects, plus charges such as reinspection fees when they apply. The city sets the final amount.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What counts as the valuation of the work?</h3>
+          <p>Denver's Admin 138 policy defines valuation as the total value of all construction work for the permit, including labor, materials, profit, overhead, and permanent equipment. If the city's valuation is higher than the one on the application, fees are assessed on the higher number.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sources">
+      <div class="wrap">
+        <p><strong>Sources.</strong> Fee table: City and County of Denver, <a href="https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Plan-Review-Permits-and-Inspections/Development-Fees">Building and Land Development Fees</a>, read November 27, 2026. Valuation and quick permit rules: Denver's <a href="https://www.denvergov.org/content/dam/denvergov/Portals/696/documents/Denver_Building_Code/2011_Code_Policies/ADMIN_138.pdf">Admin 138 building code policy (PDF)</a>. Next step: read our <a href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a> or browse <a href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="claim">
+        <h2>Run a Denver trade business?</h2>
+        <p>Your YourTownPros listing is free, and it stays free. Claim it to fix anything we got wrong, add your hours and services, and show up correctly when homeowners search.</p>
+        <a class="btn" href="https://yourtownpros.com/claim/?source=permit-fee-estimator">Claim your free listing</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <p><strong>Denver Permit Fee Estimator</strong> is a free tool from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory. It is not affiliated with the City and County of Denver. Fees are estimated from the city's published table; the city sets the final fee on every permit.</p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/tools/denver-permit-checker/">Do I need a permit in Denver?</a> · <a href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a></p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        function track(name, params){ if (window.gtag) { gtag("event", name, params || {}); } }
+        var BRACKETS = [
+          { upTo: 500, label: "$1.00 to $500.00", base: 20, baseCovers: 500, per: 0, review: 0, text: "$20.00 flat" },
+          { upTo: 2000, label: "$501.00 to $2,000.00", base: 35, baseCovers: 2000, per: 0, review: 0, text: "$35.00 flat" },
+          { upTo: 25000, label: "$2,001.00 to $25,000.00", base: 35, baseCovers: 2000, per: 8, review: 0.5, text: "$35.00 for the first $2,000.00 plus $8.00 for each additional $1,000.00 or fraction thereof" },
+          { upTo: 50000, label: "$25,001.00 to $50,000.00", base: 220, baseCovers: 25000, per: 8, review: 0.5, text: "$220.00 for the first $25,000.00 plus $8.00 for each additional $1,000.00 or fraction thereof" },
+          { upTo: 100000, label: "$50,001.00 to $100,000.00", base: 420, baseCovers: 50000, per: 7, review: 0.5, text: "$420.00 for the first $50,000.00 plus $7.00 for each additional $1,000.00 or fraction thereof" },
+          { upTo: 500000, label: "$100,001.00 to $500,000.00", base: 770, baseCovers: 100000, per: 5.6, review: 0.5, text: "$770.00 for the first $100,000 plus $5.60 for each additional $1,000.00 or fraction thereof" },
+          { upTo: 1000000, label: "$500,001.00 to $1,000,000.00", base: 3010, baseCovers: 500000, per: 4.75, review: 0.5, text: "$3,010.00 for the first $500,000.00 plus $4.75 for each additional $1,000.00 or fraction thereof" },
+          { upTo: Infinity, label: "$1,000,001.00 and over", base: 5385, baseCovers: 1000000, per: 3.65, review: 0.5, text: "$5,385.00 for the first $1,000,000.00 plus $3.65 for each additional $1,000.00 or fraction thereof" }
+        ];
+        var ZONING = [
+          { upTo: 500, text: "$10" },
+          { upTo: 2000, text: "$25" },
+          { upTo: 50000, text: "$35 plus $0.50 per $1,000 in valuation or fraction thereof" },
+          { upTo: 100000, text: "$100 plus $0.50 per $1,000 in valuation or fraction thereof" },
+          { upTo: Infinity, text: "$150 plus $0.50 per $1,000 in valuation or fraction thereof" }
+        ];
+        var QUICK_TYPES = { "water-heater": true, "furnace": true, "electrical": true };
+        function money(n) { return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+        function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+        document.getElementById("calc").addEventListener("click", function () {
+          var v = parseFloat(document.getElementById("valuation").value);
+          var type = document.getElementById("ptype").value;
+          var out = document.getElementById("result");
+          if (!v || v <= 0) {
+            out.innerHTML = "<p class=\"placeholder\">Enter a valuation above $0 to run the estimate. Denver values the work as the total of labor, materials, and permanent equipment.</p>";
+            return;
+          }
+          track("permit_fee_estimate_submitted");
+          var b = null, i;
+          for (i = 0; i < BRACKETS.length; i++) { if (v <= BRACKETS[i].upTo) { b = BRACKETS[i]; break; } }
+          var extra = Math.max(0, Math.ceil((v - b.baseCovers) / 1000));
+          var fee = b.base + extra * b.per;
+          var quick = !!QUICK_TYPES[type];
+          var review = quick ? 0 : Math.round(fee * b.review * 100) / 100;
+          var total = fee + review;
+          var z = null;
+          for (i = 0; i < ZONING.length; i++) { if (v <= ZONING[i].upTo) { z = ZONING[i]; break; } }
+          var math;
+          if (b.per === 0) {
+            math = "Your valuation of " + money(v) + " falls in Denver's " + b.label + " bracket, which is a flat fee of " + money(b.base) + ".";
+          } else {
+            math = "Your valuation of " + money(v) + " falls in Denver's " + b.label + " bracket. The city charges " + b.text + ". Your job has " + extra + " additional started thousand" + (extra === 1 ? "" : "s") + " above " + money(b.baseCovers) + ", so the permit fee is " + money(b.base) + " plus " + extra + " times " + money(b.per) + ", which is " + money(fee) + ".";
+          }
+          var reviewLine;
+          if (quick) {
+            reviewLine = "This project type is a Denver quick permit, and quick permits carry no plan review fee, so the plan review fee is $0.00 and the permit fee is the whole estimate.";
+          } else if (b.review === 0) {
+            reviewLine = "Denver's table lists no plan review fee at this valuation.";
+          } else {
+            reviewLine = "The standard plan review fee is 50 percent of the permit fee, which is " + money(review) + " here.";
+          }
+          var quickNote = "";
+          if (quick) {
+            quickNote = "<p class=\"caveat\">Quick permit note: Denver issues like-for-like replacements such as water heaters, furnaces, and standard electrical work as quick permits. Denver's Admin 138 policy says quick permits have no plan review fees and are checked by field inspection instead, which is why the plan review line above is $0.00.</p>";
+          }
+          var headlineCaption = quick
+            ? "Estimated building permit fee. This is a quick permit job, and quick permits carry no plan review fee."
+            : "Estimated building permit fee plus standard plan review fee";
+          var reviewRow = quick
+            ? "<li><span>Plan review fee (quick permits carry no plan review fee)</span><span>$0.00</span></li>"
+            : "<li><span>Plan review fee</span><span>" + money(review) + "</span></li>";
+          out.innerHTML =
+            "<p class=\"fee-big\">" + money(total) + "</p>" +
+            "<p class=\"caveat\" style=\"margin:0\">" + headlineCaption + "</p>" +
+            "<ul class=\"fee-lines\">" +
+            "<li><span>Building permit fee</span><span>" + money(fee) + "</span></li>" +
+            reviewRow +
+            "<li class=\"total\"><span>Estimated total</span><span>" + money(total) + "</span></li>" +
+            "</ul>" +
+            "<div class=\"math-note\">" + esc(math) + " " + esc(reviewLine) + "</div>" +
+            quickNote +
+            "<p class=\"caveat\">Not included: Denver also charges a separate zoning construction permit fee on many projects. For a valuation in your range, the city's zoning table reads: " + esc(z.text) + ". Reinspection and other charges can apply. The City and County of Denver sets the final fee on every permit, and if the city values your work higher than the figure you entered, it assesses fees on its own valuation.</p>";
+          track("permit_fee_result_shown", { quick_permit: QUICK_TYPES[type] ? "yes" : "no" });
+        });
+        document.querySelectorAll('a[href*="denvergov.org"]').forEach(function (a) {
+          a.addEventListener("click", function () { track("permit_fee_click_source"); });
+        });
+      })();
+    </script>
+    <script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>

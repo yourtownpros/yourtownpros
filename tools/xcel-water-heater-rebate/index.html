@@ -182,6 +182,15 @@
         #results{display:block!important}
         .card{box-shadow:none}
       }
+      body.embed-mode .brandbar,
+      body.embed-mode .hero,
+      body.embed-mode .faq,
+      body.embed-mode .embed,
+      body.embed-mode .next,
+      body.embed-mode footer{display:none!important}
+      body.embed-mode .tool{padding-top:12px}
+      details.closed-note summary{cursor:pointer; font-weight:700; font-size:17px; font-family:"Bitter",Georgia,serif}
+      details.closed-note p{margin-top:8px}
     </style>
     <script type="application/ld+json">
     {
@@ -335,6 +344,13 @@
         </div>
       </section>
 
+      <section class="faq" aria-label="Closed incentives note">
+        <details class="faq-item closed-note">
+          <summary>What about the federal tax credit or the Colorado HEAR rebate?</summary>
+          <p>Both have ended: the federal energy efficient home improvement credit (Section 25C) ended for equipment placed in service after December 31, 2025, and Colorado's HEAR rebate program has ended as well. For a qualifying heat pump water heater, the Xcel rebate estimated above is the remaining incentive.</p>
+        </details>
+      </section>
+
       <section class="faq" aria-labelledby="faq-h">
         <h2 id="faq-h">Questions, answered plainly</h2>
 
@@ -365,7 +381,8 @@
           <span class="step-tag">For other websites</span>
           <h2 id="embed-h">Embed this calculator on your site</h2>
           <p>Plumbers, home inspectors, real estate agents, HOAs, and property managers: put the calculator on your own page, free, and help your customers see the rebate before they buy. Paste this code where you want it to appear. The line under the tool credits YourTownPros and links back here; please keep it in place.</p>
-          <textarea id="embedCode" readonly rows="4" aria-label="Embed code">&lt;iframe src="https://yourtownpros.com/tools/xcel-water-heater-rebate/" width="100%" height="760" style="border:1px solid #d5ddd6;border-radius:14px;max-width:1120px" title="Xcel Water Heater Rebate Calculator" loading="lazy"&gt;&lt;/iframe&gt;
+          <textarea id="embedCode" readonly rows="6" aria-label="Embed code">&lt;iframe id="ytp-rebate-calculator" src="https://yourtownpros.com/tools/xcel-water-heater-rebate/?embed=1" width="100%" height="700" scrolling="no" style="border:1px solid #d5ddd6;border-radius:14px;max-width:1120px;width:100%" title="Xcel Water Heater Rebate Calculator" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;script&gt;window.addEventListener('message',function(e){if(e.origin!=='https://yourtownpros.com')return;if(e.data&amp;&amp;e.data.type==='ytp-embed-height'){var f=document.getElementById('ytp-rebate-calculator');if(f){f.style.height=e.data.height+'px';}}});&lt;/script&gt;
 &lt;p style="font-size:13px;font-family:inherit"&gt;Powered by &lt;a href="https://yourtownpros.com/tools/xcel-water-heater-rebate/"&gt;YourTownPros: Xcel Water Heater Rebate Calculator&lt;/a&gt;&lt;/p&gt;</textarea>
           <button class="btn btn-ghost btn-small" id="embedCopy" type="button">Copy the embed code</button>
           <p class="embed-msg" id="embedMsg" role="status"></p>
@@ -400,6 +417,16 @@
         var errorEl = document.getElementById('formError');
         var emptyState = document.getElementById('emptyState');
         var results = document.getElementById('results');
+
+        var EMBED_MODE = new URLSearchParams(window.location.search).get('embed') === '1';
+        if (EMBED_MODE){ document.body.classList.add('embed-mode'); }
+        function postEmbedHeight(){
+          if (!EMBED_MODE || window.parent === window) return;
+          var h = Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0);
+          window.parent.postMessage({type: 'ytp-embed-height', height: h}, '*');
+        }
+        window.addEventListener('load', postEmbedHeight);
+        window.addEventListener('resize', postEmbedHeight);
 
         function esc(s){
           return String(s == null ? '' : s)
@@ -477,10 +504,12 @@
               '</div>' +
               '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
               '<p class="caveat">The caveats, in Xcel\u2019s own substance: the bonus is limited-time, its funding is limited and first-come, first-served until the Public Utility Commission approved funding is expended, so the $1,500 is not guaranteed to still be there when you apply. Apply by September 30 of the year after the equipment was installed. Xcel approves every rebate itself. Confirm the current terms on the Xcel Water Heaters page before you buy.</p>' +
+              '<p style="margin:0 0 12px">A Denver plumber or HVAC pro can pull the city permit and file the Xcel rebate paperwork for the install:</p>' +
               '<div class="result-actions">' +
                 '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/hvac/colorado/denver/">Denver HVAC pros</a>' +
               '</div></div>';
           } else if (fails.length === 0){
             html = '<div class="card verdict-card">' +
@@ -494,10 +523,12 @@
               '</div>' +
               '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
               '<p class="caveat">The caveats, in Xcel\u2019s own substance: apply by September 30 of the year after the equipment was installed, and Xcel approves every rebate itself. Confirm the current terms on the Xcel Water Heaters page before you buy.</p>' +
+              '<p style="margin:0 0 12px">A Denver plumber or HVAC pro can pull the city permit and file the Xcel rebate paperwork for the install:</p>' +
               '<div class="result-actions">' +
                 '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/hvac/colorado/denver/">Denver HVAC pros</a>' +
               '</div></div>';
           } else {
             html = '<div class="card verdict-card zero">' +
@@ -506,17 +537,20 @@
               '<p class="amount-note">On the answers you gave, this purchase does not qualify under the terms Xcel publishes. Here is exactly why, point by point:</p>' +
               '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
               '<p class="caveat">Terms can change, and Xcel decides every rebate. If your situation is different from the answers above, for example the home is an Xcel electric, gas, or combination account after all, run the calculator again, and confirm the current terms on the Xcel Water Heaters page.</p>' +
+              '<p style="margin:0 0 12px">A Denver plumber or HVAC pro can pull the city permit and file the Xcel rebate paperwork for the install:</p>' +
               '<div class="result-actions">' +
                 '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
                 '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/hvac/colorado/denver/">Denver HVAC pros</a>' +
               '</div></div>';
           }
 
           emptyState.style.display = 'none';
           results.innerHTML = html;
           results.classList.add('show');
-          results.scrollIntoView({behavior:'smooth', block:'start'});
+          if (EMBED_MODE){ postEmbedHeight(); setTimeout(postEmbedHeight, 60); }
+          else { results.scrollIntoView({behavior:'smooth', block:'start'}); }
           if (window.gtag){
             gtag('event', 'rebate_calculate_submitted', {tool: 'xcel-water-heater-rebate'});
             gtag('event', 'rebate_result_shown', {tool: 'xcel-water-heater-rebate', verdict: fails.length === 0 ? 'qualifies' : 'zero', amount: amount});
@@ -529,7 +563,7 @@
           if (!a.closest('#results') && !a.closest('.next-card')) return;
           if (a.href.indexOf('xcelenergy.com') !== -1){ gtag('event', 'rebate_click_source', {tool: 'xcel-water-heater-rebate'}); }
           else if (a.href.indexOf('/guides/') !== -1){ gtag('event', 'rebate_click_guide', {tool: 'xcel-water-heater-rebate'}); }
-          else if (a.href.indexOf('/plumbers/') !== -1){ gtag('event', 'rebate_click_listing', {tool: 'xcel-water-heater-rebate'}); }
+          else if (a.href.indexOf('/plumbers/') !== -1 || a.href.indexOf('/hvac/') !== -1){ gtag('event', 'rebate_click_listing', {tool: 'xcel-water-heater-rebate'}); }
         });
 
         var embedBtn = document.getElementById('embedCopy');

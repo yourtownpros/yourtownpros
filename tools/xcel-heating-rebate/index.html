@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Check your Xcel Energy heat pump rebate eligibility, deadlines, and math for a Colorado home, using the rules on Xcel's own Heat Pumps page." />
+    <link rel="canonical" href="https://yourtownpros.com/tools/xcel-heating-rebate/" />
+    <link rel="icon" href="data:," />
+    <script async src="https://www.googletagmanager.com/gtm.js?id=G-N3X91JV46L"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+    <title>Xcel Furnace and Heat Pump Rebate Checker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#f4f6f3; --surface:#ffffff; --surface-2:#eef3ee; --ink:#17251f; --ink-soft:#42544b; --ink-faint:#68796f;
+        --line:#d5ddd6; --pine:#174736; --pine-deep:#0f3125; --copper:#b04f1b; --copper-soft:#fdf0e6; --gold:#e9a13b;
+        --good:#1d7a4f; --good-soft:#e6f4ec; --flag:#b3261e; --flag-soft:#fdecea; --focus:#2f7fd0;
+        --shadow:0 1px 2px rgba(15,49,37,.06),0 8px 28px rgba(15,49,37,.07); --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{ --bg:#0d1512; --surface:#16211c; --surface-2:#1c2a23; --ink:#eef4f0; --ink-soft:#b9c9bf; --ink-faint:#8fa398;
+          --line:#2c3d34; --pine:#2c7a5c; --pine-deep:#123528; --copper:#eda06a; --copper-soft:#33231a; --good:#5cc48d;
+          --good-soft:#173327; --flag:#ff9d94; --flag-soft:#3a201d; --focus:#7ab5ec; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); }
+      }
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+      body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:16.5px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+      h1,h2,h3{font-family:"Bitter",Georgia,serif; line-height:1.15; margin:0}
+      a{color:var(--pine); text-underline-offset:3px}
+      @media (prefers-color-scheme: dark){ a{color:#8fd0b2} }
+      :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
+      .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+      .brandbar{background:var(--pine-deep); color:#fff}
+      .brandbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px; flex-wrap:wrap}
+      .brand{font-family:"Bitter",serif; font-weight:800; font-size:21px; letter-spacing:.2px; color:#fff; text-decoration:none}
+      .brand span{color:var(--gold)}
+      .brandbar p{margin:0; font-size:13.5px; color:#cfe3d8}
+      .hero{padding:38px 0 8px}
+      .hero h1{font-size:clamp(32px,5.4vw,50px); font-weight:800; max-width:18ch}
+      .hero .lede{font-size:19px; color:var(--ink-soft); max-width:62ch; margin:16px 0 0}
+      .hero .lede strong{color:var(--ink)}
+      .hero-note{margin-top:16px; font-size:14.5px; color:var(--ink-faint); max-width:66ch}
+      .tool{padding:30px 0 10px}
+      .tool-grid{display:grid; grid-template-columns:400px 1fr; gap:22px; align-items:start}
+      @media (max-width:900px){ .tool-grid{grid-template-columns:1fr} }
+      .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+      .step-tag{display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--copper); margin-bottom:8px}
+      .form-card{padding:24px; position:sticky; top:16px}
+      @media (max-width:900px){ .form-card{position:static} }
+      .form-card h2{font-size:23px; margin-bottom:6px}
+      .form-card .hint{color:var(--ink-soft); font-size:14.5px; margin:0 0 18px}
+      .field{margin-bottom:15px}
+      .field label{display:block; font-weight:600; font-size:14.5px; margin-bottom:5px}
+      .field input,.field select{ width:100%; font:inherit; font-size:16px; color:var(--ink); background:var(--surface); border:1.5px solid var(--line); border-radius:9px; padding:9px 12px; }
+      .field .sub{font-size:13.5px; color:var(--ink-faint); margin-top:4px}
+      .btn{display:inline-block; font:inherit; font-weight:700; font-size:16px; border-radius:10px; padding:11px 20px; border:1.5px solid transparent; cursor:pointer; text-decoration:none}
+      .btn-pine{background:var(--pine); color:#fff}
+      .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink)}
+      .btn-small{padding:8px 14px; font-size:14.5px; margin:4px 6px 0 0}
+      .result-card{padding:24px}
+      .result-card h2{font-size:23px; margin-bottom:6px}
+      .placeholder{color:var(--ink-faint)}
+      .fee-big{font-family:"Bitter",serif; font-size:40px; font-weight:800; color:var(--pine); margin:8px 0 2px}
+      @media (prefers-color-scheme: dark){ .fee-big{color:#8fd0b2} }
+      .fee-lines{margin:14px 0; padding:0; list-style:none}
+      .fee-lines li{display:flex; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px solid var(--line)}
+      .fee-lines li.total{font-weight:700; border-bottom:none}
+      .math-note{background:var(--surface-2); border-radius:10px; padding:14px 16px; font-size:15px; margin:14px 0}
+      .verdict{display:inline-block; font-family:"Bitter",serif; font-weight:800; font-size:20px; border-radius:10px; padding:8px 16px; margin:6px 0 12px}
+      .verdict.warn{background:var(--copper-soft); color:var(--copper)}
+      .caveat{font-size:14.5px; color:var(--ink-soft)}
+      .faq{padding:30px 0}
+      .faq h2{font-size:26px; margin-bottom:14px}
+      .faq-item{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; box-shadow:var(--shadow)}
+      .faq-item h3{font-size:17.5px; margin-bottom:6px}
+      .faq-item p{margin:0; color:var(--ink-soft)}
+      .sources{padding:6px 0 30px; font-size:14.5px; color:var(--ink-soft)}
+      .claim{background:var(--pine-deep); color:#fff; border-radius:var(--radius); padding:26px; margin:10px 0 40px}
+      .claim h2{color:#fff; font-size:24px; margin-bottom:8px}
+      .claim p{color:#cfe3d8; margin:0 0 16px; max-width:60ch}
+      .claim .btn{background:var(--gold); color:#17251f}
+      .privacy-line{font-size:13px; color:var(--ink-faint); margin:12px 0 0; text-align:center}
+      footer{padding:0 0 44px; font-size:14px; color:var(--ink-faint)}
+      .hidden{display:none}
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Xcel Furnace and Heat Pump Rebate Checker",
+      "url": "https://yourtownpros.com/tools/xcel-heating-rebate/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "provider": { "@type": "Organization", "name": "YourTownPros", "url": "https://yourtownpros.com/" },
+      "description": "Check your Xcel Energy heat pump rebate eligibility, deadlines, and math for a Colorado home, using the rules on Xcel's own Heat Pumps page."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Who can get an Xcel Energy heat pump rebate in Colorado?", "acceptedAnswer": { "@type": "Answer", "text": "Xcel says residential electric and natural gas customers in Colorado are eligible to receive heat pump rebates. Xcel also says income-qualified customers may be eligible for additional rebates and services covering up to the full cost of a heat pump and its installation, and Xcel sets the income limits for that help." } },
+        { "@type": "Question", "name": "Why does this checker ask me for the rebate rate instead of showing it?", "acceptedAnswer": { "@type": "Answer", "text": "Xcel publishes its current dollar amounts in its Rebate Summary Sheet, linked from its Heat Pumps page, and it can change those amounts. We link you to that sheet and do the math on the rate you read there, so you are always working from the rate Xcel is publishing now, not a copy that could go stale." } },
+        { "@type": "Question", "name": "What are the deadlines?", "acceptedAnswer": { "@type": "Answer", "text": "Xcel says invoices and installations must be completed by December 31, 2026, and rebate applications will be accepted through September 30, 2027." } },
+        { "@type": "Question", "name": "Can the rebate be more than my project cost?", "acceptedAnswer": { "@type": "Answer", "text": "No. Xcel says rebate amounts vary based on qualifying equipment and cannot exceed installation costs. This checker applies that cap to every estimate." } },
+        { "@type": "Question", "name": "Does Xcel decide my rebate, or does this page?", "acceptedAnswer": { "@type": "Answer", "text": "Xcel decides. This checker applies the rules and deadlines Xcel publishes on its Heat Pumps page to your answers. If anything here disagrees with Xcel's page, Xcel's page wins." } }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="wrap">
+        <a class="brand" href="https://yourtownpros.com/">YourTown<span>Pros</span></a>
+        <p>Free tools for Denver homeowners and the pros they hire</p>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="wrap">
+        <h1>Xcel furnace and heat pump rebate checker</h1>
+        <p class="lede">Check whether your home qualifies for an Xcel Energy heating rebate in Colorado, whether your dates make the current deadlines, and what the math looks like. The rules and deadlines come from <strong>Xcel's own Heat Pumps page</strong>, read on November 27, 2026.</p>
+        <p class="hero-note">One honest note before you start: Xcel publishes its current dollar amounts in its Rebate Summary Sheet, linked from that page, and it can change them. Rather than print a rate here that could go stale, this checker does the math on the rate you read in Xcel's sheet today. For a furnace, Xcel's current pages do not publish an amount we could verify on our read date, so this checker will not invent one; it tells you where to confirm it.</p>
+      </div>
+    </header>
+
+    <section class="tool">
+      <div class="wrap">
+        <div class="tool-grid">
+          <div class="card form-card">
+            <span class="step-tag">Step 1</span>
+            <h2>Your home and project</h2>
+            <p class="hint">Nothing you enter leaves this page.</p>
+            <div class="field">
+              <label for="cust">Your Xcel service</label>
+              <select id="cust">
+                <option value="">Choose one</option>
+                <option value="both">Xcel electric and Xcel natural gas</option>
+                <option value="gas">Xcel natural gas only</option>
+                <option value="electric">Xcel electric only</option>
+                <option value="none">Not an Xcel customer</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="equip">Equipment you are installing</label>
+              <select id="equip">
+                <option value="">Choose one</option>
+                <option value="heatpump">Heat pump</option>
+                <option value="furnace">Gas furnace</option>
+              </select>
+              <p class="sub">The rebate follows the fuel the equipment uses: a gas furnace rebate needs Xcel natural gas service at your home, and a heat pump rebate needs Xcel electric service, because a heat pump runs on electricity.</p>
+            </div>
+            <div id="hp-fields" class="hidden">
+              <div class="field">
+                <label for="tons">System size in tons (from the quote or AHRI rating)</label>
+                <input id="tons" type="number" min="0" step="0.5" inputmode="decimal" placeholder="e.g. 3" />
+              </div>
+              <div class="field">
+                <label for="rate">Rebate rate per ton, from Xcel's current Rebate Summary Sheet (USD)</label>
+                <input id="rate" type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. the per-ton rate in the sheet" />
+                <p class="sub">Open <a href="https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps" target="_blank" rel="noopener">Xcel's Heat Pumps page</a> and use its Rebate Summary Sheet link. Rates differ by equipment type and by how your home is heated today, so copy the rate for your row of the sheet.</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="cost">Total installed cost on the invoice (USD)</label>
+              <input id="cost" type="number" min="0" step="1" inputmode="decimal" placeholder="e.g. 18000" />
+            </div>
+            <div class="field">
+              <label for="idate">Installation and invoice completion date</label>
+              <input id="idate" type="date" />
+            </div>
+            <div class="field">
+              <label for="income">Are you income-qualified for Xcel assistance programs?</label>
+              <select id="income">
+                <option value="no">No, or not that I know of</option>
+                <option value="yes">Yes</option>
+                <option value="unsure">Not sure</option>
+              </select>
+            </div>
+            <button class="btn btn-pine" id="calc" type="button">Check my rebate</button>
+            <p class="privacy-line">Your check runs in this page. The figures you type are never sent or saved. We count anonymous checks and result views with Google Analytics and GoatCounter, never the figures you typed.</p>
+          </div>
+
+          <div class="card result-card" aria-live="polite">
+            <span class="step-tag">Step 2</span>
+            <h2>Your result</h2>
+            <div id="result"><p class="placeholder">Answer the questions on the left. Your eligibility, your deadline status, and your rebate math will appear here.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div class="wrap">
+        <h2>Questions, answered plainly</h2>
+        <div class="faq-item">
+          <h3>Who can get an Xcel Energy heat pump rebate in Colorado?</h3>
+          <p>Xcel says residential electric and natural gas customers in Colorado are eligible to receive heat pump rebates. Xcel also says income-qualified customers may be eligible for additional rebates and services covering up to the full cost of a heat pump and its installation, and Xcel sets the income limits for that help.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why does this checker ask me for the rebate rate instead of showing it?</h3>
+          <p>Xcel publishes its current dollar amounts in its Rebate Summary Sheet, linked from its Heat Pumps page, and it can change those amounts. We link you to that sheet and do the math on the rate you read there, so you are always working from the rate Xcel is publishing now, not a copy that could go stale.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What are the deadlines?</h3>
+          <p>Xcel says invoices and installations must be completed by December 31, 2026, and rebate applications will be accepted through September 30, 2027.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can the rebate be more than my project cost?</h3>
+          <p>No. Xcel says rebate amounts vary based on qualifying equipment and cannot exceed installation costs. This checker applies that cap to every estimate.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does Xcel decide my rebate, or does this page?</h3>
+          <p>Xcel decides. This checker applies the rules and deadlines Xcel publishes on its Heat Pumps page to your answers. If anything here disagrees with Xcel's page, Xcel's page wins.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sources">
+      <div class="wrap">
+        <p><strong>Source.</strong> Xcel Energy, <a href="https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps">Heat Pumps (Residential Services)</a>, read November 27, 2026. That page carries Xcel's eligibility rules, its December 31, 2026 installation and invoice deadline, its September 30, 2027 application deadline, and the link to its current Rebate Summary Sheet. Questions: Xcel Energy at 800-895-4999. Next step: <a href="https://yourtownpros.com/hvac/colorado/denver/">Denver HVAC pros</a>.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="claim">
+        <h2>Install heating systems in the Denver metro?</h2>
+        <p>Your YourTownPros listing is free, and it stays free. Claim it to fix anything we got wrong, add your hours and services, and show up correctly when homeowners search.</p>
+        <a class="btn" href="https://yourtownpros.com/claim/?source=xcel-heating-checker">Claim your free listing</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <p><strong>Xcel Furnace and Heat Pump Rebate Checker</strong> is a free tool from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory. It is not affiliated with Xcel Energy. Xcel decides every rebate; if anything here disagrees with Xcel's own pages, Xcel's pages win.</p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/tools/xcel-water-heater-rebate/">Xcel water heater rebate calculator</a> · <a href="https://yourtownpros.com/hvac/colorado/denver/">Denver HVAC pros</a></p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        function track(name, params){ if (window.gtag) { gtag("event", name, params || {}); } }
+        var XCEL_PAGE = "https://co.my.xcelenergy.com/s/residential/heating-cooling/heat-pumps";
+        var equipSel = document.getElementById("equip");
+        equipSel.addEventListener("change", function () {
+          document.getElementById("hp-fields").classList.toggle("hidden", equipSel.value !== "heatpump");
+        });
+        function money(n) { return "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+        document.getElementById("calc").addEventListener("click", function () {
+          var cust = document.getElementById("cust").value;
+          var equip = equipSel.value;
+          var cost = parseFloat(document.getElementById("cost").value);
+          var idate = document.getElementById("idate").value;
+          var income = document.getElementById("income").value;
+          var out = document.getElementById("result");
+          if (!cust || !equip) { out.innerHTML = "<p class=\"placeholder\">Choose your Xcel service and your equipment first, then check again.</p>"; return; }
+          track("heating_rebate_check_submitted");
+
+          if (cust === "none") {
+            track("heating_rebate_result_shown", { verdict: "not_xcel_customer" });
+            out.innerHTML = "<p class=\"fee-big\">$0 from Xcel</p>" +
+              "<div class=\"math-note\">Xcel's Heat Pumps page limits its rebates to residential electric and natural gas Xcel Energy customers in Colorado. If Xcel does not serve your home, this rebate is not available to you, whatever the equipment.</div>" +
+              "<p class=\"caveat\">Other programs may still apply to your home, including state and regional ones. Start with your own utility's rebate page.</p>";
+            return;
+          }
+
+          var incomeNote = "";
+          if (income === "yes" || income === "unsure") {
+            incomeNote = "<p class=\"caveat\">Income-qualified note: Xcel says income-qualified customers may be eligible for additional rebates and services that cover up to the full cost of a heat pump and its installation. Xcel sets the income limits for that help, which is verified through its Home Energy Squad. That help sits on top of the standard rebate math and is worth checking before you sign a quote.</p>";
+          }
+
+          if (equip === "furnace" && cust === "electric") {
+            track("heating_rebate_result_shown", { verdict: "service_mismatch", equipment: "furnace" });
+            out.innerHTML = "<span class=\"verdict warn\">Not eligible for an Xcel furnace rebate</span>" +
+              "<p>A gas furnace rebate runs on Xcel natural gas service. You told us Xcel supplies your electricity only, so you are not in the eligible customer class for an Xcel gas furnace rebate.</p>" +
+              "<div class=\"math-note\">If another company supplies your home's natural gas, check that company's rebate programs for your furnace. If you are switching to a heat pump instead, that rebate runs on your Xcel electric service: pick Heat pump above and check again.</div>" +
+              "<p style=\"margin-top:14px\"><a class=\"btn btn-ghost btn-small\" href=\"https://yourtownpros.com/hvac/colorado/denver/\">See Denver HVAC pros</a></p>";
+            return;
+          }
+
+          if (equip === "heatpump" && cust === "gas") {
+            track("heating_rebate_result_shown", { verdict: "service_mismatch", equipment: "heat_pump" });
+            out.innerHTML = "<span class=\"verdict warn\">Not eligible for an Xcel heat pump rebate</span>" +
+              "<p>A heat pump runs on electricity, and an Xcel heat pump rebate needs Xcel electric service at your home. You told us Xcel supplies your natural gas only, so you are not in the eligible customer class for an Xcel heat pump rebate.</p>" +
+              "<div class=\"math-note\">If another company supplies your home's electricity, check that company's heat pump rebates instead. If your project is a gas furnace, that rebate runs on your Xcel natural gas service: pick Gas furnace above and check again.</div>" +
+              "<p style=\"margin-top:14px\"><a class=\"btn btn-ghost btn-small\" href=\"https://yourtownpros.com/hvac/colorado/denver/\">See Denver HVAC pros</a></p>";
+            return;
+          }
+
+          if (equip === "furnace") {
+            track("heating_rebate_result_shown", { verdict: "amount_not_published", equipment: "furnace" });
+            out.innerHTML = "<span class=\"verdict warn\">Amount not published here</span>" +
+              "<p>We are not going to guess at this number. On November 27, 2026 we read Xcel's own residential heating pages looking for a current furnace rebate amount we could stand behind, and the amounts on Xcel's site live in its Rebate Summary Sheet rather than on a page we could verify. YourTownPros only publishes rebate figures it has verified on the program's own site.</p>" +
+              "<div class=\"math-note\">What we can tell you from Xcel's own pages: you are in the eligible customer class (a residential Xcel natural gas customer in Colorado), and Xcel's published rule that a rebate cannot exceed installation costs applies to its heating rebates. Confirm the current furnace amount in the Rebate Summary Sheet linked from <a href=\"" + XCEL_PAGE + "\">Xcel's Heat Pumps page</a>, or call Xcel at 800-895-4999, before you rely on any figure a contractor quotes you.</div>" +
+              incomeNote +
+              "<p style=\"margin-top:14px\"><a class=\"btn btn-ghost btn-small\" href=\"https://yourtownpros.com/hvac/colorado/denver/\">See Denver HVAC pros</a></p>";
+            return;
+          }
+
+          var tons = parseFloat(document.getElementById("tons").value);
+          var rate = parseFloat(document.getElementById("rate").value);
+          if (!tons || tons <= 0 || !rate || rate <= 0) {
+            out.innerHTML = "<p class=\"placeholder\">For a heat pump estimate, enter your system size in tons and the per-ton rate from Xcel's current Rebate Summary Sheet. The sheet is linked from <a href=\"" + XCEL_PAGE + "\">Xcel's Heat Pumps page</a>. We ask for the rate instead of printing one because Xcel can change it, and a stale rate would give you a wrong number with confidence it does not deserve.</p>" + incomeNote;
+            return;
+          }
+          track("heating_rebate_result_shown", { verdict: "estimated", equipment: "heat_pump" });
+          var raw = Math.round(tons * rate * 100) / 100;
+          var capped = raw;
+          var capNote = "";
+          if (!isNaN(cost) && cost > 0 && raw > cost) {
+            capped = cost;
+            capNote = " Xcel's rule that a rebate cannot exceed installation costs caps it at your invoice total of " + money(cost) + ".";
+          }
+          var deadlineNote;
+          if (idate) {
+            if (idate <= "2026-12-31") {
+              deadlineNote = "Your installation and invoice date of " + idate + " is inside Xcel's window: Xcel says invoices and installations must be completed by December 31, 2026, and rebate applications will be accepted through September 30, 2027.";
+            } else {
+              deadlineNote = "Your date of " + idate + " falls after December 31, 2026. Xcel's page ties the current rebate round to installations and invoices completed by December 31, 2026, with applications accepted through September 30, 2027. A later installation depends on terms Xcel has not published on that page yet, so confirm with Xcel before you count on this amount.";
+            }
+          } else {
+            deadlineNote = "Deadline check skipped: you did not enter a date. Xcel says invoices and installations must be completed by December 31, 2026, and rebate applications will be accepted through September 30, 2027.";
+          }
+          out.innerHTML = "<p class=\"fee-big\">" + money(capped) + "</p>" +
+            "<p class=\"caveat\" style=\"margin:0\">Estimated Xcel heat pump rebate at the rate you entered</p>" +
+            "<ul class=\"fee-lines\">" +
+            "<li><span>Rate per ton (from Xcel's Rebate Summary Sheet, as you entered it)</span><span>" + money(rate) + "</span></li>" +
+            "<li><span>System size</span><span>" + tons + " tons</span></li>" +
+            "<li><span>Rate times tons</span><span>" + money(raw) + "</span></li>" +
+            "<li class=\"total\"><span>Estimated rebate after Xcel's cost cap</span><span>" + money(capped) + "</span></li>" +
+            "</ul>" +
+            "<div class=\"math-note\">Eligibility basis: a heat pump runs on electricity, and you have Xcel electric service at your home, which is the service this rebate runs on. " + deadlineNote + capNote + "</div>" +
+            incomeNote +
+            "<p class=\"caveat\">Xcel decides every rebate, based on qualifying equipment, and its Trade Partner Network contractors usually handle the application. If anything here disagrees with Xcel's page, Xcel's page wins.</p>" +
+            "<p style=\"margin-top:14px\"><a class=\"btn btn-ghost btn-small\" href=\"https://yourtownpros.com/hvac/colorado/denver/\">See Denver HVAC pros</a></p>";
+        });
+        document.addEventListener("click", function (ev) {
+          var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="xcelenergy.com"]') : null;
+          if (a) { track("heating_rebate_click_source"); }
+        });
+      })();
+    </script>
+    <script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>

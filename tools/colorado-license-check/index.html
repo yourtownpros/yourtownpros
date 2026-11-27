@@ -119,6 +119,17 @@
       .btn-ghost:hover{border-color:var(--ink-faint)}
       .btn-small{min-height:40px; padding:8px 14px; font-size:14.5px}
       .privacy-line{font-size:13px; color:var(--ink-faint); margin:12px 0 0; text-align:center}
+      .filter-pills{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 2px}
+      .pill{
+        appearance:none; cursor:pointer; font:inherit; font-size:14px; font-weight:600;
+        border:1.5px solid var(--line); background:var(--surface); color:var(--ink);
+        border-radius:999px; padding:7px 14px; min-height:38px;
+      }
+      .pill:hover{border-color:var(--ink-faint)}
+      .pill[aria-pressed="true"]{background:var(--pine); border-color:var(--pine); color:#fff}
+      @media (prefers-color-scheme: dark){ .pill[aria-pressed="true"]{background:#2c7a5c; border-color:#2c7a5c} }
+      .results-note{font-size:15px; color:var(--ink-soft); margin:0 0 14px}
+      .results-note strong{color:var(--ink)}
 
       .empty-card{padding:26px}
       .empty-card h2{font-size:23px; margin-bottom:8px}
@@ -126,7 +137,7 @@
       .empty-card ul{margin:0; padding-left:20px; color:var(--ink-soft); font-size:15px; display:grid; gap:8px}
 
       #results{display:none}
-      #results.show{display:block}
+      #results.show{display:block; min-height:280px}
       .result-card{padding:24px; margin-bottom:16px}
       .result-card h2{font-size:22px; margin-bottom:2px}
       .result-card .where{color:var(--ink-soft); font-size:14.5px; margin:0 0 14px}
@@ -181,6 +192,13 @@
         #results{display:block!important}
         .card{box-shadow:none}
       }
+      body.embed-mode .brandbar,
+      body.embed-mode .hero,
+      body.embed-mode .faq,
+      body.embed-mode .embed,
+      body.embed-mode .next,
+      body.embed-mode footer{display:none!important}
+      body.embed-mode .tool{padding-top:12px}
     </style>
     <script type="application/ld+json">
     {
@@ -265,7 +283,7 @@
     <main class="wrap">
       <section class="hero">
         <h1>Colorado Contractor License Checker</h1>
-        <p class="lede">Before you hire a plumber or an electrician, check the license. <strong>Type in a business name and this checker looks it up in the license records YourTownPros has recorded from Colorado DORA data</strong>, the same records behind our listings.</p>
+        <p class="lede">Before you hire a plumber or an electrician, check the license. <strong>Type in a business name, a city, or a license number and this checker looks it up in the license records YourTownPros has recorded from Colorado DORA data</strong>, the same records behind our listings.</p>
         <span class="snap-chip">DORA snapshot recorded November 27, 2026 · 293 listings · not a live state database</span>
         <p class="hero-note">How to read this page honestly: the statuses below are what we recorded on the date printed above. A license can be renewed, expire, or change after that date, so every result links to the official DORA license lookup, which is the live record and the one that counts. This checker carries every YourTownPros Colorado listing we have matched to a state license record: 293 listings as of the snapshot date, and the snapshot is refreshed weekly.</p>
       </section>
@@ -275,13 +293,19 @@
         <div class="tool-grid">
           <form class="card form-card" id="lookupForm" novalidate>
             <span class="step-tag">Free · Runs on this page</span>
-            <h2>Enter a business name</h2>
-            <p class="hint">Spell it the way it appears on the truck, the invoice, or our listing. Partial names work: try Applewood, Plumbline, or Squeaks.</p>
+            <h2>Enter a business name, city, or license number</h2>
+            <p class="hint">Spell a business name the way it appears on the truck, the invoice, or our listing. Partial names work: try Applewood, Plumbline, or Squeaks. You can also type a city, like Westminster, to browse the recorded licenses there, or the license number from a truck or a quote, like 828.</p>
 
             <div class="field">
-              <label for="f-name">Business name <span class="req" aria-hidden="true">*</span></label>
-              <input id="f-name" name="name" type="text" autocomplete="off" aria-required="true" placeholder="e.g. Applewood Plumbing" />
-              <p class="micro">The check runs against the snapshot stored in this page. The name you type is never sent or saved; we count anonymous searches with Google Analytics, including whether a match was found and how many, never the name.</p>
+              <label for="f-name">Business name, city, or license number <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="off" aria-required="true" placeholder="e.g. Applewood Plumbing, Westminster, or 828" />
+              <p class="micro">The check runs against the snapshot stored in this page.</p>
+            </div>
+
+            <div class="filter-pills" role="group" aria-label="Filter results by license type">
+              <button type="button" class="pill" data-filter="all" aria-pressed="true">All licenses</button>
+              <button type="button" class="pill" data-filter="Plumbing" aria-pressed="false">Plumbing</button>
+              <button type="button" class="pill" data-filter="Electrical" aria-pressed="false">Electrical</button>
             </div>
 
             <p class="field-error" id="formError" role="alert"></p>
@@ -303,7 +327,7 @@
               <div class="result-actions" style="margin-top:16px">
                 <a class="btn btn-primary btn-small" style="width:auto" href="https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx">Search the official DORA lookup, the complete live record</a>
               </div>
-              <p style="margin-top:14px">No name to check yet? Browse <a href="https://yourtownpros.com/plumbers/">Colorado plumbers</a> and <a href="https://yourtownpros.com/electricians/">Colorado electricians</a>.</p>
+              <p style="margin-top:14px">No name to check yet? Browse <a href="https://yourtownpros.com/plumbers/colorado/">Colorado plumbers</a> and <a href="https://yourtownpros.com/electricians/colorado/">Colorado electricians</a>.</p>
             </div>
 
             <div id="results" aria-live="polite"></div>
@@ -355,7 +379,8 @@
           <span class="step-tag">For other websites</span>
           <h2 id="embed-h">Embed this checker on your site</h2>
           <p>Plumbers, home inspectors, real estate agents, HOAs, and property managers: put the checker on your own page, free. Paste this code where you want it to appear. The line under the tool credits YourTownPros and links back here; please keep it in place.</p>
-          <textarea id="embedCode" readonly rows="4" aria-label="Embed code">&lt;iframe src="https://yourtownpros.com/tools/colorado-license-check/" width="100%" height="760" style="border:1px solid #d5ddd6;border-radius:14px;max-width:1120px" title="Colorado Contractor License Checker" loading="lazy"&gt;&lt;/iframe&gt;
+          <textarea id="embedCode" readonly rows="6" aria-label="Embed code">&lt;iframe id="ytp-license-checker" src="https://yourtownpros.com/tools/colorado-license-check/?embed=1" width="100%" height="700" scrolling="no" style="border:1px solid #d5ddd6;border-radius:14px;max-width:1120px;width:100%" title="Colorado Contractor License Checker" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;script&gt;window.addEventListener('message',function(e){if(e.origin!=='https://yourtownpros.com')return;if(e.data&amp;&amp;e.data.type==='ytp-embed-height'){var f=document.getElementById('ytp-license-checker');if(f){f.style.height=e.data.height+'px';}}});&lt;/script&gt;
 &lt;p style="font-size:13px;font-family:inherit"&gt;Powered by &lt;a href="https://yourtownpros.com/tools/colorado-license-check/"&gt;YourTownPros: Colorado Contractor License Checker&lt;/a&gt;&lt;/p&gt;</textarea>
           <button class="btn btn-ghost btn-small" id="embedCopy" type="button">Copy the embed code</button>
           <p class="embed-msg" id="embedMsg" role="status"></p>
@@ -377,7 +402,7 @@
       <footer>
         <p><strong>Colorado Contractor License Checker</strong> is a free tool from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory with 19,634 listings across 41 trades. License records shown here were recorded on November 27, 2026 from the Professional and Occupational Licenses dataset published by the Colorado Department of Regulatory Agencies (DORA) through the Colorado Information Marketplace at data.colorado.gov.</p>
         <p>The official record, updated by the state, is the <a href="https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx">DORA license lookup</a>. Confirm any license there before hiring. This snapshot covers 293 directory listings matched to state records and is refreshed weekly. The checker runs in your browser session against the snapshot stored in this page; the search itself contacts no server, and the name you type is never sent. We count anonymous searches with Google Analytics and GoatCounter.</p>
-        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/claim/?source=license-checker">claim your free listing</a> · <a href="https://yourtownpros.com/plumbers/">Colorado plumbers</a> · <a href="https://yourtownpros.com/electricians/">Colorado electricians</a></p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/claim/?source=license-checker">claim your free listing</a> · <a href="https://yourtownpros.com/plumbers/colorado/">Colorado plumbers</a> · <a href="https://yourtownpros.com/electricians/colorado/">Colorado electricians</a></p>
       </footer>
     </main>
 
@@ -5528,6 +5553,16 @@
         var emptyState = document.getElementById('emptyState');
         var results = document.getElementById('results');
 
+        var EMBED_MODE = new URLSearchParams(window.location.search).get('embed') === '1';
+        if (EMBED_MODE){ document.body.classList.add('embed-mode'); }
+        function postEmbedHeight(){
+          if (!EMBED_MODE || window.parent === window) return;
+          var h = Math.max(document.documentElement.scrollHeight, document.body ? document.body.scrollHeight : 0);
+          window.parent.postMessage({type: 'ytp-embed-height', height: h}, '*');
+        }
+        window.addEventListener('load', postEmbedHeight);
+        window.addEventListener('resize', postEmbedHeight);
+
         function esc(s){
           return String(s == null ? '' : s)
             .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
@@ -5540,14 +5575,38 @@
             .replace(/\s+/g,' ')
             .trim();
         }
-        function matches(listing, q){
-          if (q.length < 3) return false;
+        var activeFilter = 'all';
+        function listingHasType(listing, type){
+          return listing.licenses.some(function(l){ return l.type.indexOf(type) !== -1; });
+        }
+        function matchKind(listing, q, rawTrimmed){
+          if (/^\d+$/.test(rawTrimmed)){
+            for (var j = 0; j < listing.licenses.length; j++){
+              if (String(listing.licenses[j].number) !== rawTrimmed) continue;
+              if (activeFilter !== 'all' && listing.licenses[j].type.indexOf(activeFilter) === -1) continue;
+              return 'license';
+            }
+            return null;
+          }
+          if (q.length < 3) return null;
           var hay = [listing.name].concat(listing.licenses.map(function(l){ return l.entity; }));
           for (var i = 0; i < hay.length; i++){
             var h = norm(hay[i]);
-            if (h.indexOf(q) !== -1 || q.indexOf(h) !== -1) return true;
+            if (h && (h.indexOf(q) !== -1 || q.indexOf(h) !== -1)) return 'name';
           }
-          return false;
+          if (norm(listing.city).indexOf(q) !== -1) return 'city';
+          return null;
+        }
+        function searchListings(raw){
+          var q = norm(raw);
+          var rawTrimmed = raw.trim();
+          var out = [];
+          LISTINGS.forEach(function(l){
+            if (activeFilter !== 'all' && !listingHasType(l, activeFilter)) return;
+            var kind = matchKind(l, q, rawTrimmed);
+            if (kind) out.push({listing: l, kind: kind});
+          });
+          return out;
         }
 
         function licenseHtml(lic){
@@ -5582,12 +5641,18 @@
         }
 
         function noMatchHtml(q){
+          var filterNote = activeFilter !== 'all'
+            ? '<p>The ' + esc(activeFilter) + ' filter is on, so this search only looked at listings carrying a ' + esc(activeFilter.toLowerCase()) + ' license. Switch the filter above back to All licenses to search the whole snapshot.</p>'
+            : '';
           return '<div class="card nomatch-card">' +
             '<span class="step-tag">No match in this snapshot</span>' +
             '<h2>We do not have a recorded license for “' + esc(q) + '” in this snapshot</h2>' +
-            '<p>This snapshot carries ' + LISTINGS.length + ' listings matched to state license records, so many Colorado contractors are not in it yet. And a business missing here is not an unlicensed business: it only means YourTownPros has not recorded its license in this snapshot. The official DORA license lookup covers every licensed plumber and electrician in Colorado and is the record that counts. And if you searched for a heating, cooling, or roofing company: Colorado does not license those trades at the state level at all, so no state record exists to find. Their licensing is handled by the city or county where the work is done.</p>' +
+            '<p>This snapshot carries ' + LISTINGS.length + ' listings matched to state license records, so many Colorado contractors are not in it yet. If you searched a city, it means no listing in that city has a recorded license in this snapshot yet. And a business missing here is not an unlicensed business: it only means YourTownPros has not recorded its license in this snapshot. The official DORA license lookup covers every licensed plumber and electrician in Colorado and is the record that counts. And if you searched for a heating, cooling, or roofing company: Colorado does not license those trades at the state level at all, so no state record exists to find. Their licensing is handled by the city or county where the work is done.</p>' +
+            filterNote +
             '<div class="result-actions">' +
               '<a class="btn btn-primary btn-small" style="width:auto" href="' + DORA_URL + '">Search the official DORA lookup</a>' +
+              '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/">Colorado plumbers</a>' +
+              '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/electricians/colorado/">Colorado electricians</a>' +
             '</div>' +
             '<p style="margin-top:16px">Or browse the trades on YourTownPros:</p>' +
             '<div class="cat-links">' +
@@ -5600,19 +5665,31 @@
         form.addEventListener('submit', function(ev){
           ev.preventDefault();
           var raw = document.getElementById('f-name').value.trim();
-          if (raw.length < 3){
-            errorEl.textContent = 'Please type at least the first few letters of the business name.';
+          if (raw.length < 3 && !/^\d+$/.test(raw)){
+            errorEl.textContent = 'Please type at least the first few letters of a business name or city, or a full license number.';
             errorEl.classList.add('show');
-            document.getElementById('f-name').focus();
+            document.getElementById('f-name').focus({preventScroll: true});
             return;
           }
           errorEl.classList.remove('show');
-          var q = norm(raw);
-          var found = LISTINGS.filter(function(l){ return matches(l, q); });
+          var found = searchListings(raw);
           emptyState.style.display = 'none';
-          results.innerHTML = found.length ? found.map(resultCard).join('') : noMatchHtml(raw);
+          var html = '';
+          if (found.length){
+            var kinds = {};
+            found.forEach(function(f){ kinds[f.kind] = true; });
+            if (kinds.city && !kinds.name && !kinds.license){
+              html += '<p class="results-note"><strong>' + found.length + (found.length === 1 ? ' listing' : ' listings') + ' in ' + esc(found[0].listing.city) + '</strong> carry a recorded license in this snapshot:</p>';
+            } else if (kinds.license && !kinds.name && !kinds.city){
+              html += '<p class="results-note">The listing carrying license number <strong>' + esc(raw) + '</strong> in this snapshot:</p>';
+            }
+            html += found.map(function(f){ return resultCard(f.listing); }).join('');
+          } else {
+            html = noMatchHtml(raw);
+          }
+          results.innerHTML = html;
           results.classList.add('show');
-          results.scrollIntoView({behavior:'smooth', block:'start'});
+          postEmbedHeight();
         if (window.gtag){
           gtag('event', 'license_search_submitted', {tool: 'colorado-license-check'});
           if (found.length){
@@ -5628,6 +5705,18 @@
           if (!a || !window.gtag) return;
           if (a.href === DORA_URL){ gtag('event', 'license_click_dora', {tool: 'colorado-license-check'}); }
           else if (a.href.indexOf('yourtownpros.com/') !== -1){ gtag('event', 'license_click_listing', {tool: 'colorado-license-check'}); }
+        });
+
+        var pills = document.querySelectorAll('.pill[data-filter]');
+        pills.forEach(function(pill){
+          pill.addEventListener('click', function(){
+            activeFilter = pill.getAttribute('data-filter');
+            pills.forEach(function(p){ p.setAttribute('aria-pressed', p === pill ? 'true' : 'false'); });
+            var current = document.getElementById('f-name').value.trim();
+            if (current.length >= 3 || /^\d+$/.test(current)){
+              form.dispatchEvent(new Event('submit', {cancelable: true}));
+            }
+          });
         });
 
         var embedBtn = document.getElementById('embedCopy');

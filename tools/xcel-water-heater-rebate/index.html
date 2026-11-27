@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Estimate the Xcel Energy heat pump water heater rebate for Colorado homes: a $750 standard rebate plus a $1,500 limited-time bonus." />
+    <link rel="canonical" href="https://yourtownpros.com/tools/xcel-water-heater-rebate/" />
+    <link rel="icon" href="data:," />
+    <script async src="https://www.googletagmanager.com/gtm.js?id=G-N3X91JV46L"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+    <title>Xcel Water Heater Rebate Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#f4f6f3;
+        --surface:#ffffff;
+        --surface-2:#eef3ee;
+        --ink:#17251f;
+        --ink-soft:#42544b;
+        --ink-faint:#68796f;
+        --line:#d5ddd6;
+        --pine:#174736;
+        --pine-deep:#0f3125;
+        --copper:#b04f1b;
+        --copper-soft:#fdf0e6;
+        --gold:#e9a13b;
+        --good:#1d7a4f;
+        --good-soft:#e6f4ec;
+        --flag:#b3261e;
+        --flag-soft:#fdecea;
+        --focus:#2f7fd0;
+        --shadow:0 1px 2px rgba(15,49,37,.06),0 8px 28px rgba(15,49,37,.07);
+        --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#0d1512;
+          --surface:#16211c;
+          --surface-2:#1c2a23;
+          --ink:#eef4f0;
+          --ink-soft:#b9c9bf;
+          --ink-faint:#8fa398;
+          --line:#2c3d34;
+          --pine:#2c7a5c;
+          --pine-deep:#123528;
+          --copper:#eda06a;
+          --copper-soft:#33231a;
+          --good:#5cc48d;
+          --good-soft:#173327;
+          --flag:#ff9d94;
+          --flag-soft:#3a201d;
+          --focus:#7ab5ec;
+          --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35);
+        }
+      }
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+      body{
+        margin:0; background:var(--bg); color:var(--ink);
+        font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+        font-size:16.5px; line-height:1.55;
+        -webkit-font-smoothing:antialiased;
+      }
+      h1,h2,h3{font-family:"Bitter",Georgia,serif; line-height:1.15; margin:0}
+      a{color:var(--pine); text-underline-offset:3px}
+      @media (prefers-color-scheme: dark){ a{color:#8fd0b2} }
+      :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
+      .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+
+      .brandbar{background:var(--pine-deep); color:#fff}
+      .brandbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px; flex-wrap:wrap}
+      .brand{font-family:"Bitter",serif; font-weight:800; font-size:21px; letter-spacing:.2px; color:#fff; text-decoration:none}
+      .brand span{color:var(--gold)}
+      .brandbar p{margin:0; font-size:13.5px; color:#cfe3d8}
+      .brandbar p strong{color:#fff; font-weight:600}
+
+      .hero{padding:38px 0 8px}
+      .hero h1{font-size:clamp(32px,5.4vw,50px); font-weight:800; max-width:18ch}
+      .hero .lede{font-size:19px; color:var(--ink-soft); max-width:62ch; margin:16px 0 0}
+      .hero .lede strong{color:var(--ink)}
+      .hero-note{margin-top:16px; font-size:14.5px; color:var(--ink-faint); max-width:66ch}
+      .hero-note a{font-weight:600}
+      .figure-strip{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px}
+      .figure-chip{background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:8px 15px; font-size:14.5px; display:inline-flex; gap:8px; align-items:center; box-shadow:var(--shadow)}
+      .figure-chip b{font-family:"Bitter",serif; color:var(--pine)}
+      @media (prefers-color-scheme: dark){ .figure-chip b{color:#8fd0b2} }
+
+      .tool{padding:26px 0 10px}
+      .tool-grid{display:grid; grid-template-columns:400px 1fr; gap:22px; align-items:start}
+      @media (max-width:900px){ .tool-grid{grid-template-columns:1fr} }
+      .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+      .step-tag{display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--copper); margin-bottom:8px}
+      .form-card{padding:24px; position:sticky; top:16px}
+      @media (max-width:900px){ .form-card{position:static} }
+      .form-card h2{font-size:23px; margin-bottom:6px}
+      .form-card .hint{color:var(--ink-soft); font-size:14.5px; margin:0 0 18px}
+      .field{margin-bottom:15px}
+      .field label{display:block; font-weight:600; font-size:14.5px; margin-bottom:5px}
+      .field label .req{color:var(--copper)}
+      .field input,.field select{
+        width:100%; font:inherit; font-size:16px; color:var(--ink);
+        background:var(--surface); border:1.5px solid var(--line); border-radius:9px; padding:9px 12px;
+      }
+      .field input::placeholder{color:var(--ink-faint)}
+      .field .micro{font-size:13px; color:var(--ink-faint); margin-top:4px}
+      .field-error{display:none; color:var(--flag); font-size:14px; font-weight:600; margin:10px 0 0}
+      .field-error.show{display:block}
+      .btn{
+        appearance:none; border:0; cursor:pointer; font:inherit; font-weight:700;
+        border-radius:10px; padding:12px 20px; min-height:48px;
+        display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+      }
+      .btn-primary{background:var(--pine); color:#fff; width:100%; font-size:17px}
+      .btn-primary:hover{background:var(--pine-deep)}
+      @media (prefers-color-scheme: dark){ .btn-primary{background:#2c7a5c} .btn-primary:hover{background:#35916e} }
+      .btn-ghost{background:transparent; color:var(--ink); border:1.5px solid var(--line)}
+      .btn-ghost:hover{border-color:var(--ink-faint)}
+      .btn-small{min-height:40px; padding:8px 14px; font-size:14.5px}
+      .privacy-line{font-size:13px; color:var(--ink-faint); margin:12px 0 0; text-align:center}
+
+      .empty-card{padding:26px}
+      .empty-card h2{font-size:23px; margin-bottom:8px}
+      .empty-card>p{color:var(--ink-soft); margin:0 0 14px; max-width:58ch}
+      .terms-list{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+      .terms-list li{background:var(--surface-2); border-radius:11px; padding:13px 16px; font-size:15px; color:var(--ink-soft)}
+      .terms-list li strong{color:var(--ink)}
+
+      #results{display:none}
+      #results.show{display:block}
+      .verdict-card{padding:26px; margin-bottom:16px; border:2px solid var(--pine)}
+      .verdict-card.zero{border-color:var(--flag)}
+      .verdict-card .amount{font-family:"Bitter",serif; font-weight:800; font-size:44px; line-height:1.05; margin:4px 0 6px}
+      .verdict-card .amount-note{color:var(--ink-soft); margin:0 0 14px; max-width:58ch}
+      .breakdown{display:grid; gap:8px; margin:0 0 16px}
+      .breakdown div{display:flex; justify-content:space-between; gap:14px; background:var(--surface-2); border-radius:10px; padding:11px 15px; font-size:15.5px}
+      .breakdown div span:last-child{font-weight:700; white-space:nowrap}
+      .reasoning{margin:0 0 14px; padding-left:20px; color:var(--ink-soft); display:grid; gap:7px; font-size:15.5px}
+      .reasoning li strong{color:var(--ink)}
+      .caveat{background:var(--copper-soft); border:1px solid var(--copper); border-radius:10px; padding:13px 16px; font-size:14.5px; color:var(--ink); margin:0 0 16px}
+      .result-actions{display:flex; gap:10px; flex-wrap:wrap}
+
+      .faq{padding:26px 0 4px}
+      .faq h2{font-size:24px; margin-bottom:14px}
+      .faq-item{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; box-shadow:var(--shadow)}
+      .faq-item h3{font-size:17px; margin-bottom:6px}
+      .faq-item p{margin:0; color:var(--ink-soft); font-size:15.5px}
+
+      .next{padding:28px 0 8px}
+      .next-card{background:var(--pine-deep); color:#eaf3ee; border-radius:18px; padding:30px; box-shadow:var(--shadow)}
+      .next-card h2{color:#fff; font-size:27px; margin-bottom:8px}
+      .next-card p{margin:0 0 14px; max-width:64ch; color:#cfe3d8}
+      .next-card p strong{color:#fff}
+      .next-actions{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 6px}
+      .btn-claim{background:var(--gold); color:#231600; font-size:17px}
+      .btn-claim:hover{background:#f2b354}
+      .btn-outline-light{background:transparent; color:#fff; border:1.5px solid #7fa893}
+      .btn-outline-light:hover{border-color:#fff}
+      .honest{font-size:13.5px; color:#a9c4b4; margin-top:12px}
+
+      footer{padding:30px 0 44px; margin-top:26px; border-top:1px solid var(--line)}
+      footer p{font-size:13.5px; color:var(--ink-faint); max-width:72ch; margin:0 0 8px}
+      footer a{font-weight:600}
+
+
+      .embed{padding:26px 0 4px}
+      .embed-card{padding:24px}
+      .embed-card h2{font-size:23px; margin-bottom:6px}
+      .embed-card p{color:var(--ink-soft); font-size:15.5px; margin:0 0 14px; max-width:66ch}
+      .embed-card textarea{
+        width:100%; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; line-height:1.5;
+        color:var(--ink); background:var(--surface-2); border:1.5px solid var(--line); border-radius:9px; padding:12px; margin-bottom:12px;
+      }
+      .embed-msg{font-size:14px; color:var(--good); font-weight:600; margin:10px 0 0}
+      @media print{
+        .brandbar,.form-card,.next,.result-actions{display:none!important}
+        body{background:#fff}
+        #results{display:block!important}
+        .card{box-shadow:none}
+      }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebApplication",
+                "name": "Xcel Water Heater Rebate Calculator",
+                "url": "https://yourtownpros.com/tools/xcel-water-heater-rebate/",
+                "applicationCategory": "FinanceApplication",
+                "operatingSystem": "Any",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                },
+                "provider": {
+                    "@type": "Organization",
+                    "name": "YourTownPros",
+                    "url": "https://yourtownpros.com/"
+                },
+                "description": "Estimate the Xcel Energy heat pump water heater rebate for Colorado homes: a $750 standard rebate plus a $1,500 limited-time bonus."
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "How much is the Xcel Energy water heater rebate in Colorado?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "For Xcel Energy residential electric, gas, or combination customers in Colorado, Xcel lists a standard rebate of $750 for a qualifying heat pump water heater, plus a limited-time bonus of $1,500, for up to $2,250 in total. The bonus requires an invoice dated in 2026, and its funding is limited and first-come, first-served."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Who qualifies for the rebate?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Based on the terms Xcel publishes: you must be an Xcel Energy residential electric, gas, or combination customer in Colorado; the equipment must be an ENERGY STAR rated heat pump water heater with a minimum 3.3 UEF, listed on the AHRI Certified Directory; and the unit must be 80 gallons or smaller, since units over 80 gallons are not eligible. Apply by September 30 of the year after the equipment was installed."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does this calculator decide my rebate?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. This calculator applies the terms on the Xcel Energy water heaters page to the answers you enter, in this page only. Xcel makes the final decision on every rebate, and its page is the source to trust if anything here differs."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What does a heat pump water heater cost to install in Denver?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Our Denver water heater replacement cost guide works through local installed prices, the City of Denver permit fee, and this rebate, from cited sources. It is linked below the calculator, along with the Denver plumbers page, where local plumbers carry their listings."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="wrap">
+        <a class="brand" href="https://yourtownpros.com/">YourTown<span>Pros</span></a>
+        <p><strong>Colorado-first local directory</strong> · 19,634 listings · 4,734 in Colorado · 41 trades</p>
+      </div>
+    </div>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Xcel Water Heater Rebate Calculator</h1>
+        <p class="lede">Replacing a water heater with a heat pump model can come with real money back from Xcel Energy. <strong>Answer four questions and this calculator applies the rebate terms Xcel publishes</strong>, in plain sentences, with the reason for the number it gives you.</p>
+        <div class="figure-strip" aria-label="The rebate figures this calculator uses">
+          <span class="figure-chip"><b>$750</b> standard rebate</span>
+          <span class="figure-chip"><b>+$1,500</b> limited-time bonus</span>
+          <span class="figure-chip"><b>$2,250</b> max, if bonus funds last</span>
+        </div>
+        <p class="hero-note">YourTownPros is not affiliated with Xcel Energy. The figures and terms are taken from <a href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Xcel Energy's own Water Heaters page</a>, read on November 27, 2026. Xcel decides every rebate and can change its terms, so its page is the final word. This calculator is an estimate tool, not an application and not a promise. Replacing a dead water heater today? <a href="https://yourtownpros.com/plumbers/colorado/denver/">See Denver plumbers</a> for the people who can install the new one.</p>
+      </section>
+
+      <section class="tool" aria-labelledby="tool-h">
+        <h2 id="tool-h" class="step-tag" style="font-size:13px">The calculator</h2>
+        <div class="tool-grid">
+          <form class="card form-card" id="calcForm" novalidate>
+            <span class="step-tag">Free · Runs on this page</span>
+            <h2>Four questions</h2>
+            <p class="hint">Answer for the home where the water heater will be installed and the equipment you are buying, or already bought. One thing to know before you start: this rebate is only for buying a heat pump water heater, so a new gas or standard electric tank scores $0 under these terms.</p>
+
+            <div class="field">
+              <label for="f-customer">Is the home an Xcel Energy residential electric, gas, or combination customer in Colorado? <span class="req" aria-hidden="true">*</span></label>
+              <select id="f-customer" name="customer" aria-required="true">
+                <option value="">Choose one…</option>
+                <option value="yes">Yes: Xcel electric, gas, or both; residential, in Colorado</option>
+                <option value="no">No, or not sure</option>
+              </select>
+              <p class="micro">The rebate on Xcel's page is for its residential electric, gas, or combination customers in Colorado. Homes outside Colorado, and homes that are not Xcel customers, do not qualify under these terms.</p>
+            </div>
+
+            <div class="field">
+              <label for="f-date">When was, or will, the equipment be invoiced? <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-date" name="date" type="date" aria-required="true" />
+              <p class="micro">Use the date on the invoice or receipt. Xcel states no purchase-date requirement for the standard rebate. The $1,500 bonus requires an invoice dated in 2026.</p>
+            </div>
+
+            <div class="field">
+              <label for="f-size">Tank size of the new unit, in gallons <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-size" name="size" type="number" min="1" max="300" step="1" inputmode="numeric" aria-required="true" placeholder="e.g. 50" />
+              <p class="micro">The rating on the unit itself, not the old tank. Units over 80 gallons are not eligible.</p>
+            </div>
+
+            <div class="field">
+              <label for="f-equip">What type of water heater is it? <span class="req" aria-hidden="true">*</span></label>
+              <select id="f-equip" name="equip" aria-required="true">
+                <option value="">Choose one…</option>
+                <option value="hpwh">Heat pump water heater</option>
+                <option value="electric">Standard electric tank water heater</option>
+                <option value="gas">Gas or propane water heater</option>
+                <option value="other">Something else</option>
+              </select>
+              <p class="micro">The rebate is for a qualifying heat pump water heater replacing an existing water heater: ENERGY STAR rated, minimum 3.3 UEF, and listed on the AHRI Certified Directory.</p>
+            </div>
+
+            <p class="field-error" id="formError" role="alert"></p>
+            <button class="btn btn-primary" type="submit">Calculate my rebate →</button>
+            <p class="privacy-line">The math runs in this page. Your answers are never sent or saved, and nothing here is shared with Xcel. We count anonymous calculations with Google Analytics, including whether the result qualified and the amount shown, never your answers.</p>
+          </form>
+
+          <div>
+            <div class="card empty-card" id="emptyState">
+              <span class="step-tag">The terms, up front</span>
+              <h2>What Xcel's page says</h2>
+              <p>So the result is never a surprise, here are the terms this calculator applies, in Xcel's own substance:</p>
+              <ul class="terms-list">
+                <li><strong>Who:</strong> Xcel Energy residential electric, gas, or combination customers in Colorado.</li>
+                <li><strong>What:</strong> replacing a water heater with a qualifying heat pump water heater: ENERGY STAR rated, minimum 3.3 UEF, listed on the AHRI Certified Directory. Indirect and commercial units are excluded.</li>
+                <li><strong>How much:</strong> a standard rebate of $750, plus a limited-time bonus of $1,500, up to $2,250 in total.</li>
+                <li><strong>When:</strong> no purchase-date requirement for the standard rebate. Apply by September 30 of the year after the equipment is installed.</li>
+                <li><strong>Size limit:</strong> units over 80 gallons are not eligible.</li>
+                <li><strong>The bonus:</strong> requires an invoice dated in 2026. Its funding is limited and first-come, first-served until the Public Utility Commission approved funding is expended.</li>
+              </ul>
+              <p style="margin-top:14px">Source: <a href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Xcel Energy, Water Heaters</a>. If anything on this page ever differs from that page, that page is right.</p>
+            </div>
+
+            <div id="results" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-h">
+        <h2 id="faq-h">Questions, answered plainly</h2>
+
+        <div class="faq-item">
+          <h3>How much is the Xcel Energy water heater rebate in Colorado?</h3>
+          <p>For Xcel Energy residential electric, gas, or combination customers in Colorado, Xcel lists a standard rebate of $750 for a qualifying heat pump water heater, plus a limited-time bonus of $1,500, for up to $2,250 in total. The bonus requires an invoice dated in 2026, and its funding is limited and first-come, first-served.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Who qualifies for the rebate?</h3>
+          <p>Based on the terms Xcel publishes: you must be an Xcel Energy residential electric, gas, or combination customer in Colorado; the equipment must be an ENERGY STAR rated heat pump water heater with a minimum 3.3 UEF, listed on the AHRI Certified Directory; and the unit must be 80 gallons or smaller, since units over 80 gallons are not eligible. Apply by September 30 of the year after the equipment was installed.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Does this calculator decide my rebate?</h3>
+          <p>No. This calculator applies the terms on the Xcel Energy water heaters page to the answers you enter, in this page only. Xcel makes the final decision on every rebate, and its page is the source to trust if anything here differs.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>What does a heat pump water heater cost to install in Denver?</h3>
+          <p>Our Denver water heater replacement cost guide works through local installed prices, the City of Denver permit fee, and this rebate, from cited sources. It is linked below the calculator, along with the Denver plumbers page, where local plumbers carry their listings.</p>
+        </div>
+      </section>
+
+
+      <section class="embed" aria-labelledby="embed-h">
+        <div class="card embed-card">
+          <span class="step-tag">For other websites</span>
+          <h2 id="embed-h">Embed this calculator on your site</h2>
+          <p>Plumbers, home inspectors, real estate agents, HOAs, and property managers: put the calculator on your own page, free, and help your customers see the rebate before they buy. Paste this code where you want it to appear. The line under the tool credits YourTownPros and links back here; please keep it in place.</p>
+          <textarea id="embedCode" readonly rows="4" aria-label="Embed code">&lt;iframe src="https://yourtownpros.com/tools/xcel-water-heater-rebate/" width="100%" height="760" style="border:1px solid #d5ddd6;border-radius:14px;max-width:1120px" title="Xcel Water Heater Rebate Calculator" loading="lazy"&gt;&lt;/iframe&gt;
+&lt;p style="font-size:13px;font-family:inherit"&gt;Powered by &lt;a href="https://yourtownpros.com/tools/xcel-water-heater-rebate/"&gt;YourTownPros: Xcel Water Heater Rebate Calculator&lt;/a&gt;&lt;/p&gt;</textarea>
+          <button class="btn btn-ghost btn-small" id="embedCopy" type="button">Copy the embed code</button>
+          <p class="embed-msg" id="embedMsg" role="status"></p>
+        </div>
+      </section>
+
+      <section class="next" aria-labelledby="next-h">
+        <div class="next-card">
+          <h2 id="next-h">Next: what the job costs, and who near you does it</h2>
+          <p>Our <strong>Denver water heater replacement cost guide</strong> works through installed prices from cited local sources, the City of Denver permit fee, and this rebate, so you can see the likely total before you call anyone. Then the <strong>Denver plumbers page</strong> lists the local plumbers, with reviews and contact details, who can quote the job.</p>
+          <div class="next-actions">
+            <a class="btn btn-claim" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Read the Denver cost guide</a>
+            <a class="btn btn-outline-light" href="https://yourtownpros.com/plumbers/colorado/denver/">See Denver plumbers</a>
+          </div>
+          <p class="honest">Honest note, straight from YourTownPros: a rebate estimate is not a quote and not a rebate approval. Your installer confirms the equipment qualifies, and Xcel approves the payment.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>Xcel Water Heater Rebate Calculator</strong> is a free tool from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory with 19,634 listings across 41 trades. It is not affiliated with Xcel Energy. Rebate figures and terms are from <a href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Xcel Energy's Water Heaters page</a>, read on November 27, 2026.</p>
+        <p>Your answers stay in your browser session: the calculator sends nothing to Xcel, stores nothing, and never transmits your answers. We count anonymous calculations and result views with Google Analytics, including whether the result qualified and the amount shown, never your answers.</p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a> · <a href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a> · <a href="https://yourtownpros.com/claim/?source=rebate-calculator">claim your free listing</a></p>
+      </footer>
+    </main>
+
+    <script>
+      (function(){
+        var STANDARD = 750;
+        var BONUS = 1500;
+
+        var form = document.getElementById('calcForm');
+        var errorEl = document.getElementById('formError');
+        var emptyState = document.getElementById('emptyState');
+        var results = document.getElementById('results');
+
+        function esc(s){
+          return String(s == null ? '' : s)
+            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+        function money(n){ return '$' + n.toLocaleString('en-US'); }
+        function val(id){ return document.getElementById(id).value; }
+
+        function prettyDate(iso){
+          var parts = iso.split('-');
+          var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+          return months[parseInt(parts[1],10)-1] + ' ' + parseInt(parts[2],10) + ', ' + parts[0];
+        }
+
+        form.addEventListener('submit', function(ev){
+          ev.preventDefault();
+          var customer = val('f-customer');
+          var date = val('f-date');
+          var sizeRaw = val('f-size');
+          var equip = val('f-equip');
+          var size = parseInt(sizeRaw, 10);
+
+          if (!customer || !date || !sizeRaw || !equip || isNaN(size) || size < 1){
+            errorEl.textContent = 'Please answer all four questions, including a tank size in gallons, and the calculator will do the rest.';
+            errorEl.classList.add('show');
+            return;
+          }
+          errorEl.classList.remove('show');
+
+          var reasons = [];
+          var fails = [];
+
+          if (customer === 'yes'){
+            reasons.push('<strong>Customer:</strong> you told us the home is an Xcel Energy residential electric, gas, or combination customer in Colorado, which is who this rebate is for.');
+          } else {
+            reasons.push('<strong>Customer:</strong> you told us the home is not an Xcel Energy residential electric, gas, or combination customer in Colorado, or you are not sure. The rebate on Xcel\u2019s page is only for those customers, so under these terms the answer is $0. If you are not sure, check an Xcel bill for the home.');
+            fails.push('customer');
+          }
+
+          var invoiceYear = parseInt(date.split('-')[0], 10);
+          var bonusApplies = invoiceYear === 2026;
+          if (bonusApplies){
+            reasons.push('<strong>Invoice date:</strong> ' + esc(prettyDate(date)) + ' is dated in 2026, which is what the $1,500 bonus requires. The standard rebate itself has no purchase-date requirement.');
+          } else {
+            reasons.push('<strong>Invoice date:</strong> ' + esc(prettyDate(date)) + ' is not dated in 2026. The standard rebate has no purchase-date requirement, so it still applies, but the $1,500 bonus requires an invoice dated in 2026, so this estimate is the standard rebate only.');
+          }
+
+          if (equip === 'hpwh'){
+            reasons.push('<strong>Equipment:</strong> a heat pump water heater is the equipment this rebate pays for. The model must be ENERGY STAR rated with a minimum 3.3 UEF and listed on the AHRI Certified Directory.');
+          } else {
+            var label = equip === 'electric' ? 'a standard electric tank water heater' : (equip === 'gas' ? 'a gas or propane water heater' : 'something other than a heat pump water heater');
+            reasons.push('<strong>Equipment:</strong> you chose ' + label + '. The rebate is for a qualifying heat pump water heater, so this equipment does not qualify.');
+            fails.push('equip');
+          }
+
+          if (size <= 80){
+            reasons.push('<strong>Tank size:</strong> ' + size + ' gallons is at or under the 80 gallon limit.');
+          } else {
+            reasons.push('<strong>Tank size:</strong> ' + size + ' gallons is over the limit. Units over 80 gallons are not eligible under Xcel\u2019s terms.');
+            fails.push('size');
+          }
+
+          var amount = fails.length === 0 ? STANDARD + (bonusApplies ? BONUS : 0) : 0;
+          var html = '';
+          if (fails.length === 0 && bonusApplies){
+            html = '<div class="card verdict-card">' +
+              '<span class="step-tag">Your estimated rebate</span>' +
+              '<div class="amount">Up to ' + money(STANDARD + BONUS) + '</div>' +
+              '<p class="amount-note">On the answers you gave, this purchase matches the terms Xcel publishes for the full amount: the standard rebate, plus the limited-time bonus while bonus funds last. Xcel confirms eligibility when you apply, and its published terms are the final word.</p>' +
+              '<div class="breakdown">' +
+                '<div><span>Standard rebate</span><span>' + money(STANDARD) + '</span></div>' +
+                '<div><span>Limited-time bonus (invoice dated in 2026)</span><span>' + money(BONUS) + '</span></div>' +
+                '<div><span>Total</span><span>Up to ' + money(STANDARD + BONUS) + '</span></div>' +
+              '</div>' +
+              '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
+              '<p class="caveat">The caveats, in Xcel\u2019s own substance: the bonus is limited-time, its funding is limited and first-come, first-served until the Public Utility Commission approved funding is expended, so the $1,500 is not guaranteed to still be there when you apply. Apply by September 30 of the year after the equipment was installed. Xcel approves every rebate itself. Confirm the current terms on the Xcel Water Heaters page before you buy.</p>' +
+              '<div class="result-actions">' +
+                '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+              '</div></div>';
+          } else if (fails.length === 0){
+            html = '<div class="card verdict-card">' +
+              '<span class="step-tag">Your estimated rebate</span>' +
+              '<div class="amount">' + money(STANDARD) + '</div>' +
+              '<p class="amount-note">On the answers you gave, this purchase matches the terms Xcel publishes for the standard rebate. It does not include the $1,500 bonus, because the bonus requires an invoice dated in 2026. Xcel confirms eligibility when you apply, and its published terms are the final word.</p>' +
+              '<div class="breakdown">' +
+                '<div><span>Standard rebate</span><span>' + money(STANDARD) + '</span></div>' +
+                '<div><span>Limited-time bonus (needs an invoice dated in 2026)</span><span>$0</span></div>' +
+                '<div><span>Total</span><span>' + money(STANDARD) + '</span></div>' +
+              '</div>' +
+              '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
+              '<p class="caveat">The caveats, in Xcel\u2019s own substance: apply by September 30 of the year after the equipment was installed, and Xcel approves every rebate itself. Confirm the current terms on the Xcel Water Heaters page before you buy.</p>' +
+              '<div class="result-actions">' +
+                '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+              '</div></div>';
+          } else {
+            html = '<div class="card verdict-card zero">' +
+              '<span class="step-tag">Your estimated rebate</span>' +
+              '<div class="amount">$0</div>' +
+              '<p class="amount-note">On the answers you gave, this purchase does not qualify under the terms Xcel publishes. Here is exactly why, point by point:</p>' +
+              '<ul class="reasoning">' + reasons.map(function(r){ return '<li>' + r + '</li>'; }).join('') + '</ul>' +
+              '<p class="caveat">Terms can change, and Xcel decides every rebate. If your situation is different from the answers above, for example the home is an Xcel electric, gas, or combination account after all, run the calculator again, and confirm the current terms on the Xcel Water Heaters page.</p>' +
+              '<div class="result-actions">' +
+                '<a class="btn btn-primary btn-small" style="width:auto" href="https://co.my.xcelenergy.com/s/residential/home-rebates/water-heaters">Check the terms at Xcel Energy</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/guides/water-heater-replacement-cost-denver/">Denver water heater cost guide</a>' +
+                '<a class="btn btn-ghost btn-small" href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a>' +
+              '</div></div>';
+          }
+
+          emptyState.style.display = 'none';
+          results.innerHTML = html;
+          results.classList.add('show');
+          results.scrollIntoView({behavior:'smooth', block:'start'});
+          if (window.gtag){
+            gtag('event', 'rebate_calculate_submitted', {tool: 'xcel-water-heater-rebate'});
+            gtag('event', 'rebate_result_shown', {tool: 'xcel-water-heater-rebate', verdict: fails.length === 0 ? 'qualifies' : 'zero', amount: amount});
+          }
+        });
+
+        document.addEventListener('click', function(ev){
+          var a = ev.target && ev.target.closest ? ev.target.closest('a') : null;
+          if (!a || !window.gtag) return;
+          if (!a.closest('#results') && !a.closest('.next-card')) return;
+          if (a.href.indexOf('xcelenergy.com') !== -1){ gtag('event', 'rebate_click_source', {tool: 'xcel-water-heater-rebate'}); }
+          else if (a.href.indexOf('/guides/') !== -1){ gtag('event', 'rebate_click_guide', {tool: 'xcel-water-heater-rebate'}); }
+          else if (a.href.indexOf('/plumbers/') !== -1){ gtag('event', 'rebate_click_listing', {tool: 'xcel-water-heater-rebate'}); }
+        });
+
+        var embedBtn = document.getElementById('embedCopy');
+        if (embedBtn){
+          embedBtn.addEventListener('click', function(){
+            var ta = document.getElementById('embedCode');
+            var msg = document.getElementById('embedMsg');
+            function done(){ msg.textContent = 'Copied. Paste it into your page where you want the tool to appear.'; }
+            if (window.gtag){ gtag('event', 'tool_embed_copied', {tool: 'xcel-water-heater-rebate'}); }
+            if (navigator.clipboard && navigator.clipboard.writeText){
+              navigator.clipboard.writeText(ta.value).then(done, function(){ ta.select(); document.execCommand('copy'); done(); });
+            } else { ta.select(); document.execCommand('copy'); done(); }
+          });
+        }
+
+      })();
+    </script>
+    <script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>

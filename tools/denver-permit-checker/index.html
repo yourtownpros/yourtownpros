@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Check whether a Denver water heater, furnace, or electrical job needs a permit, using the city's own published permit guidance for houses and duplexes." />
+    <link rel="canonical" href="https://yourtownpros.com/tools/denver-permit-checker/" />
+    <link rel="icon" href="data:," />
+    <script async src="https://www.googletagmanager.com/gtm.js?id=G-N3X91JV46L"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+    <title>Do I Need a Permit in Denver?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#f4f6f3; --surface:#ffffff; --surface-2:#eef3ee; --ink:#17251f; --ink-soft:#42544b; --ink-faint:#68796f;
+        --line:#d5ddd6; --pine:#174736; --pine-deep:#0f3125; --copper:#b04f1b; --copper-soft:#fdf0e6; --gold:#e9a13b;
+        --good:#1d7a4f; --good-soft:#e6f4ec; --flag:#b3261e; --flag-soft:#fdecea; --focus:#2f7fd0;
+        --shadow:0 1px 2px rgba(15,49,37,.06),0 8px 28px rgba(15,49,37,.07); --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{ --bg:#0d1512; --surface:#16211c; --surface-2:#1c2a23; --ink:#eef4f0; --ink-soft:#b9c9bf; --ink-faint:#8fa398;
+          --line:#2c3d34; --pine:#2c7a5c; --pine-deep:#123528; --copper:#eda06a; --copper-soft:#33231a; --good:#5cc48d;
+          --good-soft:#173327; --flag:#ff9d94; --flag-soft:#3a201d; --focus:#7ab5ec; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35); }
+      }
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+      body{ margin:0; background:var(--bg); color:var(--ink); font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif; font-size:16.5px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+      h1,h2,h3{font-family:"Bitter",Georgia,serif; line-height:1.15; margin:0}
+      a{color:var(--pine); text-underline-offset:3px}
+      @media (prefers-color-scheme: dark){ a{color:#8fd0b2} }
+      :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
+      .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+      .brandbar{background:var(--pine-deep); color:#fff}
+      .brandbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px; flex-wrap:wrap}
+      .brand{font-family:"Bitter",serif; font-weight:800; font-size:21px; letter-spacing:.2px; color:#fff; text-decoration:none}
+      .brand span{color:var(--gold)}
+      .brandbar p{margin:0; font-size:13.5px; color:#cfe3d8}
+      .hero{padding:38px 0 8px}
+      .hero h1{font-size:clamp(32px,5.4vw,50px); font-weight:800; max-width:18ch}
+      .hero .lede{font-size:19px; color:var(--ink-soft); max-width:62ch; margin:16px 0 0}
+      .hero .lede strong{color:var(--ink)}
+      .hero-note{margin-top:16px; font-size:14.5px; color:var(--ink-faint); max-width:66ch}
+      .tool{padding:30px 0 10px}
+      .tool-grid{display:grid; grid-template-columns:400px 1fr; gap:22px; align-items:start}
+      @media (max-width:900px){ .tool-grid{grid-template-columns:1fr} }
+      .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+      .step-tag{display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--copper); margin-bottom:8px}
+      .form-card{padding:24px; position:sticky; top:16px}
+      @media (max-width:900px){ .form-card{position:static} }
+      .form-card h2{font-size:23px; margin-bottom:6px}
+      .form-card .hint{color:var(--ink-soft); font-size:14.5px; margin:0 0 18px}
+      .field{margin-bottom:15px}
+      .field label{display:block; font-weight:600; font-size:14.5px; margin-bottom:5px}
+      .field select{ width:100%; font:inherit; font-size:16px; color:var(--ink); background:var(--surface); border:1.5px solid var(--line); border-radius:9px; padding:9px 12px; }
+      .btn{display:inline-block; font:inherit; font-weight:700; font-size:16px; border-radius:10px; padding:11px 20px; border:1.5px solid transparent; cursor:pointer; text-decoration:none}
+      .btn-pine{background:var(--pine); color:#fff}
+      .btn-ghost{background:transparent; border-color:var(--line); color:var(--ink)}
+      .btn-small{padding:8px 14px; font-size:14.5px; margin:4px 6px 0 0}
+      .result-card{padding:24px}
+      .result-card h2{font-size:23px; margin-bottom:6px}
+      .placeholder{color:var(--ink-faint)}
+      .verdict{display:inline-block; font-family:"Bitter",serif; font-weight:800; font-size:21px; border-radius:10px; padding:8px 16px; margin:6px 0 12px}
+      .verdict.yes{background:var(--flag-soft); color:var(--flag)}
+      .verdict.no{background:var(--good-soft); color:var(--good)}
+      .verdict.maybe{background:var(--copper-soft); color:var(--copper)}
+      .basis{background:var(--surface-2); border-radius:10px; padding:14px 16px; font-size:15px; margin:14px 0}
+      .basis p{margin:0 0 8px}
+      .basis p:last-child{margin-bottom:0}
+      .caveat{font-size:14.5px; color:var(--ink-soft)}
+      .faq{padding:30px 0}
+      .faq h2{font-size:26px; margin-bottom:14px}
+      .faq-item{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px; margin-bottom:12px; box-shadow:var(--shadow)}
+      .faq-item h3{font-size:17.5px; margin-bottom:6px}
+      .faq-item p{margin:0; color:var(--ink-soft)}
+      .sources{padding:6px 0 30px; font-size:14.5px; color:var(--ink-soft)}
+      .claim{background:var(--pine-deep); color:#fff; border-radius:var(--radius); padding:26px; margin:10px 0 40px}
+      .claim h2{color:#fff; font-size:24px; margin-bottom:8px}
+      .claim p{color:#cfe3d8; margin:0 0 16px; max-width:60ch}
+      .claim .btn{background:var(--gold); color:#17251f}
+      .privacy-line{font-size:13px; color:var(--ink-faint); margin:12px 0 0; text-align:center}
+      footer{padding:0 0 44px; font-size:14px; color:var(--ink-faint)}
+      .hidden{display:none}
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Do I Need a Permit in Denver?",
+      "url": "https://yourtownpros.com/tools/denver-permit-checker/",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "provider": { "@type": "Organization", "name": "YourTownPros", "url": "https://yourtownpros.com/" },
+      "description": "Check whether a Denver water heater, furnace, or electrical job needs a permit, using the city's own published permit guidance for houses and duplexes."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Do I need a permit to replace a water heater in Denver?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Denver's permit guidance lists new or replacement water heaters, including solar, as work that requires a trades permit. For a house or duplex it goes through the city's quick permit process, with no drawings and no plan review." } },
+        { "@type": "Question", "name": "Do I need a permit to replace a furnace in Denver?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, in the usual case. Denver lists forced air heating systems, furnaces, as trades permit work. The city's exemption for like-unit repairs stops applying when the work disconnects and reconnects a gas line or a flue vent, which a furnace replacement does." } },
+        { "@type": "Question", "name": "Do I need a permit to add an outlet in Denver?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Denver's guidance lists new lighting and receptacles, and new GFCI outlets, as electrical work that requires a trades permit through the quick permit process." } },
+        { "@type": "Question", "name": "When can I skip the permit?", "acceptedAnswer": { "@type": "Answer", "text": "Denver exempts general repairs that do not alter existing systems, such as replacing like fixtures, and mechanical repairs of like units that do not disconnect a gas line, flue vent, refrigerant line, steam or hot water line, or boiler safety controls. If your job is not listed on the city's page, check with the city before you start." } },
+        { "@type": "Question", "name": "Does this checker cover other cities?", "acceptedAnswer": { "@type": "Answer", "text": "No. It follows the City and County of Denver's published guidance for single-family houses and duplexes. Other cities in the metro area run their own permit rules." } }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="wrap">
+        <a class="brand" href="https://yourtownpros.com/">YourTown<span>Pros</span></a>
+        <p>Free tools for Denver homeowners and the pros they hire</p>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="wrap">
+        <h1>Do I need a permit in Denver?</h1>
+        <p class="lede">Answer two quick questions about a <strong>water heater, furnace, or electrical job</strong> in a Denver house or duplex. Every answer comes from the City and County of Denver's own published permit guidance, and the result shows you the exact line of the city's table it rests on.</p>
+        <p class="hero-note">This checker follows Denver's guidance page, read on November 27, 2026. It is guidance, not a ruling: the city decides on your specific project, and where its page does not settle your case, this checker says so and sends you to the city instead of guessing.</p>
+        <p class="hero-note" style="color:var(--ink)"><strong>Scope: single-family houses and duplexes inside the City and County of Denver only.</strong></p>
+      </div>
+    </header>
+
+    <section class="tool">
+      <div class="wrap">
+        <div class="tool-grid">
+          <div class="card form-card">
+            <span class="step-tag">Step 1</span>
+            <h2>Your job</h2>
+            <p class="hint">For single-family houses and duplexes inside the City and County of Denver.</p>
+            <div class="field">
+              <label for="job">What is the job?</label>
+              <select id="job">
+                <option value="">Choose a job</option>
+                <option value="water-heater">Replace a water heater</option>
+                <option value="furnace">Replace a furnace</option>
+                <option value="electrical">Electrical work</option>
+              </select>
+            </div>
+            <div class="field hidden" id="elec-wrap">
+              <label for="elec">Which electrical job?</label>
+              <select id="elec">
+                <option value="">Choose one</option>
+                <option value="panel">Upgrade or replace the electrical panel</option>
+                <option value="circuit">Run a new circuit or rewire</option>
+                <option value="outlet">Add a new outlet or receptacle</option>
+                <option value="repair">Replace an existing outlet or switch with the same kind</option>
+              </select>
+            </div>
+            <div class="field hidden" id="furn-wrap">
+              <label for="furn">The deciding fact: a full furnace replacement almost always disconnects the gas line and the flue, and that is what makes the permit required. Which is your job?</label>
+              <select id="furn">
+                <option value="">Choose one</option>
+                <option value="yes">A full replacement of the furnace</option>
+                <option value="no">A repair of one part, with no gas line, flue, or refrigerant line disconnected</option>
+                <option value="unsure">Not sure</option>
+              </select>
+            </div>
+            <button class="btn btn-pine" id="check" type="button">Check my job</button>
+            <p class="privacy-line">Your check runs in this page. Your answers are never sent or saved. We count anonymous checks and result views with Google Analytics and GoatCounter, never your answers.</p>
+          </div>
+
+          <div class="card result-card" aria-live="polite">
+            <span class="step-tag">Step 2</span>
+            <h2>Your answer</h2>
+            <div id="result"><p class="placeholder">Pick your job on the left. Your answer, the city's own table line behind it, and the next step will appear here.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq">
+      <div class="wrap">
+        <h2>Questions, answered plainly</h2>
+        <div class="faq-item">
+          <h3>Do I need a permit to replace a water heater in Denver?</h3>
+          <p>Yes. Denver's permit guidance lists new or replacement water heaters, including solar, as work that requires a trades permit. For a house or duplex it goes through the city's quick permit process, with no drawings and no plan review.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I need a permit to replace a furnace in Denver?</h3>
+          <p>Yes, in the usual case. Denver lists forced air heating systems, furnaces, as trades permit work. The city's exemption for like-unit repairs stops applying when the work disconnects and reconnects a gas line or a flue vent, which a furnace replacement does.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do I need a permit to add an outlet in Denver?</h3>
+          <p>Yes. Denver's guidance lists new lighting and receptacles, and new GFCI outlets, as electrical work that requires a trades permit through the quick permit process.</p>
+        </div>
+        <div class="faq-item">
+          <h3>When can I skip the permit?</h3>
+          <p>Denver exempts general repairs that do not alter existing systems, such as replacing like fixtures, and mechanical repairs of like units that do not disconnect a gas line, flue vent, refrigerant line, steam or hot water line, or boiler safety controls. If your job is not listed on the city's page, check with the city before you start.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does this checker cover other cities?</h3>
+          <p>No. It follows the City and County of Denver's published guidance for single-family houses and duplexes. Other cities in the metro area run their own permit rules.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sources">
+      <div class="wrap">
+        <p><strong>Source.</strong> City and County of Denver, <a href="https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Plan-Review-Permits-and-Inspections/Single-Family-and-Duplex-Projects/Permitting-Process/Do-I-Need-Permits">Do I need permits for my home project?</a>, read November 27, 2026. Questions the page does not settle: call the city at 3-1-1, or (720) 913-1311 from outside Denver. Next step: <a href="https://yourtownpros.com/tools/denver-permit-fee-estimator/">estimate the permit fee</a>.</p>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <div class="claim">
+        <h2>Run a Denver trade business?</h2>
+        <p>Your YourTownPros listing is free, and it stays free. Claim it to fix anything we got wrong, add your hours and services, and show up correctly when homeowners search.</p>
+        <a class="btn" href="https://yourtownpros.com/claim/?source=permit-checker">Claim your free listing</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <p><strong>Do I Need a Permit in Denver?</strong> is a free tool from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory. It is not affiliated with the City and County of Denver, and it does not replace the city's decision on your project.</p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/">all free tools</a> · <a href="https://yourtownpros.com/tools/denver-permit-fee-estimator/">Denver permit fee estimator</a> · <a href="https://yourtownpros.com/plumbers/colorado/denver/">Denver plumbers</a></p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        function track(name, params){ if (window.gtag) { gtag("event", name, params || {}); } }
+        var CITY_PAGE = "https://denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Plan-Review-Permits-and-Inspections/Single-Family-and-Duplex-Projects/Permitting-Process/Do-I-Need-Permits";
+        var FEE_TOOL = "https://yourtownpros.com/tools/denver-permit-fee-estimator/";
+        var jobSel = document.getElementById("job");
+        var elecWrap = document.getElementById("elec-wrap");
+        var furnWrap = document.getElementById("furn-wrap");
+        jobSel.addEventListener("change", function () {
+          elecWrap.classList.toggle("hidden", jobSel.value !== "electrical");
+          furnWrap.classList.toggle("hidden", jobSel.value !== "furnace");
+        });
+        function links(catUrl, catLabel) {
+          return "<p style=\"margin-top:14px\">" +
+            "<a class=\"btn btn-ghost btn-small\" href=\"" + FEE_TOOL + "\">Estimate the permit fee</a>" +
+            "<a class=\"btn btn-ghost btn-small\" href=\"" + catUrl + "\">" + catLabel + "</a></p>";
+        }
+        function show(cls, verdict, bodyHtml) {
+          track("permit_check_result_shown", { verdict: cls });
+          document.getElementById("result").innerHTML =
+            "<span class=\"verdict " + cls + "\">" + verdict + "</span>" + bodyHtml;
+        }
+        document.getElementById("check").addEventListener("click", function () {
+          var job = jobSel.value;
+          var out = document.getElementById("result");
+          if (!job) { out.innerHTML = "<p class=\"placeholder\">Choose a job first, then check it.</p>"; return; }
+          track("permit_check_submitted");
+
+          if (job === "water-heater") {
+            show("yes", "Permit required",
+              "<p>Denver requires a trades permit to replace a water heater in a house or duplex. It goes through the city's quick permit process: no drawings, no plan review, and compliance is checked by field inspection.</p>" +
+              "<div class=\"basis\"><p><strong>The city's own table:</strong> under Plumbing, \"New or replacement water heaters (including solar)\" is listed with a trades permit required and the Quick review process. \"Water heater venting\" is listed the same way under Mechanical.</p></div>" +
+              "<p class=\"caveat\">A licensed contractor usually pulls this permit for you. Homeowners can be issued permits for a single-family home under the city's rules, and the city decides edge cases.</p>" +
+              links("https://yourtownpros.com/plumbers/colorado/denver/", "See Denver plumbers"));
+            return;
+          }
+
+          if (job === "furnace") {
+            var f = document.getElementById("furn").value;
+            if (!f) { out.innerHTML = "<p class=\"placeholder\">Answer the follow-up question about replacement versus repair, then check again. That one fact decides this case on the city's page.</p>"; return; }
+            if (f === "yes") {
+              show("yes", "Permit required",
+                "<p>Denver requires a trades permit for this job, through the quick permit process: no drawings and no plan review.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> under Mechanical, \"Forced air heating systems - furnace\" is listed with a trades permit required and the Quick review process.</p><p>The city's exemption for general repairs and replacements of like units stops applying when the work involves disconnection and reconnection of a natural gas line, a flue vent from a fuel-fired appliance, a refrigerant line, a steam or hot water line, or safety controls on high pressure boilers. A furnace replacement disconnects the gas line and the flue, so it sits on the permit side of that line.</p></div>" +
+                links("https://yourtownpros.com/hvac/colorado/denver/", "See Denver HVAC pros"));
+            } else if (f === "no") {
+              show("no", "Usually not required",
+                "<p>On the facts you picked, Denver's guidance does not require a permit: a like-unit repair that disconnects none of the listed lines falls inside the city's exemption.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> under Mechanical, \"General repairs and replacements of like units\" require no permit, unless the work involves disconnection and reconnection of a natural gas line (other than replacing a gas valve with a like unit), a flue vent from a fuel-fired appliance, a refrigerant line, a steam or hot water line, or safety controls on high pressure boilers.</p></div>" +
+                "<p class=\"caveat\">Be sure this is really your case. A full furnace replacement almost always disconnects the gas line and the flue vent, which moves it to \"permit required.\" When in doubt, ask the city before the work starts.</p>" +
+                links("https://yourtownpros.com/hvac/colorado/denver/", "See Denver HVAC pros"));
+            } else {
+              show("maybe", "It depends",
+                "<p>The deciding factor is whether the work disconnects and reconnects a natural gas line, a flue vent, a refrigerant line, a steam or hot water line, or boiler safety controls. If it does, Denver requires a trades permit. If it is a like-unit repair with none of those, the city's exemption applies.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> \"Forced air heating systems - furnace\" is listed as trades permit work, and the like-unit repair exemption is written with the disconnection list above as its boundary.</p></div>" +
+                "<p class=\"caveat\">Your contractor can tell you which side your job falls on, or you can ask the city directly at 3-1-1. We do not guess on this one.</p>" +
+                links("https://yourtownpros.com/hvac/colorado/denver/", "See Denver HVAC pros"));
+            }
+            return;
+          }
+
+          if (job === "electrical") {
+            var e = document.getElementById("elec").value;
+            if (!e) { out.innerHTML = "<p class=\"placeholder\">Choose which electrical job you mean, then check again.</p>"; return; }
+            if (e === "panel") {
+              show("yes", "Permit required",
+                "<p>Denver requires a trades permit for a new or replacement panel. For services rated 400 amps or less it is a quick permit with no drawings. A service upgrade rated over 400 amps needs drawings and goes through the standard review process instead.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> under Electrical, \"New or replacement panels and subpanels, for service rated 400 Amps or less\" and \"Utility service upgrade rated 400 Amps or less\" are listed with a trades permit required and the Quick review process. \"Utility service upgrade rated more than 400 Amps\" is listed with drawings required and the Standard process.</p></div>" +
+                links("https://yourtownpros.com/electricians/colorado/denver/", "See Denver electricians"));
+            } else if (e === "circuit") {
+              show("yes", "Permit required",
+                "<p>Denver requires a trades permit to run a new circuit, through the quick permit process with no drawings.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> under Electrical, \"Interior/exterior wiring or rewiring\" is listed with a trades permit required and the Quick review process.</p></div>" +
+                links("https://yourtownpros.com/electricians/colorado/denver/", "See Denver electricians"));
+            } else if (e === "outlet") {
+              show("yes", "Permit required",
+                "<p>Yes, even for one outlet. Denver requires a trades permit to add a new receptacle, through the quick permit process with no drawings.</p>" +
+                "<div class=\"basis\"><p><strong>The city's own table:</strong> under Electrical, \"New lighting and receptacles\" and \"New GFCI outlets\" are both listed with a trades permit required and the Quick review process.</p></div>" +
+                links("https://yourtownpros.com/electricians/colorado/denver/", "See Denver electricians"));
+            } else {
+              show("maybe", "Check with the city",
+                "<p>Denver's guidance page lists new receptacles as permit work, but it does not list replacing an existing outlet or switch with the same kind, so we will not guess which side your job falls on.</p>" +
+                "<div class=\"basis\"><p><strong>What the city says:</strong> all electrical work requires a building permit unless the work is exempt under the National Electrical Code as adopted by the State of Colorado, or under the state provisions the city's page names (Title 12, Article 23, Section 111, Colorado Revised Statutes, and 3 CCR 710-1). Whether a like-for-like swap is exempt is a call only the city can make for your case.</p></div>" +
+                "<p class=\"caveat\">Ask before you start: call the city at 3-1-1, or (720) 913-1311 from outside Denver, or read the full table on the <a href=\"" + CITY_PAGE + "\">city's permit guidance page</a>.</p>" +
+                links("https://yourtownpros.com/electricians/colorado/denver/", "See Denver electricians"));
+            }
+            return;
+          }
+        });
+        document.addEventListener("click", function (ev) {
+          var a = ev.target && ev.target.closest ? ev.target.closest('a[href*="denvergov.org"]') : null;
+          if (a) { track("permit_check_click_source"); }
+        });
+      })();
+    </script>
+    <script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Free YourTownPros tools for Colorado homeowners: check a contractor's recorded state license, and estimate the Xcel Energy heat pump water heater rebate." />
+    <link rel="canonical" href="https://yourtownpros.com/tools/" />
+    <link rel="icon" href="data:," />
+    <title>Free Tools for Colorado Homeowners | YourTownPros</title>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=G-N3X91JV46L"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700;800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+      * { box-sizing: border-box; }
+      :root{
+        --bg:#f4f6f3;
+        --surface:#ffffff;
+        --surface-2:#eef3ee;
+        --ink:#17251f;
+        --ink-soft:#42544b;
+        --ink-faint:#68796f;
+        --line:#d5ddd6;
+        --pine:#174736;
+        --pine-deep:#0f3125;
+        --copper:#b04f1b;
+        --copper-soft:#fdf0e6;
+        --gold:#e9a13b;
+        --good:#1d7a4f;
+        --focus:#2f7fd0;
+        --shadow:0 1px 2px rgba(15,49,37,.06),0 8px 28px rgba(15,49,37,.07);
+        --radius:14px;
+      }
+      @media (prefers-color-scheme: dark){
+        :root{
+          --bg:#0d1512;
+          --surface:#16211c;
+          --surface-2:#1c2a23;
+          --ink:#eef4f0;
+          --ink-soft:#b9c9bf;
+          --ink-faint:#8fa398;
+          --line:#2c3d34;
+          --pine:#2c7a5c;
+          --pine-deep:#123528;
+          --copper:#eda06a;
+          --copper-soft:#33231a;
+          --good:#5cc48d;
+          --focus:#7ab5ec;
+          --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.35);
+        }
+      }
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important} }
+      body{
+        margin:0; background:var(--bg); color:var(--ink);
+        font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+        font-size:16.5px; line-height:1.55;
+        -webkit-font-smoothing:antialiased;
+      }
+      h1,h2,h3{font-family:"Bitter",Georgia,serif; line-height:1.15; margin:0}
+      a{color:var(--pine); text-underline-offset:3px}
+      @media (prefers-color-scheme: dark){ a{color:#8fd0b2} }
+      :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
+      .wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+
+      .brandbar{background:var(--pine-deep); color:#fff}
+      .brandbar .wrap{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:12px; padding-bottom:12px; flex-wrap:wrap}
+      .brand{font-family:"Bitter",serif; font-weight:800; font-size:21px; letter-spacing:.2px; color:#fff; text-decoration:none}
+      .brand span{color:var(--gold)}
+      .brandbar p{margin:0; font-size:13.5px; color:#cfe3d8}
+      .brandbar p strong{color:#fff; font-weight:600}
+
+      .hero{padding:38px 0 8px}
+      .hero h1{font-size:clamp(32px,5.4vw,50px); font-weight:800; max-width:20ch}
+      .hero .lede{font-size:19px; color:var(--ink-soft); max-width:62ch; margin:16px 0 0}
+      .hero .lede strong{color:var(--ink)}
+
+      .tool-cards{display:grid; grid-template-columns:1fr 1fr; gap:22px; padding:30px 0 6px}
+      @media (max-width:900px){ .tool-cards{grid-template-columns:1fr} }
+      .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+      .tool-card{padding:28px; display:flex; flex-direction:column; gap:10px}
+      .step-tag{display:inline-block; font-size:12.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--copper)}
+      .tool-card h2{font-size:26px}
+      .tool-card p{margin:0; color:var(--ink-soft); font-size:16px}
+      .tool-card .honest-note{font-size:14px; color:var(--ink-faint)}
+      .btn{
+        appearance:none; border:0; cursor:pointer; font:inherit; font-weight:700;
+        border-radius:10px; padding:12px 20px; min-height:48px;
+        display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+      }
+      .btn-primary{background:var(--pine); color:#fff; font-size:16.5px; margin-top:auto; align-self:flex-start}
+      .btn-primary:hover{background:var(--pine-deep)}
+      @media (prefers-color-scheme: dark){ .btn-primary{background:#2c7a5c} .btn-primary:hover{background:#35916e} }
+      .btn-claim{background:var(--gold); color:#231600; font-size:17px}
+      .btn-claim:hover{background:#f2b354}
+      .btn-outline-light{background:transparent; color:#fff; border:1.5px solid #7fa893}
+      .btn-outline-light:hover{border-color:#fff}
+
+      .note-band{padding:22px 0 4px}
+      .note-card{padding:22px 26px}
+      .note-card h2{font-size:21px; margin-bottom:6px}
+      .note-card p{margin:0; color:var(--ink-soft); font-size:15.5px; max-width:72ch}
+
+      .next{padding:28px 0 8px}
+      .next-card{background:var(--pine-deep); color:#eaf3ee; border-radius:18px; padding:30px; box-shadow:var(--shadow)}
+      .next-card h2{color:#fff; font-size:27px; margin-bottom:8px}
+      .next-card p{margin:0 0 14px; max-width:64ch; color:#cfe3d8}
+      .next-card p strong{color:#fff}
+      .next-actions{display:flex; gap:12px; flex-wrap:wrap; margin:18px 0 6px}
+      .honest{font-size:13.5px; color:#a9c4b4; margin-top:12px}
+
+      footer{padding:30px 0 44px; margin-top:26px; border-top:1px solid var(--line)}
+      footer p{font-size:13.5px; color:var(--ink-faint); max-width:72ch; margin:0 0 8px}
+      footer a{font-weight:600}
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Colorado Contractor License Checker",
+          "url": "https://yourtownpros.com/tools/colorado-license-check/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "provider": { "@type": "Organization", "name": "YourTownPros", "url": "https://yourtownpros.com/" }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Xcel Water Heater Rebate Calculator",
+          "url": "https://yourtownpros.com/tools/xcel-water-heater-rebate/",
+          "applicationCategory": "FinanceApplication",
+          "operatingSystem": "Any",
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "provider": { "@type": "Organization", "name": "YourTownPros", "url": "https://yourtownpros.com/" }
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body>
+    <div class="brandbar">
+      <div class="wrap">
+        <a class="brand" href="https://yourtownpros.com/">YourTown<span>Pros</span></a>
+        <p><strong>Colorado-first local directory</strong> · 19,634 listings · 4,734 in Colorado · 41 trades</p>
+      </div>
+    </div>
+
+    <main class="wrap">
+      <section class="hero">
+        <h1>Free tools for Colorado homeowners</h1>
+        <p class="lede">Two free tools from YourTownPros, built on public records we record from the source, with the date of the record shown on each page. <strong>Check a plumber's or electrician's recorded state license before you hire, and work out the Xcel water heater rebate before you buy.</strong> Both run right in the page. What you type stays in the page; we count anonymous tool use with Google Analytics and GoatCounter, never what you typed.</p>
+        <p style="margin-top:14px; font-size:16px; color:var(--ink-soft)">Need the tradesperson, not a tool? Browse <a href="https://yourtownpros.com/plumbers/">Colorado plumbers</a> and <a href="https://yourtownpros.com/electricians/">Colorado electricians</a>.</p>
+      </section>
+
+      <section class="tool-cards" aria-label="The tools">
+        <div class="card tool-card">
+          <span class="step-tag">Free · State records</span>
+          <h2>Colorado Contractor License Checker</h2>
+          <p>Type in a plumber's or electrician's business name and see the Colorado state license YourTownPros recorded for it from DORA data: type, number, status, and expiration, with a link to the official state lookup to confirm the live record.</p>
+          <p class="honest-note">A dated snapshot of state data, not a live state database. Colorado licenses plumbers and electricians at the state level; heating, cooling, and roofing are licensed by cities and counties instead.</p>
+          <a class="btn btn-primary" href="https://yourtownpros.com/tools/colorado-license-check/">Check a license →</a>
+        </div>
+
+        <div class="card tool-card">
+          <span class="step-tag">Free · Rebate estimate</span>
+          <h2>Xcel Water Heater Rebate Calculator</h2>
+          <p>Answer four questions and the calculator applies the rebate terms Xcel Energy publishes for Colorado electric homes: a $750 standard rebate plus a $1,500 limited-time bonus, up to $2,250 for a qualifying heat pump water heater.</p>
+          <p class="honest-note">An estimate from Xcel's published terms, not an application. Xcel decides every rebate, and its page is the final word.</p>
+          <a class="btn btn-primary" href="https://yourtownpros.com/tools/xcel-water-heater-rebate/">Estimate my rebate →</a>
+        </div>
+      </section>
+
+      <section class="note-band" aria-labelledby="licensing-h">
+        <div class="card note-card">
+          <h2 id="licensing-h">Which trades does Colorado license at the state level?</h2>
+          <p>Plumbers and electricians, including plumbing contractors and electrical contractors, are licensed by the state through DORA, the Colorado Department of Regulatory Agencies. Heating and air conditioning work and roofing are not licensed by the state in Colorado. Cities and counties run their own licensing for those trades, so the building department where the work happens is the record that counts for them. The license checker says this on its own page too, and it never shows a state record for a trade the state does not license.</p>
+        </div>
+      </section>
+
+      <section class="next" aria-labelledby="next-h">
+        <div class="next-card">
+          <h2 id="next-h">Run a local business? Your listing is free</h2>
+          <p>If your business is listed on YourTownPros and anything is out of date, or it is not listed yet, <strong>claim or add it, free.</strong> Claiming is free, with no card required and no paid plan required. Once we verify you own or manage the business, you can request updates to your hours, description, services, and photos, and every change is reviewed by a person on the YourTownPros team before it goes live.</p>
+          <div class="next-actions">
+            <a class="btn btn-claim" href="https://yourtownpros.com/claim/?source=tools-hub">Claim or add your free listing</a>
+            <a class="btn btn-outline-light" href="https://yourtownpros.com/for-business/">See For Business options</a>
+          </div>
+          <p class="honest">Honest note, straight from YourTownPros: a correct listing puts your right name, number, and hours in front of people already looking. No listing can promise results, customers, or calls.</p>
+        </div>
+      </section>
+
+      <footer>
+        <p><strong>YourTownPros free tools</strong> from <a href="https://yourtownpros.com/">YourTownPros</a>, a Colorado-first local directory with 19,634 listings across 41 trades. License records in the checker were recorded from the Professional and Occupational Licenses dataset published by the Colorado Department of Regulatory Agencies (DORA) through the Colorado Information Marketplace at data.colorado.gov. Rebate terms are from Xcel Energy's own Water Heaters page.</p>
+        <p>Next step: <a href="https://yourtownpros.com/tools/colorado-license-check/">License checker</a> · <a href="https://yourtownpros.com/tools/xcel-water-heater-rebate/">Rebate calculator</a> · <a href="https://yourtownpros.com/claim/?source=tools-hub">claim your free listing</a></p>
+      </footer>
+    </main>
+    <script data-goatcounter="https://yourtownpros.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>
